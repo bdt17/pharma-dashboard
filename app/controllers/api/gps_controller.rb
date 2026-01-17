@@ -1,7 +1,5 @@
 module Api
-  class GpsController < ApplicationController
-    skip_before_action :verify_authenticity_token
-    
+  class GpsController < Api::BaseController
     def create
       render json: {
         status: 'received',

@@ -1,5 +1,4 @@
-class Api::WaymoController < ApplicationController
-  protect_from_forgery with: :null_session
+class Api::WaymoController < Api::BaseController
 
   def create
     render json: {

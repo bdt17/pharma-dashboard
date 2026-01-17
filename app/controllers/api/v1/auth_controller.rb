@@ -1,8 +1,7 @@
 module Api
   module V1
-    class AuthController < ApplicationController
+    class AuthController < Api::BaseController
       # Skip auth check for this test endpoint
-#      skip_before_action :authenticate_user!, only: :test_login
 
       def test_login
         username = params[:username]

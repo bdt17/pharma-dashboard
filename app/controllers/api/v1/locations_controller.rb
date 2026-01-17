@@ -1,4 +1,4 @@
-class Api::V1::LocationsController < ApplicationController
+class Api::V1::LocationsController < Api::BaseController
   # no CSRF filters in API mode
 
   def create
