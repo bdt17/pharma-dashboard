@@ -21,3 +21,6 @@ Rails.application.routes.draw do
   
   root "application#index"
 end
+namespace :api do
+  post '/gps', to: 'gps#create'
+end
