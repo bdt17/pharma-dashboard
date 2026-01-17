@@ -1,54 +1,24 @@
 Rails.application.routes.draw do
-  get "compliance/index"
-  get "compliance/logs"
-  get "compliance/signatures"
-  get "drivers/index"
-  get "drivers/show"
-  get "drivers/sessions"
-  get "revenue/index"
-  get "alerts/index"
-  get "alerts/show"
-  get "batches/index"
-  get "batches/show"
-  get "batches/new"
-  get "batches/edit"
-  get "vehicles/index"
-  get "vehicles/show"
-  get "vehicles/new"
-  get "vehicles/edit"
-  post '/api/gps', to: -> (env) { 
-    [200, {'Content-Type' => 'application/json'}, 
-     [JSON.generate({status: 'received', batch: JSON.parse(env['rack.input'].read)['batch']})]] 
-  }
+  # Devise routes (if present)
+  devise_for :users
   
-  post '/api/waymo/:id', to: -> (env) { 
-    [200, {'Content-Type' => 'application/json'}, 
-     [JSON.generate({waymo_id: env['actioncontroller.params']['id'], status: 'enroute'})]] 
-  }
+  # Dashboard (PHASE 8)
+  root "dashboard#index"
+  get "dashboard", to: "dashboard#index", as: :dashboard_index
   
-  post '/api/ai/predict-excursion', to: -> (env) { 
-    [200, {'Content-Type' => 'application/json'}, 
-     [JSON.generate({risk: 0.12, status: 'safe'})]] 
-  }
+  # Core pharma features
+  resources :vehicles, only: [:index, :show]
+  resources :batches, only: [:index, :show]
+  resources :alerts, only: [:index, :show]
+  resources :drivers, only: [:index, :show]
   
-  post '/api/marketplace/bid', to: -> (env) { 
-    [200, {'Content-Type' => 'application/json'}, 
-     [JSON.generate({bid_accepted: true, amount: 1250})]] 
-  }
+  # Analytics
+  get "revenue", to: "revenue#index", as: :revenue
+  get "compliance", to: "compliance#index", as: :compliance
   
-  root "application#index"
-namespace :api do
-  post '/gps', to: 'gps#create'
+  # API endpoints
+  namespace :api do
+    resources :vehicles, only: [:index]
+    resources :batches, only: [:index]
+  end
 end
-end
-
-
-
-root "dashboard#index"
-get "dashboard", to: "dashboard#index", as: :dashboard_index
-resources :vehicles, only: [:index, :show]
-resources :batches, only: [:index, :show] 
-resources :alerts, only: [:index, :show]
-resources :drivers, only: [:index, :show]
-get "revenue", to: "revenue#index", as: :revenue
-get "compliance", to: "compliance#index", as: :compliance
