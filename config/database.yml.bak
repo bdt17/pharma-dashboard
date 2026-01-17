@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: pharma-db
+  username: postgres
+  password: password
+  database: pharma_development
+
+development:
+  <<: *default
+  database: pharma_dashboard_development
+  username: postgres
+  password: K7mP9xQ2rF4v
+  host: localhost  #n changed 
+  port: 5432

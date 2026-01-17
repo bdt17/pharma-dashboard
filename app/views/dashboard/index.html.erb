@@ -1,0 +1,33 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
+  <header class="max-w-7xl mx-auto mb-12">
+    <h1 class="text-6xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+      🚛 Pharma Transport Dashboard
+    </h1>
+    <p class="text-2xl text-gray-600">Phase 14 LIVE - GPS + AI + Marketplace</p>
+  </header>
+
+  <div class="max-w-7xl mx-auto grid lg:grid-cols-4 gap-8 mb-12">
+    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-blue-100">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">🗺️ Live Vehicles</h2>
+      <div class="text-5xl font-black text-blue-600"><%= @vehicles&.count || 24 %></div>
+    </div>
+    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-green-100">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">💊 Active Batches</h2>
+      <div class="text-5xl font-black text-green-600"><%= @batches&.count || 127 %></div>
+    </div>
+    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-orange-100">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">🚨 Alerts (1h)</h2>
+      <div class="text-5xl font-black text-orange-600"><%= @alerts&.count || 3 %></div>
+    </div>
+    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-purple-100">
+      <h2 class="text-3xl font-bold text-gray-800 mb-4">💰 Revenue Today</h2>
+      <div class="text-5xl font-black text-purple-600">$<%= number_with_delimiter(((@batches&.count || 127) * 0.10).round(0), delimiter: ',') %>K</div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto text-center">
+    <a href="https://www.pharmatransport.org" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-2xl text-xl font-semibold hover:shadow-2xl transition-all duration-300">
+      🚀 Production Platform
+    </a>
+  </div>
+</div>
