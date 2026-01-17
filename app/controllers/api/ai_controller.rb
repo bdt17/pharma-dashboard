@@ -1,13 +1,9 @@
-class Api::AiController < ApplicationController
-  protect_from_forgery with: :null_session
-
-  def create
-    render json: {
-      endpoint: "ai/predict-excursion",
-      status: "prediction_generated",
-      risk_score: rand.round(2),
-      received_at: Time.current,
-      payload: params.permit!.to_h
-    }
+module Api
+  class AiController < ApplicationController
+    skip_before_action :verify_authenticity_token
+    
+    def predict_excursion
+      render json: { status: 'AI prediction', risk: 0.12 }, status: :ok
+    end
   end
 end
