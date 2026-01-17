@@ -1,26 +1,38 @@
-<div style="background:#FFFFFF;color:#565759;font-family:-apple-system,sans-serif;max-width:1200px;margin:2rem auto;padding:2rem">
-  <h1 style="color:#0984C0;font-size:3rem;font-weight:900;text-align:center;margin-bottom:1rem">Pharma Transport Dashboard</h1>
-  <p style="text-align:center;font-size:1.2rem;color:#565759;margin-bottom:3rem">Phase 14 Live - GPS + AI + Compliance</p>
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem">
-    <div style="background:#FFFFFF;border:1px solid #AAA7B0;padding:2.5rem;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center">
-      <h3 style="color:#565759;font-size:1.1rem;margin-bottom:1rem;font-weight:600">Live Vehicles</h3>
-      <div style="font-size:3.5rem;font-weight:900;color:#0984C0;margin-bottom:0.5rem">24</div>
-      <div style="color:#AAA7B0;font-size:0.9rem">Phoenix Metro Area</div>
-    </div>
-    <div style="background:#FFFFFF;border:1px solid #AAA7B0;padding:2.5rem;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center">
-      <h3 style="color:#565759;font-size:1.1rem;margin-bottom:1rem;font-weight:600">Active Batches</h3>
-      <div style="font-size:3.5rem;font-weight:900;color:#0984C0;margin-bottom:0.5rem">127</div>
-      <div style="color:#AAA7B0;font-size:0.9rem">2-8°C Maintained</div>
-    </div>
-    <div style="background:#FFFFFF;border:1px solid #AAA7B0;padding:2.5rem;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center">
-      <h3 style="color:#565759;font-size:1.1rem;margin-bottom:1rem;font-weight:600">Active Alerts</h3>
-      <div style="font-size:3.5rem;font-weight:900;color:#0984C0;margin-bottom:0.5rem">3</div>
-      <div style="color:#AAA7B0;font-size:0.9rem">Temp deviations</div>
-    </div>
-    <div style="background:#FFFFFF;border:1px solid #AAA7B0;padding:2.5rem;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.08);text-align:center">
-      <h3 style="color:#565759;font-size:1.1rem;margin-bottom:1rem;font-weight:600">Monthly Revenue</h3>
-      <div style="font-size:3.5rem;font-weight:900;color:#0984C0;margin-bottom:0.5rem">$12K</div>
-      <div style="color:#AAA7B0;font-size:0.9rem">Jan 2026</div>
-    </div>
+<div style="text-align: center; margin-bottom: 3rem;">
+  <h1 style="color: #0984C0 !important; font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">
+    Pharma Transport Dashboard
+  </h1>
+  <p style="color: #565759 !important; font-size: 1.3rem; margin: 0;">
+    Phase 14 - GPS Tracking & FDA Compliance
+  </p>
+</div>
+
+<div class="metric-grid">
+  <div class="metric-card">
+    <div class="metric-label">Live Vehicles</div>
+    <div class="metric-number">24</div>
+    <div style="color: #AAA7B0; font-size: 0.95rem;">Phoenix Metro Area</div>
   </div>
+  
+  <div class="metric-card">
+    <div class="metric-label">Active Batches</div>
+    <div class="metric-number">127</div>
+    <div style="color: #AAA7B0; font-size: 0.95rem;">2-8°C Maintained</div>
+  </div>
+  
+  <div class="metric-card">
+    <div class="metric-label">Active Alerts</div>
+    <div class="metric-number">3</div>
+    <div style="color: #AAA7B0; font-size: 0.95rem;">Temperature Deviations</div>
+  </div>
+  
+  <div class="metric-card">
+    <div class="metric-label">Monthly Revenue</div>
+    <div class="metric-number">$12K</div>
+    <div style="color: #AAA7B0; font-size: 0.95rem;">January 2026</div>
+  </div>
+</div>
+
+<div style="text-align: center; margin-top: 3rem;">
+  <%= link_to "View All Vehicles", vehicles_path, class: "btn" %>
 </div>
