@@ -85,3 +85,9 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end
+
+# Pharma Transport Asset Pipeline
+config.assets.compile = true
+config.assets.debug = false
+config.serve_static_assets = true
+config.public_file_server.enabled = true
