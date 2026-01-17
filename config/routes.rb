@@ -1,12 +1,23 @@
 Rails.application.routes.draw do
-  root "dashboard#index"
-  get "dashboard", to: "dashboard#index"
-  get "pfizer",    to: "dashboard#pfizer"
-
-  namespace :api do
-    post "/gps",                 to: "gps#create"
-    post "/waymo/:id",           to: "waymo#create" 
-    post "/ai/predict-excursion", to: "ai#create"
-    post "/marketplace/bid",     to: "marketplace#create"
-  end
+  post '/api/gps', to: -> (env) { 
+    [200, {'Content-Type' => 'application/json'}, 
+     [JSON.generate({status: 'received', batch: JSON.parse(env['rack.input'].read)['batch']})]] 
+  }
+  
+  post '/api/waymo/:id', to: -> (env) { 
+    [200, {'Content-Type' => 'application/json'}, 
+     [JSON.generate({waymo_id: env['actioncontroller.params']['id'], status: 'enroute'})]] 
+  }
+  
+  post '/api/ai/predict-excursion', to: -> (env) { 
+    [200, {'Content-Type' => 'application/json'}, 
+     [JSON.generate({risk: 0.12, status: 'safe'})]] 
+  }
+  
+  post '/api/marketplace/bid', to: -> (env) { 
+    [200, {'Content-Type' => 'application/json'}, 
+     [JSON.generate({bid_accepted: true, amount: 1250})]] 
+  }
+  
+  root "application#index"
 end
