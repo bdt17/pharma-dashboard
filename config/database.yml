@@ -4,15 +4,24 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *default
-  database: pharma_dashboard_development
+  primary: &dev_primary
+    <<: *default
+    database: pharma_dashboard_development
+  cache: *dev_primary
+  cable: *dev_primary
 
 test:
-  <<: *default
-  database: pharma_dashboard_test
+  primary: &test_primary
+    <<: *default
+    database: pharma_dashboard_test
+  cache: *test_primary
+  cable: *test_primary
 
 production:
   primary:
+    <<: *default
+    url: <%= ENV['DATABASE_URL'] %>
+  cache:
     <<: *default
     url: <%= ENV['DATABASE_URL'] %>
   cable:
