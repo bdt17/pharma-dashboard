@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_16_202255) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_17_083308) do
   create_table "audit_logs", force: :cascade do |t|
     t.integer "batch_id"
     t.datetime "created_at", null: false
@@ -55,6 +55,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_16_202255) do
     t.datetime "timestamp"
     t.datetime "updated_at", null: false
     t.integer "vehicle_id"
+  end
+
+  create_table "vehicles", force: :cascade do |t|
+    t.integer "batch_id"
+    t.datetime "created_at", null: false
+    t.float "heading"
+    t.float "lat"
+    t.float "lng"
+    t.float "speed"
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "audit_logs", "batches"
