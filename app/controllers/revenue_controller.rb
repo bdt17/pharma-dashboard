@@ -1,4 +1,1 @@
-class RevenueController < ApplicationController
-  def index
-  end
-end
+class RevenueController < ApplicationController; def index; @title = 'Revenue'; end; end

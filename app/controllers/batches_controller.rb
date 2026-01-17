@@ -1,13 +1,1 @@
-class BatchesController < ApplicationController
-  def index
-  end
-
-  def show
-  end
-
-  def new
-  end
-
-  def edit
-  end
-end
+class BatchesController < ApplicationController; def index; @title = 'Batches'; end; end
