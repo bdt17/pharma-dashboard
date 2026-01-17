@@ -1,93 +1,121 @@
 <!DOCTYPE html>
-<html style="background: #FFFFFF !important; color: #565759 !important;">
+<html>
 <head>
   <title>Pharma Transport Dashboard</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <style>
-    * { box-sizing: border-box; }
-    html, body { 
-      margin: 0; padding: 0; 
-      background: #FFFFFF !important; 
-      color: #565759 !important; 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      background: #FFFFFF !important;
+      color: #565759 !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    .header { 
-      background: #0984C0 !important; 
-      color: white !important; 
-      padding: 1.5rem 2rem; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    .header {
+      background: linear-gradient(135deg, #0984C0 0%, #0A6BBE 100%) !important;
+      color: white !important;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 20px rgba(9,132,192,0.3);
     }
-    .nav a { 
-      color: white !important; 
-      padding: 0.75rem 1.5rem; 
-      text-decoration: none; 
-      border-radius: 6px; 
-      display: inline-block; 
-      margin-right: 0.5rem;
+    .nav-link {
+      color: white !important;
+      padding: 0.75rem 1.5rem !important;
+      text-decoration: none !important;
+      border-radius: 8px !important;
+      font-weight: 500 !important;
+      transition: all 0.3s ease !important;
+      display: inline-block !important;
     }
-    .nav a:hover { background: #60BDD1 !important; }
-    .content { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    .metric-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-      gap: 2rem; 
-      margin: 2rem 0;
+    .nav-link:hover {
+      background: rgba(255,255,255,0.2) !important;
+      transform: translateY(-2px) !important;
     }
-    .metric-card { 
-      background: #FFFFFF !important; 
-      border: 1px solid #AAA7B0 !important; 
-      padding: 2.5rem; 
-      border-radius: 12px; 
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
-      text-align: center;
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
     }
-    .metric-number { 
-      font-size: 3.5rem; 
-      font-weight: 900; 
-      color: #0984C0 !important; 
-      margin: 1rem 0 0.5rem 0;
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
     }
-    .metric-label { 
-      color: #565759 !important; 
-      font-size: 1.1rem; 
-      font-weight: 600; 
-      margin-bottom: 0.5rem;
+    .metric-card {
+      background: #FFFFFF !important;
+      border: 1px solid #AAA7B0 !important;
+      padding: 2.5rem 2rem !important;
+      border-radius: 16px !important;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.08) !important;
+      text-align: center !important;
+      transition: all 0.3s ease !important;
     }
-    .btn { 
-      background: #0984C0 !important; 
-      color: white !important; 
-      padding: 1rem 2.5rem; 
-      border-radius: 8px; 
-      text-decoration: none; 
-      font-weight: 600; 
-      font-size: 1.1rem;
-      display: inline-block;
-      box-shadow: 0 4px 12px rgba(9,132,192,0.3);
+    .metric-card:hover {
+      transform: translateY(-8px) !important;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15) !important;
     }
-    .btn:hover { background: #60BDD1 !important; }
+    .metric-label {
+      color: #565759 !important;
+      font-size: 1.1rem !important;
+      font-weight: 600 !important;
+      margin-bottom: 1rem !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+    }
+    .metric-number {
+      font-size: 4rem !important;
+      font-weight: 900 !important;
+      color: #0984C0 !important;
+      line-height: 1 !important;
+      margin-bottom: 0.5rem !important;
+    }
+    .metric-subtitle {
+      color: #AAA7B0 !important;
+      font-size: 0.95rem !important;
+      font-weight: 500 !important;
+    }
+    .cta-button {
+      background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%) !important;
+      color: white !important;
+      padding: 1.25rem 3rem !important;
+      border: none !important;
+      border-radius: 12px !important;
+      font-size: 1.2rem !important;
+      font-weight: 700 !important;
+      text-decoration: none !important;
+      display: inline-block !important;
+      box-shadow: 0 8px 32px rgba(9,132,192,0.4) !important;
+      transition: all 0.3s ease !important;
+    }
+    .cta-button:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 16px 48px rgba(9,132,192,0.6) !important;
+    }
   </style>
 </head>
 <body>
   <header class="header">
-    <div class="content">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h1 style="margin: 0; font-size: 2rem; font-weight: 700;">Pharma Transport Dashboard</h1>
-        <nav class="nav">
-          <%= link_to "Dashboard", root_path %>
-          <%= link_to "Vehicles", vehicles_path %>
-          <%= link_to "Batches", batches_path %>
-          <%= link_to "Alerts", alerts_path %>
-          <%= link_to "Revenue", revenue_index_path %>
-          <%= link_to "Drivers", drivers_path %>
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <h1 style="margin: 0; font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px;">
+          Pharma Transport
+        </h1>
+        <nav style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <%= link_to "Dashboard", root_path, class: "nav-link" %>
+          <%= link_to "Vehicles", vehicles_path, class: "nav-link" %>
+          <%= link_to "Batches", batches_path, class: "nav-link" %>
+          <%= link_to "Alerts", alerts_path, class: "nav-link" %>
+          <%= link_to "Revenue", revenue_index_path, class: "nav-link" %>
+          <%= link_to "Drivers", drivers_path, class: "nav-link" %>
         </nav>
       </div>
     </div>
   </header>
   
-  <div class="content">
+  <main class="container">
     <%= yield %>
-  </div>
+  </main>
 </body>
 </html>
