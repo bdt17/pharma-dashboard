@@ -32,6 +32,6 @@ gem "sentry-rails"
 gem "lograge"
 
 group :development, :test do
-  gem "sqlite3", "1.7.3"
+  gem "sqlite3", "2.9.0"
   gem "debug"
 end
