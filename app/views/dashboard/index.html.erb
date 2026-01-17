@@ -1,45 +1,46 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-8">
-  <header class="max-w-7xl mx-auto mb-12">
-    <h1 class="text-6xl font-black bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-      🚛 Pharma Transport Dashboard
-    </h1>
-    <p class="text-2xl text-gray-600">Phase 14 LIVE - GPS + AI + Marketplace</p>
-  </header>
+<div class="text-center mb-12">
+  <h1 class="text-5xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
+    Pharma Transport Dashboard
+  </h1>
+  <p class="text-xl text-purple-200">Phase 14 LIVE - GPS + AI + Compliance</p>
+</div>
 
-  <div class="max-w-7xl mx-auto grid lg:grid-cols-4 gap-8 mb-12">
-    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-blue-100">
-      <h2 class="text-3xl font-bold text-gray-800 mb-4">🗺️ Live Vehicles</h2>
-      <div class="text-5xl font-black text-blue-600"><%= @vehicles&.count || 24 %></div>
-    </div>
-    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-green-100">
-      <h2 class="text-3xl font-bold text-gray-800 mb-4">💊 Active Batches</h2>
-      <div class="text-5xl font-black text-green-600"><%= @batches&.count || 127 %></div>
-    </div>
-    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-orange-100">
-      <h2 class="text-3xl font-bold text-gray-800 mb-4">🚨 Alerts (1h)</h2>
-      <div class="text-5xl font-black text-orange-600"><%= @alerts&.count || 3 %></div>
-    </div>
-    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-2xl border border-purple-100">
-      <h2 class="text-3xl font-bold text-gray-800 mb-4">💰 Revenue Today</h2>
-      <div class="text-5xl font-black text-purple-600">$<%= number_with_delimiter(((@batches&.count || 127) * 0.10).round(0), delimiter: ',') %>K</div>
-    </div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+  <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 backdrop-blur-xl border border-purple-500/30 p-8 rounded-3xl hover:scale-105 transition-all duration-300">
+    <div class="text-4xl mb-2">🚛</div>
+    <h3 class="text-lg font-semibold text-purple-200 mb-2">Live Vehicles</h3>
+    <div class="text-4xl font-black text-purple-400"><%= @stats[:vehicles] %></div>
   </div>
-
-  <div class="max-w-7xl mx-auto text-center">
-    <a href="https://www.pharmatransport.org" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-2xl text-xl font-semibold hover:shadow-2xl transition-all duration-300">
-      🚀 Production Platform
-    </a>
+  <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-xl border border-blue-500/30 p-8 rounded-3xl hover:scale-105 transition-all duration-300">
+    <div class="text-4xl mb-2">📦</div>
+    <h3 class="text-lg font-semibold text-blue-200 mb-2">Active Batches</h3>
+    <div class="text-4xl font-black text-blue-400"><%= @stats[:batches] %></div>
+  </div>
+  <div class="bg-gradient-to-br from-red-500/20 to-red-600/20 backdrop-blur-xl border border-red-500/30 p-8 rounded-3xl hover:scale-105 transition-all duration-300">
+    <div class="text-4xl mb-2">🚨</div>
+    <h3 class="text-lg font-semibold text-red-200 mb-2">Alerts</h3>
+    <div class="text-4xl font-black text-red-400"><%= @stats[:alerts] %></div>
+  </div>
+  <div class="bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 backdrop-blur-xl border border-emerald-500/30 p-8 rounded-3xl hover:scale-105 transition-all duration-300">
+    <div class="text-4xl mb-2">💰</div>
+    <h3 class="text-lg font-semibold text-emerald-200 mb-2">Revenue</h3>
+    <div class="text-4xl font-black text-emerald-400">$<%= @stats[:revenue] %>K</div>
   </div>
 </div>
-<div class="grid grid-cols-4 gap-6 p-8 bg-gradient-to-r from-indigo-900 to-purple-900 rounded-2xl">
-  <div class="bg-emerald-600 text-white p-6 rounded-xl shadow-2xl">🚛 <%= Vehicle.active.count %> Live</div>
-  <div class="bg-blue-600 text-white p-6 rounded-xl shadow-2xl">💊 <%= Batch.active.count %> Batches</div>
-  <div class="bg-red-600 text-white p-6 rounded-xl shadow-2xl">🚨 <%= Alert.recent.count %> Alerts</div>
-  <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-6 rounded-xl shadow-2xl">$<%= number_to_currency(revenue_today) %></div>
+
+<div class="grid md:grid-cols-2 gap-8">
+  <div class="bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
+    <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>🚛 Live Vehicle Tracking</h2>
+    <%= bar_chart Vehicle.group(:status).count, colors: ["#8b5cf6", "#3b82f6", "#ef4444"] %>
+  </div>
+  <div class="bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
+    <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>📦 Batch Status</h2>
+    <%= pie_chart Batch.group(:status).count, donut: true, colors: ["#10b981", "#f59e0b", "#ef4444"] %>
+  </div>
 </div>
-<div class="grid grid-cols-4 gap-6 p-8 bg-gradient-to-r from-indigo-900 to-purple-900 rounded-2xl">
-  <div class="bg-emerald-600 text-white p-6 rounded-xl shadow-2xl">🚛 <%= Vehicle.active.count %> Live</div>
-  <div class="bg-blue-600 text-white p-6 rounded-xl shadow-2xl">💊 <%= Batch.active.count %> Batches</div>
-  <div class="bg-red-600 text-white p-6 rounded-xl shadow-2xl">🚨 <%= Alert.recent.count %> Alerts</div>
-  <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-6 rounded-xl shadow-2xl">$<%= number_to_currency(revenue_today) %></div>
+
+<div class="mt-12 grid md:grid-cols-3 gap-6">
+  <%= link_to "🚛 Vehicle Management", vehicles_path, class: "group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-6 px-8 rounded-2xl text-xl shadow-2xl hover:shadow-purple-500/25 transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center space-x-3" %>
+  <%= link_to "📦 Batch Tracking", batches_path, class: "group bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-6 px-8 rounded-2xl text-xl shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center space-x-3" %>
+  <%= link_to "🚨 Alert Center", alerts_path, class: "group bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-bold py-6 px-8 rounded-2xl text-xl shadow-2xl hover:shadow-red-500/25 transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center space-x-3" %>
 </div>
