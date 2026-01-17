@@ -1,1 +1,4 @@
-class DashboardController < ApplicationController; def index; @title = 'Dashboard'; end; end
+class DashboardController < ApplicationController
+  def index
+  end
+end

@@ -1,34 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html style="background: #FFFFFF !important; color: #565759 !important;">
 <head>
   <title>Pharma Transport Dashboard</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_importmap_tags %>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { 
+      margin: 0; padding: 0; 
+      background: #FFFFFF !important; 
+      color: #565759 !important; 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+    }
+    .header { 
+      background: #0984C0 !important; 
+      color: white !important; 
+      padding: 1.5rem 2rem; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .nav a { 
+      color: white !important; 
+      padding: 0.75rem 1.5rem; 
+      text-decoration: none; 
+      border-radius: 6px; 
+      display: inline-block; 
+      margin-right: 0.5rem;
+    }
+    .nav a:hover { background: #60BDD1 !important; }
+    .content { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .metric-grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+      gap: 2rem; 
+      margin: 2rem 0;
+    }
+    .metric-card { 
+      background: #FFFFFF !important; 
+      border: 1px solid #AAA7B0 !important; 
+      padding: 2.5rem; 
+      border-radius: 12px; 
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+      text-align: center;
+    }
+    .metric-number { 
+      font-size: 3.5rem; 
+      font-weight: 900; 
+      color: #0984C0 !important; 
+      margin: 1rem 0 0.5rem 0;
+    }
+    .metric-label { 
+      color: #565759 !important; 
+      font-size: 1.1rem; 
+      font-weight: 600; 
+      margin-bottom: 0.5rem;
+    }
+    .btn { 
+      background: #0984C0 !important; 
+      color: white !important; 
+      padding: 1rem 2.5rem; 
+      border-radius: 8px; 
+      text-decoration: none; 
+      font-weight: 600; 
+      font-size: 1.1rem;
+      display: inline-block;
+      box-shadow: 0 4px 12px rgba(9,132,192,0.3);
+    }
+    .btn:hover { background: #60BDD1 !important; }
+  </style>
 </head>
-<body class="bg-white text-gray-900 antialiased">
-  <!-- PHARMA NAV (Blue #0984C0) -->
-  <nav class="bg-[#0984C0] shadow-lg">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="flex justify-between h-16">
-        <div class="flex items-center">
-          <h1 class="text-white text-2xl font-bold">🩺 Pharma Transport</h1>
-        </div>
-        <div class="flex space-x-4 items-center">
-          <%= link_to "📊 Dashboard", root_path, class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
-          <%= link_to "🚛 Vehicles", "/vehicles", class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
-          <%= link_to "📦 Batches", "/batches", class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
-          <%= link_to "🚨 Alerts", "/alerts", class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
-          <%= link_to "💰 Revenue", "/revenue", class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
-        </div>
+<body>
+  <header class="header">
+    <div class="content">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1 style="margin: 0; font-size: 2rem; font-weight: 700;">Pharma Transport Dashboard</h1>
+        <nav class="nav">
+          <%= link_to "Dashboard", root_path %>
+          <%= link_to "Vehicles", vehicles_path %>
+          <%= link_to "Batches", batches_path %>
+          <%= link_to "Alerts", alerts_path %>
+          <%= link_to "Revenue", revenue_index_path %>
+          <%= link_to "Drivers", drivers_path %>
+        </nav>
       </div>
     </div>
-  </nav>
-
-  <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  </header>
+  
+  <div class="content">
     <%= yield %>
-  </main>
+  </div>
 </body>
 </html>
