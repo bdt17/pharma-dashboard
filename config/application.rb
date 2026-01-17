@@ -9,10 +9,8 @@ module PharmaDashboard
     config.i18n.default_locale = :en
     config.i18n.available_locales = [:en]
     config.i18n.fallbacks = [:en]
-  end
-
     config.api_only = false
   end
-
-
 end
+
+
