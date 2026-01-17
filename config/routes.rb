@@ -1,3 +1,1 @@
-Rails.application.routes.draw do
-  root "dashboard#index"
-end
+Rails.application.routes.draw { root "dashboard#index" }
