@@ -31,3 +31,9 @@
     </a>
   </div>
 </div>
+<div class="grid grid-cols-4 gap-6 p-8 bg-gradient-to-r from-indigo-900 to-purple-900 rounded-2xl">
+  <div class="bg-emerald-600 text-white p-6 rounded-xl shadow-2xl">🚛 <%= Vehicle.active.count %> Live</div>
+  <div class="bg-blue-600 text-white p-6 rounded-xl shadow-2xl">💊 <%= Batch.active.count %> Batches</div>
+  <div class="bg-red-600 text-white p-6 rounded-xl shadow-2xl">🚨 <%= Alert.recent.count %> Alerts</div>
+  <div class="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-6 rounded-xl shadow-2xl">$<%= number_to_currency(revenue_today) %></div>
+</div>

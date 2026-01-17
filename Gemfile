@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby "3.2.3"
 
 gem "rails", "~> 8.1.1"
 gem "bootsnap", require: false
@@ -32,6 +32,9 @@ gem "sentry-rails"
 gem "lograge"
 
 group :development, :test do
-  gem "sqlite3", "1.7.3"
+  gem "sqlite3", "~> 2.0"
+
   gem "debug"
 end
+
+gem "playwright-ruby-client", "~> 1.57"
