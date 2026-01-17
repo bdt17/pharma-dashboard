@@ -1,46 +1,38 @@
 <div class="text-center mb-12">
-  <h1 class="text-5xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-    Pharma Transport Dashboard
-  </h1>
-  <p class="text-xl text-purple-200">Phase 14 LIVE - GPS + AI + Compliance</p>
+  <h1 class="text-5xl font-bold text-[#0984C0] mb-4">Pharma Transport Dashboard</h1>
+  <p class="text-xl text-gray-600 mb-12">Phase 14 LIVE - GPS + AI + Marketplace</p>
 </div>
 
-<div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-  <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 backdrop-blur-xl border border-purple-500/30 p-8 rounded-3xl hover:scale-105 transition-all duration-300">
-    <div class="text-4xl mb-2">🚛</div>
-    <h3 class="text-lg font-semibold text-purple-200 mb-2">Live Vehicles</h3>
-    <div class="text-4xl font-black text-purple-400"><%= @stats[:vehicles] %></div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+  <!-- Live Vehicles -->
+  <div class="bg-white p-8 rounded-2xl shadow-xl border border-[#AAA7B0]/30 hover:shadow-2xl transition-all duration-300">
+    <div class="text-4xl mb-4">🚛</div>
+    <h3 class="text-lg font-semibold text-[#565759] mb-2">Live Vehicles</h3>
+    <div class="text-4xl font-bold text-[#0984C0]">24</div>
   </div>
-  <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 backdrop-blur-xl border border-blue-500/30 p-8 rounded-3xl hover:scale-105 transition-all duration-300">
-    <div class="text-4xl mb-2">📦</div>
-    <h3 class="text-lg font-semibold text-blue-200 mb-2">Active Batches</h3>
-    <div class="text-4xl font-black text-blue-400"><%= @stats[:batches] %></div>
+  
+  <!-- Active Batches -->
+  <div class="bg-white p-8 rounded-2xl shadow-xl border border-[#AAA7B0]/30 hover:shadow-2xl transition-all duration-300">
+    <div class="text-4xl mb-4">📦</div>
+    <h3 class="text-lg font-semibold text-[#565759] mb-2">Active Batches</h3>
+    <div class="text-4xl font-bold text-[#0984C0]">127</div>
   </div>
-  <div class="bg-gradient-to-br from-red-500/20 to-red-600/20 backdrop-blur-xl border border-red-500/30 p-8 rounded-3xl hover:scale-105 transition-all duration-300">
-    <div class="text-4xl mb-2">🚨</div>
-    <h3 class="text-lg font-semibold text-red-200 mb-2">Alerts</h3>
-    <div class="text-4xl font-black text-red-400"><%= @stats[:alerts] %></div>
+  
+  <!-- Alerts -->
+  <div class="bg-white p-8 rounded-2xl shadow-xl border border-[#AAA7B0]/30 hover:shadow-2xl transition-all duration-300">
+    <div class="text-4xl mb-4">🚨</div>
+    <h3 class="text-lg font-semibold text-[#565759] mb-2">Alerts</h3>
+    <div class="text-4xl font-bold text-[#0984C0]">3</div>
   </div>
-  <div class="bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 backdrop-blur-xl border border-emerald-500/30 p-8 rounded-3xl hover:scale-105 transition-all duration-300">
-    <div class="text-4xl mb-2">💰</div>
-    <h3 class="text-lg font-semibold text-emerald-200 mb-2">Revenue</h3>
-    <div class="text-4xl font-black text-emerald-400">$<%= @stats[:revenue] %>K</div>
-  </div>
-</div>
-
-<div class="grid md:grid-cols-2 gap-8">
-  <div class="bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
-    <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="w-2 h-2 bg-green-400 rounded-full mr-3"></span>🚛 Live Vehicle Tracking</h2>
-    <%= bar_chart Vehicle.group(:status).count, colors: ["#8b5cf6", "#3b82f6", "#ef4444"] %>
-  </div>
-  <div class="bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl p-8">
-    <h2 class="text-2xl font-bold mb-6 flex items-center"><span class="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>📦 Batch Status</h2>
-    <%= pie_chart Batch.group(:status).count, donut: true, colors: ["#10b981", "#f59e0b", "#ef4444"] %>
+  
+  <!-- Revenue -->
+  <div class="bg-white p-8 rounded-2xl shadow-xl border border-[#AAA7B0]/30 hover:shadow-2xl transition-all duration-300">
+    <div class="text-4xl mb-4">💰</div>
+    <h3 class="text-lg font-semibold text-[#565759] mb-2">Revenue</h3>
+    <div class="text-4xl font-bold text-[#0984C0]">$12K</div>
   </div>
 </div>
 
-<div class="mt-12 grid md:grid-cols-3 gap-6">
-  <%= link_to "🚛 Vehicle Management", vehicles_path, class: "group bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-6 px-8 rounded-2xl text-xl shadow-2xl hover:shadow-purple-500/25 transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center space-x-3" %>
-  <%= link_to "📦 Batch Tracking", batches_path, class: "group bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-6 px-8 rounded-2xl text-xl shadow-2xl hover:shadow-blue-500/25 transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center space-x-3" %>
-  <%= link_to "🚨 Alert Center", alerts_path, class: "group bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 text-white font-bold py-6 px-8 rounded-2xl text-xl shadow-2xl hover:shadow-red-500/25 transform hover:-translate-y-2 transition-all duration-300 flex items-center justify-center space-x-3" %>
+<div class="text-center">
+  <a href="/vehicles" class="bg-[#0984C0] hover:bg-[#60BDD1] text-white font-bold py-4 px-8 rounded-2xl text-xl shadow-xl hover:shadow-2xl transition-all duration-300">🚛 View All Vehicles</a>
 </div>

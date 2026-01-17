@@ -1,10 +1,34 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Pharma Transport</title>
-  </head>
-  <body>
-    <h1>🚚 Pharma Transport Dashboard</h1>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+  <!-- PHARMA NAV (Blue #0984C0) -->
+  <nav class="bg-[#0984C0] shadow-lg">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <h1 class="text-white text-2xl font-bold">🩺 Pharma Transport</h1>
+        </div>
+        <div class="flex space-x-4 items-center">
+          <%= link_to "📊 Dashboard", root_path, class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
+          <%= link_to "🚛 Vehicles", "/vehicles", class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
+          <%= link_to "📦 Batches", "/batches", class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
+          <%= link_to "🚨 Alerts", "/alerts", class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
+          <%= link_to "💰 Revenue", "/revenue", class: "text-white hover:text-[#60BDD1] px-3 py-2 rounded font-medium" %>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
     <%= yield %>
-  </body>
+  </main>
+</body>
 </html>
