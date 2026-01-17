@@ -1,0 +1,46 @@
+nohup: ignoring input
+🩺 Testing Pharma Dashboard (https://pharma-dashboard-1-9xaz.onrender.com) - Sat Jan 17 12:39:43 AM MST 2026
+==================================================
+1. Root (/)
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>502</title>
+    <style>@font-face {
+  font-family: "Roobert";
+  font-weight: 500;
+  font-style: normal;
+2. /dashboard
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>502</title>
+    <style>@font-face {
+  font-family: "Roobert";
+  font-weight: 500;
+  font-style: normal;
+3. /pfizer
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>502</title>
+    <style>@font-face {
+  font-family: "Roobert";
+  font-weight: 500;
+  font-style: normal;
+4. POST /api/gps
+✅ GPS OK
+5. POST /api/waymo/123
+✅ Waymo OK
+6. POST /api/ai/predict-excursion
+✅ AI OK
+7. POST /api/marketplace/bid
+✅ Marketplace OK
+==================================================
+✅ Phase 14 APIs deploying to pharma-dashboard-1-9xaz.onrender.com
