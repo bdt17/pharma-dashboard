@@ -1,7 +1,1 @@
-class AlertsController < ApplicationController
-  def index
-  end
-
-  def show
-  end
-end
+class AlertsController < ApplicationController; def index; @title = 'Alerts'; end; end

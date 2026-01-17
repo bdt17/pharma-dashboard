@@ -1,10 +1,1 @@
-class DriversController < ApplicationController
-  def index
-  end
-
-  def show
-  end
-
-  def sessions
-  end
-end
+class DriversController < ApplicationController; def index; @title = 'Drivers'; end; end

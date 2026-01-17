@@ -4,7 +4,7 @@
 class CreateAuditLogs < ActiveRecord::Migration[8.1]
   def change
     create_table :audit_logs do |t|
-      t.references :user, null: false, foreign_key: true
+      # t.references :user, null: false, foreign_key: true
       t.references :batch, foreign_key: true
       t.string :event, null: false
       t.json :data                    # ✅ SQLite + PostgreSQL compatible
