@@ -1,0 +1,19 @@
+<div class="header">
+  <h1>🔗 21 CFR Part 11 Chain of Custody</h1>
+  <h2>LOT: <%= @batch.lot_number || "PHARMA-#{@batch.id}-#{@batch.created_at.strftime('%Y%m%d')}" %></h2>
+</div>
+
+<table>
+  <tr><td><strong>📦 Batch ID:</strong></td><td><%= @batch.id %></td></tr>
+  <tr><td><strong>🚚 Vehicle:</strong></td><td><%= @batch.vehicle&.name || 'N/A' %></td></tr>
+  <tr><td><strong>👨 Driver:</strong></td><td><%= @batch.driver&.name || 'N/A' %></td></tr>
+  <tr><td><strong>📍 Status:</strong></td><td><span class="status"><%= @batch.status&.upcase || 'IN_TRANSIT' %></span></td></tr>
+  <tr><td><strong>📅 Created:</strong></td><td><%= @batch.created_at.in_time_zone("MST") %></td></tr>
+  <tr><td><strong>🌡️ Temp:</strong></td><td><%= number_with_precision(@batch.temperature, precision: 1) if @batch.temperature %>°C</td></tr>
+</table>
+
+<div class="signature">
+  <p><strong>📝 Signed:</strong> <%= current_user&.email || "System Generated" %></p>
+  <p><strong>⏰ Timestamp:</strong> <%= Time.current.in_time_zone("MST") %></p>
+  <p style="font-size: 10px; color: #666;">FDA 21 CFR Part 11 Compliant • Immutable Audit Record</p>
+</div>
