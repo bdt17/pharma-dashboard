@@ -2,8 +2,8 @@
 port        ENV.fetch("PORT") { 3000 }
 environment ENV.fetch("RAILS_ENV") { "production" }
 
-# CRITICAL: Load Rails Rack app
-rackup      config.ru
+# FIXED: String quotes required
+rackup      "config.ru"
 preload_app!
 
 # Render logging
