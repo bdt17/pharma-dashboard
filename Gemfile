@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby "3.2.3"
 
 gem "rails", "~> 8.1.1"
 gem "bootsnap", require: false
@@ -38,3 +38,6 @@ group :development, :test do
 end
 
 gem "playwright-ruby-client", "~> 1.57"
+
+gem "wicked_pdf", "~> 2.8"
+gem "wkhtmltopdf-binary", "~> 0.12.6"
