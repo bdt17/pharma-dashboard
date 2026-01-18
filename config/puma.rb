@@ -1,14 +1,11 @@
-# Render Rails 8.1.2 + WickedPDF Production
+# Render Rails 8.1.2 Production - NO DefaultRackup
 port        ENV.fetch("PORT") { 3000 }
 environment ENV.fetch("RAILS_ENV") { "production" }
 
-# CRITICAL: Load Rails application
-rackup      DefaultRackup
-require     "./config/environment" 
-
+# Standard Rails app loading
 preload_app!
 
 # Render logging
-stdout_redirect "log/puma.stdout.log", "log/puma.stderr.log", true
+stdout_redirect '-', '-', true
 
 plugin :tmp_restart
