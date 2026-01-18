@@ -10,10 +10,18 @@ development:
   cache: *dev_primary
   cable: *dev_primary
 
+#test:
+ # primary: &test_primary
+  #  <<: *default
+   # database: pharma_dashboard_test
+  #cache: *test_primary
+ # cable: *test_primary
 test:
   primary: &test_primary
-    <<: *default
-    database: pharma_dashboard_test
+    adapter: sqlite3
+    database: db/test.sqlite3
+    pool: 5
+    timeout: 5000
   cache: *test_primary
   cable: *test_primary
 
