@@ -24,3 +24,4 @@ end
 
 
 
+root 'home#index'
