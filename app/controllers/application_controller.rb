@@ -4,7 +4,16 @@ class ApplicationController < ActionController::Base
   end
 
   def index
-    render plain: "Pharma Dashboard LIVE! 🚀 21/21 Tests PASSING", status: 200
+def index
+  render html: <<-HTML.html_safe
+    <div style="background: white; color: black; padding: 40px; max-width: 1200px; margin: 0 auto;">
+      <h1 style="color: #1e40af;">🚛 Pharma Transport Dashboard</h1>
+      <p><strong>Phase 14 LIVE</strong> - GPS + AI + Marketplace</p>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+        <div style="background: #eff6ff; padding: 20px; border-radius: 8px; text-align: center;">
+          <h2 style="color:
+
+
   end
 
   def dashboard
@@ -145,9 +154,5 @@ class ApplicationController < ActionController::Base
   def properties
     render plain: "Rails 8.1.2 Info ✓", status: 200
   end
-
-
-
-
 
 end
