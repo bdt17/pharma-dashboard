@@ -1,36 +1,133 @@
 #!/bin/bash
+# test_pharma.sh - COMPLETE Pharma Dashboard Production Test Suite
+# Tests ALL endpoints + FDA compliance + revenue features
+
 BASE_URL="https://pharma-dashboard-1-9xaz.onrender.com"
-echo "🩺 Testing Pharma Dashboard ($BASE_URL) - $(date)"
+TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S %Z')
+
+echo "🩺 COMPLETE Pharma Dashboard PRODUCTION TEST - $TIMESTAMP"
 echo "=================================================="
+echo "Target: $BASE_URL"
+echo ""
 
-echo "1. Root (/)"; 
-curl -s -w "HTTP: %{http_code}\n" "$BASE_URL/" | head -10 || echo "❌ Error"
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 
-echo "2. /dashboard"; 
-curl -s -w "HTTP: %{http_code}\n" "$BASE_URL/dashboard" | head -10 || echo "❌ 404"
+# Test counters
+TOTAL=0
+PASS=0
+FAIL=0
 
-echo "3. /pfizer"; 
-curl -s -w "HTTP: %{http_code}\n" "$BASE_URL/pfizer" | head -10 || echo "❌ 404"
+test_endpoint() {
+    local endpoint=$1
+    local method=${2:-GET}
+    local data=${3:-}
+    local expected=${4:-200}
+    local desc=${5:-$endpoint}
+    
+    TOTAL=$((TOTAL + 1))
+    echo -n "  ${TOTAL}. $desc ... "
+    
+    if [ "$method" = "POST" ]; then
+        response=$(curl -s -w "\n%{http_code}" -X POST \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/json" \
+            -d "$data" \
+            "$BASE_URL$endpoint")
+    else
+        response=$(curl -s -w "\n%{http_code}" "$BASE_URL$endpoint")
+    fi
+    
+    http_code=$(echo "$response" | tail -n1)
+    body=$(echo "$response" | sed '$d')
+    
+    if [ "$http_code" = "$expected" ]; then
+        echo -e "${GREEN}✅ PASS ($http_code ms)${NC}"
+        PASS=$((PASS + 1))
+    else
+        echo -e "${RED}❌ FAIL ($http_code) Body: $body${NC}"
+        FAIL=$((FAIL + 1))
+    fi
+}
 
-echo "4. POST /api/gps"; 
-curl -s -X POST "$BASE_URL/api/gps" \
-  -H "Content-Type: application/json" \
-  -d '{"lat":33.44,"lng":-112.07,"batch":"PFIZER-INSULIN"}' | jq . 2>/dev/null || echo "✅ GPS OK"
+test_pdf() {
+    local endpoint=$1
+    local desc=${2:-$endpoint}
+    
+    TOTAL=$((TOTAL + 1))
+    echo -n "  ${TOTAL}. $desc ... "
+    
+    response=$(curl -s -w "\n%{http_code}\n%{content_type}\n%{size_download}" \
+        -o /tmp/test.pdf \
+        "$BASE_URL$endpoint")
+    
+    http_code=$(echo "$response" | head -n1)
+    content_type=$(echo "$response" | head -n2 | tail -n1)
+    size=$(echo "$response" | tail -n1)
+    
+    if [ "$http_code" = "200" ] && [[ "$content_type" == "application/pdf"* ]]; then
+        echo -e "${GREEN}✅ PDF ($size bytes)${NC}"
+        PASS=$((PASS + 1))
+        rm -f /tmp/test.pdf
+    else
+        echo -e "${RED}❌ FAIL ($http_code) Type: $content_type Size: $size${NC}"
+        FAIL=$((FAIL + 1))
+    fi
+}
 
-echo "5. POST /api/waymo/123";
-curl -s -X POST "$BASE_URL/api/waymo/123" \
-  -H "Content-Type: application/json" \
-  -d '{"status":"enroute"}' | jq . 2>/dev/null || echo "✅ Waymo OK"
+echo "📊 WEB PAGES:"
+test_endpoint "/" "" "" "200" "Homepage"
+test_endpoint "/dashboard" "" "" "200" "Main Dashboard" 
+test_endpoint "/batches" "" "" "200" "Batches List"
+test_endpoint "/pfizer" "" "" "200" "Pfizer Dashboard"
+test_endpoint "/login" "" "" "200" "Login Page"
 
-echo "6. POST /api/ai/predict-excursion";
-curl -s -X POST "$BASE_URL/api/ai/predict-excursion" \
-  -H "Content-Type: application/json" \
-  -d '{"route_distance":450}' | jq . 2>/dev/null || echo "✅ AI OK"
+echo ""
+echo "🔗 FDA COMPLIANCE PDFs (Revenue Critical):"
+test_pdf "/batches/1/chain_of_custody" "Chain of Custody PDF"
+test_pdf "/batches/1/label" "Shipping Label PDF" 
+test_pdf "/batches/1/manifest" "Cargo Manifest PDF"
 
-echo "7. POST /api/marketplace/bid";
-curl -s -X POST "$BASE_URL/api/marketplace/bid" \
-  -H "Content-Type: application/json" \
-  -d '{"bid_amount":1250,"batch":"PFIZER-INSULIN"}' | jq . 2>/dev/null || echo "✅ Marketplace OK"
+echo ""
+echo "🚀 CORE APIs:"
+test_endpoint "/api/gps" POST '{"lat":33.4484,"lng":-112.0740,"speed":65}' "200" "GPS Tracking"
+test_endpoint "/api/waymo/123" POST '{"event":"arrived"}' "200" "Waymo Integration"
+test_endpoint "/api/ai/predict-excursion" POST '{"speed":75,"route":"I-10"}' "200" "AI Prediction"
+test_endpoint "/api/marketplace/bid" POST '{"batch_id":1,"bid":2500}' "200" "Marketplace Bid"
 
+echo ""
+echo "🔐 AUTH & SECURITY:"
+test_endpoint "/api/auth/signin" POST '{"email":"test@pharma.com","password":"test123"}' "200" "Devise Login"
+test_endpoint "/api/current_user" GET "" "200" "Current User (auth req)"
+
+echo ""
+echo "📈 ENTERPRISE FEATURES:"
+test_endpoint "/api/batches" GET "" "200" "Batch List"
+test_endpoint "/api/batches/1" GET "" "200" "Single Batch" 
+test_endpoint "/api/batches/stats" GET "" "200" "Batch Analytics"
+test_endpoint "/api/audits" GET "" "200" "FDA Audit Trail"
+test_endpoint "/api/compliance/report" GET "" "200" "Compliance Report"
+
+echo ""
+echo "⚡ PERFORMANCE:"
+test_endpoint "/up" "" "" "200" "Health Check (Render)"
+test_endpoint "/rails/info/properties" "" "" "200" "Rails Info"
+
+echo ""
 echo "=================================================="
-echo "✅ Phase 14 APIs deploying to pharma-dashboard-1-9xaz.onrender.com"
+echo "✅ RESULTS: $PASS/$TOTAL passed  ❌ $FAIL failed"
+echo "💰 REVENUE STATUS: $([ $PASS -eq $TOTAL ] && echo '🟢 LIVE - BILLING ENABLED' || echo '🔴 FIX REQUIRED')"
+echo ""
+echo "📋 MISSING IMPLEMENTATIONS DETECTED:"
+if [ $FAIL -gt 0 ]; then 
+    echo "  - Web pages returning 404 → Add Rails routes/controllers"
+    echo "  - PDF endpoints → Implement WickedPDF actions" 
+    echo "  - Auth endpoints → Configure Devise"
+    echo "  → See Rails logs on Render dashboard"
+fi
+
+echo "🚀 Next: Deploy missing controllers → re-run tests → FDA PRODUCTION!"
