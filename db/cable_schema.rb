@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.1].define(version: 2026_01_17_233010) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "alerts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -19,7 +22,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_17_233010) do
   end
 
   create_table "audit_logs", force: :cascade do |t|
-    t.integer "batch_id"
+    t.bigint "batch_id"
     t.datetime "created_at", null: false
     t.json "data"
     t.string "event", null: false
@@ -55,7 +58,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_17_233010) do
     t.datetime "recorded_at"
     t.float "speed"
     t.datetime "updated_at", null: false
-    t.integer "vehicle_id", null: false
+    t.bigint "vehicle_id", null: false
     t.index ["vehicle_id"], name: "index_location_points_on_vehicle_id"
   end
 
@@ -78,12 +81,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_17_233010) do
   end
 
   create_table "vehicles", force: :cascade do |t|
-    t.integer "batch_id"
+    t.boolean "active"
     t.datetime "created_at", null: false
-    t.float "heading"
-    t.float "lat"
-    t.float "lng"
-    t.float "speed"
+    t.float "current_latitude"
+    t.float "current_longitude"
+    t.string "identifier"
+    t.string "name"
     t.datetime "updated_at", null: false
   end
 

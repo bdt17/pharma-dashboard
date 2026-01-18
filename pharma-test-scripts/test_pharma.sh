@@ -2,7 +2,7 @@
 # test_pharma.sh - COMPLETE Pharma Dashboard Production Test Suite
 # Tests ALL endpoints + FDA compliance + revenue features
 
-BASE_URL="https://pharma-dashboard-1-9xaz.onrender.com"
+BASE_URL="https://pharma-dashboard-clean.onrender.com"
 TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S %Z')
 
 echo "🩺 COMPLETE Pharma Dashboard PRODUCTION TEST - $TIMESTAMP"
@@ -23,47 +23,37 @@ PASS=0
 FAIL=0
 
 test_endpoint() {
-    local endpoint=$1
-    local method=${2:-GET}
-    local data=${3:-}
-    local expected=${4:-200}
-    local desc=${5:-$endpoint}
-    
+    local endpoint=$1 method=${2:-GET} data=${3:-} expected=${4:-200} desc=${5:-$endpoint}
     TOTAL=$((TOTAL + 1))
     echo -n "  ${TOTAL}. $desc ... "
     
     if [ "$method" = "POST" ]; then
-        response=$(curl -s -w "\n%{http_code}" -X POST \
-            -H "Content-Type: application/json" \
-            -H "Accept: application/json" \
-            -d "$data" \
-            "$BASE_URL$endpoint")
+        response=$(curl -s -w "\n%{http_code}" --max-time 15 -X POST \
+            -H "Content-Type: application/json" -H "Accept: application/json" \
+            -d "$data" "$BASE_URL$endpoint")
     else
-        response=$(curl -s -w "\n%{http_code}" "$BASE_URL$endpoint")
+        response=$(curl -s -w "\n%{http_code}" --max-time 15 "$BASE_URL$endpoint")
     fi
     
     http_code=$(echo "$response" | tail -n1)
     body=$(echo "$response" | sed '$d')
     
     if [ "$http_code" = "$expected" ]; then
-        echo -e "${GREEN}✅ PASS ($http_code ms)${NC}"
+        echo -e "${GREEN}✅ PASS ($http_code)${NC}"
         PASS=$((PASS + 1))
     else
-        echo -e "${RED}❌ FAIL ($http_code) Body: $body${NC}"
+        echo -e "${RED}❌ FAIL ($http_code): $body${NC}"
         FAIL=$((FAIL + 1))
     fi
 }
 
 test_pdf() {
-    local endpoint=$1
-    local desc=${2:-$endpoint}
-    
+    local endpoint=$1 desc=${2:-$endpoint}
     TOTAL=$((TOTAL + 1))
     echo -n "  ${TOTAL}. $desc ... "
     
     response=$(curl -s -w "\n%{http_code}\n%{content_type}\n%{size_download}" \
-        -o /tmp/test.pdf \
-        "$BASE_URL$endpoint")
+        --max-time 15 -o /tmp/test.pdf "$BASE_URL$endpoint")
     
     http_code=$(echo "$response" | head -n1)
     content_type=$(echo "$response" | head -n2 | tail -n1)
@@ -120,14 +110,8 @@ test_endpoint "/rails/info/properties" "" "" "200" "Rails Info"
 echo ""
 echo "=================================================="
 echo "✅ RESULTS: $PASS/$TOTAL passed  ❌ $FAIL failed"
-echo "💰 REVENUE STATUS: $([ $PASS -eq $TOTAL ] && echo '🟢 LIVE - BILLING ENABLED' || echo '🔴 FIX REQUIRED')"
-echo ""
-echo "📋 MISSING IMPLEMENTATIONS DETECTED:"
-if [ $FAIL -gt 0 ]; then 
-    echo "  - Web pages returning 404 → Add Rails routes/controllers"
-    echo "  - PDF endpoints → Implement WickedPDF actions" 
-    echo "  - Auth endpoints → Configure Devise"
-    echo "  → See Rails logs on Render dashboard"
+if [ $PASS -eq $TOTAL ]; then
+    echo "💰 REVENUE STATUS: 🟢 FDA PRODUCTION LIVE!"
+else
+    echo "💰 REVENUE STATUS: 🔴 FIX REQUIRED"
 fi
-
-echo "🚀 Next: Deploy missing controllers → re-run tests → FDA PRODUCTION!"
