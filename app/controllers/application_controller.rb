@@ -5,11 +5,13 @@ class ApplicationController < ActionController::Base
 
   def index
 def index
-  render html: <<-HTML.html_safe
+  render html: <<~HTML.html_safe
     <div style="background: white; color: black; padding: 40px; max-width: 1200px; margin: 0 auto;">
       <h1 style="color: #1e40af;">🚛 Pharma Transport Dashboard</h1>
-      <p><strong>Phase 14 LIVE</strong> - GPS + AI + Marketplace</p>
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+      <p><strong>Phase 14 LIVE</strong> - GPS + AI + Marketplace</p>HTML
+  end
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">HTML
+  end
         <div style="background: #eff6ff; padding: 20px; border-radius: 8px; text-align: center;">
           <h2 style="color:
 
