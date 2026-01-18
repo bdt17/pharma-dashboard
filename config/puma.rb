@@ -1,13 +1,11 @@
-# Rails 8.1.2 + Render Production Puma Config
-require "./config/environment"  # Load Rails
-
+# Render Rails 8.1.2 Production Puma
 port        ENV.fetch("PORT") { 3000 }
 environment ENV.fetch("RAILS_ENV") { "production" }
 
-rackup      DefaultRackup         # REQUIRED: Load config.ru
-threads     1, 5
-
+# Load Rails AFTER credentials
 preload_app!
 
 # Render logging
-stdout_redirect "log/puma.stdout.log", "log/puma.stderr.log", true
+stdout_redirect '-', '-', true
+
+plugin :tmp_restart
