@@ -22,3 +22,4 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+# API controllers removed - Render deploy Sun Jan 18 04:20:36 PM MST 2026
