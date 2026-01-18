@@ -1,13 +1,13 @@
-max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
-min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
-threads min_threads_count, max_threads_count
+# Rails 8.1.2 + Render Production Puma Config
+require "./config/environment"  # Load Rails
 
 port        ENV.fetch("PORT") { 3000 }
 environment ENV.fetch("RAILS_ENV") { "production" }
 
-# DISABLE cluster mode for Render free tier
-# workers     ENV.fetch("WEB_CONCURRENCY") { 1 }
+rackup      DefaultRackup         # REQUIRED: Load config.ru
+threads     1, 5
 
 preload_app!
 
-plugin :tmp_restart
+# Render logging
+stdout_redirect "log/puma.stdout.log", "log/puma.stderr.log", true
