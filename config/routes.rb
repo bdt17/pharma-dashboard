@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  get "/up", to: "application#health"
-  # ... existing routes
+get "/up", to: -> (env) { [200, {}, ["ok"]] }
+
 end
