@@ -11,7 +11,7 @@ RUN apt-get update -qq && apt-get install -y \
 WORKDIR /rails
 COPY config config/
 COPY Gemfile Gemfile.lock ./
-RUN gem install bundler && bundle config set --local deployment 'true' && bundle install
+RUN gem install bundler && bundle install
 COPY . .
 EXPOSE $PORT
 CMD ["sh", "-c", "rm -f tmp/pids/server.pid && rails server -b 0.0.0.0 -p $PORT"]
