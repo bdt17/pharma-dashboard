@@ -14,7 +14,19 @@ test:
 production:
   <<: *default
   adapter: postgresql
+  encoding: unicode
   database: pharma_dashboard_prod
   username: <%= ENV['DATABASE_USERNAME'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
   host: <%= ENV['DATABASE_HOST'] %>
+  # Solid Stack - ALL use main production DB
+  primary: &production_primary
+    adapter: postgresql
+    encoding: unicode
+    database: pharma_dashboard_prod
+    username: <%= ENV['DATABASE_USERNAME'] %>
+    password: <%= ENV['DATABASE_PASSWORD'] %>
+    host: <%= ENV['DATABASE_HOST'] %>
+  cache: *production_primary
+  queue: *production_primary
+  cable: *production_primary
