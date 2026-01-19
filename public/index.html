@@ -1,1 +1,98 @@
-<!DOCTYPE html><html><head><title>Pharma Dashboard</title><meta name="viewport" content="width=device-width"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:system-ui;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;color:white;padding:2rem}.container{max-width:1200px;margin:0 auto}h1{font-size:clamp(2.5rem,8vw,5rem);text-align:center;margin-bottom:1rem;background:rgba(255,255,255,0.2);padding:1rem;border-radius:1rem}.subtitle{text-align:center;font-size:1.5rem;margin-bottom:3rem;opacity:0.9}.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-bottom:3rem}.metric{background:rgba(255,255,255,0.15);padding:2rem;border-radius:1.5rem;backdrop-filter:blur(20px);text-align:center;border:1px solid rgba(255,255,255,0.2)}.metric h2{font-size:1.3rem;margin-bottom:1rem;opacity:0.9}.metric .number{font-size:3.5rem;font-weight:900;margin-bottom:0.5rem}.cta{display:block;width:300px;margin:3rem auto 0;background:rgba(255,255,255,0.2);color:white;padding:1.2rem 2rem;text-decoration:none;border-radius:50px;font-weight:600;text-align:center}</style></head><body><div class="container"><h1>🚛 Pharma Transport Dashboard</h1><p class="subtitle">Phase 14 LIVE - GPS + AI + Marketplace</p><div class="metrics"><div class="metric"><h2>🗺️ Live Vehicles</h2><div class="number" style="color:#60a5fa">24</div></div><div class="metric"><h2>💊 Active Batches</h2><div class="number" style="color:#10b981">127</div></div><div class="metric"><h2>🚨 Alerts</h2><div class="number" style="color:#f59e0b">3</div></div><div class="metric"><h2>💰 Revenue</h2><div class="number" style="color:#8b5cf6">$12K</div></div></div><a href="https://www.pharmatransport.org" class="cta">🚀 Production Platform</a></div></body></html>
+<!DOCTYPE html>
+<html style="background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 60%, #1E1B4B 100%) !important; margin: 0 !important; padding: 0 !important; height: 100vh !important; overflow-x: hidden !important;">
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { 
+      all: revert !important; 
+      margin: 0 !important; 
+      padding: 0 !important; 
+      box-sizing: border-box !important; 
+    }
+    html, body { 
+      background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 60%, #1E1B4B 100%) !important;
+      color: #FFFFFF !important;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+      min-height: 100vh !important;
+      line-height: 1.6 !important;
+    }
+    a { color: #60BDD1 !important; text-decoration: none !important; }
+    .glass { 
+      background: rgba(255,255,255,0.06) !important; 
+      backdrop-filter: blur(25px) !important; 
+      border: 1px solid rgba(9,132,192,0.3) !important;
+      border-radius: 24px !important;
+    }
+    .glow { box-shadow: 0 25px 50px rgba(0,0,0,0.3), 0 0 30px rgba(9,132,192,0.4) !important; }
+    .primary-blue { color: #0984C0 !important; }
+    .silver-sand { color: #C0BEC6 !important; }
+    .metallic-silver { color: #AAA7B0 !important; }
+    .davy-grey { color: #565759 !important; }
+    .sea-serpent { color: #60BDD1 !important; }
+    .pure-white { color: #FFFFFF !important; }
+  </style>
+</head>
+<body>
+  <div style="padding: 2rem 2rem 0;">
+    <!-- HEADER - DEEP OCEAN BLUE #0984C0 -->
+    <div style="background: rgba(9,132,192,0.95) !important; border-radius: 24px; padding: 1.5rem 2rem; margin-bottom: 2rem; border: 2px solid #0984C0 !important; glow;">
+      <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+          <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #0984C0, #60BDD1) !important; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: 0 20px 40px rgba(9,132,192,0.6) !important;">
+            💉
+          </div>
+          <div>
+            <h1 style="font-size: 2.5rem; font-weight: 900; color: #FFFFFF !important; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Pharma Transport</h1>
+            <p class="silver-sand" style="font-size: 1rem; margin: 0; font-weight: 500;">Phase 14 LIVE • 24 GPS Vehicles • 127 Batches</p>
+          </div>
+        </div>
+        <a href="https://www.pharmatransport.org/" style="background: linear-gradient(90deg, #0984C0, #60BDD1) !important; color: #FFFFFF !important; padding: 1rem 2.5rem; border-radius: 16px; font-weight: 800; font-size: 1.1rem; box-shadow: 0 15px 35px rgba(9,132,192,0.6) !important; border: 2px solid #0984C0 !important;">
+          🚀 Production Platform
+        </a>
+      </div>
+    </div>
+
+    <!-- METRICS GRID - YOUR EXACT COLORS -->
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+        
+        <!-- VEHICLES - SEA SERPENT #60BDD1 -->
+        <div class="glass glow" style="padding: 3.5rem 2.5rem; text-align: center; border-color: rgba(96,189,209,0.5) !important;">
+          <div style="font-size: 4.5rem; margin-bottom: 1rem; color: #60BDD1 !important;">🚛</div>
+          <h3 class="silver-sand" style="font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Live Vehicles</h3>
+          <div style="font-size: 4.2rem; font-weight: 900; color: #60BDD1 !important; text-shadow: 0 0 30px rgba(96,189,209,0.8) !important;">24</div>
+          <p class="metallic-silver" style="font-size: 1.1rem;">GPS Tracked • Real-time</p>
+        </div>
+
+        <!-- REVENUE - GOLD + SILVER SAND #C0BEC6 -->
+        <div class="glass glow" style="padding: 3.5rem 2.5rem; text-align: center; background: rgba(255,213,0,0.08) !important; border-color: rgba(255,215,0,0.5) !important;">
+          <div style="font-size: 4.5rem; margin-bottom: 1rem;">💰</div>
+          <h3 class="silver-sand" style="font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Monthly Revenue</h3>
+          <div style="font-size: 4.2rem; font-weight: 900; color: #FFD700 !important; text-shadow: 0 0 30px rgba(255,215,0,0.8) !important;">$12K</div>
+          <p class="metallic-silver" style="font-size: 1.1rem; font-weight: 600;">Phase 14 Growth +18%</p>
+        </div>
+
+        <!-- BATCHES - DEEP OCEAN BLUE #0984C0 -->
+        <div class="glass glow" style="padding: 3.5rem 2.5rem; text-align: center; border-color: rgba(9,132,192,0.5) !important;">
+          <div style="font-size: 4.5rem; margin-bottom: 1rem;">📦</div>
+          <h3 class="silver-sand" style="font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Active Batches</h3>
+          <div style="font-size: 4.2rem; font-weight: 900; color: #0984C0 !important; text-shadow: 0 0 30px rgba(9,132,192,0.8) !important;">127</div>
+          <p class="metallic-silver" style="font-size: 1.1rem;">FDA Compliant • Temp Controlled</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER - EXACT COLORS -->
+    <div style="text-align: center; padding: 3rem 2rem; color: #C0BEC6 !important; font-size: 1rem; max-width: 1200px; margin: 4rem auto 2rem; background: rgba(15,23,42,0.6) !important; border-radius: 20px; border: 1px solid rgba(9,132,192,0.3) !important;">
+      <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+        <span>🛰️ Solid Stack Rails 8.1</span>
+        <span class="metallic-silver">🔒 FDA Compliant</span>
+        <span class="sea-serpent">📡 24/7 GPS Tracking</span>
+        <span>🤖 AI Anomaly Detection</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
