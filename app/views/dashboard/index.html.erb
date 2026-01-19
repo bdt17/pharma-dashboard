@@ -6,37 +6,72 @@
 <style>
 *,*::before,*::after{all:revert!important;box-sizing:border-box!important;margin:0!important;padding:0!important}
 html,body{color:#FFFFFF!important;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;min-height:100vh!important;overflow-x:hidden!important;line-height:1.6!important}
+
 .glass{background:rgba(255,255,255,0.12)!important;backdrop-filter:blur(30px) saturate(160%)!important;border:1px solid rgba(9,132,192,0.4)!important;border-radius:28px!important;transition:all 0.4s cubic-bezier(0.22,1,0.36,1)!important;padding:2.5rem!important;position:relative!important;overflow:hidden!important}
 .glass::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#0984C0,#60BDD1,#0984C0)!important}
 .glass:hover{transform:translateY(-12px) scale(1.03)!important;box-shadow:0 35px 80px rgba(9,132,192,0.4),0 0 40px rgba(9,132,192,0.6)!important;border-color:rgba(9,132,192,0.8)!important}
+
 .pharma-logo{color:transparent!important;background:linear-gradient(135deg,#0984C0 0%,#60BDD1 50%,#0984C0 100%)!important;background-clip:text!important;-webkit-background-clip:text!important;text-shadow:0 0 30px rgba(9,132,192,1)!important;font-weight:900!important;font-size:2.6rem!important;margin:0!important;animation:glow 3s ease-in-out infinite alternate!important}
 @keyframes glow{0%{text-shadow:0 0 20px rgba(9,132,192,0.8)}100%{text-shadow:0 0 40px rgba(9,132,192,1),0 0 60px rgba(9,132,192,0.6)}}
-.metric-icon{font-size:4.2rem!important;margin-bottom:1rem!important;filter:drop-shadow(0 0 15px currentColor)!important;animation:float 6s ease-in-out infinite!important}
+
+.metric-card{position:relative;padding:2.6rem 2.4rem;border-radius:24px;background:linear-gradient(135deg,rgba(15,23,42,0.9),rgba(15,23,42,0.6))!important;border:1px solid rgba(148,163,184,0.35)!important;box-shadow:0 18px 40px rgba(15,23,42,0.78)!important;overflow:hidden!important;transition:all 0.3s cubic-bezier(0.22,0.61,0.36,1)!important}
+.metric-card::before{content:"";position:absolute;inset:-40%;background:radial-gradient(circle at 0% 0%,rgba(96,189,209,0.22),transparent 55%);opacity:0;transform:translate3d(-10%,-10%,0);transition:opacity 0.26s ease-out,transform 0.26s ease-out}
+.metric-card:hover{transform:translateY(-8px)!important;border-color:rgba(96,189,209,0.8)!important;box-shadow:0 28px 70px rgba(15,23,42,0.9),0 0 40px rgba(9,132,192,0.65)!important}
+.metric-card:hover::before{opacity:1!important;transform:translate3d(0,0,0)!important}
+
+.metric-icon{font-size:3.9rem!important;margin-bottom:1rem!important;filter:drop-shadow(0 0 14px rgba(9,132,192,0.75))!important;transition:transform 0.26s ease-out!important;animation:float 6s ease-in-out infinite!important}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.metric-number{font-size:4.4rem!important;font-weight:900!important;background:linear-gradient(135deg,currentColor 0%,#FFFFFF 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;text-shadow:none!important;animation:pulse 2s ease-in-out infinite!important}
+.metric-card:hover .metric-icon{transform:translateY(-4px) scale(1.04)!important}
+
+.metric-number{font-size:3.8rem!important;font-weight:900!important;background:linear-gradient(135deg,currentColor 0%,#FFFFFF 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;text-shadow:none!important;animation:pulse 2s ease-in-out infinite!important}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:0.95}}
+
 .metric-label{color:#E2E8F0!important;font-size:1.15rem!important;font-weight:600!important;text-transform:uppercase!important;letter-spacing:2px!important;margin-bottom:0.75rem!important}
 .metric-subtext{color:#A7A7B0!important;font-size:1rem!important;font-weight:500!important}
+
+.cta-button{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;padding:1.1rem 2.8rem;border-radius:999px;background:radial-gradient(circle at 0% 0%,#60BDD1,#0984C0 40%,#0F172A 100%)!important;color:#ffffff!important;font-weight:800!important;font-size:1.05rem!important;text-decoration:none!important;letter-spacing:0.06em!important;text-transform:uppercase!important;overflow:hidden!important;border:1px solid rgba(255,255,255,0.18)!important;box-shadow:0 18px 40px rgba(9,132,192,0.65),0 0 22px rgba(9,132,192,0.9)!important;transform:translateY(0)!important;transition:transform 0.16s cubic-bezier(0.22,0.61,0.36,1),box-shadow 0.16s ease-out,filter 0.16s ease-out!important}
+.cta-button .cta-bg{position:absolute;inset:0;background:radial-gradient(circle at 0% 0%,#ffffff44,transparent 55%);opacity:0;transform:translate3d(-40%,-40%,0);transition:opacity 0.22s ease-out,transform 0.22s ease-out!important}
+.cta-button:hover{transform:translateY(-3px) scale(1.02)!important;box-shadow:0 24px 55px rgba(9,132,192,0.8),0 0 40px rgba(96,189,209,0.9)!important;filter:saturate(1.15)!important}
+.cta-button:hover .cta-bg{opacity:1!important;transform:translate3d(-10%,-15%,0)!important}
+.cta-button:active{transform:translateY(1px) scale(0.99)!important;box-shadow:0 10px 25px rgba(9,132,192,0.7),0 0 20px rgba(96,189,209,0.7)!important;filter:saturate(1)!important}
+
+.fade-in-up{opacity:0!important;transform:translateY(18px)!important;animation:fadeUp 480ms ease-out forwards!important}
+.fade-in-up.delay-1{animation-delay:0.06s!important}
+.fade-in-up.delay-2{animation-delay:0.14s!important}
+.fade-in-up.delay-3{animation-delay:0.22s!important}
+@keyframes fadeUp{to{opacity:1!important;transform:translateY(0)!important}}
+
+.metric-card--vehicles{color:#60BDD1!important}
+.metric-card--revenue{color:#FFD700!important;background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,193,7,0.15))!important;border:3px solid #FFD700!important}
+.metric-card--batches{color:#0984C0!important}
 </style>
 </head>
 <body>
 <div style="padding:2rem;max-width:1400px;margin:0 auto">
-<div class="glass" style="margin-bottom:3rem;background:linear-gradient(135deg,rgba(9,132,192,0.95),rgba(96,189,209,0.9))!important;border:3px solid #0984C0!important">
+<!-- HEADER -->
+<div class="glass fade-in-up" style="margin-bottom:3rem;background:linear-gradient(135deg,rgba(9,132,192,0.95),rgba(96,189,209,0.9))!important;border:3px solid #0984C0!important">
 <div style="display:flex;flex-direction:column;gap:1.5rem;align-items:center;text-align:center;position:relative;z-index:2">
 <div style="display:flex;align-items:center;gap:1.5rem">
 <div style="width:68px;height:68px;background:linear-gradient(135deg,#0984C0,#60BDD1)!important;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;box-shadow:0 20px 40px rgba(9,132,192,0.8)!important;animation:spin-glow 4s linear infinite!important">💉</div>
 <div><h1 class="pharma-logo">Pharma Transport</h1><p style="color:#E2E8F0!important;font-size:1.15rem;margin:0.5rem 0 0;font-weight:500!important">Phase 14 LIVE • 24 GPS Vehicles • 127 Batches</p></div></div>
-<a href="https://www.pharmatransport.org/" style="background:linear-gradient(135deg,#0984C0,#60BDD1)!important;color:#FFFFFF!important;padding:1.2rem 3rem;border-radius:20px;font-weight:900!important;font-size:1.15rem!important;box-shadow:0 25px 50px rgba(9,132,192,0.7)!important;animation:pulse-glow 3s ease-in-out infinite alternate!important;text-decoration:none!important;display:inline-block!important">🛠️ Production Platform</a></div></div>
+<a href="https://www.pharmatransport.org/" class="cta-button">
+<span class="cta-bg"></span>
+<span class="cta-label">🛠️ Production Platform</span>
+</a></div></div>
 
+<!-- METRICS -->
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2.5rem">
-<div class="glass" style="border-color:rgba(96,189,209,0.6)!important"><div class="metric-icon" style="color:#60BDD1!important">🚛</div><h3 class="metric-label">Live Vehicles</h3><div class="metric-number" style="color:#60BDD1!important">24</div><p class="metric-subtext">GPS Tracked • Real-time</p></div>
-<div class="glass" style="background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,193,7,0.15))!important;border:3px solid #FFD700!important"><div class="metric-icon" style="color:#FFD700!important">💰</div><h3 class="metric-label">Monthly Revenue</h3><div class="metric-number" style="color:#FFD700!important">$12K</div><p class="metric-subtext">Phase 14 Growth +18%</p></div>
-<div class="glass" style="border-color:rgba(9,132,192,0.6)!important"><div class="metric-icon" style="color:#0984C0!important">📦</div><h3 class="metric-label">Active Batches</h3><div class="metric-number" style="color:#0984C0!important">127</div><p class="metric-subtext">FDA Compliant • Temp Controlled</p></div>
+<div class="metric-card metric-card--vehicles fade-in-up delay-1"><div class="metric-icon">🚛</div><h3 class="metric-label">Live Vehicles</h3><div class="metric-number">24</div><p class="metric-subtext">GPS Tracked • Real-time</p></div>
+<div class="metric-card metric-card--revenue fade-in-up delay-2"><div class="metric-icon">💰</div><h3 class="metric-label">Monthly Revenue</h3><div class="metric-number">$12K</div><p class="metric-subtext">Phase 14 Growth +18%</p></div>
+<div class="metric-card metric-card--batches fade-in-up delay-3"><div class="metric-icon">📦</div><h3 class="metric-label">Active Batches</h3><div class="metric-number">127</div><p class="metric-subtext">FDA Compliant • Temp Controlled</p></div>
 </div>
 
-<div class="glass" style="margin-top:3rem;text-align:center;background:rgba(255,255,255,0.06)!important">
+<!-- FOOTER -->
+<div class="glass fade-in-up" style="margin-top:3rem;text-align:center;background:rgba(255,255,255,0.06)!important">
 <div style="display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;font-size:1.1rem">
 <span style="color:#E2E8F0!important">⚙️ Solid Stack Rails 8.1</span><span style="color:#60BDD1!important;font-weight:700!important">🔒 FDA Compliant</span><span style="color:#0984C0!important;font-weight:700!important">📡 24/7 GPS Tracking</span><span style="color:#FFD700!important;font-weight:700!important">🤖 AI Anomaly Detection</span></div></div>
 </div>
+
+<style>@keyframes spin-glow{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}@keyframes pulse-glow{0%{box-shadow:0 25px 50px rgba(9,132,192,0.7)}100%{box-shadow:0 25px 50px rgba(9,132,192,0.9),0 0 30px rgba(96,189,209,0.8)}}</style>
 </body>
 </html>
