@@ -17,5 +17,6 @@ Rails.application.configure do
   
   # Don't generate system test files
   config.active_support.test_order = :random
-end
+
 config.assets.compile = false
+end
