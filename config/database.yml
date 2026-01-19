@@ -1,30 +1,20 @@
-# config/database.yml
 default: &default
-  adapter: postgresql
-  encoding: unicode
+  adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
 
 development:
   <<: *default
-  database: pharmatransport_db_development
+  database: db/development.sqlite3
 
 test:
   <<: *default
-  database: pharmatransport_db_test
+  database: db/test.sqlite3
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-
-# Solid Stack (Phase 14 GPS WebSockets + Cache)
-cable:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-
-cache:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-
-queue:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  adapter: postgresql
+  database: pharmatransport_production
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  host: <%= ENV['DB_HOST'] %>
