@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem "rails", "~> 8.1.1"
 gem "bootsnap", require: false
 gem "puma"
-gem "pg", "~> 1.1"  # SINGLE pg declaration
+gem "pg", "~> 1.6"  # SINGLE pg declaration
 
 # Auth + Security
 gem "devise"
@@ -21,9 +21,6 @@ gem "groupdate"
 # Media
 gem "image_processing"
 
-# Rails 8.1 Solid Stack
-gem "solid_cache"
-gem "solid_queue"
 
 # Compliance + Monitoring
 gem "audited"
