@@ -1,8 +1,21 @@
+# config/database.yml
 default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+development:
+  <<: *default
+  database: pharmatransport_db_development
+
+test:
+  <<: *default
+  database: pharmatransport_db_test
+
 production:
   <<: *default
-  database: <%= ENV['DATABASE_URL']&.split('/')&.last || 'pharma_production' %>
+  url: <%= ENV['DATABASE_URL'] %>
+
+cable:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
