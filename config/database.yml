@@ -1,45 +1,20 @@
 default: &default
-  adapter: postgresql
-  encoding: unicode
+  adapter: sqlite3
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  port: 5432
+  timeout: 5000
 
 development:
   <<: *default
-  database: pharmatransport_development
-  username: postgres
-  password: <%= ENV['DB_PASSWORD'] %>
+  database: db/development.sqlite3
 
 test:
   <<: *default
-  database: pharmatransport_test
-  username: postgres
-  password: <%= ENV['DB_PASSWORD'] %>
+  database: db/test.sqlite3
 
 production:
   <<: *default
-  database: <%= ENV['DATABASE_URL']&.split('?')&.first&.split('/')&.last || 'pharmatransport_production' %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
-
-cable:
-  <<: *default
-  database: <%= ENV['DATABASE_URL']&.split('?')&.first&.split('/')&.last || 'pharmatransport_cable' %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
-
-cache:
-  <<: *default
-  database: <%= ENV['DATABASE_URL']&.split('?')&.first&.split('/')&.last || 'pharmatransport_cache' %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
-
-queue:
-  <<: *default
-  database: <%= ENV['DATABASE_URL']&.split('?')&.first&.split('/')&.last || 'pharmatransport_queue' %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
+  adapter: postgresql
+  database: pharma_dashboard_prod
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
