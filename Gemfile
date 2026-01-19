@@ -24,7 +24,6 @@ gem "image_processing"
 # Rails 8.1 Solid Stack
 gem "solid_cache"
 gem "solid_queue"
-gem "solid_cable"
 
 # Compliance + Monitoring
 gem "audited"
