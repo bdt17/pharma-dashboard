@@ -1,5 +1,6 @@
 class GpsController < ApplicationController
   layout false
+  
   def dashboard
     @vehicles = [
       OpenStruct.new(identifier: 'PT-001', lat: 33.4484, lng: -112.0740, status: 'Active'),

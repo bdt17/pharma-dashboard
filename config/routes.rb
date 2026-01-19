@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  root "dashboard#index"
-end
+  root "gps#dashboard"
   get "/gps", to: "gps#dashboard"
+end
