@@ -5,99 +5,64 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pharma Transport Dashboard</title>
   <style>
-    *, *::before, *::after { 
-      all: revert !important; 
-      box-sizing: border-box !important; 
-      margin: 0 !important; 
-      padding: 0 !important; 
-    }
-    html, body { 
-      background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 60%, #1E1B4B 100%) !important;
-      color: #FFFFFF !important;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-      min-height: 100vh !important;
-      line-height: 1.6 !important;
-      overflow-x: hidden !important;
-    }
-    
-    .glass {
-      background: rgba(255,255,255,0.08) !important;
-      backdrop-filter: blur(20px) !important;
-      border: 1px solid rgba(9,132,192,0.3) !important;
-      border-radius: 20px !important;
-      transition: all 0.3s ease !important;
-      padding: 2rem !important;
-    }
-    .glass:hover { 
-      transform: translateY(-6px) !important; 
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(9,132,192,0.4) !important;
-    }
-    
-    .pharma-logo { color: #0984C0 !important; font-weight: 900 !important; text-shadow: 0 0 15px rgba(9,132,192,0.7) !important; }
-    .metric-icon { font-size: 3.8rem !important; margin-bottom: 0.75rem !important; }
-    .metric-number { font-size: 4rem !important; font-weight: 900 !important; text-shadow: 0 0 20px currentColor !important; }
-    .metric-label { color: #C0BEC6 !important; font-size: 1.1rem !important; font-weight: 500 !important; text-transform: uppercase; letter-spacing: 1px !important; margin-bottom: 0.5rem !important; }
-    .metric-subtext { color: #AAA7B0 !important; font-size: 0.95rem !important; }
+    *,*::before,*::after{all:revert!important;box-sizing:border-box!important;margin:0!important;padding:0!important}
+    html,body{background:linear-gradient(135deg,#1E3A8A 0%,#0F172A 60%,#1E1B4B 100%)!important;color:#FFFFFF!important;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;min-height:100vh!important;line-height:1.6!important;overflow-x:hidden!important}
+    .glass{background:rgba(255,255,255,0.08)!important;backdrop-filter:blur(20px)!important;border:1px solid rgba(9,132,192,0.3)!important;border-radius:20px!important;transition:all 0.3s ease!important;padding:2rem!important}
+    .glass:hover{transform:translateY(-6px)!important;box-shadow:0 20px 40px rgba(0,0,0,0.4),0 0 20px rgba(9,132,192,0.4)!important}
+    .pharma-logo{color:#0984C0!important;font-weight:900!important;text-shadow:0 0 15px rgba(9,132,192,0.7)!important}
+    .metric-icon{font-size:3.8rem!important;margin-bottom:0.75rem!important}
+    .metric-number{font-size:4rem!important;font-weight:900!important;text-shadow:0 0 20px currentColor!important}
+    .metric-label{color:#C0BEC6!important;font-size:1.1rem!important;font-weight:500!important;text-transform:uppercase;letter-spacing:1px!important;margin-bottom:0.5rem!important}
+    .metric-subtext{color:#AAA7B0!important;font-size:0.95rem!important}
   </style>
 </head>
 <body>
-  <div style="padding: 1.5rem; max-width: 1200px; margin: 0 auto;">
-    
-    <!-- HEADER - EXACT COPY -->
-    <div class="glass" style="margin-bottom: 2.5rem; background: rgba(9,132,192,0.95) !important; border: 2px solid #0984C0 !important;">
-      <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center; text-align: center;">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-          <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #0984C0, #60BDD1) !important; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">
-            💉
-          </div>
-          <div>
-            <h1 class="pharma-logo" style="font-size: 2.4rem; margin: 0;">Pharma Transport</h1>
-            <p style="color: #C0BEC6 !important; font-size: 1rem; margin: 0.25rem 0 0;">Phase 14 LIVE • 24 GPS Vehicles • 127 Batches</p>
-          </div>
+<div style="padding:1.5rem;max-width:1200px;margin:0 auto">
+  <!-- HEADER EXACT -->
+  <div class="glass" style="margin-bottom:2.5rem;background:rgba(9,132,192,0.95)!important;border:2px solid #0984C0!important">
+    <div style="display:flex;flex-direction:column;gap:1rem;align-items:center;text-align:center">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <div style="width:56px;height:56px;background:linear-gradient(135deg,#0984C0,#60BDD1)!important;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem">💉</div>
+        <div>
+          <h1 class="pharma-logo" style="font-size:2.4rem;margin:0">Pharma Transport</h1>
+          <p style="color:#C0BEC6!important;font-size:1rem;margin:0.25rem 0 0">Phase 14 LIVE • 24 GPS Vehicles • 127 Batches</p>
         </div>
-        <a href="https://www.pharmatransport.org/" style="background: linear-gradient(135deg, #0984C0, #60BDD1) !important; color: #FFFFFF !important; padding: 0.9rem 2rem; border-radius: 14px; font-weight: 800; font-size: 1rem; box-shadow: 0 12px 25px rgba(9,132,192,0.5) !important;">
-          🛠️ Production Platform
-        </a>
       </div>
-    </div>
-
-    <!-- 3 METRICS - EXACT ORDER -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.75rem;">
-      
-      <!-- LIVE VEHICLES -->
-      <div class="glass" style="border-color: rgba(96,189,209,0.5) !important; text-align: center;">
-        <div class="metric-icon" style="color: #60BDD1 !important;">🚛</div>
-        <h3 class="metric-label">Live Vehicles</h3>
-        <div class="metric-number" style="color: #60BDD1 !important;">24</div>
-        <p class="metric-subtext">GPS Tracked • Real-time</p>
-      </div>
-
-      <!-- REVENUE -->
-      <div class="glass" style="background: rgba(255,215,0,0.15) !important; border: 2px solid #FFD700 !important; text-align: center;">
-        <div class="metric-icon">💰</div>
-        <h3 class="metric-label">Monthly Revenue</h3>
-        <div class="metric-number" style="color: #FFD700 !important;">$12K</div>
-        <p class="metric-subtext">Phase 14 Growth +18%</p>
-      </div>
-
-      <!-- BATCHES -->
-      <div class="glass" style="border-color: rgba(9,132,192,0.5) !important; text-align: center;">
-        <div class="metric-icon">📦</div>
-        <h3 class="metric-label">Active Batches</h3>
-        <div class="metric-number" style="color: #0984C0 !important;">127</div>
-        <p class="metric-subtext">FDA Compliant • Temp Controlled</p>
-      </div>
-    </div>
-
-    <!-- FOOTER - EXACT COPY -->
-    <div class="glass" style="margin-top: 2.5rem; text-align: center;">
-      <div style="display: flex; justify-content: center; gap: 1.75rem; flex-wrap: wrap;">
-        <span style="color: #C0BEC6 !important; font-size: 1rem;">⚙️ Solid Stack Rails 8.1</span>
-        <span style="color: #60BDD1 !important; font-weight: 600;">🔒 FDA Compliant</span>
-        <span style="color: #0984C0 !important; font-weight: 600;">📡 24/7 GPS Tracking</span>
-        <span style="color: #FFD700 !important; font-weight: 600;">🤖 AI Anomaly Detection</span>
-      </div>
+      <a href="https://www.pharmatransport.org/" style="background:linear-gradient(135deg,#0984C0,#60BDD1)!important;color:#FFFFFF!important;padding:0.9rem 2rem;border-radius:14px;font-weight:800;font-size:1rem;box-shadow:0 12px 25px rgba(9,132,192,0.5)!important">🛠️ Production Platform</a>
     </div>
   </div>
+
+  <!-- METRICS EXACT ORDER -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.75rem">
+    <div class="glass" style="border-color:rgba(96,189,209,0.5)!important;text-align:center">
+      <div class="metric-icon" style="color:#60BDD1!important">🚛</div>
+      <h3 class="metric-label">Live Vehicles</h3>
+      <div class="metric-number" style="color:#60BDD1!important">24</div>
+      <p class="metric-subtext">GPS Tracked • Real-time</p>
+    </div>
+    <div class="glass" style="background:rgba(255,215,0,0.15)!important;border:2px solid #FFD700!important;text-align:center">
+      <div class="metric-icon">💰</div>
+      <h3 class="metric-label">Monthly Revenue</h3>
+      <div class="metric-number" style="color:#FFD700!important">$12K</div>
+      <p class="metric-subtext">Phase 14 Growth +18%</p>
+    </div>
+    <div class="glass" style="border-color:rgba(9,132,192,0.5)!important;text-align:center">
+      <div class="metric-icon">📦</div>
+      <h3 class="metric-label">Active Batches</h3>
+      <div class="metric-number" style="color:#0984C0!important">127</div>
+      <p class="metric-subtext">FDA Compliant • Temp Controlled</p>
+    </div>
+  </div>
+
+  <!-- FOOTER EXACT -->
+  <div class="glass" style="margin-top:2.5rem;text-align:center">
+    <div style="display:flex;justify-content:center;gap:1.75rem;flex-wrap:wrap">
+      <span style="color:#C0BEC6!important;font-size:1rem">⚙️ Solid Stack Rails 8.1</span>
+      <span style="color:#60BDD1!important;font-weight:600">🔒 FDA Compliant</span>
+      <span style="color:#0984C0!important;font-weight:600">📡 24/7 GPS Tracking</span>
+      <span style="color:#FFD700!important;font-weight:600">🤖 AI Anomaly Detection</span>
+    </div>
+  </div>
+</div>
 </body>
 </html>
