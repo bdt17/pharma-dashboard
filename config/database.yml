@@ -16,6 +16,15 @@ production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
 
+# Solid Stack (Phase 14 GPS WebSockets + Cache)
 cable:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+
+cache:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
+
+queue:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
