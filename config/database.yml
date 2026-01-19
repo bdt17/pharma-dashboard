@@ -3,35 +3,6 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-development:
-  primary: &dev_primary
-    <<: *default
-    database: pharma_dashboard_development
-  cache: *dev_primary
-  cable: *dev_primary
-
-#test:
- # primary: &test_primary
-  #  <<: *default
-   # database: pharma_dashboard_test
-  #cache: *test_primary
- # cable: *test_primary
-test:
-  primary: &test_primary
-    adapter: sqlite3
-    database: db/test.sqlite3
-    pool: 5
-    timeout: 5000
-  cache: *test_primary
-  cable: *test_primary
-
 production:
-  primary:
-    <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
-  cache:
-    <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
-  cable:
-    <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
+  <<: *default
+  database: <%= ENV['DATABASE_URL']&.split('/')&.last || 'pharma_production' %>
