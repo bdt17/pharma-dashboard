@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; background: #FFFFFF; min-height: 100vh; }
+    .container { max-width: 1600px; margin: 0 auto; padding: 40px; }
+    .header { text-align: center; background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%); color: white; padding: 60px 40px; border-radius: 20px; margin-bottom: 40px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin-bottom: 40px; }
+    .widget { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid #C0BEC6; }
+    .metric { font-size: 72px; font-weight: 900; color: #0984C0; }
+    #gps-map { height: 700px; border-radius: 20px; border: 3px solid #0984C0; box-shadow: 0 20px 40px rgba(9,132,192,0.3); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 style="font-size: 64px; font-weight: 800;">🚛 PHARMA TRANSPORT 💉📍</h1>
+      <p style="font-size: 28px;">Phase 15 LIVE - GPS Tracking</p>
+    </div>
+
+    <div class="stats">
+      <div class="widget">
+        <div style="font-size: 24px; color: #565759; margin-bottom: 20px;">GPS Vehicles</div>
+        <div class="metric"><%= @trucks.count %></div>
+        <div style="font-size: 18px; color: #565759;">Live GPS • Real-time tracking</div>
+      </div>
+      <div class="widget">
+        <div style="font-size: 24px; color: #565759; margin-bottom: 20px;">Batches</div>
+        <div class="metric">127</div>
+        <div style="font-size: 18px; color: #565759;">FDA Compliant • Temp Controlled</div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <h3 style="font-size: 32px; color: #0984C0; margin-bottom: 20px;">🗺️ LIVE GPS MAP - <%= @trucks.count %> Trucks</h3>
+      <div id="gps-map"></div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const trucks = <%= raw @trucks.to_json %>;
+    const map = L.map('gps-map').setView([33.4484, -112.0740], 11);
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    trucks.forEach(truck => {
+      L.marker([truck.lat, truck.lng])
+        .addTo(map)
+        .bindPopup(`
+          <b>Truck #${truck.id}</b><br>
+          📍 GPS: ${truck.lat.toFixed(4)}, ${truck.lng.toFixed(4)}<br>
+          🌡️ Temp: ${truck.temp}°C ✓<br>
+          ⏱️ ETA: ${truck.eta}
+        `);
+    });
+    
+    map.fitBounds(trucks.map(t => [t.lat, t.lng]));
+  </script>
+</body>
+</html>
