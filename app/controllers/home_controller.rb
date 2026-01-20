@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
   def index
-    render plain: "PHARMA DASHBOARD LIVE 🚛💉📍 Phase 14 - 24 GPS Trucks - 127 Batches"
+    render plain: "PHARMA DASHBOARD LIVE"
   end
+end
