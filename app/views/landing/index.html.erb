@@ -1,61 +1,46 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
-  <!-- HEADER -->
-  <div class="container mx-auto px-6 py-12 text-center">
-    <div class="inline-flex items-center bg-white/10 backdrop-blur-xl px-6 py-3 rounded-full mb-8">
-      <span class="text-yellow-400 text-lg font-bold">PHASE 14 LIVE</span>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+</head>
+<body class="bg-gray-900 text-white">
+  <div class="max-w-6xl mx-auto p-8">
+    <h1 class="text-5xl font-bold mb-12 text-yellow-400">💉 Pharma Transport</h1>
+    <p class="text-2xl mb-16">Phase 14 LIVE • 24 GPS Vehicles • 127 Batches</p>
+    
+    <div class="grid md:grid-cols-3 gap-12 mb-16">
+      <div class="bg-blue-600 p-12 rounded-2xl text-center">
+        <div class="text-6xl mb-6">🚛</div>
+        <div class="text-4xl font-bold mb-4">24</div>
+        <p class="text-xl">Live Vehicles<br>GPS Tracked • Real-time</p>
+      </div>
+      
+      <div class="bg-emerald-600 p-12 rounded-2xl text-center">
+        <div class="text-6xl mb-6">📦</div>
+        <div class="text-4xl font-bold mb-4">127</div>
+        <p class="text-xl">Active Batches<br>FDA Compliant</p>
+      </div>
+      
+      <div class="bg-yellow-500 p-12 rounded-2xl text-center">
+        <div class="text-6xl mb-6">💰</div>
+        <div class="text-4xl font-bold mb-4">$12K</div>
+        <p class="text-xl">Monthly Revenue<br>Phase 14 Growth +18%</p>
+      </div>
     </div>
     
-    <h1 class="text-6xl md:text-7xl font-black mb-6 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent drop-shadow-2xl">
-      💉 Pharma Transport
-    </h1>
+    <div class="text-center">
+      <a href="/gps" class="bg-blue-600 hover:bg-blue-700 text-white px-12 py-6 rounded-2xl text-2xl font-bold inline-block">
+        🚚 LIVE GPS DASHBOARD
+      </a>
+    </div>
     
-    <p class="text-2xl md:text-3xl mb-16 font-light tracking-wide opacity-90 max-w-3xl mx-auto">
-      24 GPS Vehicles • 127 FDA Batches • Serving America
-    </p>
-  </div>
-
-  <!-- LIVE STATS -->
-  <div class="container mx-auto px-6 pb-20">
-    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <div class="group bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-3xl hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-        <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">🚛</div>
-        <div class="text-4xl font-black text-blue-400 mb-3 animate-pulse">24</div>
-        <div class="text-xl font-bold mb-2">Live Vehicles</div>
-        <div class="text-blue-200">GPS Tracked • Real-time</div>
-      </div>
-
-      <div class="group bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-3xl hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-        <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">📦</div>
-        <div class="text-4xl font-black text-emerald-400 mb-3 animate-pulse">127</div>
-        <div class="text-xl font-bold mb-2">Active Batches</div>
-        <div class="text-emerald-200">FDA 21 CFR Part 11</div>
-      </div>
-
-      <div class="group bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-3xl hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:shadow-2xl">
-        <div class="text-6xl mb-6 group-hover:scale-110 transition-transform">💰</div>
-        <div class="text-4xl font-black text-yellow-400 mb-3 animate-pulse">$12K</div>
-        <div class="text-xl font-bold mb-2">Monthly Revenue</div>
-        <div class="text-yellow-200">+18% Phase 14 Growth</div>
-      </div>
+    <div class="mt-16 text-center text-lg text-gray-300">
+      🔒 FDA 21 CFR Part 11 • 📡 24/7 GPS • 🤖 AI Anomaly Detection • ⚙️ Rails 8.1
     </div>
   </div>
-
-  <!-- CTA -->
-  <div class="container mx-auto px-6 pb-20 text-center">
-    <a href="/gps" class="group inline-flex items-center bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 text-2xl font-black py-8 px-16 rounded-3xl shadow-2xl hover:shadow-3xl transform hover:-translate-y-2 transition-all duration-500">
-      <span class="mr-4 text-3xl group-hover:scale-110 transition-transform">🚚</span>
-      LIVE GPS DASHBOARD
-      <span class="ml-4 text-3xl group-hover:scale-110 transition-transform">📡</span>
-    </a>
-  </div>
-
-  <!-- TECH STACK -->
-  <div class="container mx-auto px-6 py-16">
-    <div class="grid md:grid-cols-4 gap-8 text-center text-sm opacity-75">
-      <div>🔒 FDA 21 CFR Part 11</div>
-      <div>📡 24/7 GPS Tracking</div>
-      <div>🤖 AI Anomaly Detection</div>
-      <div>⚙️ Rails 8.1 Enterprise</div>
-    </div>
-  </div>
-</div>
+</body>
+</html>
