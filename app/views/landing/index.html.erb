@@ -1,114 +1,67 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>PharmaTransport.org - Secure Pharmacy Delivery</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= csrf_meta_tags %>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .glass { background: rgba(255,255,255,0.12); backdrop-filter: blur(30px); border: 1px solid rgba(9,132,192,0.4); }
-  </style>
-</head>
-<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 min-h-screen text-white">
-  
-  <!-- HERO -->
-  <div class="max-w-6xl mx-auto p-8">
-    <div class="glass rounded-3xl p-12 text-center mb-16 shadow-2xl">
-      <div class="inline-flex bg-white/20 px-6 py-3 rounded-2xl mb-8">🟢 LIVE • Serving American Pharmacies</div>
-      <h1 class="text-5xl lg:text-7xl font-black bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent mb-6">
-        Secure Pharmacy Delivery
-      </h1>
-      <p class="text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
-        Pharmacists submit private orders • Patients order securely • Real-time tracking
-      </p>
+<html style="background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1e3a8a 100%); color: white; font-family: -apple-system, sans-serif; min-height: 100vh; margin: 0; padding: 2rem;">
+<body style="margin: 0; padding: 2rem; max-width: 1200px; margin: 0 auto;">
+  <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 3rem; margin-bottom: 3rem; border: 1px solid rgba(255,255,255,0.2);">
+    <h1 style="font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #60a5fa, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 1rem;">
+      💉 PharmaTransport.org
+    </h1>
+    <p style="font-size: 1.5rem; text-align: center; opacity: 0.9; margin-bottom: 2rem;">
+      Secure Pharmacy Delivery • Pharmacists + Patients • Live Now
+    </p>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+    <!-- PHARMACIST PORTAL -->
+    <a href="/pharmacists" style="text-decoration: none; background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s; display: block;">
+      <div style="font-size: 4rem; margin-bottom: 1.5rem; text-align: center;">🏥</div>
+      <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; text-align: center;">Pharmacist Portal</h2>
+      <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+        <li style="margin-bottom: 0.5rem;">✅ Submit private orders</li>
+        <li style="margin-bottom: 0.5rem;">✅ Real-time tracking</li>
+        <li style="margin-bottom: 0.5rem;">✅ FDA compliant</li>
+        <li style="margin-bottom: 0.5rem;">✅ Revenue sharing</li>
+      </ul>
+    </a>
+
+    <!-- PATIENT APP -->
+    <a href="/patients" style="text-decoration: none; background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s; display: block;">
+      <div style="font-size: 4rem; margin-bottom: 1.5rem; text-align: center;">📱</div>
+      <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; text-align: center;">Patient App</h2>
+      <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+        <li style="margin-bottom: 0.5rem;">✅ Order from pharmacies</li>
+        <li style="margin-bottom: 0.5rem;">✅ Home delivery</li>
+        <li style="margin-bottom: 0.5rem;">✅ Live notifications</li>
+        <li style="margin-bottom: 0.5rem;">✅ Secure payments</li>
+      </ul>
+    </a>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">🚛</div>
+      <div style="font-size: 3rem; font-weight: 900; color: #60a5fa; margin-bottom: 0.5rem;">24</div>
+      <div style="font-weight: 700; margin-bottom: 0.5rem;">Live Vehicles</div>
+      <div>Phoenix Metro</div>
     </div>
-
-    <!-- DUAL PORTALS -->
-    <div class="grid lg:grid-cols-2 gap-8 mb-16">
-      <!-- PHARMACIST PORTAL -->
-      <a href="/pharmacists/sign_in" class="group glass rounded-3xl p-12 hover:bg-white/20 transition-all hover:-translate-y-4 shadow-2xl">
-        <div class="text-6xl mb-8 group-hover:scale-110 transition-transform">🏥</div>
-        <h2 class="text-3xl font-bold mb-6 text-blue-300">Pharmacist Portal</h2>
-        <ul class="space-y-3 text-lg mb-8">
-          <li>✅ Secure order submission</li>
-          <li>✅ Real-time delivery tracking</li>
-          <li>✅ FDA 21 CFR Part 11 compliant</li>
-          <li>✅ Order history & compliance tools</li>
-        </ul>
-        <div class="bg-blue-500/20 border-2 border-blue-400/50 rounded-2xl p-6 font-mono text-sm">
-          For independent & chain pharmacies
-        </div>
-      </a>
-
-      <!-- CONSUMER APP -->
-      <a href="/patients/sign_in" class="group glass rounded-3xl p-12 hover:bg-white/20 transition-all hover:-translate-y-4 shadow-2xl">
-        <div class="text-6xl mb-8 group-hover:scale-110 transition-transform">📱</div>
-        <h2 class="text-3xl font-bold mb-6 text-emerald-300">Patient App</h2>
-        <ul class="space-y-3 text-lg mb-8">
-          <li>✅ Order from local pharmacies</li>
-          <li>✅ Home delivery or pickup</li>
-          <li>✅ Real-time notifications</li>
-          <li>✅ HIPAA secure payments</li>
-        </ul>
-        <div class="bg-emerald-500/20 border-2 border-emerald-400/50 rounded-2xl p-6 font-mono text-sm">
-          Available on iOS & Android
-        </div>
-      </a>
+    
+    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">📦</div>
+      <div style="font-size: 3rem; font-weight: 900; color: #34d399; margin-bottom: 0.5rem;">127</div>
+      <div style="font-weight: 700; margin-bottom: 0.5rem;">Active Orders</div>
+      <div>HIPAA Secure</div>
     </div>
-
-    <!-- METRICS -->
-    <div class="grid md:grid-cols-3 gap-8 mb-16">
-      <div class="glass rounded-3xl p-10 text-center hover:shadow-blue-500/25 transition-all">
-        <div class="text-5xl mb-4">🚛</div>
-        <div class="text-4xl font-black text-blue-400 mb-2">24</div>
-        <div class="text-lg font-bold">Live Vehicles</div>
-        <div class="text-blue-200">Phoenix Metro Coverage</div>
-      </div>
-      
-      <div class="glass rounded-3xl p-10 text-center hover:shadow-emerald-500/25 transition-all">
-        <div class="text-5xl mb-4">📦</div>
-        <div class="text-4xl font-black text-emerald-400 mb-2">127</div>
-        <div class="text-lg font-bold">Active Orders</div>
-        <div class="text-emerald-200">HIPAA Compliant</div>
-      </div>
-      
-      <div class="glass rounded-3xl p-10 text-center hover:shadow-amber-500/25 transition-all">
-        <div class="text-5xl mb-4">💰</div>
-        <div class="text-4xl font-black text-amber-400 mb-2">$12K</div>
-        <div class="text-lg font-bold">Monthly Revenue</div>
-        <div class="text-amber-200">Phase 14 Growth</div>
-      </div>
+    
+    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">💰</div>
+      <div style="font-size: 3rem; font-weight: 900; color: #fbbf24; margin-bottom: 0.5rem;">$12K</div>
+      <div style="font-weight: 700; margin-bottom: 0.5rem;">Monthly Revenue</div>
+      <div>Phase 14 Live</div>
     </div>
+  </div>
 
-    <!-- BUSINESS BENEFITS -->
-    <div class="glass rounded-3xl p-12 mb-16">
-      <h2 class="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-        Why Pharmacies Choose Us
-      </h2>
-      <div class="grid md:grid-cols-3 gap-8 text-center">
-        <div>
-          <div class="text-4xl mb-4">🔒</div>
-          <h3 class="text-xl font-bold mb-4">HIPAA Compliant</h3>
-          <p>Secure patient data • FDA 21 CFR Part 11 • End-to-end encryption</p>
-        </div>
-        <div>
-          <div class="text-4xl mb-4">🚚</div>
-          <h3 class="text-xl font-bold mb-4">24/7 Coverage</h3>
-          <p>Real-time GPS tracking • Route optimization • Proof of delivery</p>
-        </div>
-        <div>
-          <div class="text-4xl mb-4">💼</div>
-          <h3 class="text-xl font-bold mb-4">Revenue Share</h3>
-          <p>Transaction fees only • No subscription • Scale with volume</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- TECH STACK -->
-    <div class="text-center py-16">
-      <div class="inline-flex bg-white/10 backdrop-blur-xl px-8 py-4 rounded-3xl border border-white/20">
-        <span class="text-lg">⚙️ Rails 8.1 • 🔒 HIPAA Secure • 📱 iOS/Android Ready • 🚀 Live Now</span>
-      </div>
+  <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 3rem; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
+    <div style="font-size: 1.5rem; opacity: 0.9;">
+      ⚙️ Rails 8.1 • 🔒 HIPAA Compliant • 📱 iOS/Android Ready • 🚚 Live Delivery Network
     </div>
   </div>
 </body>
