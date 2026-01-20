@@ -15,3 +15,7 @@ class HomeController < ApplicationController
     end
   end
 end
+
+  def health
+    render plain: "Phase 15 GPS LIVE - #{Time.now.utc} - #{@trucks.count} trucks", status: 200
+  end
