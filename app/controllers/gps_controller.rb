@@ -1,12 +1,14 @@
 class GpsController < ApplicationController
-  layout false
-  
   def dashboard
-    @vehicles = [
-      OpenStruct.new(identifier: 'PT-001', lat: 33.4484, lng: -112.0740, status: 'Active'),
-      OpenStruct.new(identifier: 'PT-002', lat: 33.4621, lng: -112.0668, status: 'En Route'),
-      OpenStruct.new(identifier: 'PT-003', lat: 33.4372, lng: -112.0824, status: 'Idle')
-    ]
-    render layout: false
+    @vehicles = 24.times.map do
+      OpenStruct.new(
+        id: "LOT-PHARMA-#{"%03d" % rand(1..999)}",
+        lat: 39.8 + rand(-5..5)/10.0,
+        lng: -98.5 + rand(-20..20)/10.0,
+        temp: "#{rand(2.0..8.0).round(1)}°C",
+        status: rand < 0.95 ? "normal" : "alert",
+        eta: "#{rand(45..180)}min"
+      )
+    end
   end
 end
