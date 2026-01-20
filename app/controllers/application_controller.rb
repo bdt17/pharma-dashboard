@@ -8,3 +8,4 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email])
   end
 end
+def index; render plain: "PHARMA DASHBOARD LIVE 🚛💉📍"; end
