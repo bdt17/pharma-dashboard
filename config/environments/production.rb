@@ -1,31 +1,25 @@
 Rails.application.configure do
-  # Core settings
+  config.hosts.clear
   config.cache_classes = true
-  config.eager_load = false
+  config.eager_load = true
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  
-  # Static files
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
+  config.public_file_server.enabled = true
   config.public_file_server.headers = { 'Cache-Control' => "public, max-age=#{1.hour.to_i}" }
-  
-  # Mailer
+
   config.action_mailer.perform_caching = false
-  config.action_mailer.default_url_options = { host: ENV['APP_HOST'] || 'localhost:3000' }
-  
-  # Logger
+  config.action_mailer.default_url_options = { host: 'pharma-dashboard-8jhe.onrender.com' }
+
   config.log_level = :info
   config.log_tags = [ :request_id ]
-  
-  # i18n
   config.i18n.fallbacks = true
-  
-  # Deprecation
   config.active_support.deprecation = :notify
-  
-  # Force SSL
-  config.force_ssl = false
-  
-  # Timezone
+  config.force_ssl = true
   config.time_zone = 'Mountain Time (US & Canada)'
+  
+  # Phase 14 LIVE
+  config.cache_store = :solid_cache_store
+  config.active_job.queue_adapter = :solid_queue
+  config.action_cable.allowed_request_origins = ['https://pharma-dashboard-8jhe.onrender.com']
 end
