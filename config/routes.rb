@@ -3,3 +3,4 @@ Rails.application.routes.draw do
   resources :batches
   # devise_for :users
 end
+get "/", to: "batches#index", constraints: { format: :html }
