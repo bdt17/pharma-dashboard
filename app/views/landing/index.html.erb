@@ -1,45 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport</title>
+  <title>PharmaTransport.org - Secure Pharmacy Delivery</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .glass { background: rgba(255,255,255,0.12); backdrop-filter: blur(30px); border: 1px solid rgba(9,132,192,0.4); }
+  </style>
 </head>
-<body class="bg-gray-900 text-white">
+<body class="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 min-h-screen text-white">
+  
+  <!-- HERO -->
   <div class="max-w-6xl mx-auto p-8">
-    <h1 class="text-5xl font-bold mb-12 text-yellow-400">💉 Pharma Transport</h1>
-    <p class="text-2xl mb-16">Phase 14 LIVE • 24 GPS Vehicles • 127 Batches</p>
-    
-    <div class="grid md:grid-cols-3 gap-12 mb-16">
-      <div class="bg-blue-600 p-12 rounded-2xl text-center">
-        <div class="text-6xl mb-6">🚛</div>
-        <div class="text-4xl font-bold mb-4">24</div>
-        <p class="text-xl">Live Vehicles<br>GPS Tracked • Real-time</p>
-      </div>
-      
-      <div class="bg-emerald-600 p-12 rounded-2xl text-center">
-        <div class="text-6xl mb-6">📦</div>
-        <div class="text-4xl font-bold mb-4">127</div>
-        <p class="text-xl">Active Batches<br>FDA Compliant</p>
-      </div>
-      
-      <div class="bg-yellow-500 p-12 rounded-2xl text-center">
-        <div class="text-6xl mb-6">💰</div>
-        <div class="text-4xl font-bold mb-4">$12K</div>
-        <p class="text-xl">Monthly Revenue<br>Phase 14 Growth +18%</p>
-      </div>
+    <div class="glass rounded-3xl p-12 text-center mb-16 shadow-2xl">
+      <div class="inline-flex bg-white/20 px-6 py-3 rounded-2xl mb-8">🟢 LIVE • Serving American Pharmacies</div>
+      <h1 class="text-5xl lg:text-7xl font-black bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent mb-6">
+        Secure Pharmacy Delivery
+      </h1>
+      <p class="text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
+        Pharmacists submit private orders • Patients order securely • Real-time tracking
+      </p>
     </div>
-    
-    <div class="text-center">
-      <a href="/gps" class="bg-blue-600 hover:bg-blue-700 text-white px-12 py-6 rounded-2xl text-2xl font-bold inline-block">
-        🚚 LIVE GPS DASHBOARD
+
+    <!-- DUAL PORTALS -->
+    <div class="grid lg:grid-cols-2 gap-8 mb-16">
+      <!-- PHARMACIST PORTAL -->
+      <a href="/pharmacists/sign_in" class="group glass rounded-3xl p-12 hover:bg-white/20 transition-all hover:-translate-y-4 shadow-2xl">
+        <div class="text-6xl mb-8 group-hover:scale-110 transition-transform">🏥</div>
+        <h2 class="text-3xl font-bold mb-6 text-blue-300">Pharmacist Portal</h2>
+        <ul class="space-y-3 text-lg mb-8">
+          <li>✅ Secure order submission</li>
+          <li>✅ Real-time delivery tracking</li>
+          <li>✅ FDA 21 CFR Part 11 compliant</li>
+          <li>✅ Order history & compliance tools</li>
+        </ul>
+        <div class="bg-blue-500/20 border-2 border-blue-400/50 rounded-2xl p-6 font-mono text-sm">
+          For independent & chain pharmacies
+        </div>
+      </a>
+
+      <!-- CONSUMER APP -->
+      <a href="/patients/sign_in" class="group glass rounded-3xl p-12 hover:bg-white/20 transition-all hover:-translate-y-4 shadow-2xl">
+        <div class="text-6xl mb-8 group-hover:scale-110 transition-transform">📱</div>
+        <h2 class="text-3xl font-bold mb-6 text-emerald-300">Patient App</h2>
+        <ul class="space-y-3 text-lg mb-8">
+          <li>✅ Order from local pharmacies</li>
+          <li>✅ Home delivery or pickup</li>
+          <li>✅ Real-time notifications</li>
+          <li>✅ HIPAA secure payments</li>
+        </ul>
+        <div class="bg-emerald-500/20 border-2 border-emerald-400/50 rounded-2xl p-6 font-mono text-sm">
+          Available on iOS & Android
+        </div>
       </a>
     </div>
-    
-    <div class="mt-16 text-center text-lg text-gray-300">
-      🔒 FDA 21 CFR Part 11 • 📡 24/7 GPS • 🤖 AI Anomaly Detection • ⚙️ Rails 8.1
+
+    <!-- METRICS -->
+    <div class="grid md:grid-cols-3 gap-8 mb-16">
+      <div class="glass rounded-3xl p-10 text-center hover:shadow-blue-500/25 transition-all">
+        <div class="text-5xl mb-4">🚛</div>
+        <div class="text-4xl font-black text-blue-400 mb-2">24</div>
+        <div class="text-lg font-bold">Live Vehicles</div>
+        <div class="text-blue-200">Phoenix Metro Coverage</div>
+      </div>
+      
+      <div class="glass rounded-3xl p-10 text-center hover:shadow-emerald-500/25 transition-all">
+        <div class="text-5xl mb-4">📦</div>
+        <div class="text-4xl font-black text-emerald-400 mb-2">127</div>
+        <div class="text-lg font-bold">Active Orders</div>
+        <div class="text-emerald-200">HIPAA Compliant</div>
+      </div>
+      
+      <div class="glass rounded-3xl p-10 text-center hover:shadow-amber-500/25 transition-all">
+        <div class="text-5xl mb-4">💰</div>
+        <div class="text-4xl font-black text-amber-400 mb-2">$12K</div>
+        <div class="text-lg font-bold">Monthly Revenue</div>
+        <div class="text-amber-200">Phase 14 Growth</div>
+      </div>
+    </div>
+
+    <!-- BUSINESS BENEFITS -->
+    <div class="glass rounded-3xl p-12 mb-16">
+      <h2 class="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+        Why Pharmacies Choose Us
+      </h2>
+      <div class="grid md:grid-cols-3 gap-8 text-center">
+        <div>
+          <div class="text-4xl mb-4">🔒</div>
+          <h3 class="text-xl font-bold mb-4">HIPAA Compliant</h3>
+          <p>Secure patient data • FDA 21 CFR Part 11 • End-to-end encryption</p>
+        </div>
+        <div>
+          <div class="text-4xl mb-4">🚚</div>
+          <h3 class="text-xl font-bold mb-4">24/7 Coverage</h3>
+          <p>Real-time GPS tracking • Route optimization • Proof of delivery</p>
+        </div>
+        <div>
+          <div class="text-4xl mb-4">💼</div>
+          <h3 class="text-xl font-bold mb-4">Revenue Share</h3>
+          <p>Transaction fees only • No subscription • Scale with volume</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="text-center py-16">
+      <div class="inline-flex bg-white/10 backdrop-blur-xl px-8 py-4 rounded-3xl border border-white/20">
+        <span class="text-lg">⚙️ Rails 8.1 • 🔒 HIPAA Secure • 📱 iOS/Android Ready • 🚀 Live Now</span>
+      </div>
     </div>
   </div>
 </body>
