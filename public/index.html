@@ -1,63 +1,64 @@
 <!DOCTYPE html>
-<html style="ALL: initial !important; background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%) !important;">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pharma Transport Dashboard</title>
-<style>
-*,*::before,*::after{all:revert!important;box-sizing:border-box!important;margin:0!important;padding:0!important}
-html,body{background:radial-gradient(circle at 20% 80%,#2C5282 0%,#1A365D 50%,#0F172A 100%)!important;color:#FFFFFF!important;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;min-height:100vh!important;overflow-x:hidden!important;line-height:1.6!important}
-.glass{background:rgba(255,255,255,0.12)!important;backdrop-filter:blur(30px) saturate(160%)!important;border:1px solid rgba(9,132,192,0.4)!important;border-radius:28px!important;transition:all 0.4s cubic-bezier(0.22,1,0.36,1)!important;padding:2.5rem!important;position:relative!important;overflow:hidden!important}
-.glass::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#0984C0,#60BDD1,#0984C0)!important}
-.glass:hover{transform:translateY(-12px) scale(1.03)!important;box-shadow:0 35px 80px rgba(9,132,192,0.4),0 0 40px rgba(9,132,192,0.6)!important;border-color:rgba(9,132,192,0.8)!important}
-.pharma-logo{color:transparent!important;background:linear-gradient(135deg,#0984C0 0%,#60BDD1 50%,#0984C0 100%)!important;background-clip:text!important;-webkit-background-clip:text!important;text-shadow:0 0 30px rgba(9,132,192,1)!important;font-weight:900!important;font-size:2.6rem!important;margin:0!important;animation:glow 3s ease-in-out infinite alternate!important}
-@keyframes glow{0%{text-shadow:0 0 20px rgba(9,132,192,0.8)}100%{text-shadow:0 0 40px rgba(9,132,192,1),0 0 60px rgba(9,132,192,0.6)}}
-.metric-icon{font-size:4.2rem!important;margin-bottom:1rem!important;filter:drop-shadow(0 0 15px currentColor)!important;animation:float 6s ease-in-out infinite!important}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.metric-number{font-size:4.4rem!important;font-weight:900!important;background:linear-gradient(135deg,currentColor 0%,#FFFFFF 100%)!important;-webkit-background-clip:text!important;background-clip:text!important;text-shadow:none!important;animation:pulse 2s ease-in-out infinite!important}
-@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:0.95}}
-.metric-label{color:#E2E8F0!important;font-size:1.15rem!important;font-weight:600!important;text-transform:uppercase!important;letter-spacing:2px!important;margin-bottom:0.75rem!important}
-.metric-subtext{color:#A7A7B0!important;font-size:1rem!important;font-weight:500!important}
-</style>
-</head>
-<body>
-<div style="padding:2rem;max-width:1400px;margin:0 auto">
-<div class="glass" style="margin-bottom:3rem;background:linear-gradient(135deg,rgba(9,132,192,0.95),rgba(96,189,209,0.9))!important;border:3px solid #0984C0!important">
-<div style="display:flex;flex-direction:column;gap:1.5rem;align-items:center;text-align:center;position:relative;z-index:2">
-<div style="display:flex;align-items:center;gap:1.5rem">
-<div style="width:68px;height:68px;background:linear-gradient(135deg,#0984C0,#60BDD1)!important;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2.2rem;box-shadow:0 20px 40px rgba(9,132,192,0.8)!important;animation:spin-glow 4s linear infinite!important">
-💉
-</div>
-<div><h1 class="pharma-logo">Pharma Transport</h1><p style="color:#E2E8F0!important;font-size:1.15rem;margin:0.5rem 0 0;font-weight:500!important">Phase 14 LIVE • 24 GPS Vehicles • 127 Batches</p></div></div>
-<a href="https://www.pharmatransport.org/" style="background:linear-gradient(135deg,#0984C0,#60BDD1)!important;color:#FFFFFF!important;padding:1.2rem 3rem;border-radius:20px;font-weight:900!important;font-size:1.15rem!important;box-shadow:0 25px 50px rgba(9,132,192,0.7)!important;animation:pulse-glow 3s ease-in-out infinite alternate!important">🛠️ Production Platform</a></div></div>
+<html style="background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1e3a8a 100%); color: white; font-family: -apple-system, BlinkMacSystemFont, sans-serif; min-height: 100vh; margin: 0; padding: 2rem;">
+<body style="margin: 0; padding: 2rem; max-width: 1200px; margin: 0 auto;">
+  <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 3rem; margin-bottom: 3rem; border: 1px solid rgba(255,255,255,0.2);">
+    <h1 style="font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #60a5fa, #93c5fd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 1rem;">
+      💉 PharmaTransport.org - LIVE NOW
+    </h1>
+    <p style="font-size: 1.5rem; text-align: center; opacity: 0.9; margin-bottom: 2rem;">
+      B2B2C Pharmacy Delivery • Phoenix Metro • Rails 8.1 Live
+    </p>
+  </div>
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:2.5rem">
-<div class="glass" style="border-color:rgba(96,189,209,0.6)!important">
-<div class="metric-icon" style="color:#60BDD1!important">🚛</div>
-<h3 class="metric-label">Live Vehicles</h3>
-<div class="metric-number" style="color:#60BDD1!important">24</div>
-<p class="metric-subtext">GPS Tracked • Real-time</p>
-</div>
-<div class="glass" style="background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,193,7,0.15))!important;border:3px solid #FFD700!important">
-<div class="metric-icon" style="color:#FFD700!important">💰</div>
-<h3 class="metric-label">Monthly Revenue</h3>
-<div class="metric-number" style="color:#FFD700!important">$12K</div>
-<p class="metric-subtext">Phase 14 Growth +18%</p>
-</div>
-<div class="glass" style="border-color:rgba(9,132,192,0.6)!important">
-<div class="metric-icon" style="color:#0984C0!important">📦</div>
-<h3 class="metric-label">Active Batches</h3>
-<div class="metric-number" style="color:#0984C0!important">127</div>
-<p class="metric-subtext">FDA Compliant • Temp Controlled</p>
-</div>
-</div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+    <a href="#pharmacists" style="text-decoration: none; background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s; display: block;">
+      <div style="font-size: 4rem; margin-bottom: 1.5rem; text-align: center;">🏥</div>
+      <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; text-align: center;">Pharmacist Portal</h2>
+      <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+        <li style="margin-bottom: 0.5rem;">✅ Submit private orders</li>
+        <li style="margin-bottom: 0.5rem;">✅ Real-time GPS tracking</li>
+        <li style="margin-bottom: 0.5rem;">✅ FDA 21 CFR Part 11</li>
+        <li style="margin-bottom: 0.5rem;">✅ Revenue sharing model</li>
+      </ul>
+    </a>
 
-<div class="glass" style="margin-top:3rem;text-align:center;background:rgba(255,255,255,0.06)!important">
-<div style="display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;font-size:1.1rem">
-<span style="color:#E2E8F0!important">⚙️ Solid Stack Rails 8.1</span>
-<span style="color:#60BDD1!important;font-weight:700!important">🔒 FDA Compliant</span>
-<span style="color:#0984C0!important;font-weight:700!important">📡 24/7 GPS Tracking</span>
-<span style="color:#FFD700!important;font-weight:700!important">🤖 AI Anomaly Detection</span>
-</div></div>
-</div>
+    <a href="#patients" style="text-decoration: none; background: rgba(255,255,255,0.15); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; border: 1px solid rgba(255,255,255,0.3); transition: all 0.3s; display: block;">
+      <div style="font-size: 4rem; margin-bottom: 1.5rem; text-align: center;">📱</div>
+      <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem; text-align: center;">Patient App</h2>
+      <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+        <li style="margin-bottom: 0.5rem;">✅ Order from local pharmacies</li>
+        <li style="margin-bottom: 0.5rem;">✅ Home delivery or pickup</li>
+        <li style="margin-bottom: 0.5rem;">✅ Live notifications</li>
+        <li style="margin-bottom: 0.5rem;">✅ HIPAA secure payments</li>
+      </ul>
+    </a>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">🚛</div>
+      <div style="font-size: 3rem; font-weight: 900; color: #60a5fa; margin-bottom: 0.5rem;">24</div>
+      <div style="font-weight: 700; margin-bottom: 0.5rem;">Live Vehicles</div>
+      <div>Phoenix Metro Coverage</div>
+    </div>
+    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">📦</div>
+      <div style="font-size: 3rem; font-weight: 900; color: #34d399; margin-bottom: 0.5rem;">127</div>
+      <div style="font-weight: 700; margin-bottom: 0.5rem;">Active Orders</div>
+      <div>HIPAA Compliant</div>
+    </div>
+    <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 2.5rem; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">💰</div>
+      <div style="font-size: 3rem; font-weight: 900; color: #fbbf24; margin-bottom: 0.5rem;">$12K</div>
+      <div style="font-weight: 700; margin-bottom: 0.5rem;">Monthly Revenue</div>
+      <div>Phase 18 Live +18% Growth</div>
+    </div>
+  </div>
+
+  <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 3rem; text-align: center; border: 1px solid rgba(255,255,255,0.2);">
+    <div style="font-size: 1.5rem; opacity: 0.9;">
+      ⚙️ Rails 8.1 Production • 🔒 HIPAA/FDA Compliant • 📱 iOS & Android Ready • 🚚 Phoenix Live Network
+    </div>
+  </div>
 </body>
 </html>
