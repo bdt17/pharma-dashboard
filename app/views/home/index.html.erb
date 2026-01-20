@@ -58,7 +58,7 @@ cat > app/views/home/index.html.erb << 'EOF'
 
     let hasAlerts = false;
     trucks.forEach(truck => {
-      const inAlert = truck.alert && truck.alert.includes("ALERT");
+      const inAlert = truck.alert && truck.alert.includes("ALERT"); }); }
       if (inAlert) hasAlerts = true;
 
       L.marker([truck.lat, truck.lng])
@@ -68,14 +68,14 @@ cat > app/views/home/index.html.erb << 'EOF'
           📍 GPS: ${truck.lat.toFixed(4)}, ${truck.lng.toFixed(4)}<br>
           🌡️ Temp: ${truck.temp}°C ${truck.alert || '✅ OK'}<br>
           ⏱️ ETA: ${truck.eta}
-        `);
-    });
+        `); }); }
+    }); } });
 
     if (hasAlerts) {
       document.getElementById("alert-banner").style.display = "block";
     }
     if (trucks.length > 0) {
-      map.fitBounds(trucks.map(t => [t.lat, t.lng]));
+      map.fitBounds(trucks.map(t => [t.lat, t.lng])); }); }
     }
   </script>
 </body>
@@ -96,7 +96,7 @@ EOF
     #let hasAlerts = false;
 
    # trucks.forEach(truck => {
-    #  const inAlert = truck.alert && truck.alert.includes("ALERT");
+    #  const inAlert = truck.alert && truck.alert.includes("ALERT"); }); }
      # if (inAlert) hasAlerts = true;
 
      # L.marker([truck.lat, truck.lng])
@@ -106,16 +106,16 @@ EOF
          # 📍 GPS: ${truck.lat.toFixed(4)}, ${truck.lng.toFixed(4)}<br>
          # 🌡️ Temp: ${truck.temp}°C ${truck.alert}<br>
          # ⏱️ ETA: ${truck.eta}
-       # `);
-   # });
+       # `); }); }
+   # }); } });
 
    # if (hasAlerts) {
-    #  const banner = document.getElementById("alert-banner");
+    #  const banner = document.getElementById("alert-banner"); }); }
      # if (banner) banner.style.display = "block";
    # }
 
    # if (trucks.length > 0) {
-    #  map.fitBounds(trucks.map(t => [t.lat, t.lng]));
+    #  map.fitBounds(trucks.map(t => [t.lat, t.lng])); }); }
    # }
  # </script>
 #</body>
@@ -136,17 +136,17 @@ EOF
   # 📍 GPS: ${truck.lat.toFixed(4)}, ${truck.lng.toFixed(4)}<br>
   # 🌡️ Temp: ${truck.temp}°C ${truck.alert}<br>
   # ⏱️ ETA: ${truck.eta}
- #`);    
+ #`); }); }    
 
     #.bindPopup(`
          # <b>Truck #${truck.id}</b><br>
           #📍 GPS: ${truck.lat.toFixed(4)}, ${truck.lng.toFixed(4)}<br>
           #🌡️ Temp: ${truck.temp}°C ✓<br>
           #⏱️ ETA: ${truck.eta}
-       # `);
-   # });
+       # `); }); }
+   # }); } });
     
-  #  map.fitBounds(trucks.map(t => [t.lat, t.lng]));
+  #  map.fitBounds(trucks.map(t => [t.lat, t.lng])); }); }
  # </script>
 #</body>
 #</html>
