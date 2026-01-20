@@ -19,3 +19,5 @@ Rails.application.configure do
   config.active_support.test_order = :random
 
 end
+config.eager_load = false
+config.autoloader = :classic
