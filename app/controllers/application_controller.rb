@@ -9,3 +9,4 @@ class ApplicationController < ActionController::Base
   end
 end
 def index; render plain: "PHARMA DASHBOARD LIVE 🚛💉📍"; end
+def index; render plain: "PHARMA DASHBOARD LIVE 🚛💉📍"; end
