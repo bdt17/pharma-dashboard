@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
   root "batches#index"
   resources :batches
-  # TEMP DISABLED: # TEMP DISABLED: devise_for :users :users :users
+  devise_for :users
 end
