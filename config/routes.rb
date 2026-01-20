@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  root "batches#index"
+  root "home#index"
 end
