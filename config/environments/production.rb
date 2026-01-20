@@ -19,7 +19,7 @@ Rails.application.configure do
   config.time_zone = 'Mountain Time (US & Canada)'
   
   # Phase 14 LIVE
-  config.cache_store = :solid_cache_store
-  config.active_job.queue_adapter = :solid_queue
+#0  config.cache_store = :solid_cache_store
+  #config.active_job.queue_adapter = :solid_queue
   config.action_cable.allowed_request_origins = ['https://pharma-dashboard-8jhe.onrender.com']
 end
