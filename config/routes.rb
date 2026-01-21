@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
-  get '/batches/:id/chain_of_custody', to: 'pdfs#chain_of_custody'
+  # Phase 22: TEXT endpoint first (no PDF complexity)
+  get '/test-revenue', to: 'homepage#test_revenue'
   root "homepage#index"
 end
