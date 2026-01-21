@@ -13,4 +13,16 @@ Date: #{Time.now.strftime("%Y-%m-%d %H:%M")}
     send_data pdf, filename: "coc_#{params[:id]}.pdf", 
               type: "application/pdf", disposition: "attachment"
   end
+  
+  def shipping_label
+    send_data "SHIPPING LABEL BATCH #{params[:id]}", 
+              filename: "label_#{params[:id]}.pdf", 
+              type: "application/pdf"
+  end
+  
+  def manifest
+    send_data "CARGO MANIFEST BATCH #{params[:id]}", 
+              filename: "manifest_#{params[:id]}.pdf", 
+              type: "application/pdf"
+  end
 end
