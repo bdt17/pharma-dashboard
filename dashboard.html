@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pharma Transport - Live GPS Tracking</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --ocean-blue: #0984C0;
+      --sea-serpent: #60BDD1;
+      --metallic-silver: #AAA7B0;
+      --davys-grey: #565759;
+      --silver-sand: #C0BEC6;
+      --black: #0a0a0a;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:system-ui;background:var(--black);color:var(--silver-sand);line-height:1.6;overflow:hidden;}
+    
+    .header{position:fixed;top:0;left:0;right:0;background:var(--black);border-bottom:3px solid var(--ocean-blue);padding:1rem 0;z-index:1000;}
+    h1{font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--ocean-blue),var(--sea-serpent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:inline-block;}
+    
+    .main{display:flex;height:calc(100vh - 80px);}
+    
+    /* MAP - 60% */
+    #map{height:100%;width:60%;border-right:3px solid var(--ocean-blue);}
+    
+    /* STATS PANEL - 40% */
+    .stats-panel{width:40%;background:linear-gradient(145deg,rgba(15,15,15,0.95),rgba(25,25,25,0.9));backdrop-filter:blur(20px);padding:2rem;overflow-y:auto;}
+    .stat-row{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 0;border-bottom:1px solid rgba(9,132,192,0.2);margin-bottom:1rem;}
+    .stat-number{font-size:2.5rem;font-weight:900;color:var(--ocean-blue);font-family:monospace;}
+    .stat-label{font-size:1.125rem;color:var(--metallic-silver);}
+    
+    .card{margin:2rem 0;background:rgba(9,132,192,0.1);border:2px solid var(--ocean-blue);border-radius:16px;padding:1.5rem;}
+    .card h3{color:var(--sea-serpent);font-size:1.25rem;margin-bottom:1rem;}
+    .card ul{list-style:none;}
+    .card li{margin:0.75rem 0;color:var(--silver-sand);font-size:1rem;}
+    .card li:before{content:"✓";color:var(--sea-serpent);font-weight:900;margin-right:0.75rem;}
+    
+    .cta{position:fixed;bottom:2rem;right:2rem;}
+    .cta-button{background:linear-gradient(135deg,var(--ocean-blue),var(--sea-serpent));color:white;padding:1rem 2rem;border:none;border-radius:50px;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(9,132,192,0.4);transition:all 0.3s;}
+    .cta-button:hover{transform:translateY(-3px);box-shadow:0 15px 40px rgba(9,132,192,0.6);}
+    
+    @media(max-width:1024px){#map{width:100%;height:60vh;}.stats-panel{width:100%;order:2;height:40vh;}}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div style="max-width:1400px;margin:0 auto;padding:0 2rem;">
+      <h1>Pharma Transport</h1>
+      <span style="float:right;color:var(--silver-sand);font-size:1rem;">127 Active Batches | 24 Live Vehicles</span>
+    </div>
+  </header>
+  
+  <main class="main">
+    <div id="map"></div>
+    
+    <div class="stats-panel">
+      <div class="stat-row">
+        <div class="stat-label">ACTIVE BATCHES</div>
+        <div class="stat-number">127</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">LIVE VEHICLES</div>
+        <div class="stat-number">24</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-label">MONTHLY REVENUE</div>
+        <div class="stat-number">$12K</div>
+      </div>
+      
+      <div class="card">
+        <h3>🚛 Vehicle Fleet</h3>
+        <ul>
+          <li>PHX-001 → Scottsdale (ETA 8min)</li>
+          <li>PHX-002 → Tempe (ETA 12min)</li>
+          <li>PHX-003 → Mesa (ETA 15min)</li>
+          <li>PHX-004 → Glendale (ETA 9min)</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <h3>📦 Top Routes</h3>
+        <ul>
+          <li>CVS → Patient Home (42%)</li>
+          <li>Walgreens → Patient Home (28%)</li>
+          <li>Patient Home → Pharmacy (18%)</li>
+          <li>Pharmacy → Hospital (12%)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <button class="cta-button cta" onclick="toggleMapFull()">Fullscreen Map</button>
+  
+  <script>
+    // Phoenix Metro center
+    const map = L.map('map').setView([33.4484, -112.0740], 11);
+    
+    // OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+    
+    // 24 Live Vehicle Markers (Phoenix Metro)
+    const vehicles = [
+      {id:'PHX-001',lat:33.4942,lng:-111.9261,color:'red',status:'En Route'},
+      {id:'PHX-002',lat:33.4255,lng:-111.9400,color:'blue',status:'ETA 12min'},
+      {id:'PHX-003',lat:33.4152,lng:-111.8315,color:'green',status:'ETA 15min'},
+      {id:'PHX-004',lat:33.5398,lng:-112.2695,color:'orange',status:'ETA 9min'},
+      // Add 20 more realistic Phoenix coordinates...
+    ];
+    
+    vehicles.forEach(v => {
+      const marker = L.circleMarker([v.lat, v.lng], {
+        radius: 10,
+        fillColor: v.color,
+        color: '#fff',
+        weight: 3,
+        opacity: 1,
+        fillOpacity: 0.8
+      }).addTo(map);
+      
+      marker.bindPopup(`<b>${v.id}</b><br>${v.status}<br>Temp: 2-8°C`);
+    });
+    
+    // Auto-update every 10s
+    setInterval(() => {
+      vehicles.forEach(v => {
+        v.lat += (Math.random()-0.5)*0.001;
+        v.lng += (Math.random()-0.5)*0.001;
+        map.panTo([33.4484, -112.0740], {animate: true});
+      });
+    }, 10000);
+    
+    function toggleMapFull() {
+      document.querySelector('#map').requestFullscreen();
+    }
+  </style>
+</body>
+</html>
