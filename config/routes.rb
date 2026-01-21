@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  # Phase 23: Revenue Test (SAFEST possible)
   get "/revenue-test", to: "homepage#revenue_test"
-  
-  # Keep your existing dashboard
+  get "/coc/:id", to: "application#chain_of_custody"  # FDA PDFs
   root "homepage#index"
 end
