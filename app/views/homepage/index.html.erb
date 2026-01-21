@@ -1,42 +1,48 @@
-<div class="dashboard">
-  <h1>Pharma Transport</h1>
-  
-  <div class="stats">
-    <div class="stat">
-      <div class="number green">127</div>
-      <div>Active Batches</div>
-    </div>
-    <div class="stat">
-      <div class="number orange">24</div>
-      <div>Live Vehicles</div>
-    </div>
-    <div class="stat">
-      <div class="number red">$12K</div>
-      <div>Monthly Revenue</div>
-    </div>
-  </div>
-
-  <div class="content">
-    <div class="section">
-      <h2>🚛 Vehicle Fleet</h2>
-      <ul>
-        <li>PHX-001 → Scottsdale <span>(ETA 8min)</span></li>
-        <li>PHX-002 → Tempe <span>(ETA 12min)</span></li>
-        <li>PHX-003 → Mesa <span>(ETA 15min)</span></li>
-        <li>PHX-004 → Glendale <span>(ETA 9min)</span></li>
-      </ul>
-    </div>
-    
-    <div class="section">
-      <h2>📦 Top Routes</h2>
-      <ul>
-        <li>CVS → Patient Home <span>(42%)</span></li>
-        <li>Walgreens → Patient Home <span>(28%)</span></li>
-        <li>Patient Home → Pharmacy <span>(18%)</span></li>
-        <li>Pharmacy → Hospital <span>(12%)</span></li>
-      </ul>
-    </div>
-  </div>
-
-  <%= link_to "Fullscreen Map", "#", class: "button primary" %>
-</div>
+<table border="1" cellpadding="20" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 1000px; margin: 20px auto; background: #1e3c72; color: white; border-radius: 12px;">
+  <tr>
+    <td colspan="3" style="text-align: center; padding: 30px; font-size: 28px; font-weight: bold; background: #0f2440;">
+      <strong>Pharma Transport</strong>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center; padding: 30px; width: 33%; background: #2a4a7a;">
+      <div style="font-size: 48px; font-weight: bold; color: #00ff88;">127</div>
+      <div style="font-size: 18px;">Active Batches</div>
+    </td>
+    <td style="text-align: center; padding: 30px; width: 33%; background: #2a4a7a;">
+      <div style="font-size: 48px; font-weight: bold; color: #ffaa00;">24</div>
+      <div style="font-size: 18px;">Live Vehicles</div>
+    </td>
+    <td style="text-align: center; padding: 30px; width: 33%; background: #2a4a7a;">
+      <div style="font-size: 48px; font-weight: bold; color: #ff4444;">$12K</div>
+      <div style="font-size: 18px;">Monthly Revenue</div>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding: 20px; vertical-align: top;">
+      <h3 style="margin: 0 0 15px 0; font-size: 22px;">🚛 Vehicle Fleet</h3>
+      <div style="line-height: 1.8;">
+        PHX-001 → Scottsdale <span style="color: #00ff88; font-weight: bold;">(ETA 8min)</span><br>
+        PHX-002 → Tempe <span style="color: #00ff88; font-weight: bold;">(ETA 12min)</span><br>
+        PHX-003 → Mesa <span style="color: #00ff88; font-weight: bold;">(ETA 15min)</span><br>
+        PHX-004 → Glendale <span style="color: #00ff88; font-weight: bold;">(ETA 9min)</span>
+      </div>
+    </td>
+    <td colspan="2" style="padding: 20px; vertical-align: top;">
+      <h3 style="margin: 0 0 15px 0; font-size: 22px;">📦 Top Routes</h3>
+      <div style="line-height: 1.8;">
+        CVS → Patient Home <span style="color: #00ff88; font-weight: bold;">(42%)</span><br>
+        Walgreens → Patient Home <span style="color: #00ff88; font-weight: bold;">(28%)</span><br>
+        Patient Home → Pharmacy <span style="color: #00ff88; font-weight: bold;">(18%)</span><br>
+        Pharmacy → Hospital <span style="color: #00ff88; font-weight: bold;">(12%)</span>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" style="text-align: center; padding: 30px;">
+      <a href="#" style="display: inline-block; padding: 18px 40px; background: #00ff88; color: black; text-decoration: none; border-radius: 10px; font-size: 20px; font-weight: bold;">
+        🗺️ Fullscreen Map
+      </a>
+    </td>
+  </tr>
+</table>
