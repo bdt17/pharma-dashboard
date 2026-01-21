@@ -1,6 +1,6 @@
 class HomepageController < ApplicationController
   def index
-    render plain: "PHARMA DASHBOARD LIVE 🚛💉📍 FDA REVENUE READY", status: 200
+    # Renders app/views/homepage/index.html.erb + pharma dashboard layout
   end
   
   def revenue_test
