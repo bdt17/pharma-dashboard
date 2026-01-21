@@ -1,0 +1,58 @@
+<div style="background:red;color:white;padding:40px;font-size:32px;">
+  🚨 VIEW IS RENDERING 🚨
+</div>
+
+
+
+<div class="dashboard-container">
+  <h1 class="title">Pharma Transport</h1>
+
+  <p class="subtitle">PharmaTransport.org – LIVE</p>
+  <p class="subtext">
+    B2B2C Pharmacy Delivery · Phoenix Metro · Rails 8.1 · Production
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h2>🏥 Pharmacist Portal</h2>
+      <ul>
+        <li>Submit private orders</li>
+        <li>Real-time GPS tracking</li>
+        <li>FDA 21 CFR Part 11 compliance</li>
+        <li>Revenue sharing model</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>📱 Patient App</h2>
+      <ul>
+        <li>Order from local pharmacies</li>
+        <li>Home delivery or pickup</li>
+        <li>Live notifications</li>
+        <li>HIPAA secure payments</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div>
+      <div class="stat-number">24</div>
+      <div class="stat-label">Live Vehicles</div>
+      <div class="stat-subtext">Phoenix Metro Coverage</div>
+    </div>
+
+    <div>
+      <div class="stat-number">127</div>
+      <div class="stat-label">Active Orders</div>
+      <div class="stat-subtext">HIPAA Compliant</div>
+    </div>
+
+    <div>
+      <div class="stat-number">$12K</div>
+      <div class="stat-label">Monthly Revenue</div>
+      <div class="stat-subtext">Phase 1B Live</div>
+    </div>
+  </div>
+
+  <%= render "home/gps_map" rescue nil %>
+</div>
