@@ -1,28 +1,23 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
-  before_action :configure_permitted_parameters, if: :devise_controller?
-
-  protected
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email])
-  end
-end
-def index; render plain: "PHARMA DASHBOARD LIVE 🚛💉📍"; end
-def index; render plain: "PHARMA DASHBOARD LIVE 🚛💉📍"; end
-
-    pdf = "FDA 21 CFR Part 11\nBatch: #{params[:id]}\nDELIVERED ✓\nPfizer ✓\n2-8°C ✓\n24 Vehicles ✓\n
-
-    pdf = <<~FDA
+  # Phase 23.2: FDA Chain-of-Custody PDF Generator
+  def chain_of_custody
+    batch_id = params[:id] || 1
+    
+    pdf_content = <<~FDA
 FDA 21 CFR Part 11 - CHAIN OF CUSTODY
 =====================================
-Batch: #{params[:id] || 1}
+Batch: ##{batch_id}
 Status: DELIVERED ✓
-Pfizer Order #PFZ-#{params[:id]}
+Pfizer Order #PFZ-#{batch_id}
 Temp: 2-8°C ✓ GPS: 24 Vehicles
 Signature: Electronic ✓
 Date: #{Time.now.strftime("%Y-%m-%d %H:%M")}
 FDA
-    send_data pdf, filename: "coc_#{params[:id]}.pdf", 
-              type: "application/pdf", disposition: "attachment"
+    FDA
+
+    send_data pdf_content,
+              filename: "coc_#{batch_id}.pdf",
+              type: "application/pdf",
+              disposition: "attachment"
   end
+end
