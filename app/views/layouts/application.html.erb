@@ -1,23 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <title>Pharma Transport</title>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
-    <!-- Rails asset pipeline -->
-    <%= stylesheet_link_tag "application", media: "all", "data-turbo-track": "relo>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
-    <div class="app-container">
-      <%= yield %>
-    </div>
+    <%= yield %>
   </body>
 </html>
-
