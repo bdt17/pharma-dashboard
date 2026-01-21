@@ -3,3 +3,4 @@ Rails.application.routes.draw do
   get '/test-revenue', to: 'homepage#test_revenue'
   root "homepage#index"
 end
+  get "/revenue-test", to: "homepage#revenue_test"
