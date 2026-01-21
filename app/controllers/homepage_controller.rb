@@ -7,4 +7,3 @@ class HomepageController < ApplicationController
     render plain: "FDA REVENUE LIVE ✓", status: 200
   end
 end
-//CACHEBUST
