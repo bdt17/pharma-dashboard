@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  # Phase 22: TEXT endpoint first (no PDF complexity)
-  get '/test-revenue', to: 'homepage#test_revenue'
+  # Phase 23: Revenue Test (SAFEST possible)
+  get "/revenue-test", to: "homepage#revenue_test"
+  
+  # Keep your existing dashboard
   root "homepage#index"
 end
-  get "/revenue-test", to: "homepage#revenue_test"
