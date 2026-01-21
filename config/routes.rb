@@ -1,3 +1,5 @@
+# FDA Revenue Phase 21
+get "/batches/:id/chain_of_custody", to: "revenue#chain_of_custody"
 Rails.application.routes.draw do
   root "home#index"
 end
