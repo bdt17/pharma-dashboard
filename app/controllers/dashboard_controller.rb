@@ -17,4 +17,9 @@ class DashboardController < ApplicationController
     ]
   render layout: false
   end
+ 
+def batches
+    @batches = 127
+    render "batches", layout: false
+  end
 end
