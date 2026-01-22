@@ -1,49 +1,81 @@
-<div style="max-width:1200px;margin:0 auto;padding:2rem;font-family:Arial;">
-  <h1 style="color:#1e40af;">Pharma Transport</h1>
-  
-  <div style="display:flex;justify-content:space-around;font-size:1.5rem;margin:2rem 0;">
-    <div>127 Active Batches</div>
-    <div>24 Live Vehicles</div>
-    <div>$12K Monthly Revenue</div>
-  </div>
-  
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;">
-    <div style="text-align:center;">
-      <h3>ACTIVE BATCHES</h3>
-      <span style="font-size:3rem;color:#3b82f6;">127</span>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="margin:0;padding:20px;background:#0f0f23;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;">
+  <div style="max-width:1200px;margin:0 auto;">
+    <h1 style="color:#1e40af;font-size:2.5rem;margin-bottom:1rem;">Pharma Transport</h1>
+    
+    <div style="display:flex;justify-content:space-between;font-size:1.3rem;font-weight:600;margin:2rem 0;padding:1rem;background:rgba(30,64,175,0.1);border-radius:12px;">
+      <div style="text-align:center;">
+        <div style="font-size:2.5rem;color:#3b82f6;">127</div>
+        <div>Active Batches</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2.5rem;color:#10b981;">24</div>
+        <div>Live Vehicles</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:2.5rem;color:#f59e0b;">$12K</div>
+        <div>Monthly Revenue</div>
+      </div>
     </div>
-    <div style="text-align:center;">
-      <h3>LIVE VEHICLES</h3>
-      <span style="font-size:3rem;color:#10b981;">24</span>
+    
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin:3rem 0;">
+      <div>
+        <h3 style="color:#6b7280;margin-bottom:1rem;font-size:1.2rem;">🚛 Vehicle Fleet</h3>
+        <div style="background:white;padding:1.5rem;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+          <div style="margin-bottom:0.75rem;padding:0.75rem;border-left:4px solid #3b82f6;">
+            <a href="/vehicles/phx-001" style="color:#1f2937;text-decoration:none;font-weight:500;">PHX-001 → Scottsdale</a>
+            <span style="float:right;color:#6b7280;">ETA 8min</span>
+          </div>
+          <div style="margin-bottom:0.75rem;padding:0.75rem;border-left:4px solid #10b981;">
+            <a href="/vehicles/phx-002" style="color:#1f2937;text-decoration:none;font-weight:500;">PHX-002 → Tempe</a>
+            <span style="float:right;color:#6b7280;">ETA 12min</span>
+          </div>
+          <div style="margin-bottom:0.75rem;padding:0.75rem;border-left:4px solid #f59e0b;">
+            <a href="/vehicles/phx-003" style="color:#1f2937;text-decoration:none;font-weight:500;">PHX-003 → Mesa</a>
+            <span style="float:right;color:#6b7280;">ETA 15min</span>
+          </div>
+          <div style="padding:0.75rem;border-left:4px solid #ef4444;">
+            <a href="/vehicles/phx-004" style="color:#1f2937;text-decoration:none;font-weight:500;">PHX-004 → Glendale</a>
+            <span style="float:right;color:#6b7280;">ETA 9min</span>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <h3 style="color:#6b7280;margin-bottom:1rem;font-size:1.2rem;">📦 Top Routes</h3>
+        <div style="background:white;padding:1.5rem;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+          <div style="margin-bottom:0.75rem;">
+            <span style="font-weight:600;">CVS → Patient Home</span>
+            <span style="float:right;color:#10b981;font-weight:600;">42%</span>
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <span style="font-weight:600;">Walgreens → Patient Home</span>
+            <span style="float:right;color:#10b981;font-weight:600;">28%</span>
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <span style="font-weight:600;">Patient Home → Pharmacy</span>
+            <span style="float:right;color:#10b981;font-weight:600;">18%</span>
+          </div>
+          <div>
+            <span style="font-weight:600;">Pharmacy → Hospital</span>
+            <span style="float:right;color:#10b981;font-weight:600;">12%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="text-align:center;margin-top:3rem;">
+      <a href="#" style="background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;padding:1.25rem 3rem;border:none;border-radius:12px;text-decoration:none;font-size:1.1rem;font-weight:600;box-shadow:0 4px 14px rgba(30,64,175,0.4);display:inline-block;">Fullscreen Map</a>
+    </div>
+    
+    <div style="text-align:center;margin-top:3rem;color:#6b7280;font-size:0.9rem;">
+      Phase 14 LIVE • 24 GPS Vehicles • 127 Batches • FDA Compliant
     </div>
   </div>
-  
-  <div style="margin:2rem 0;">
-    <h3 style="margin-bottom:1rem;">🚛 Vehicle Fleet</h3>
-    <ul style="list-style:none;padding:0;">
-      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">
-        <a href="/vehicles/phx-001" style="color:#1e40af;text-decoration:none;">PHX-001 → Scottsdale (ETA 8min)</a>
-      </li>
-      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">
-        <a href="/vehicles/phx-002" style="color:#1e40af;text-decoration:none;">PHX-002 → Tempe (ETA 12min)</a>
-      </li>
-      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">
-        <a href="/vehicles/phx-003" style="color:#1e40af;text-decoration:none;">PHX-003 → Mesa (ETA 15min)</a>
-      </li>
-      <li style="padding:0.5rem;">
-        <a href="/vehicles/phx-004" style="color:#1e40af;text-decoration:none;">PHX-004 → Glendale (ETA 9min)</a>
-      </li>
-    </ul>
-  </div>
-  
-  <div style="margin:2rem 0;">
-    <h3 style="margin-bottom:1rem;">📦 Top Routes</h3>
-    <ul style="list-style:none;padding:0;">
-      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">CVS → Patient Home <span style="color:#10b981;">42%</span></li>
-      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">Walgreens → Patient Home <span style="color:#10b981;">28%</span></li>
-      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">Patient Home → Pharmacy <span style="color:#10b981;">18%</span></li>
-      <li style="padding:0.5rem;">Pharmacy → Hospital <span style="color:#10b981;">12%</span></li>
-    </ul>
-    <a href="#" style="background:#1e40af;color:white;padding:1rem 2rem;border:none;border-radius:8px;text-decoration:none;display:inline-block;margin-top:1rem;">Fullscreen Map</a>
-  </div>
-</div>
+</body>
+</html>
