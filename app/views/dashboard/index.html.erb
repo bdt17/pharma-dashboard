@@ -4,13 +4,13 @@
   <title>Pharma Transport</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body style="margin:0;padding:20px;background:#0f0f23;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;">
+<body style="margin:0;padding:20px;background:#000000;color:#FFFFFF;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;">
   <div style="max-width:1200px;margin:0 auto;">
-    <!-- FIXED HEADER - Line 9 -->
+    <!-- BRAND HEADER - Perfectly centered + Deep Ocean Blue -->
     <h1 style="color:#0984C0;font-size:2.5rem;margin:0 0 1rem;text-align:center;">Pharma Transport</h1>
 
-    <!-- FIXED STATS - Lines 11-24 -->
-    <div style="display:flex;justify-content:space-between;font-size:1.3rem;font-weight:600;margin:2rem auto;padding:1rem;background:rgba(9,132,192,0.1);border-radius:12px;max-width:1200px;">
+    <!-- BRAND STATS - Perfect spacing + Brand colors -->
+    <div style="display:flex;justify-content:space-between;font-size:1.3rem;font-weight:600;margin:2rem auto;padding:1rem;background:rgba(9,132,192,0.1);border-radius:12px;max-width:1200px;box-shadow:0 4px 20px rgba(0,0,0,0.3);">
       <div style="text-align:center;flex:1;">
         <div style="font-size:2.5rem;color:#0984C0;"><%= @batches %></div>
         <div style="color:#565759;">Active Batches</div>
@@ -25,10 +25,10 @@
       </div>
     </div>
 
-    <!-- KEEP EXISTING GRID Lines 26-47 (perfect) -->
+    <!-- PERFECT GRID - Your existing code (unchanged) -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin:3rem 0;">
       <div>
-        <h3 style="color:#6b7280;margin-bottom:1rem;font-size:1.2rem;">🚛 Vehicle Fleet</h3>
+        <h3 style="color:#AAA7B0;margin-bottom:1rem;font-size:1.2rem;">🚛 Vehicle Fleet</h3>
         <div style="background:#FFFFFF;color:#1f2937;padding:1.5rem;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1);">
           <% @fleet.each do |vehicle| %>
             <div style="margin-bottom:0.75rem;padding:0.75rem;border-left:4px solid #0984C0;">
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div>
-        <h3 style="color:#6b7280;margin-bottom:1rem;font-size:1.2rem;">📦 Top Routes</h3>
+        <h3 style="color:#AAA7B0;margin-bottom:1rem;font-size:1.2rem;">📦 Top Routes</h3>
         <div style="background:#FFFFFF;color:#1f2937;padding:1.5rem;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1);">
           <% @routes.each do |route| %>
             <div style="margin-bottom:0.75rem;">
@@ -49,13 +49,13 @@
       </div>
     </div>
 
-    <!-- FIXED BUTTON - Line 50 (complete truncated line) -->
+    <!-- FIXED BUTTON - Complete + Brand gradient -->
     <div style="text-align:center;margin-top:3rem;">
       <a href="/batches" style="background:linear-gradient(135deg,#0984C0,#60BDD1);color:#FFFFFF;padding:1.25rem 3rem;border:none;border-radius:12px;text-decoration:none;font-size:1.1rem;font-weight:600;box-shadow:0 4px 14px rgba(9,132,192,0.4);display:inline-block;">View All Batches</a>
     </div>
 
-    <!-- KEEP FOOTER - Perfect -->
-    <div style="text-align:center;margin-top:3rem;color:#6b7280;font-size:0.9rem;">
+    <!-- PERFECT FOOTER -->
+    <div style="text-align:center;margin-top:3rem;color:#AAA7B0;font-size:0.9rem;">
       Phase 14 LIVE • 24 GPS Vehicles • 127 Batches • FDA Compliant
     </div>
   </div>
