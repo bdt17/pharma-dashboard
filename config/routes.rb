@@ -8,3 +8,4 @@ Rails.application.routes.draw do
   get '/batches', to: 'dashboard#batches'
   get '/vehicles/:id', to: 'vehicles#show'
 end
+get "/vehicles/:id", to: "vehicles#show"
