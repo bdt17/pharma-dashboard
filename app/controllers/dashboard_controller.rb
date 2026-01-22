@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
     @revenue = '$12K'
     @fleet = [
       "PHX-001 → Scottsdale (ETA 8min)",
-      "PHX-002 → Tempe (ETA 12min)", 
+      "PHX-002 → Tempe (ETA 12min)",
       "PHX-003 → Mesa (ETA 15min)",
       "PHX-004 → Glendale (ETA 9min)"
     ]
