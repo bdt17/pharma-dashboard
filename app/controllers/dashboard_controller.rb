@@ -15,5 +15,6 @@ class DashboardController < ApplicationController
       "Patient Home → Pharmacy (18%)",
       "Pharmacy → Hospital (12%)"
     ]
+  render layout: false
   end
 end
