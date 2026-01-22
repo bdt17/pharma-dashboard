@@ -1,44 +1,49 @@
-<div class="dashboard-container">
-  <header>Pharma Transport</header>
+<div style="max-width:1200px;margin:0 auto;padding:2rem;font-family:Arial;">
+  <h1 style="color:#1e40af;">Pharma Transport</h1>
   
-  <div class="stats-row">
+  <div style="display:flex;justify-content:space-around;font-size:1.5rem;margin:2rem 0;">
     <div>127 Active Batches</div>
     <div>24 Live Vehicles</div>
     <div>$12K Monthly Revenue</div>
   </div>
   
-  <section class="active-stats">
-    <h3>ACTIVE BATCHES</h3><span>127</span>
-    <h3>LIVE VEHICLES</h3><span>24</span>
-  </section>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;">
+    <div style="text-align:center;">
+      <h3>ACTIVE BATCHES</h3>
+      <span style="font-size:3rem;color:#3b82f6;">127</span>
+    </div>
+    <div style="text-align:center;">
+      <h3>LIVE VEHICLES</h3>
+      <span style="font-size:3rem;color:#10b981;">24</span>
+    </div>
+  </div>
   
-  <section class="fleet">
-    <h3>🚛 Vehicle Fleet</h3>
-    <ul>
-      <li><a href="/vehicles/phx-001">PHX-001 → Scottsdale (ETA 8min)</a></li>
-      <li><a href="/vehicles/phx-002">PHX-002 → Tempe (ETA 12min)</a></li>
-      <li><a href="/vehicles/phx-003">PHX-003 → Mesa (ETA 15min)</a></li>
-      <li><a href="/vehicles/phx-004">PHX-004 → Glendale (ETA 9min)</a></li>
+  <div style="margin:2rem 0;">
+    <h3 style="margin-bottom:1rem;">🚛 Vehicle Fleet</h3>
+    <ul style="list-style:none;padding:0;">
+      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">
+        <a href="/vehicles/phx-001" style="color:#1e40af;text-decoration:none;">PHX-001 → Scottsdale (ETA 8min)</a>
+      </li>
+      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">
+        <a href="/vehicles/phx-002" style="color:#1e40af;text-decoration:none;">PHX-002 → Tempe (ETA 12min)</a>
+      </li>
+      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">
+        <a href="/vehicles/phx-003" style="color:#1e40af;text-decoration:none;">PHX-003 → Mesa (ETA 15min)</a>
+      </li>
+      <li style="padding:0.5rem;">
+        <a href="/vehicles/phx-004" style="color:#1e40af;text-decoration:none;">PHX-004 → Glendale (ETA 9min)</a>
+      </li>
     </ul>
-  </section>
+  </div>
   
-  <section class="routes">
-    <h3>📦 Top Routes</h3>
-    <ul>
-      <li>CVS → Patient Home <span>42%</span></li>
-      <li>Walgreens → Patient Home <span>28%</span></li>
-      <li>Patient Home → Pharmacy <span>18%</span></li>
-      <li>Pharmacy → Hospital <span>12%</span></li>
+  <div style="margin:2rem 0;">
+    <h3 style="margin-bottom:1rem;">📦 Top Routes</h3>
+    <ul style="list-style:none;padding:0;">
+      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">CVS → Patient Home <span style="color:#10b981;">42%</span></li>
+      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">Walgreens → Patient Home <span style="color:#10b981;">28%</span></li>
+      <li style="padding:0.5rem;border-bottom:1px solid #e5e7eb;">Patient Home → Pharmacy <span style="color:#10b981;">18%</span></li>
+      <li style="padding:0.5rem;">Pharmacy → Hospital <span style="color:#10b981;">12%</span></li>
     </ul>
-    <a href="#" class="fullscreen-btn">Fullscreen Map</a>
-  </section>
+    <a href="#" style="background:#1e40af;color:white;padding:1rem 2rem;border:none;border-radius:8px;text-decoration:none;display:inline-block;margin-top:1rem;">Fullscreen Map</a>
+  </div>
 </div>
-
-<style>
-.dashboard-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-.stats-row { display: flex; justify-content: space-around; font-size: 1.5rem; margin: 2rem 0; }
-.active-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; text-align: center; }
-.fleet ul, .routes ul { list-style: none; padding: 0; }
-.fleet li, .routes li { padding: 0.5rem; border-bottom: 1px solid #333; }
-.fullscreen-btn { background: #007bff; color: white; padding: 1rem 2rem; border: none; border-radius: 8px; }
-</style>
