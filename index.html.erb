@@ -1,0 +1,15 @@
+<div id="clock" style="text-align:center;color:#60BDD1;font-size:1.1rem;margin:1rem 0;"></div>
+<script>
+function updateClock() {
+  const now = new Date();
+  const timeString = now.toLocaleTimeString('en-US', { 
+    hour12: true, 
+    hour: '2-digit', 
+    minute: '2-digit', 
+    second: '2-digit' 
+  });
+  document.getElementById('clock').textContent = timeString;
+}
+setInterval(updateClock, 1000);
+updateClock(); // Initial call
+</script>

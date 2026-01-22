@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController
+ before_action :authenticate_user!
   def index
     @batches = 127
     @vehicles = 24
