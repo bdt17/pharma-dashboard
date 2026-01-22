@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><title>Pharma Transport</title></head>
+<body style="background:#0f0f23;color:white;padding:20px;">
+  <h1 style="color:#3b82f6;">Pharma Transport Dashboard</h1>
+  
+  <div style="display:flex;gap:2rem;">
+    <div><h2 style="color:#10b981;"><%= @batches %></h2><p>Active Batches</p></div>
+    <div><h2 style="color:#f59e0b;"><%= @vehicles %></h2><p>Live Vehicles</p></div>
+    <div><h2 style="color:#ef4444;"><%= @revenue %></h2><p>Revenue</p></div>
+  </div>
+  
+  <div style="margin:2rem 0;">
+    <h3 style="color:#6b7280;">🚛 Fleet Status</h3>
+    <p>PHX-001 → Scottsdale (ETA 8min)</p>
+    <p>PHX-002 → Tempe (ETA 12min)</p>
+  </div>
+</body>
+</html>
