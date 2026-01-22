@@ -1,6 +1,7 @@
 port        ENV.fetch("PORT") { 3000 }
-environment ENV.fetch("RAILS_ENV") { "production" }
-threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
-threads threads_count, threads_count
-preload_app!
-workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+environment "production"
+threads     5, 5
+workers     2
+
+# DISABLE preload_app! for Render debugging
+# preload_app!
