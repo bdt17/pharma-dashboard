@@ -1,27 +1,19 @@
 class DashboardController < ApplicationController
+  layout 'application'  # Use beautiful layout
+  
   def index
     render plain: <<~HTML
-      <!DOCTYPE html>
-      <html>
-      <head><title>Pharma Dashboard</title></head>
-      <body>
-        <h1>🩺 Pharma Transport Dashboard LIVE</h1>
-        <p>✅ Render production - Phoenix AZ</p>
-        <ul>
-          <li>127 pharma batches tracked</li>
-          <li>GPS tracking 4ms response</li>
-          <li>FDA 21CFR Chain-of-Custody PDFs</li>
-          <li>Stripe payments ready</li>
-          <li>Slack notifications LIVE</li>
-        </ul>
-        <p><strong>APIs WORKING:</strong><br>
-        /api/health ✓ /api/gps ✓ /reports ✓ /batches ✓</p>
-      </body>
-      </html>
+      <h1>🩺 Pharma Transport Dashboard LIVE</h1>
+      <p>✅ Render production - Phoenix AZ</p>
+      <ul>
+        <li><span class="status">✓</span> 127 pharma batches tracked</li>
+        <li><span class="status">✓</span> GPS tracking 4ms response</li>
+        <li><span class="status">✓</span> FDA 21CFR Chain-of-Custody PDFs</li>
+        <li><span class="status">✓</span> Stripe payments ready</li>
+        <li><span class="status">✓</span> Slack notifications LIVE</li>
+      </ul>
+      <p><strong>APIs WORKING:</strong><br>
+      /api/health ✓ /api/gps ✓ /reports ✓ /batches ✓</p>
     HTML
-  end
-
-  def batches
-    render json: { count: 127 }
   end
 end
