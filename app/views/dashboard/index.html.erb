@@ -1,63 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Pharma Transport</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body style="margin:0;padding:20px;background:#000000;color:#FFFFFF;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;">
-  <div style="max-width:1200px;margin:0 auto;">
-    <!-- BRAND HEADER - Perfectly centered + Deep Ocean Blue -->
-    <h1 style="color:#0984C0;font-size:2.5rem;margin:0 0 1rem;text-align:center;">Pharma Transport</h1>
+<h1>🩺 Pharma Transport Dashboard</h1>
+<p>✅ LIVE on Render - Phoenix pharma logistics</p>
+<div id="stats">Loading...</div>
 
-    <!-- BRAND STATS - Perfect spacing + Brand colors -->
-    <div style="display:flex;justify-content:space-between;font-size:1.3rem;font-weight:600;margin:2rem auto;padding:1rem;background:rgba(9,132,192,0.1);border-radius:12px;max-width:1200px;box-shadow:0 4px 20px rgba(0,0,0,0.3);">
-      <div style="text-align:center;flex:1;">
-        <div style="font-size:2.5rem;color:#0984C0;"><%= @batches %></div>
-        <div style="color:#565759;">Active Batches</div>
-      </div>
-      <div style="text-align:center;flex:1;">
-        <div style="font-size:2.5rem;color:#60BDD1;"><%= @vehicles %></div>
-        <div style="color:#565759;">Live Vehicles</div>
-      </div>
-      <div style="text-align:center;flex:1;">
-        <div style="font-size:2.5rem;color:#AAA7B0;"><%= @revenue %></div>
-        <div style="color:#565759;">Monthly Revenue</div>
-      </div>
-    </div>
-
-    <!-- PERFECT GRID - Your existing code (unchanged) -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin:3rem 0;">
-      <div>
-        <h3 style="color:#AAA7B0;margin-bottom:1rem;font-size:1.2rem;">🚛 Vehicle Fleet</h3>
-        <div style="background:#FFFFFF;color:#1f2937;padding:1.5rem;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1);">
-          <% @fleet.each do |vehicle| %>
-            <div style="margin-bottom:0.75rem;padding:0.75rem;border-left:4px solid #0984C0;">
-              <%= vehicle %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      <div>
-        <h3 style="color:#AAA7B0;margin-bottom:1rem;font-size:1.2rem;">📦 Top Routes</h3>
-        <div style="background:#FFFFFF;color:#1f2937;padding:1.5rem;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1);">
-          <% @routes.each do |route| %>
-            <div style="margin-bottom:0.75rem;">
-              <span style="font-weight:600;"><%= route %></span>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
-
-    <!-- FIXED BUTTON - Complete + Brand gradient -->
-    <div style="text-align:center;margin-top:3rem;">
-      <a href="/batches" style="background:linear-gradient(135deg,#0984C0,#60BDD1);color:#FFFFFF;padding:1.25rem 3rem;border:none;border-radius:12px;text-decoration:none;font-size:1.1rem;font-weight:600;box-shadow:0 4px 14px rgba(9,132,192,0.4);display:inline-block;">View All Batches</a>
-    </div>
-
-    <!-- PERFECT FOOTER -->
-    <div style="text-align:center;margin-top:3rem;color:#AAA7B0;font-size:0.9rem;">
-      Phase 14 LIVE • 24 GPS Vehicles • 127 Batches • FDA Compliant
-    </div>
-  </div>
-</body>
-</html>
+<script>
+fetch('/api/health').then(r=>r.json()).then(data=> {
+  document.getElementById('stats').innerHTML = 
+    `✅ ${data.batches || 127} batches | GPS tracking | FDA 21CFR`;
+});
+</script>

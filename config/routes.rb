@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "dashboard/index"
+  get "dashboard/batches"
   get '/api/health', to: 'health#show'
   post '/api/gps', to: 'gps#update'
   get '/reports/chain-of-custody/:id', to: 'reports#chain_of_custody', as: :chain_of_custody
