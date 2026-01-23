@@ -44,5 +44,3 @@ gem "factory_bot_rails", "~> 6.5"
 gem "shoulda-matchers", "~> 7.0"
 gem "capybara", "~> 3.40", group: :test
 gem "selenium-webdriver", "~> 4.39", group: :test
-gem 'prawn'
-gem 'matrix', '~> 0.4'
