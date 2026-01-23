@@ -335,6 +335,7 @@ DEPENDENCIES
   image_processing
   jwt
   lograge
+  matrix (~> 0.4)
   pg (~> 1.6)
   playwright-ruby-client (~> 1.57)
   prawn
