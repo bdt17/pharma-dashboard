@@ -1,28 +1,19 @@
 Rails.application.routes.draw do
-  namespace :api do
+  # API v1 namespace (JSON only)
+  namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      get "gps/update"
+      post "/gps", to: "gps#update"
+      get  "/vehicles/:id", to: "vehicles#show"
     end
   end
-  # BULLETPROOF ROOT - use dashboard (already working)
-  root 'dashboard#index'
 
-  # Keep all working APIs
+  # Working APIs (keep these)
   get '/api/health', to: 'health#show'
-  post '/api/gps', to: 'gps#update'
-  get '/reports/chain-of-custody/:id', to: 'reports#chain_of_custody', as: :chain_of_custody
   get '/batches', to: 'batches#index'
-  get '/vehicles/:id', to: 'vehicles#show'
-end
-
-namespace :api, defaults: { format: :json } do
-  namespace :v1 do
-    post "/gps", to: "gps#update"
-  end
-end
-
-namespace :api, defaults: { format: :json } do
-  namespace :v1 do
-    post "/gps", to: "gps#update"
-  end
+  
+  # FDA Chain of Custody
+  get '/reports/chain-of-custody/:id', to: 'reports#chain_of_custody', as: :chain_of_custody
+  
+  # Root dashboard
+  root 'dashboard#index'
 end
