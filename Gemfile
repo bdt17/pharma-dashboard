@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem "stripe", "~> 12.9"
+gem "stripe", "~> 12.6"
 
 
 gem "rails", "~> 8.1.1"
