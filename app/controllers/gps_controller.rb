@@ -1,6 +1,6 @@
 class GpsController < ApplicationController
   def update
-    gps_params = params.permit(:lat, :lng, :batch)
+    gps_params = params.permit(:lat, :lng, :batch)  # ← STRONG PARAMS
     render json: {
       status: 'received',
       lat: gps_params[:lat],
