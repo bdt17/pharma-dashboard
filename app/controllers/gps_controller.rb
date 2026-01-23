@@ -1,8 +1,6 @@
 class GpsController < ApplicationController
   def update
-    # Thomas IT GPS strong params - Phoenix AZ pharma tracking
     gps_params = params.permit(:lat, :lng, :batch)
-    
     render json: {
       status: 'received',
       lat: gps_params[:lat],
