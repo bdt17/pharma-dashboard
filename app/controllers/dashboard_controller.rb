@@ -1,19 +1,7 @@
 class DashboardController < ApplicationController
-  layout 'application'  # Use beautiful layout
-  
+  layout 'application'
+
   def index
-    render plain: <<~HTML
-      <h1>🩺 Pharma Transport Dashboard LIVE</h1>
-      <p>✅ Render production - Phoenix AZ</p>
-      <ul>
-        <li><span class="status">✓</span> 127 pharma batches tracked</li>
-        <li><span class="status">✓</span> GPS tracking 4ms response</li>
-        <li><span class="status">✓</span> FDA 21CFR Chain-of-Custody PDFs</li>
-        <li><span class="status">✓</span> Stripe payments ready</li>
-        <li><span class="status">✓</span> Slack notifications LIVE</li>
-      </ul>
-      <p><strong>APIs WORKING:</strong><br>
-      /api/health ✓ /api/gps ✓ /reports ✓ /batches ✓</p>
-    HTML
+    # Uses app/views/dashboard/index.html.erb
   end
 end
