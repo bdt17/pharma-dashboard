@@ -1,83 +1,79 @@
 <div class="dashboard">
-  <!-- Header + Live Stats -->
-  <header class="header">
-    <h1>🩺 Pharma Transport Dashboard</h1>
-    <div class="live-stats">
-      <div class="stat">
-        <div class="stat-number">24</div>
-        <div class="stat-label">Vehicles</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">127</div>
-        <div class="stat-label">Batches</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">$12K</div>
-        <div class="stat-label">Revenue</div>
-      </div>
+  <h1 class="logo">💉 PHARMA TRANSPORT</h1>
+  <h2 class="subtitle">Thomas Information Technology · Phoenix AZ</h2>
+  
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">Vehicles Live</div>
+      <div class="card-main">24</div>
     </div>
-  </header>
-
-  <!-- Feature Cards -->
-  <div class="cards">
-    <div class="card gps">
-      <div class="card-icon">🛰️</div>
-      <h3>GPS Tracking</h3>
-      <p>33.4484°N, 112.0740°W<br>Phoenix AZ → Pfizer Insulin</p>
-      <a href="#" class="card-link">View Map →</a>
+    <div class="card">
+      <div class="card-title">Batches Active</div>
+      <div class="card-main">127</div>
     </div>
-    
-    <div class="card reports">
-      <div class="card-icon">📄</div>
-      <h3>FDA Reports</h3>
-      <p>21CFR Chain-of-Custody<br>Download PDFs</p>
-      <a href="/reports/chain-of-custody/B001" class="card-link">B001 PDF →</a>
+    <div class="card">
+      <div class="card-title">Monthly Revenue</div>
+      <div class="card-main">$12K</div>
     </div>
-    
-    <div class="card payments">
-      <div class="card-icon">💳</div>
-      <h3>Stripe Payments</h3>
-      <p>$12K revenue tracked<br>Ready for production</p>
-      <a href="#" class="card-link">Process Payment →</a>
+    <div class="card">
+      <div class="card-title">APIs</div>
+      <div class="card-main">5/5 ✓</div>
     </div>
+  </div>
+  
+  <div class="badge">
+    ✅ FDA 21 CFR Part 11 Compliant · 
+    <a href="/reports/chain-of-custody/B001">B001 Chain of Custody →</a>
   </div>
 </div>
 
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { 
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
-    color: white; 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    min-height: 100vh;
-  }
-  
-  .dashboard { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-  
-  .header { text-align: center; margin-bottom: 3rem; }
-  .header h1 { font-size: 3rem; background: linear-gradient(135deg, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem; }
-  
-  .live-stats { display: flex; justify-content: center; gap: 4rem; }
-  .stat { text-align: center; }
-  .stat-number { font-size: 3rem; font-weight: 700; color: #10b981; }
-  .stat-label { font-size: 1rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
-  
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
-  .card { 
-    background: rgba(255,255,255,0.05); 
-    backdrop-filter: blur(10px); 
-    border: 1px solid rgba(255,255,255,0.1); 
-    border-radius: 20px; padding: 2rem; 
-    transition: all 0.3s ease; 
-  }
-  .card:hover { transform: translateY(-10px); border-color: #10b981; }
-  .card-icon { font-size: 3rem; margin-bottom: 1rem; }
-  .card h3 { color: #3b82f6; font-size: 1.5rem; margin-bottom: 1rem; }
-  .card p { opacity: 0.8; margin-bottom: 1.5rem; }
-  .card-link { 
-    color: #10b981; text-decoration: none; 
-    font-weight: 600; border-bottom: 2px solid transparent; 
-    transition: all 0.2s;
-  }
-  .card-link:hover { border-color: #10b981; }
+:root {
+  --primary-blue: #0984C0;
+  --lighter-blue: #60BDD1;
+  --silver-sand: #C0BEC6;
+  --metallic-silver: #AAA7B0;
+  --davy-grey: #565759;
+  --white: #FFFFFF;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--lighter-blue) 100%);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 16px;
+}
+
+.dashboard { max-width: 1100px; width: 100%; }
+.logo { font-size: 2.5rem; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.35); }
+.subtitle { font-size: 1.1rem; color: var(--silver-sand); margin-top: 8px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 32px; }
+.card {
+  background: rgba(255,255,255,0.96);
+  border-radius: 18px;
+  border: 1px solid var(--metallic-silver);
+  padding: 20px;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.25);
+  color: var(--davy-grey);
+  transition: all 0.15s ease-out;
+}
+.card:hover { transform: translateY(-2px); border-color: var(--primary-blue); }
+.card-title { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--metallic-silver); margin-bottom: 8px; }
+.card-main { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
+.link-primary { color: var(--lighter-blue); font-weight: 600; }
+.badge {
+  margin-top: 28px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.94);
+  border: 2px solid var(--primary-blue);
+  color: var(--davy-grey);
+  font-size: 0.95rem;
+}
+.badge a { color: var(--primary-blue); font-weight: 600; }
 </style>
