@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_21_204600) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_23_214353) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -40,7 +40,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_204600) do
     t.string "status"
     t.float "temperature_celsius"
     t.datetime "updated_at", null: false
+    t.bigint "vehicle_id", null: false
     t.index ["lot"], name: "index_batches_on_lot", unique: true
+    t.index ["vehicle_id"], name: "index_batches_on_vehicle_id"
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -135,5 +137,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_204600) do
   end
 
   add_foreign_key "audit_logs", "batches"
+  add_foreign_key "batches", "vehicles"
   add_foreign_key "orders", "patients"
 end
