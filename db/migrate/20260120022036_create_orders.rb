@@ -1,7 +1,7 @@
 class CreateOrders < ActiveRecord::Migration[8.1]
   def change
     create_table :orders do |t|
-      t.references :pharmacy, null: false, foreign_key: true
+      t.bigint :pharmacy_id  # Disable FK temporarily
       t.references :patient, null: false, foreign_key: true
       t.string :status
       t.string :tracking_id
