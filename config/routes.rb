@@ -1,13 +1,21 @@
 Rails.application.routes.draw do
-  get "dashboard/index"
-  get "dashboard/batches"
+  get "home/index"
+  # Landing page (public - root)
+  root 'home#index'
+
+  # Dashboard (separate route)
+  get '/dashboard', to: 'dashboard#index'
+
+  # API endpoints (PRODUCTION WORKING)
   get '/api/health', to: 'health#show'
   post '/api/gps', to: 'gps#update'
+
+  # FDA Reports
   get '/reports/chain-of-custody/:id', to: 'reports#chain_of_custody', as: :chain_of_custody
-  get "/batches", to: "batches#index"
-# #   # devise_for :users  # ← COMMENTED OUT (no User model)
-  root "dashboard#index"
-  get '/dashboard', to: 'dashboard#index'
-  get '/batches', to: 'dashboard#batches'
+
+  # Batches
+  get '/batches', to: 'batches#index'
+
+  # Vehicles
   get '/vehicles/:id', to: 'vehicles#show'
 end
