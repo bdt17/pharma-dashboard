@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.1].define(version: 2026_01_21_204600) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "alerts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -19,17 +22,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_204600) do
   end
 
   create_table "audit_logs", force: :cascade do |t|
-    t.integer "batch_id"
+    t.bigint "batch_id"
     t.datetime "created_at", null: false
     t.json "data"
     t.string "event", null: false
     t.string "ip_address", limit: 45
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
     t.index ["batch_id"], name: "index_audit_logs_on_batch_id"
     t.index ["event"], name: "index_audit_logs_on_event"
     t.index ["ip_address"], name: "index_audit_logs_on_ip_address"
-    t.index ["user_id"], name: "index_audit_logs_on_user_id"
   end
 
   create_table "batches", force: :cascade do |t|
@@ -57,8 +58,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_204600) do
     t.datetime "recorded_at"
     t.float "speed"
     t.datetime "updated_at", null: false
-    t.integer "vehicle_id", null: false
-    t.index ["vehicle_id"], name: "index_location_points_on_vehicle_id"
+    t.bigint "vehicle_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -74,13 +74,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_204600) do
 
   create_table "orders", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.integer "patient_id", null: false
-    t.integer "pharmacy_id", null: false
+    t.bigint "patient_id", null: false
+    t.bigint "pharmacy_id"
     t.string "status"
     t.string "tracking_id"
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_orders_on_patient_id"
-    t.index ["pharmacy_id"], name: "index_orders_on_pharmacy_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -127,18 +126,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_204600) do
   end
 
   create_table "vehicles", force: :cascade do |t|
-    t.integer "batch_id"
     t.datetime "created_at", null: false
-    t.float "heading"
-    t.float "lat"
-    t.float "lng"
-    t.float "speed"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "name"
+    t.string "status"
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "audit_logs", "batches"
-  add_foreign_key "audit_logs", "users"
-  add_foreign_key "location_points", "vehicles"
   add_foreign_key "orders", "patients"
-  add_foreign_key "orders", "pharmacies"
 end
