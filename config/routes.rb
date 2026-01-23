@@ -20,3 +20,9 @@ namespace :api, defaults: { format: :json } do
     post "/gps", to: "gps#update"
   end
 end
+
+namespace :api, defaults: { format: :json } do
+  namespace :v1 do
+    post "/gps", to: "gps#update"
+  end
+end
