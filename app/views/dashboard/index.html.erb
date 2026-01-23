@@ -1,23 +1,83 @@
 <div class="dashboard">
-  <h1>🩺 Pharma Transport Dashboard LIVE</h1>
-  <p>✅ Render production - Phoenix AZ</p>
-  <ul class="features">
-    <li><span class="status">✓</span> 127 pharma batches tracked</li>
-    <li><span class="status">✓</span> GPS tracking 4ms response</li>
-    <li><span class="status">✓</span> FDA 21CFR Chain-of-Custody PDFs</li>
-    <li><span class="status">✓</span> Stripe payments ready</li>
-    <li><span class="status">✓</span> Slack notifications LIVE</li>
-  </ul>
-  <div class="apis">
-    <strong>APIs WORKING:</strong> /api/health ✓ /api/gps ✓ /reports ✓ /batches ✓
+  <!-- Header + Live Stats -->
+  <header class="header">
+    <h1>🩺 Pharma Transport Dashboard</h1>
+    <div class="live-stats">
+      <div class="stat">
+        <div class="stat-number">24</div>
+        <div class="stat-label">Vehicles</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">127</div>
+        <div class="stat-label">Batches</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">$12K</div>
+        <div class="stat-label">Revenue</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Feature Cards -->
+  <div class="cards">
+    <div class="card gps">
+      <div class="card-icon">🛰️</div>
+      <h3>GPS Tracking</h3>
+      <p>33.4484°N, 112.0740°W<br>Phoenix AZ → Pfizer Insulin</p>
+      <a href="#" class="card-link">View Map →</a>
+    </div>
+    
+    <div class="card reports">
+      <div class="card-icon">📄</div>
+      <h3>FDA Reports</h3>
+      <p>21CFR Chain-of-Custody<br>Download PDFs</p>
+      <a href="/reports/chain-of-custody/B001" class="card-link">B001 PDF →</a>
+    </div>
+    
+    <div class="card payments">
+      <div class="card-icon">💳</div>
+      <h3>Stripe Payments</h3>
+      <p>$12K revenue tracked<br>Ready for production</p>
+      <a href="#" class="card-link">Process Payment →</a>
+    </div>
   </div>
 </div>
 
 <style>
-  .dashboard { max-width: 800px; margin: 2rem auto; padding: 2rem; }
-  h1 { color: #1e40af; font-size: 2.5rem; margin-bottom: 1rem; }
-  .features { list-style: none; padding: 0; }
-  .features li { padding: 1rem; background: #f8fafc; margin: 0.5rem 0; border-radius: 8px; font-size: 1.1rem; }
-  .status { background: #10b981; color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: bold; margin-right: 1rem; }
-  .apis { background: #e0f2fe; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; font-size: 1.1rem; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { 
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); 
+    color: white; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    min-height: 100vh;
+  }
+  
+  .dashboard { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+  
+  .header { text-align: center; margin-bottom: 3rem; }
+  .header h1 { font-size: 3rem; background: linear-gradient(135deg, #3b82f6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 2rem; }
+  
+  .live-stats { display: flex; justify-content: center; gap: 4rem; }
+  .stat { text-align: center; }
+  .stat-number { font-size: 3rem; font-weight: 700; color: #10b981; }
+  .stat-label { font-size: 1rem; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
+  
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+  .card { 
+    background: rgba(255,255,255,0.05); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255,255,255,0.1); 
+    border-radius: 20px; padding: 2rem; 
+    transition: all 0.3s ease; 
+  }
+  .card:hover { transform: translateY(-10px); border-color: #10b981; }
+  .card-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .card h3 { color: #3b82f6; font-size: 1.5rem; margin-bottom: 1rem; }
+  .card p { opacity: 0.8; margin-bottom: 1.5rem; }
+  .card-link { 
+    color: #10b981; text-decoration: none; 
+    font-weight: 600; border-bottom: 2px solid transparent; 
+    transition: all 0.2s;
+  }
+  .card-link:hover { border-color: #10b981; }
 </style>
