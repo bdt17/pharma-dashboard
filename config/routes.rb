@@ -3,8 +3,10 @@ Rails.application.routes.draw do
   get 'gps/update'
   get 'gps/stream'
   
-  # PHASE 2 GPS API
-  post '/api/gps', to: 'gps#update'
-  get '/api/gps/stream', to: 'gps#stream'
-  get '/api/health', to: 'gps#health'
+  # Thomas IT Pharma Transport GPS API v8.1
+  namespace :api do
+    post '/gps', to: 'gps#update'
+    get '/gps/stream', to: 'gps#stream'
+    get '/health', to: 'gps#health'
+  end
 end
