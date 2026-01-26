@@ -48,4 +48,3 @@ gem "capybara", "~> 3.40", group: :test
 gem "selenium-webdriver", "~> 4.39", group: :test
 
 
-gem 'sse-rails'
