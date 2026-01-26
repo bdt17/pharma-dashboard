@@ -8,6 +8,8 @@ gem "rails", "~> 8.1.1"
 gem "bootsnap", require: false
 gem "puma"
 gem "pg", "~> 1.6"
+gem 'rake', '~> 13.2.1'
+
 
 # Auth (ONE devise only)
 gem "devise"
@@ -44,3 +46,5 @@ gem "factory_bot_rails", "~> 6.5"
 gem "shoulda-matchers", "~> 7.0"
 gem "capybara", "~> 3.40", group: :test
 gem "selenium-webdriver", "~> 4.39", group: :test
+
+
