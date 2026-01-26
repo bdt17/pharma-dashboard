@@ -324,6 +324,7 @@ GEM
     sqlite3 (2.9.0-x86_64-darwin)
     sqlite3 (2.9.0-x86_64-linux-gnu)
     sqlite3 (2.9.0-x86_64-linux-musl)
+    sse-rails (0.0.2)
     stringio (3.2.0)
     stripe (12.6.0)
     thor (1.5.0)
@@ -384,6 +385,7 @@ DEPENDENCIES
   sentry-rails
   shoulda-matchers (~> 7.0)
   sqlite3 (~> 2.0)
+  sse-rails
   stripe (~> 12.6)
   wicked_pdf (~> 2.8)
   wkhtmltopdf-binary (~> 0.12.6)
@@ -519,6 +521,7 @@ CHECKSUMS
   sqlite3 (2.9.0-x86_64-darwin) sha256=59fe51baa3cb33c36d27ce78b4ed9360cd33ccca09498c2ae63850c97c0a6026
   sqlite3 (2.9.0-x86_64-linux-gnu) sha256=72fff9bd750070ba3af695511ba5f0e0a2d8a9206f84869640b3e99dfaf3d5a5
   sqlite3 (2.9.0-x86_64-linux-musl) sha256=ef716ba7a66d7deb1ccc402ac3a6d7343da17fac862793b7f0be3d2917253c90
+  sse-rails (0.0.2) sha256=efe95b6045784468b458a61975720b74500e5cc30dd99cb9057a5eebec7775ce
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
   stripe (12.6.0) sha256=115f074872c8ae72e3279e9fa25db748e92c7160c0748c5a4605fe3a2e29a478
   thor (1.5.0) sha256=e3a9e55fe857e44859ce104a84675ab6e8cd59c650a49106a05f55f136425e73
