@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get '/', to: proc { [200, {'Content-Type' => 'text/html'}, [<<~HTML]] }
+  get '/', to: proc { [200, {'Content-Type' => 'text/html'}, [<<~HTML.html_safe]] }
     <!DOCTYPE html>
     <html>
     <head><title>Thomas IT Pharma Transport</title></head>
@@ -31,6 +31,6 @@ Rails.application.routes.draw do
     </html>
   HTML
   }
-  
+
   get '/status', to: proc { [200, {'Content-Type' => 'text/plain'}, ['Thomas IT Pharma Transport - All systems operational']] }
 end
