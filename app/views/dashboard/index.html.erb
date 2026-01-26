@@ -1,30 +1,135 @@
-<div style="background:black;color:white;font-family:'Courier New',monospace;padding:40px;display:flex;justify-content:center;align-items:center;min-height:100vh;">
-  <h1 style="color:#0984C0;font-size:3rem;margin:0;font-weight:700;letter-spacing:0.1em;text-shadow:0 2px 8px rgba(9,132,192,0.5);">💉 PHARMA TRANSPORT</h1>
-  <h2 style="color:#C0BEC6;font-size:1.2rem;margin:10px 0;">Thomas Information Technology · Phoenix AZ</h2>
-  
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin:40px 0;max-width:1100px;width:100%;">
-    <div style="background:rgba(255,255,255,0.1);border:1px solid #0984C0;border-radius:8px;padding:20px;text-align:center;">
-      <div style="font-size:0.9rem;color:#C0BEC6;text-transform:uppercase;margin-bottom:8px;">Vehicles Live</div>
-      <div style="font-size:2.2rem;font-weight:700;color:#0984C0;">24</div>
-    <div style="background:rgba(255,255,255,0.1);border:1px solid #0984C0;border-radius:8px;padding:20px;text-align:center;">
-      <div style="font-size:0.9rem;color:#C0BEC6;text-transform:uppercase;margin-bottom:8px;">Batches Active</div>
-      <div style="font-size:2.2rem;font-weight:700;color:#0984C0;">127</div>
-    </div>
-    <div style="background:rgba(255,255,255,0.1);border:1px solid #0984C0;border-radius:8px;padding:20px;text-align:center;">
-      <div style="font-size:0.9rem;color:#C0BEC6;text-transform:uppercase;margin-bottom:8px;">Monthly Revenue</div>
-      <div style="font-size:2.2rem;font-weight:700;color:#0984C0;">$12K</div>
-    </div>
-    <div style="background:rgba(255,255,255,0.1);border:1px solid #0984C0;border-radius:8px;padding:20px;text-align:center;">
-      <div style="font-size:0.9rem;color:#C0BEC6;text-transform:uppercase;margin-bottom:8px;">APIs</div>
-      <div style="font-size:2.2rem;font-weight:700;color:#0984C0;">5/5 ✓</div>
-    </div>
-
-    </div>
-    <!-- Copy this exact div structure for other 3 cards, NO backdrop-filter -->
+<!DOCTYPE html>
+<html style="height:100%;">
+<head>
+  <title>Pharma Transport</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { 
+      background: #000; 
+      color: #fff; 
+      font-family: 'Courier New', monospace; 
+      height: 100vh; 
+      overflow: hidden;
+    }
+    .header {
+      position: fixed; top:0; left:0; right:0; 
+      background: rgba(0,0,0,0.9); 
+      padding: 20px; 
+      display: flex; 
+      justify-content: space-between; 
+      z-index: 100;
+    }
+    .logo { 
+      font-size: 2rem; 
+      color: #0984C0; 
+      font-weight: bold;
+    }
+    .portal-grid {
+      position: absolute; 
+      top: 100px; 
+      left: 20px; 
+      display: grid; 
+      gap: 20px;
+    }
+    .portal-card {
+      background: rgba(9,132,192,0.1); 
+      border: 2px solid #0984C0; 
+      border-radius: 12px; 
+      padding: 25px; 
+      width: 280px;
+      backdrop-filter: blur(10px);
+    }
+    .portal-title { 
+      color: #60BDD1; 
+      font-size: 1.1rem; 
+      margin-bottom: 15px;
+    }
+    .metric-grid {
+      position: absolute; 
+      top: 50%; 
+      right: 40px; 
+      transform: translateY(-50%);
+      display: grid; 
+      grid-template-columns: repeat(2, 140px); 
+      gap: 20px;
+    }
+    .metric-card {
+      background: rgba(9,132,192,0.15); 
+      border: 1px solid #0984C0; 
+      border-radius: 8px; 
+      padding: 20px; 
+      text-align: center;
+    }
+    .metric-label { 
+      color: #C0BEC6; 
+      font-size: 0.85rem; 
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .metric-value { 
+      color: #0984C0; 
+      font-size: 2rem; 
+      font-weight: bold;
+    }
+    .scale-btn {
+      position: fixed; 
+      bottom: 40px; 
+      right: 40px; 
+      background: linear-gradient(45deg, #0984C0, #60BDD1); 
+      border: none; 
+      border-radius: 50px; 
+      padding: 15px 30px; 
+      color: white; 
+      font-weight: bold; 
+      font-size: 1rem; 
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(9,132,192,0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">💉 Pharma Transport</div>
+    <div>Thomas Information Technology · Phoenix AZ</div>
   </div>
   
-  <div style="padding:15px 20px;border:2px solid #0984C0;background:rgba(9,132,192,0.2);border-radius:8px;font-size:1rem;font-family:'Courier New',monospace;">
-    ✅ FDA 21 CFR Part 11 Compliant · 
-    <a href="mailto:sales@thomasinformationtechnology.com" style="color:#60BDD1;font-weight:600;text-decoration:none;">Contact Thomas IT →</a>
+  <div class="portal-grid">
+    <div class="portal-card">
+      <div class="portal-title">🏥 Pharmacist Portal</div>
+      <div>Batch management</div>
+      <div>FDA compliance</div>
+      <div>Real-time tracking</div>
+    </div>
+    <div class="portal-card">
+      <div class="portal-title">👤 Patient App</div>
+      <div>Delivery status</div>
+      <div>ETA notifications</div>
+      <div>Proof of delivery</div>
+    </div>
   </div>
-</div>
+  
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Live Vehicles</div>
+      <div class="metric-value">24</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Active Batches</div>
+      <div class="metric-value">127</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Monthly Revenue</div>
+      <div class="metric-value">$12K</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">APIs</div>
+      <div class="metric-value">5/5 ✓</div>
+    </div>
+  </div>
+  
+  <button class="scale-btn" onclick="window.open('mailto:sales@thomasinformationtechnology.com')">
+    Ready to Scale Your Pharma Network?
+  </button>
+</body>
+</html>
