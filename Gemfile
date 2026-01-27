@@ -25,8 +25,6 @@ gem "groupdate"
 gem "image_processing"
 
 # PDF - Use wicked_pdf (production stable)
-gem "wicked_pdf", "~> 2.8"
-gem "wkhtmltopdf-binary", "~> 0.12.6"
 
 # Compliance + Monitoring
 gem "audited"
@@ -49,3 +47,5 @@ gem "selenium-webdriver", "~> 4.39", group: :test
 
 
 gem 'solid_cable'
+gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary'
