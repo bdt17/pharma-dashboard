@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get '/api/gps/stream', to: 'gps#stream'
   get '/api/health', to: 'gps#health'
 
-end
+  get "/test-pdf", to: "reports/chain_of_custody#index"
+
+  end
