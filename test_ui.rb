@@ -34,13 +34,13 @@ puts "3️⃣ Layout → #{`curl -s #{URL} | grep -c 'PharmaTransport'`.strip !=
 puts "4️⃣ Thomas IT → #{`curl -s #{URL} | grep -c 'Thomas Information'`.strip != '0' ? '✅ PERFECT' : '❌ MISSING'}"
 
 puts "\n🛰️ PHASE 3: API ENDPOINTS"
-puts "✅ GPS POST:  #{test_endpoint('/api/gps', method: 'POST') ? '✅ 200 LIVE' : '🔄 DEPLOYING'}"
-puts "✅ GPS GET:   #{test_endpoint('/api/gps/stream') ? '✅ 200 LIVE' : '🔄 DEPLOYING'}" 
+puts "✅ GPS POST:  #{test_endpoint('/gps/update', method: 'POST') ? '✅ 200 LIVE' : '🔄 DEPLOYING'}"
+puts "✅ GPS GET:   #{test_endpoint('/gps/update/stream') ? '✅ 200 LIVE' : '🔄 DEPLOYING'}" 
 puts "✅ Health:    #{test_endpoint('/api/health') ? '✅ 200 LIVE' : '🔄 DEPLOYING'}"
 
 puts "\n💉 LIVE GPS TESTS (Copy/paste these exactly)"
-puts "curl -X POST \"#{URL}/api/gps?imei=GV55-001&lat=33.45&lng=-112.07\""
-puts "curl \"#{URL}/api/gps/stream\""
+puts "curl -X POST \"#{URL}/gps/update?imei=GV55-001&lat=33.45&lng=-112.07\""
+puts "curl \"#{URL}/gps/update/stream\""
 puts "curl \"#{URL}/api/health\""
 
 puts "\n🎯 THOMAS IT PHARMA = GPS READY"

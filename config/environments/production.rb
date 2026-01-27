@@ -23,3 +23,5 @@ Rails.application.configure do
   #config.active_job.queue_adapter = :solid_queue
   config.action_cable.allowed_request_origins = ['https://pharma-dashboard-8jhe.onrender.com']
 end
+config.hosts << "pharma-dashboard-beq2.onrender.com"
+config.hosts << "*.onrender.com"
