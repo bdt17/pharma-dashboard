@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
-  get "gps/update"
-  get "gps/stream"
   root 'dashboard#index'
+  get 'gps/update'
+  get 'gps/stream'
   
-  # Thomas IT GPS API - Phase 2 (Phoenix AZ)
+  # Thomas IT Pharma GPS API v8.1 - Phoenix AZ
   post '/api/gps', to: 'gps#update'
   get '/api/gps/stream', to: 'gps#stream'
-  
-  # Health check (Phase 3)
   get '/api/health', to: 'gps#health'
 end

@@ -7,30 +7,20 @@ class GpsController < ApplicationController
       lng: (params[:lng] || -112.0740).to_f.round(6),
       imei: params[:imei] || 'GV55-001',
       vehicles: 24,
-      fda_compliant: true,
-      thomas_it: 'Phoenix AZ Pharma Transport'
+      fda_compliant: true
     }
   end
-  
+
   def stream
     render json: {
       lat: 33.4484 + rand(-0.01..0.01),
       lng: -112.0740 + rand(-0.01..0.01),
-      vehicle: 'GV55-001',
       vehicles: 24,
-      active_batches: 127,
-      stream: true
+      active_batches: 127
     }
   end
-  
+
   def health
-    render json: { 
-      status: 'ok', 
-      rails: '8.1.1', 
-      gps: 'ready',
-      vehicles: 24,
-      uptime: Time.now.to_i - Rails.boot_time.to_i,
-      thomas_it: 'pharma-dashboard phoenix az'
-    }
+    render json: {status: 'ok', rails: '8.1.1', gps: 'ready', vehicles: 24}
   end
 end
