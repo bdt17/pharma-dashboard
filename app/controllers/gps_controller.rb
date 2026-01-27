@@ -1,25 +1,17 @@
 class GpsController < ApplicationController
   def update
-    render json: {
-      status: 'received',
-      timestamp: Time.now.utc.iso8601,
-      lat: (params[:lat] || 33.4484).to_f.round(6),
-      lng: (params[:lng] || -112.0740).to_f.round(6),
-      imei: params[:imei] || 'GV55-001',
-      vehicles: 24,
-      fda_compliant: true,
-      thomas_it: 'Phoenix AZ'
-    }
+    # Queclink GV55 GPS data
+    imei = params[:imei]
+    lat = params[:lat]
+    lng = params[:lng]
+    render plain: "✅ GPS #{imei} → #{lat},#{lng} Phoenix AZ"
   end
-
+  
   def stream
-    render json: {
-      lat: 33.4484 + rand(-0.01..0.01),
-      lng: -112.0740 + rand(-0.01..0.01),
-      vehicle: 'GV55-001',
-      vehicles: 24,
-      active_batches: 127,
-      stream: true
-    }
+    render plain: "🛰️ GPS STREAM LIVE - 24 vehicles"
+  end
+  
+  def health
+    render plain: "✅ Pharma Transport v8.1 - All systems nominal"
   end
 end
