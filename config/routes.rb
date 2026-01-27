@@ -7,5 +7,5 @@ Rails.application.routes.draw do
   post '/api/gps', to: 'gps#update'
   get '/api/gps/stream', to: 'gps#stream'
   get '/api/health', to: 'gps#health'
+  get "/test-pdf", to: "reports/chain_of_custody#index"
 end
-get "/test-pdf", to: "reports/chain_of_custody#index"
