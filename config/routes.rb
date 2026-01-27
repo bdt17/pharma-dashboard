@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :pharmacists
   root 'dashboard#index'
   get 'gps/update'
   get 'gps/stream'
