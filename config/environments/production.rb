@@ -24,4 +24,4 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins = ['https://pharma-dashboard-8jhe.onrender.com']
 end
 Rails.application.config.hosts << "pharma-dashboard-beq2.onrender.com"
-config.hosts << "*.onrender.com"
+Rails.application.config.hosts << "*.onrender.com"  ✅ CORRECT
