@@ -4,145 +4,60 @@
   <title>PharmaTransport - Thomas IT Phoenix AZ</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💉</text></svg>">
-  
 <style>
-    * { margin:0 !important; padding:0 !important; box-sizing:border-box !important; }
-    html, body { 
-      background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%) !important; 
-      color: #ffffff !important; 
-      font-family: 'Courier New', monospace !important; 
-      height: 100vh !important; 
-      overflow: hidden !important;
-    }
-    .container { 
-      display:flex; 
-      flex-direction:column; 
-      height:100vh; 
-      padding:20px; 
-      background:#000; 
-      position:relative;
-    }
-    .login-section { 
-      position:absolute; 
-      top:20px; 
-      right:20px; 
-      display:flex; 
-      gap:15px; 
-      z-index:100;
-    }
-  </style>
-  
-  <div class="text-center mb-8 pt-8 z-10 relative">
-    <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4 drop-shadow-lg">
-      💉PharmaTransport
-    </h1>
-    <h2 class="text-xl md:text-2xl font-semibold text-gray-300 mb-2 drop-shadow-md">
-      Thomas IT PHx AZ
-    </h2>
-    <p class="text-gray-400 text-lg drop-shadow-sm">Phoenix, Arizona • FDA 21 CFR Part 11 Compliant</p>
-  </div>
-
-    .login-btn { 
-      background:rgba(9,132,192,0.2); 
-      color:#60BDD1; 
-      padding:12px 24px; 
-      border:1px solid #0984C0; 
-      border-radius:25px; 
-      font-size:1rem; 
-      font-weight:500; 
-      transition:all 0.3s; 
-      cursor:pointer; 
-      text-decoration:none; 
-      display:inline-block;
-    }
-    .login-btn:hover { 
-      background:rgba(9,132,192,0.4); 
-      transform:translateY(-2px); 
-    }
-    .header { 
-      flex:0 0 120px; 
-      display:flex; 
-      justify-content:center; 
-      align-items:center; 
-      border-bottom:3px solid #0984C0; 
-      padding:20px 0; 
-      margin-top:60px;
-    }
-    .header h1 { font-size:3.5rem;color:#0984C0;font-weight:bold;text-shadow:0 0 20px #0984C0; }
-    .header span { color:#60BDD1;font-size:1.4rem;margin-left:100px;font-weight:300; }
-    .main { flex:1;display:flex;justify-content:center;align-items:center;gap:100px;padding:40px 0;min-height:500px; }
-    .portals { display:flex;gap:50px;align-items:flex-start;flex-wrap:wrap; }
-    .portal { 
-      background:linear-gradient(145deg,rgba(9,132,192,0.2),rgba(9,132,192,0.1)); 
-      border:2px solid #0984C0; 
-      border-radius:20px; 
-      padding:40px; 
-      width:380px; 
-      box-shadow:0 20px 40px rgba(9,132,192,0.3); 
-    }
-    .portal h2 { color:#60BDD1;font-size:1.6rem;font-weight:bold;margin-bottom:30px;text-shadow:0 0 10px #60BDD1; }
-    .portal ul { color:#C0BEC6;font-size:1.15rem;line-height:2.2;list-style:none; }
-    .portal li { margin-bottom:8px;padding-left:25px;position:relative; }
-    .portal li:before { content:"▸";color:#0984C0;position:absolute;left:0;font-weight:bold; }
-    .metrics { display:grid;grid-template-columns:repeat(2,200px);gap:40px;width:450px; }
-    .metric { 
-      background:rgba(9,132,192,0.25); 
-      border:2px solid #0984C0; 
-      border-radius:16px; 
-      padding:35px; 
-      text-align:center; 
-      transition:all 0.3s; 
-    }
-    .metric:hover { 
-      background:rgba(9,132,192,0.35); 
-      transform:translateY(-5px); 
-      box-shadow:0 15px 35px rgba(9,132,192,0.4); 
-    }
-    .metric-label { color:#C0BEC6;font-size:1.1rem;text-transform:uppercase;margin-bottom:20px;letter-spacing:1.5px;font-weight:500; }
-    .metric-value { color:#0984C0;font-size:3.8rem;font-weight:bold;text-shadow:0 0 15px #0984C0; }
-    .cta-section { 
-      position:fixed; 
-      bottom:40px; 
-      left:50%; 
-      transform:translateX(-50%); 
-      text-align:center; 
-      z-index:1000; 
-    }
-    .cta-button { 
-      background:linear-gradient(45deg,#0984C0,#60BDD1); 
-      color:white; 
-      padding:20px 60px; 
-      font-size:1.4rem; 
-      font-weight:bold; 
-      border:none; 
-      border-radius:50px; 
-      cursor:pointer; 
-      text-decoration:none; 
-      display:inline-block; 
-      box-shadow:0 15px 35px rgba(9,132,192,0.4); 
-      transition:all 0.3s; 
-      font-family:'Courier New',monospace;
-      text-transform:uppercase; 
-      letter-spacing:1px;
-    }
-    .cta-button:hover { 
-      background:linear-gradient(45deg,#60BDD1,#0984C0); 
-      transform:translateY(-3px); 
-      box-shadow:0 20px 45px rgba(9,132,192,0.6); 
-    }
-    @media (max-width:1200px) { 
-      .main { flex-direction:column;gap:60px; } 
-      .portals { flex-direction:column;align-items:center; } 
-      .metrics { grid-template-columns:1fr;gap:30px;width:400px; } 
-    }
-    @media (max-width:768px) { 
-      .header h1 { font-size:2.5rem; } 
-      .header span { display:none; } 
-      .portal { width:90vw;max-width:350px; } 
-      .metric { padding:25px; } 
-      .metric-value { font-size:2.8rem; } 
-    }
-  </style>
+* { margin:0 !important; padding:0 !important; box-sizing:border-box !important; }
+html, body {
+  background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%) !important;
+  color: #ffffff !important;
+  font-family: 'Courier New', monospace !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+.container { display:flex; flex-direction:column; height:100vh; padding:20px; background:#000; position:relative; }
+.login-section { position:absolute; top:20px; right:20px; display:flex; gap:15px; z-index:100; }
+.login-btn { 
+  background:rgba(9,132,192,0.2); color:#60BDD1; padding:12px 24px; border:1px solid #0984C0; 
+  border-radius:25px; font-size:1rem; font-weight:500; transition:all 0.3s; cursor:pointer; 
+  text-decoration:none; display:inline-block; font-family:'Courier New',monospace;
+}
+.login-btn:hover { background:rgba(9,132,192,0.4); transform:translateY(-2px); }
+.header { 
+  flex:0 0 120px; display:flex; justify-content:center; align-items:center; 
+  border-bottom:3px solid #0984C0; padding:20px 0; margin-top:60px; 
+}
+.header h1 { font-size:3.5rem; color:#0984C0; font-weight:bold; text-shadow:0 0 20px #0984C0; }
+.header span { color:#60BDD1; font-size:1.4rem; margin-left:100px; font-weight:300; }
+.main { flex:1; display:flex; justify-content:center; align-items:center; gap:100px; padding:40px 0; min-height:500px; }
+.portals { display:flex; gap:50px; align-items:flex-start; flex-wrap:wrap; }
+.portal { 
+  background:linear-gradient(145deg,rgba(9,132,192,0.2),rgba(9,132,192,0.1)); 
+  border:2px solid #0984C0; border-radius:20px; padding:40px; width:380px; 
+  box-shadow:0 20px 40px rgba(9,132,192,0.3); 
+}
+.portal h2 { color:#60BDD1; font-size:1.6rem; font-weight:bold; margin-bottom:30px; text-shadow:0 0 10px #60BDD1; }
+.portal ul { color:#C0BEC6; font-size:1.15rem; line-height:2.2; list-style:none; }
+.portal li { margin-bottom:8px; padding-left:25px; position:relative; }
+.portal li:before { content:"▸"; color:#0984C0; position:absolute; left:0; font-weight:bold; }
+.metrics { display:grid; grid-template-columns:repeat(2,200px); gap:40px; width:450px; }
+.metric { 
+  background:rgba(9,132,192,0.25); border:2px solid #0984C0; border-radius:16px; 
+  padding:35px; text-align:center; transition:all 0.3s; 
+}
+.metric:hover { background:rgba(9,132,192,0.35); transform:translateY(-5px); box-shadow:0 15px 35px rgba(9,132,192,0.4); }
+.metric-label { color:#C0BEC6; font-size:1.1rem; text-transform:uppercase; margin-bottom:20px; letter-spacing:1.5px; font-weight:500; }
+.metric-value { color:#0984C0; font-size:3.8rem; font-weight:bold; text-shadow:0 0 15px #0984C0; }
+.cta-section { position:fixed; bottom:40px; left:50%; transform:translateX(-50%); text-align:center; z-index:1000; }
+.cta-button { 
+  background:linear-gradient(45deg,#0984C0,#60BDD1); color:white; padding:20px 60px; 
+  font-size:1.4rem; font-weight:bold; border:none; border-radius:50px; cursor:pointer; 
+  text-decoration:none; display:inline-block; box-shadow:0 15px 35px rgba(9,132,192,0.4); 
+  transition:all 0.3s; font-family:'Courier New',monospace; text-transform:uppercase; 
+  letter-spacing:1px; 
+}
+.cta-button:hover { background:linear-gradient(45deg,#60BDD1,#0984C0); transform:translateY(-3px); box-shadow:0 20px 45px rgba(9,132,192,0.6); }
+@media (max-width:1200px) { .main { flex-direction:column; gap:60px; } .portals { flex-direction:column; align-items:center; } .metrics { grid-template-columns:1fr; gap:30px; width:400px; } }
+@media (max-width:768px) { .header h1 { font-size:2.5rem; } .header span { display:none; } .portal { width:90vw; max-width:350px; } .metric { padding:25px; } .metric-value { font-size:2.8rem; } }
+</style>
 </head>
 <body>
   <div class="container">
