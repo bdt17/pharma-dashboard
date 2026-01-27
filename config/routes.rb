@@ -9,3 +9,4 @@ Rails.application.routes.draw do
   get '/api/health', to: 'gps#health'
   get "/test-pdf", to: "reports/chain_of_custody#index"
 end
+  get '/test-pdf', to: 'reports/chain_of_custody#index'
