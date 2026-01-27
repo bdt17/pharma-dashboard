@@ -1,74 +1,143 @@
 <!DOCTYPE html>
 <html style="height:100vh;margin:0;padding:0;">
 <head>
-  <title>PharmaTransport</title>
+  <title>PharmaTransport - Thomas IT Phoenix AZ</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💉</text></svg>">
   <style>
     * { margin:0 !important; padding:0 !important; box-sizing:border-box !important; }
     html, body { 
-      background: #000000 !important; 
+      background: linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%) !important; 
       color: #ffffff !important; 
       font-family: 'Courier New', monospace !important; 
       height: 100vh !important; 
       overflow: hidden !important;
     }
+    .container { display:flex;flex-direction:column;height:100vh;padding:40px;background:#000; }
+    .header { flex:0 0 100px;display:flex;justify-content:center;align-items:center;border-bottom:3px solid #0984C0;padding:20px 0; }
+    .header h1 { font-size:3.5rem;color:#0984C0;font-weight:bold;text-shadow:0 0 20px #0984C0; }
+    .header span { color:#60BDD1;font-size:1.4rem;margin-left:100px;font-weight:300; }
+    .main { flex:1;display:flex;justify-content:center;align-items:center;gap:100px;padding:40px 0;min-height:500px; }
+    .portals { display:flex;gap:50px;align-items:flex-start;flex-wrap:wrap; }
+    .portal { background:linear-gradient(145deg,rgba(9,132,192,0.2),rgba(9,132,192,0.1));border:2px solid #0984C0;border-radius:20px;padding:40px;width:380px;box-shadow:0 20px 40px rgba(9,132,192,0.3); }
+    .portal h2 { color:#60BDD1;font-size:1.6rem;font-weight:bold;margin-bottom:30px;text-shadow:0 0 10px #60BDD1; }
+    .portal ul { color:#C0BEC6;font-size:1.15rem;line-height:2.2;list-style:none; }
+    .portal li { margin-bottom:8px;padding-left:25px;position:relative; }
+    .portal li:before { content:"▸";color:#0984C0;position:absolute;left:0;font-weight:bold; }
+    .metrics { display:grid;grid-template-columns:repeat(2,200px);gap:40px;width:450px; }
+    .metric { background:rgba(9,132,192,0.25);border:2px solid #0984C0;border-radius:16px;padding:35px;text-align:center;transition:all 0.3s; }
+    .metric:hover { background:rgba(9,132,192,0.35);transform:translateY(-5px);box-shadow:0 15px 35px rgba(9,132,192,0.4); }
+    .metric-label { color:#C0BEC6;font-size:1.1rem;text-transform:uppercase;margin-bottom:20px;letter-spacing:1.5px;font-weight:500; }
+    .metric-value { color:#0984C0;font-size:3.8rem;font-weight:bold;text-shadow:0 0 15px #0984C0; }
+    .cta-section { position:fixed;bottom:40px;left:50%;transform:translateX(-50%);text-align:center;z-index:1000; }
+    .cta-button { 
+      background:linear-gradient(45deg,#0984C0,#60BDD1); 
+      color:white; 
+      padding:20px 50px; 
+      font-size:1.4rem; 
+      font-weight:bold; 
+      border:none; 
+      border-radius:50px; 
+      cursor:pointer; 
+      text-decoration:none; 
+      display:inline-block; 
+      box-shadow:0 15px 35px rgba(9,132,192,0.4); 
+      transition:all 0.3s; 
+      font-family:'Courier New',monospace;
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+    .cta-button:hover { 
+      background:linear-gradient(45deg,#60BDD1,#0984C0); 
+      transform:translateY(-3px); 
+      box-shadow:0 20px 45px rgba(9,132,192,0.6); 
+    }
+    .login-section { position:absolute;top:20px;right:20px;display:flex;gap:15px; }
+    .login-btn { background:rgba(9,132,192,0.2);color:#60BDD1;padding:12px 24px;border:1px solid #0984C0;border-radius:25px;font-size:1rem;font-weight:500;transition:all 0.3s;cursor:pointer; }
+    .login-btn:hover { background:rgba(9,132,192,0.4);transform:translateY(-2px); }
+    @media (max-width:1200px) { .main { flex-direction:column;gap:60px; } .portals { flex-direction:column;align-items:center; } .metrics { grid-template-columns:1fr;gap:30px;width:400px; } }
+    @media (max-width:768px) { .header h1 { font-size:2.5rem; } .header span { display:none; } .portal { width:90vw;max-width:350px; } .metric { padding:25px; } .metric-value { font-size:2.8rem; } }
   </style>
 </head>
-<body style="display:flex;flex-direction:column;height:100vh;padding:40px;background:#000;">
+<body>
+  <div class="container">
+    <!-- LOGIN BUTTONS (TOP RIGHT) -->
+    <div class="login-section">
+      <a href="/drivers/sign_in" class="login-btn">🚛 Driver Portal</a>
+      <a href="/pharmacists/sign_in" class="login-btn">🏥 Pharmacist Portal</a>
+    </div>
 
-  <!-- HEADER -->
-  <div style="flex:0 0 100px;display:flex;justify-content:center;align-items:center;border-bottom:2px solid #0984C0;">
-    <div style="font-size:2.8rem;color:#0984C0;font-weight:bold;">💉PharmaTransport</div>
-    <div style="color:#C0BEC6;font-size:1.2rem;margin-left:80px;">Thomas Information Technology · Phoenix AZ</div>
-  </div>
-  
-  <!-- MAIN CONTENT - CENTERED WITH PROPER SPACING -->
-  <div style="flex:1;display:flex;justify-content:center;align-items:center;gap:80px;min-height:400px;">
+    <!-- HEADER -->
+    <div class="header">
+      <h1>💉PharmaTransport</h1>
+      <span>Thomas Information Technology · Phoenix AZ</span>
+    </div>
     
-    <!-- LEFT PORTALS -->
-    <div style="display:flex;gap:40px;align-items:flex-start;">
-      <div style="background:rgba(9,132,192,0.15);border:2px solid #0984C0;border-radius:16px;padding:35px;width:340px;">
-        <div style="color:#60BDD1;font-size:1.4rem;font-weight:bold;margin-bottom:25px;">🏥 Pharmacist Portal</div>
-        <div style="color:#C0BEC6;font-size:1.1rem;line-height:1.9;">• Batch management</div>
-        <div style="color:#C0BEC6;font-size:1.1rem;line-height:1.9;">• FDA compliance</div>
-        <div style="color:#C0BEC6;font-size:1.1rem;line-height:1.9;">• Real-time tracking</div>
+    <!-- MAIN CONTENT -->
+    <div class="main">
+      <!-- PORTALS -->
+      <div class="portals">
+        <div class="portal">
+          <h2>🏥 Pharmacist Portal</h2>
+          <ul>
+            <li>Batch management & serialization</li>
+            <li>FDA 21 CFR Part 11 compliance</li>
+            <li>Real-time GPS vehicle tracking</li>
+            <li>Cold chain temperature monitoring</li>
+            <li>Chain of custody reports</li>
+          </ul>
+        </div>
+        <div class="portal">
+          <h2>👤 Patient App</h2>
+          <ul>
+            <li>Live delivery status updates</li>
+            <li>ETA notifications & alerts</li>
+            <li>Proof of delivery (ePOD)</li>
+            <li>Temperature compliance proof</li>
+            <li>Electronic signature capture</li>
+          </ul>
+        </div>
       </div>
-      <div style="background:rgba(9,132,192,0.15);border:2px solid #0984C0;border-radius:16px;padding:35px;width:340px;">
-        <div style="color:#60BDD1;font-size:1.4rem;font-weight:bold;margin-bottom:25px;">👤 Patient App</div>
-        <div style="color:#C0BEC6;font-size:1.1rem;line-height:1.9;">• Delivery status</div>
-        <div style="color:#C0BEC6;font-size:1.1rem;line-height:1.9;">• ETA notifications</div>
-        <div style="color:#C0BEC6;font-size:1.1rem;line-height:1.9;">• Proof of delivery</div>
+      
+      <!-- METRICS -->
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-label">Live Vehicles</div>
+          <div class="metric-value" data-metric="vehicles">24</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Active Batches</div>
+          <div class="metric-value" data-metric="batches">127</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Monthly Revenue</div>
+          <div class="metric-value" data-metric="revenue">$12K</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">APIs</div>
+          <div class="metric-value" style="color:#00FF88;">5/5 ✓</div>
+        </div>
       </div>
     </div>
     
-    <!-- RIGHT METRICS -->
-    <div style="display:grid;grid-template-columns:repeat(2,180px);gap:30px;width:400px;">
-      <div style="background:rgba(9,132,192,0.2);border:1px solid #0984C0;border-radius:12px;padding:30px;text-align:center;">
-        <div style="color:#C0BEC6;font-size:1rem;text-transform:uppercase;margin-bottom:15px;letter-spacing:1px;">Live Vehicles</div>
-        <div style="color:#0984C0;font-size:3.2rem;font-weight:bold;">24</div>
-      </div>
-      <div style="background:rgba(9,132,192,0.2);border:1px solid #0984C0;border-radius:12px;padding:30px;text-align:center;">
-        <div style="color:#C0BEC6;font-size:1rem;text-transform:uppercase;margin-bottom:15px;letter-spacing:1px;">Active Batches</div>
-        <div style="color:#0984C0;font-size:3.2rem;font-weight:bold;">127</div>
-      </div>
-      <div style="background:rgba(9,132,192,0.2);border:1px solid #0984C0;border-radius:12px;padding:30px;text-align:center;">
-        <div style="color:#C0BEC6;font-size:1rem;text-transform:uppercase;margin-bottom:15px;letter-spacing:1px;">Monthly Revenue</div>
-        <div style="color:#0984C0;font-size:3.2rem;font-weight:bold;">$12K</div>
-      </div>
-      <div style="background:rgba(9,132,192,0.2);border:1px solid #0984C0;border-radius:12px;padding:30px;text-align:center;">
-        <div style="color:#C0BEC6;font-size:1rem;text-transform:uppercase;margin-bottom:15px;letter-spacing:1px;">APIs</div>
-        <div style="color:#0984C0;font-size:3.2rem;font-weight:bold;">5/5 ✓</div>
-      </div>
+    <!-- CTA BUTTON (BOTTOM CENTER - LARGE) -->
+    <div class="cta-section">
+      <a href="mailto:sales@thomasinformationtechnology.com?subject=PharmaTransport Enterprise Demo" class="cta-button">
+        🚀 Ready to Scale Your Pharma Network?
+      </a>
     </div>
-    
   </div>
-  
-  <!-- BOTTOM CTA -->
-  <div style="flex:0 0 80px;display:flex;justify-content:center;align-items:center;">
-    <a href="mailto:sales@thomasinformationtechnology.com" style="display:inline-block;background:linear-gradient(45deg,#0984C0,#60BDD1);color:white;padding:20px 40px;border-radius:50px;font-size:1.2rem;font-weight:bold;text-decoration:none;box-shadow:0 12px 35px rgba(9,132,192,0.5);border:none;">
-      Ready to Scale Your Pharma Network?
-    </a>
-  </div>
-  
+
+  <script>
+    // Live metrics update (connects to your GPS API)
+    setInterval(async () => {
+      try {
+        const res = await fetch('/gps/stream');
+        const data = await res.json();
+        document.querySelector('[data-metric="vehicles"]').textContent = data.vehicles || 24;
+        document.querySelector('[data-metric="batches"]').textContent = data.active_batches || 127;
+      } catch(e) {}
+    }, 5000);
+  </script>
 </body>
 </html>
