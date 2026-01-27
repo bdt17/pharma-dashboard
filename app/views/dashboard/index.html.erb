@@ -46,15 +46,17 @@
       background:rgba(9,132,192,0.4); 
       transform:translateY(-2px); 
     }
-    .header { 
-      flex:0 0 120px; 
-      display:flex; 
-      justify-content:center; 
-      align-items:center; 
-      border-bottom:3px solid #0984C0; 
-      padding:20px 0; 
-      margin-top:60px; 
-    }
+    .header {
+     flex:0 0 100px;           /* ← SHRINK from 120px */
+     display:flex;
+     justify-content:center;
+     align-items:center;
+     border-bottom:3px solid #0984C0;
+     padding:15px 0;           /* ← REDUCE from 20px */
+     margin-top:0;             /* ← DELETE 60px */
+     width:100%;               /* ← FULL WIDTH */
+  }
+  }
     .header h1 { 
       font-size:3.5rem; 
       color:#0984C0; 
