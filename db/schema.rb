@@ -10,10 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_23_214353) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_catalog.plpgsql"
-
+ActiveRecord::Schema[8.1].define(version: 2026_01_27_205429) do
   create_table "alerts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -43,6 +40,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_23_214353) do
     t.bigint "vehicle_id", null: false
     t.index ["lot"], name: "index_batches_on_lot", unique: true
     t.index ["vehicle_id"], name: "index_batches_on_vehicle_id"
+  end
+
+  create_table "chain_of_custody_reports", force: :cascade do |t|
+    t.integer "batch_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "organization_id", null: false
+    t.binary "pdf_data"
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.index ["batch_id"], name: "index_chain_of_custody_reports_on_batch_id"
+    t.index ["organization_id"], name: "index_chain_of_custody_reports_on_organization_id"
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -138,5 +146,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_23_214353) do
 
   add_foreign_key "audit_logs", "batches"
   add_foreign_key "batches", "vehicles"
+  add_foreign_key "chain_of_custody_reports", "batches"
+  add_foreign_key "chain_of_custody_reports", "organizations"
   add_foreign_key "orders", "patients"
 end
