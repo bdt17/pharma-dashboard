@@ -11,5 +11,6 @@ Rails.application.routes.draw do
   get '/test-ui', to: 'tests#ui'
   get '/test-rails', to: 'tests#rails'
   get '/test-infosec', to: 'tests#infosec'
-end
+
 get '/dashboard/v2', to: 'dashboard#v2'
+end
