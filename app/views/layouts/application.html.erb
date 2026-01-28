@@ -3,10 +3,77 @@
 <head>
   <title>Pharma Transport Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 </head>
-<body>
-  <%= yield %>
-</body>
-</html>
+<body class="bg-gray-50 antialiased">
+  
+  <!-- Header: Logo + Login Buttons + Stats -->
+  <header class="bg-white shadow-sm border-b sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center py-4">
+        
+        <!-- Logo LEFT -->
+        <div class="flex-shrink-0">
+          <%= link_to "💉PharmaTransport", root_path, class: "text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors" %>
+        </div>
+        
+        <!-- Right: Buttons + Stats -->
+        <div class="flex items-center space-x-4">
+          
+          <!-- Smaller Login Buttons -->
+          <div class="flex items-center space-x-2 hidden md:flex">
+            <%= link_to "Driver Portal", "/drivers/sign_in", 
+                class: "inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out whitespace-nowrap" %>
+            <%= link_to "Pharmacist Portal", "/pharmacists/sign_in", 
+                class: "inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-emerald-600 border border-transparent rounded-md shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition duration-150 ease-in-out whitespace-nowrap" %>
+          </div>
+          
+          <!-- Stats Dashboard -->
+          <div class="flex items-center space-x-6 text-sm md:text-base font-medium text-gray-700">
+            <div class="flex items-center space-x-1">
+              <span>🚛</span>
+              <span>Live Vehicles: 23</span>
+            </div>
+            <div class="flex items-center space-x-1">
+              <span>💉</span>
+              <span>Active Batches: 128</span>
+            </div>
+            <div class="flex items-center space-x-1">
+              <span>💰</span>
+              <span>$12K MRR</span>
+            </div>
+            <div class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">
+              APIs 5/5 ✓
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Flash Messages -->
+  <% if notice %>
+    <div class="bg-green-50 border-l-4 border-green-400 p-4 mx-4 sm:mx-6 lg:mx-8 mt-4 rounded-r">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm leading-5 text-green-800"><%= notice %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if alert %>
+    <div class="bg-red-50 border-l-4 border-red-400 p-4 mx-4 sm:mx-6 lg:mx-8 mt-4 rounded-r">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293
