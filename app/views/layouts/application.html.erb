@@ -3,50 +3,49 @@
 <head>
   <title>Pharma Transport Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 </head>
 <body class="bg-gray-50 antialiased">
-  
+
   <!-- Header: Logo + Login Buttons + Stats -->
   <header class="bg-white shadow-sm border-b sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center py-4">
-        
-        <!-- Logo LEFT -->
+
+        <!-- Logo LEFT - FIXED SPACING -->
         <div class="flex-shrink-0">
-          <%= link_to "💉PharmaTransport", root_path, class: "text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors" %>
+          <%= link_to "💉 Pharma Transport", root_path, class: "text-2xl font-bold text-gray-900 hover:text-blue-600 transition-colors" %>
         </div>
-        
-        <!-- Right: Buttons + Stats -->
-        <div class="flex items-center space-x-4">
-          
-          <!-- Smaller Login Buttons -->
-          <div class="flex items-center space-x-2 hidden md:flex">
-            <%= link_to "Driver Portal", "/drivers/sign_in", 
-                class: "inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out whitespace-nowrap" %>
-            <%= link_to "Pharmacist Portal", "/pharmacists/sign_in", 
-                class: "inline-flex items-center px-3 py-1.5 text-xs font-medium text-white bg-emerald-600 border border-transparent rounded-md shadow-sm hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transition duration-150 ease-in-out whitespace-nowrap" %>
+
+        <!-- Right: Smaller Buttons + Stats -->
+        <div class="flex items-center space-x-3">
+
+          <!-- EVEN SMALLER Login Buttons -->
+          <div class="flex items-center space-x-1 hidden md:flex">
+            <%= link_to "Driver Portal", "/drivers/sign_in",
+                class: "px-2.5 py-1 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 transition-colors whitespace-nowrap" %>
+            <%= link_to "Pharmacist Portal", "/pharmacists/sign_in",
+                class: "px-2.5 py-1 text-xs font-medium text-white bg-emerald-600 rounded hover:bg-emerald-700 transition-colors whitespace-nowrap" %>
           </div>
-          
-          <!-- Stats Dashboard -->
-          <div class="flex items-center space-x-6 text-sm md:text-base font-medium text-gray-700">
+
+          <!-- Stats - Updated Numbers -->
+          <div class="flex items-center space-x-4 text-xs md:text-sm font-medium text-gray-700 ml-4">
             <div class="flex items-center space-x-1">
               <span>🚛</span>
-              <span>Live Vehicles: 23</span>
+              <span>25</span>
             </div>
             <div class="flex items-center space-x-1">
               <span>💉</span>
-              <span>Active Batches: 128</span>
+              <span>127</span>
             </div>
             <div class="flex items-center space-x-1">
               <span>💰</span>
-              <span>$12K MRR</span>
+              <span>$12K</span>
             </div>
-            <div class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-medium">
+            <div class="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full font-medium">
               APIs 5/5 ✓
             </div>
           </div>
@@ -76,4 +75,50 @@
       <div class="flex">
         <div class="flex-shrink-0">
           <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm leading-5 text-red-800"><%= alert %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <%= yield %>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-lg font-bold mb-4">💉 Pharma Transport</h3>
+          <p class="text-gray-400 text-sm">Enterprise GPS tracking & FDA 21 CFR Part 11 compliance for pharmaceutical cold chain logistics.</p>
+        </div>
+        <div>
+          <h4 class="text-md font-semibold mb-4">Enterprise Ready</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>✅ GS1 Serialization</li>
+            <li>✅ Electronic Signatures</li>
+            <li>✅ 2-8°C Cold Chain</li>
+            <li>✅ Immutable Audit Logs</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-md font-semibold mb-4">Contact</h4>
+          <p class="text-sm text-gray-400 mb-2">
+            <a href="mailto:sales@thomasinformationtechnology.com?subject=PharmaTransport%20Enterprise%20Demo" class="hover:underline">
+              🚀 Enterprise Demo
+            </a>
+          </p>
+          <p class="text-xs text-gray-500">$47B Pharma Cold Chain Market</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
