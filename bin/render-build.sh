@@ -2,5 +2,6 @@
 set -o errexit
 
 bundle install
-bundle exec rails db:migrate RAILS_ENV=production
-# Rails 8.1 Propshaft - no assets:precompile needed
+# Rails 8.1 Propshaft: NO assets:precompile needed
+# Skip DB migrate - Render handles via env vars
+echo "Build complete - Rails 8.1 ready"
