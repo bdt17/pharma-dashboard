@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  namespace :reports do
+    get "chain_of_custody/index"
+  end
   get "chain_of_custody/index"
   root 'dashboard#index'
   
@@ -14,6 +17,6 @@ Rails.application.routes.draw do
   get '/test-infosec', to: 'tests#infosec'
 
 get '/dashboard/v2', to: 'dashboard#v2'
-end
 get '/chain_of_custody', to: 'chain_of_custody#index', as: :chain_of_custody
 get '/test-pdf', to: 'chain_of_custody#index', formats: [:pdf]
+end

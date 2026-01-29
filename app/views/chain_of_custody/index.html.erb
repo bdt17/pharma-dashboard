@@ -1,15 +1,20 @@
-<h1>🔗 Chain of Custody Reports</h1>
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  <% @batches.each do |batch| %>
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="font-bold text-lg mb-2"><%= batch.lot_number %></h3>
-      <p class="text-sm text-gray-600 mb-2">Status: <%= batch.status %></p>
-      <%= link_to "📄 PDF Report", chain_of_custody_path(format: :pdf), 
-          class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm" %>
-    </div>
-  <% end %>
+<div class="max-w-7xl mx-auto px-6 py-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">🔗 Chain of Custody Dashboard</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+    <% @batches.each do |batch| %>
+      <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-all">
+        <h3 class="font-bold text-xl text-gray-900 mb-2"><%= batch.lot_number %></h3>
+        <p class="text-sm text-gray-600 mb-1">Vehicle: <%= batch.vehicle %></p>
+        <span class="inline-block bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+          <%= batch.status %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="text-center">
+    <%= link_to "🖨️ PDF Export (Phase 8.1)", "#", 
+        class: "bg-blue-600 text-white px-8 py-3 rounded-xl font-semibold hover:bg-blue-700 text-lg" %>
+  </div>
 </div>
-
-<%= link_to "🖨️ Generate All PDFs", test_pdf_path, 
-    class: "mt-6 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700" %>
