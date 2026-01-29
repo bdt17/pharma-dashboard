@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-set -e
+set -o errexit
 
-# Rails 8 importmap - no assets to precompile
-echo "Rails 8 importmap app — no assets to precompile"
-
-# Skip migrations if no DB configured
-bundle exec rails db:migrate || echo "No database migrations needed"
+bundle install
+bundle exec rails assets:precompile RAILS_ENV=production
+bundle exec rails assets:clean RAILS_ENV=production
+bundle exec rails db:migrate RAILS_ENV=production
