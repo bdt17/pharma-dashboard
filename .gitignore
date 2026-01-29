@@ -1,2 +1,3 @@
 tmp/cache/
 *.rb
+scraped_content_*.txt
