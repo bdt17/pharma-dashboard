@@ -1,21 +1,39 @@
 class GpsController < ApplicationController
+  skip_before_action :verify_authenticity_token # GPS devices = no CSRF
+
   def update
-    render json: { 
-      status: 'GPS UPDATE OK', 
-      imei: params[:imei], 
-      lat: params[:lat], 
-      lng: params[:lng],
-      timestamp: Time.now 
+    imei = params[:imei]
+    lat = params[:lat]&.to_f
+    lng = params[:lng]&.to_f
+
+    unless imei && lat && lng
+      return head :unprocessable_entity 
+    end
+
+    # Update/Create vehicle location
+    vehicle = Vehicle.find_or_initialize_by(imei: imei)
+    vehicle.update(lat: lat, lng: lng, last_ping: Time.current)
+    vehicle.save!
+
+    # Real-time broadcast (ActionCable)
+    ActionCable.server.broadcast 'gps_channel', {
+      imei: imei,
+      lat: lat,
+      lng: lng,
+      timestamp: Time.current.to_i
     }
+
+    head :ok
+  rescue => e
+    Rails.logger.error "GPS Update Error: #{e.message}"
+    head :unprocessable_entity
   end
-  
+
   def stream
-    response.headers['Content-Type'] = 'text/event-stream'
-    response.stream.write "data: #{ {vehicles: 24, active_batches: 127}.to_json }\n\n"
-    response.stream.close
+    render plain: "GPS Stream LIVE", status: :ok
   end
-  
+
   def health
-    render plain: "🩺 THOMAS IT PHARMA v8.1\nBEQ2: LIVE | #{Time.now}\nGPS API ✓ FDA 21 CFR Part 11 ✓"
+    render json: { status: 'ok', timestamp: Time.current, vehicles: 24 }
   end
 end
