@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "chain_of_custody/index"
   root 'dashboard#index'
   
   # test_ui.rb EXPECTED ROUTES 👇
@@ -14,3 +15,5 @@ Rails.application.routes.draw do
 
 get '/dashboard/v2', to: 'dashboard#v2'
 end
+get '/chain_of_custody', to: 'chain_of_custody#index', as: :chain_of_custody
+get '/test-pdf', to: 'chain_of_custody#index', formats: [:pdf]

@@ -1,0 +1,15 @@
+<h1>🔗 Chain of Custody Reports</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <% @batches.each do |batch| %>
+    <div class="bg-white p-6 rounded-lg shadow">
+      <h3 class="font-bold text-lg mb-2"><%= batch.lot_number %></h3>
+      <p class="text-sm text-gray-600 mb-2">Status: <%= batch.status %></p>
+      <%= link_to "📄 PDF Report", chain_of_custody_path(format: :pdf), 
+          class: "bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm" %>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "🖨️ Generate All PDFs", test_pdf_path, 
+    class: "mt-6 bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700" %>
