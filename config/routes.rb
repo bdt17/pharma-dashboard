@@ -20,3 +20,16 @@ get '/dashboard/v2', to: 'dashboard#v2'
 get '/chain_of_custody', to: 'chain_of_custody#index', as: :chain_of_custody
 get '/test-pdf', to: 'chain_of_custody#index', formats: [:pdf]
 end
+<<<<<<< HEAD
+=======
+devise_for :drivers, controllers: { sessions: 'drivers/sessions' }
+devise_for :pharmacists, controllers: { sessions: 'pharmacists/sessions' }
+devise_for :drivers, path: 'drivers'
+devise_for :pharmacists, path: 'pharmacists'
+
+devise_for :drivers, path: 'drivers'
+devise_for :pharmacists, path: 'pharmacists'
+>>>>>>> abcd72ec (Add Devise login routes)
+
+devise_for :drivers, path: 'drivers'
+devise_for :pharmacists, path: 'pharmacists'
