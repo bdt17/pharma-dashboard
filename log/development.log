@@ -30,3 +30,61 @@ Migrating to AddDeviseToUsers (20260122053856)
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaDashboard'*/[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (12.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Migrating to AddVehicleToBatches (20260123214353)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA foreign_keys /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TEMPORARY TABLE "abatches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "lot" varchar, "expiry" date, "status" varchar, "temperature_celsius" float, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_abatches_on_lot" ON "abatches" ("lot") /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "abatches" ("id","lot","expiry","status","temperature_celsius","created_at","updated_at")
+                     SELECT "id","lot","expiry","status","temperature_celsius","created_at","updated_at" FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "batches" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "batches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "lot" varchar, "expiry" date, "status" varchar, "temperature_celsius" float, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "vehicle_id" integer NOT NULL) /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_batches_on_lot" ON "batches" ("lot") /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "batches" ("id","lot","expiry","status","temperature_celsius","created_at","updated_at")
+                     SELECT "id","lot","expiry","status","temperature_celsius","created_at","updated_at" FROM "abatches" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mDROP TABLE "abatches" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_batches_on_vehicle_id" ON "batches" ("vehicle_id") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE TEMPORARY TABLE "abatches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "lot" varchar, "expiry" date, "status" varchar, "temperature_celsius" float, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "vehicle_id" integer NOT NULL) /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "tindex_abatches_on_vehicle_id" ON "abatches" ("vehicle_id") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "tindex_abatches_on_lot" ON "abatches" ("lot") /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "abatches" ("id","lot","expiry","status","temperature_celsius","created_at","updated_at","vehicle_id")
+                     SELECT "id","lot","expiry","status","temperature_celsius","created_at","updated_at","vehicle_id" FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE "batches" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "batches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "lot" varchar, "expiry" date, "status" varchar, "temperature_celsius" float, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "vehicle_id" integer NOT NULL, CONSTRAINT "fk_rails_3b1fd51350"
+FOREIGN KEY ("vehicle_id")
+  REFERENCES "vehicles" ("id")
+) /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_batches_on_lot" ON "batches" ("lot") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_batches_on_vehicle_id" ON "batches" ("vehicle_id") /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "batches" ("id","lot","expiry","status","temperature_celsius","created_at","updated_at","vehicle_id")
+                     SELECT "id","lot","expiry","status","temperature_celsius","created_at","updated_at","vehicle_id" FROM "abatches" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE "abatches" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0 /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260123214353') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (233.7ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+Migrating to CreateChainOfCustodyReports (20260127205429)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[35m (32.9ms)[0m  [1m[35mCREATE TABLE "chain_of_custody_reports" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "batch_id" integer NOT NULL, "organization_id" integer NOT NULL, "pdf_data" blob, "status" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_14d5d66ff8"
+FOREIGN KEY ("batch_id")
+  REFERENCES "batches" ("id")
+, CONSTRAINT "fk_rails_9a751aae8e"
+FOREIGN KEY ("organization_id")
+  REFERENCES "organizations" ("id")
+) /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_chain_of_custody_reports_on_batch_id" ON "chain_of_custody_reports" ("batch_id") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_chain_of_custody_reports_on_organization_id" ON "chain_of_custody_reports" ("organization_id") /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260127205429') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
