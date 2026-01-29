@@ -2,5 +2,5 @@
 set -o errexit
 
 bundle install
-bundle exec rails assets:precompile RAILS_ENV=production
 bundle exec rails db:migrate RAILS_ENV=production
+# Rails 8.1 Propshaft - no assets:precompile needed
