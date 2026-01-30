@@ -19,15 +19,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_205429) do
   end
 
   create_table "audit_logs", force: :cascade do |t|
-    t.bigint "batch_id"
+    t.integer "batch_id"
     t.datetime "created_at", null: false
     t.json "data"
     t.string "event", null: false
     t.string "ip_address", limit: 45
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["batch_id"], name: "index_audit_logs_on_batch_id"
     t.index ["event"], name: "index_audit_logs_on_event"
     t.index ["ip_address"], name: "index_audit_logs_on_ip_address"
+    t.index ["user_id"], name: "index_audit_logs_on_user_id"
   end
 
   create_table "batches", force: :cascade do |t|
@@ -37,7 +39,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_205429) do
     t.string "status"
     t.float "temperature_celsius"
     t.datetime "updated_at", null: false
-    t.bigint "vehicle_id", null: false
+    t.integer "vehicle_id", null: false
     t.index ["lot"], name: "index_batches_on_lot", unique: true
     t.index ["vehicle_id"], name: "index_batches_on_vehicle_id"
   end
@@ -68,7 +70,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_205429) do
     t.datetime "recorded_at"
     t.float "speed"
     t.datetime "updated_at", null: false
-    t.bigint "vehicle_id"
+    t.integer "vehicle_id", null: false
+    t.index ["vehicle_id"], name: "index_location_points_on_vehicle_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -84,12 +87,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_205429) do
 
   create_table "orders", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.bigint "patient_id", null: false
-    t.bigint "pharmacy_id"
+    t.integer "patient_id", null: false
+    t.integer "pharmacy_id", null: false
     t.string "status"
     t.string "tracking_id"
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_orders_on_patient_id"
+    t.index ["pharmacy_id"], name: "index_orders_on_pharmacy_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -136,17 +140,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_205429) do
   end
 
   create_table "vehicles", force: :cascade do |t|
+    t.integer "batch_id"
     t.datetime "created_at", null: false
-    t.float "latitude"
-    t.float "longitude"
-    t.string "name"
-    t.string "status"
+    t.float "heading"
+    t.float "lat"
+    t.float "lng"
+    t.float "speed"
     t.datetime "updated_at", null: false
   end
 
   add_foreign_key "audit_logs", "batches"
+  add_foreign_key "audit_logs", "users"
   add_foreign_key "batches", "vehicles"
   add_foreign_key "chain_of_custody_reports", "batches"
   add_foreign_key "chain_of_custody_reports", "organizations"
+  add_foreign_key "location_points", "vehicles"
   add_foreign_key "orders", "patients"
+  add_foreign_key "orders", "pharmacies"
 end

@@ -24,3 +24,4 @@ Rails.application.routes.draw do
   # devise_for :drivers, path: 'drivers'
   # devise_for :pharmacists, path: 'pharmacists'
 end
+get '/vehicles', to: 'vehicles#index'
