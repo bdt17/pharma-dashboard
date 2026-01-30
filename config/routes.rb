@@ -21,6 +21,6 @@ Rails.application.routes.draw do
   get '/test-pdf', to: 'chain_of_custody#index', formats: [:pdf]
 
   # CLEAN Devise routes (SINGLE instance)
-  devise_for :drivers, path: 'drivers', controllers: { sessions: 'drivers/sessions' }
-  devise_for :pharmacists, path: 'pharmacists', controllers: { sessions: 'pharmacists/sessions' }
+#  devise_for :drivers, path: 'drivers', controllers: { sessions: 'drivers/sessions' }
+ # devise_for :pharmacists, path: 'pharmacists', controllers: { sessions: 'pharmacists/sessions' }
 end
