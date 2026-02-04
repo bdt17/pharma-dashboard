@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  get '/vehicles', to: 'vehicles#index'
-  root 'dashboard#index'
-  get '/api/health', to: 'health#index'
+  # Your existing routes...
+  
+  get '/health', to: 'healthchecks#show'
+  get '/404', to: 'errors#error404', as: :error_404
+  get '/500', to: 'errors#error500', as: :error_500
+  
+  # Driver/Pharmacist portals
+  get '/drivers/sign_in', to: 'devise/sessions#new'  # adjust as needed
+  get '/pharmacists/sign_in', to: 'devise/sessions#new'
 end
-get '/health', to: 'healthchecks#show'
-get "/health", to: "healthchecks#show"
