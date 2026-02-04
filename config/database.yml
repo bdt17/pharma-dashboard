@@ -1,32 +1,7 @@
-default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-
-development:
-  <<: *default
-  database: db/development.sqlite3
-
-test:
-  <<: *default
-  database: db/test.sqlite3
-
 production:
-  <<: *default
-  adapter: postgresql
-  encoding: unicode
-  database: pharma_dashboard_prod
-  username: <%= ENV['DATABASE_USERNAME'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  host: <%= ENV['DATABASE_HOST'] %>
-  # Solid Stack - ALL use main production DB
-  primary: &production_primary
-    adapter: postgresql
-    encoding: unicode
-    database: pharma_dashboard_prod
-    username: <%= ENV['DATABASE_USERNAME'] %>
-    password: <%= ENV['DATABASE_PASSWORD'] %>
-    host: <%= ENV['DATABASE_HOST'] %>
-  cache: *production_primary
-  queue: *production_primary
-  cable: *production_primary
+  primary:
+    url: <%= ENV['DATABASE_URL'] %>
+  cable:
+    url: <%= ENV['DATABASE_URL'] %>
+  cache:
+    url: <%= ENV['DATABASE_URL'] %>
