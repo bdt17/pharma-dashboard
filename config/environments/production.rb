@@ -28,8 +28,4 @@ Rails.application.configure do
  config.action_cable.disable_request_forgery_protection = true
 
 # Use single DATABASE_URL for everything
-config.load_defaults 8.1
- database_url = ENV['DATABASE_URL']
- # config.active_record.databases[:cable] = { url: ENV["DATABASE_URL"] }
- # config.active_record.databases[:cache] = { url: database_url } url: database_url } if Rails.env.production?
 end
