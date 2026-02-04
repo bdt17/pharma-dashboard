@@ -8,9 +8,15 @@ Rails.application.configure do
   config.time_zone = 'Mountain Time (US & Canada)'
   config.eager_load = true
   
-# Phase 14 LIVE - Solid features
-  config.cache_store = :solid_cache_store
-  config.active_job.queue_adapter = :solid_queue
+  # Phase 14 LIVE - Solid features
+  #  config.cache_store = :solid_cache_store
+  # config.active_job.queue_adapter = :solid_queue
+  # Standard production cache
+  config.cache_store = :memory_store
+  config.active_job.queue_adapter = :async
+
+  config.eager_load = true  # ← ADD THIS LINE (fixes warning)
+
 
   # ActionCable CORS
   config.action_cable.allowed_request_origins = ['https://pharma-dashboard-beq2.onrender.com']
