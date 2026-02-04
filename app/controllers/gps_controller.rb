@@ -1,30 +1,13 @@
 class GpsController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  protect_from_forgery prepend: false, except: [:update]
+  def index
+    render json: { status: 'GPS tracking ready', count: 42 }, status: 200
+  end
 
-  def update
-    imei = params[:imei]&.strip
-    lat = params[:lat]&.to_f
-    lng = params[:lng]&.to_f
-
-    # Log incoming data
-    Rails.logger.info "GPS: imei=#{imei} lat=#{lat} lng=#{lng}"
-
-    # Simple JSON response - NO DATABASE
-    render json: { 
-      status: 'received', 
-      imei: imei, 
-      lat: lat, 
-      lng: lng,
-      timestamp: Time.current.iso8601 
-    }, status: :ok
+  def create
+    render json: { status: 'GPS data received' }, status: 201
   end
 
   def stream
-    render plain: "GPS Stream LIVE", status: :ok
-  end
-
-  def health
-    render json: { status: 'ok', timestamp: Time.current, vehicles: 24 }
+    render plain: "GPS Stream Active", status: 200
   end
 end

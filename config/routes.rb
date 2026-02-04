@@ -10,3 +10,10 @@ Rails.application.routes.draw do
   get '/pharmacists/sign_in', to: 'devise/sessions#new'
   get '/up', to: -> { {status: 'ok'}.to_json }
 end
+
+root 'dashboard#index'
+get 'dashboard', to: 'dashboard#index', as: :dashboard
+resources :gps, only: [:index, :create] do
+  collection { get :stream }
+end
+get 'test_pdf', to: 'pdfs#test'
