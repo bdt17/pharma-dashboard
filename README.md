@@ -30,3 +30,8 @@ Things you may want to cover:
 [![FDA 21CFR](https://img.shields.io/badge/FDA-21CFR%20Part%2011-orange)](https://www.fda.gov)
 [![25 Vehicles](https://img.shields.io/badge/Vehicles-25-teal)](https://pharma-dashboard-beq2.onrender.com)
 [![$12K MRR](https://img.shields.io/badge/MRR-%2412K-brightgreen)](https://pharma-dashboard-beq2.onrender.com)
+
+## 📊 LIVE STATUS
+[![Pharma Transport](https://img.shields.io/badge/Live-pharma--dashboard--beq2.onrender.com-blue)](https://pharma-dashboard-beq2.onrender.com)
+[![25 Vehicles](https://img.shields.io/badge/Vehicles-25-teal)](https://pharma-dashboard-beq2.onrender.com)
+[![$12K MRR](https://img.shields.io/badge/MRR-%2412K-brightgreen)](https://pharma-dashboard-beq2.onrender.com)
