@@ -19,3 +19,9 @@ Rails.application.configure do
   config.hosts << "pharma-dashboard-beq2.onrender.com"
   config.hosts << "*.onrender.com"
 end
+
+config.force_ssl = true
+config.log_level = :info
+config.log_tags = [ :request_id ]
+config.cache_store = :solid_cache_store
+config.active_record.verbose_query_logs = false
