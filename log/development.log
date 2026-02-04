@@ -109,3 +109,17 @@ Migrating to AddGpsToVehicles (20260130232412)
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
   [1m[35m (2.4ms)[0m  [1m[35mALTER TABLE "vehicles" ADD "lat" decimal /*application='PharmaDashboard'*/[0m
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Migrating to InstallAudited (20260130232854)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[35m (2.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "audits" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "audits" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "auditable_id" integer, "auditable_type" varchar, "associated_id" integer, "associated_type" varchar, "user_id" integer, "user_type" varchar, "username" varchar, "action" varchar, "audited_changes" text, "version" integer DEFAULT 0, "comment" varchar, "remote_address" varchar, "request_uuid" varchar, "created_at" datetime(6)) /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "auditable_index" ON "audits" ("auditable_type", "auditable_id", "version") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE INDEX "associated_index" ON "audits" ("associated_type", "associated_id") /*application='PharmaDashboard'*/[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE INDEX "user_index" ON "audits" ("user_id", "user_type") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE INDEX "index_audits_on_request_uuid" ON "audits" ("request_uuid") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_audits_on_created_at" ON "audits" ("created_at") /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260130232854') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (144.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m

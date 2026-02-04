@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_27_205429) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_30_232854) do
   create_table "alerts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -30,6 +30,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_27_205429) do
     t.index ["event"], name: "index_audit_logs_on_event"
     t.index ["ip_address"], name: "index_audit_logs_on_ip_address"
     t.index ["user_id"], name: "index_audit_logs_on_user_id"
+  end
+
+  create_table "audits", force: :cascade do |t|
+    t.string "action"
+    t.integer "associated_id"
+    t.string "associated_type"
+    t.integer "auditable_id"
+    t.string "auditable_type"
+    t.text "audited_changes"
+    t.string "comment"
+    t.datetime "created_at"
+    t.string "remote_address"
+    t.string "request_uuid"
+    t.integer "user_id"
+    t.string "user_type"
+    t.string "username"
+    t.integer "version", default: 0
+    t.index ["associated_type", "associated_id"], name: "associated_index"
+    t.index ["auditable_type", "auditable_id", "version"], name: "auditable_index"
+    t.index ["created_at"], name: "index_audits_on_created_at"
+    t.index ["request_uuid"], name: "index_audits_on_request_uuid"
+    t.index ["user_id", "user_type"], name: "user_index"
   end
 
   create_table "batches", force: :cascade do |t|
