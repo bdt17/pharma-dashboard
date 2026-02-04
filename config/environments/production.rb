@@ -26,7 +26,6 @@ Rails.application.configure do
   config.hosts << "*.onrender.com"
   # Disable Solid Cable (single DB production)
  config.action_cable.disable_request_forgery_protection = true
- config.solid_cable.enabled = false
 
 # Use single DATABASE_URL for everything
  database_url = ENV['DATABASE_URL']
