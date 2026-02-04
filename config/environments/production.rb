@@ -6,8 +6,9 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
   config.force_ssl = true
   config.time_zone = 'Mountain Time (US & Canada)'
-
-  # Phase 14 LIVE - Solid features
+  config.eager_load = true
+  
+# Phase 14 LIVE - Solid features
   config.cache_store = :solid_cache_store
   config.active_job.queue_adapter = :solid_queue
 
