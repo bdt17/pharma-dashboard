@@ -9,3 +9,4 @@ Rails.application.routes.draw do
   get '/drivers/sign_in', to: 'devise/sessions#new'  # adjust as needed
   get '/pharmacists/sign_in', to: 'devise/sessions#new'
 end
+get '/up', to: -> { {status: 'ok'}.to_json }
