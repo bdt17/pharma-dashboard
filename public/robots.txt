@@ -1,5 +1,1 @@
-User-agent: *
-Disallow: /rails/
-
-User-agent: PerplexityBot
-Allow: /
+User-agent: *\nAllow: /\nSitemap: https://pharma-dashboard-beq2.onrender.com/sitemap.xml
