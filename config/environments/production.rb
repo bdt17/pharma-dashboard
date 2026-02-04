@@ -29,6 +29,7 @@ Rails.application.configure do
 
 # Use single DATABASE_URL for everything
  database_url = ENV['DATABASE_URL']
- config.active_record.databases[:cable] = { url: database_url }
+  config.active_record.databases ||= {}
+ config.active_record.databases[:cable] = { url: ENV["DATABASE_URL"] }
  config.active_record.databases[:cache] = { url: database_url } if Rails.env.production?
 end
