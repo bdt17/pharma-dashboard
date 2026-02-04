@@ -4,3 +4,4 @@ Rails.application.routes.draw do
   get '/api/health', to: 'health#index'
 end
 get '/health', to: 'healthchecks#show'
+get "/health", to: "healthchecks#show"
