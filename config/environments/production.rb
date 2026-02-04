@@ -24,4 +24,12 @@ Rails.application.configure do
   # Render domains
   config.hosts << "pharma-dashboard-beq2.onrender.com"
   config.hosts << "*.onrender.com"
+  # Disable Solid Cable (single DB production)
+ config.action_cable.disable_request_forgery_protection = true
+ config.solid_cable.enabled = false
+
+# Use single DATABASE_URL for everything
+ database_url = ENV['DATABASE_URL']
+ config.active_record.databases[:cable] = { url: database_url }
+ config.active_record.databases[:cache] = { url: database_url } if Rails.env.production?
 end
