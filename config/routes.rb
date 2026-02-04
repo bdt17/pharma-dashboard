@@ -3,3 +3,4 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   get '/api/health', to: 'health#index'
 end
+get '/health', to: 'healthchecks#show'
