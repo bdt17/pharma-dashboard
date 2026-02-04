@@ -1,1 +1,1 @@
-User-agent: *\nAllow: /\nSitemap: https://pharma-dashboard-beq2.onrender.com/sitemap.xml
+User-agent: *\nAllow: /
