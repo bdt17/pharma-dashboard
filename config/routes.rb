@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   # Driver/Pharmacist portals
   get '/drivers/sign_in', to: 'devise/sessions#new'  # adjust as needed
   get '/pharmacists/sign_in', to: 'devise/sessions#new'
+  get '/up', to: -> { {status: 'ok'}.to_json }
 end
-get '/up', to: -> { {status: 'ok'}.to_json }
