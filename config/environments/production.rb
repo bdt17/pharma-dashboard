@@ -29,4 +29,3 @@ Rails.application.configure do
 
 # Use single DATABASE_URL for everything
 end
-config.eager_load_paths.delete_if { |path| path.match?(/solid_cable/) }
