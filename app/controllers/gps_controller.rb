@@ -11,3 +11,6 @@ class GpsController < ApplicationController
     render plain: "GPS Stream Active", status: 200
   end
 end
+  def create
+    render json: { status: 'GPS data received', count: 1 }, status: 201
+  end
