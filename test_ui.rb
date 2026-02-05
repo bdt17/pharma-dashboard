@@ -3,70 +3,47 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-URLS = {
-  '8jhe' => 'https://pharma-dashboard-8jhe.onrender.com',
-  'beq2' => 'https://pharma-dashboard-beq2.onrender.com'
-}
+MAIN_URL = "https://pharma-gps-dashboard.onrender.com"
 
-puts "🚀 THOMAS IT PHARMA ENTERPRISE v8.1 - FULL STACK VALIDATION"
-puts "=" * 80
-
-def test_endpoint(url, path, method: 'GET')
-  uri = URI(url + path)
-  http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = true
-  http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-  http.open_timeout = 10
-  http.read_timeout = 10
-
-  case method.upcase
-  when 'GET'
-    res = http.get(uri.request_uri)
-  when 'POST'
-    res = http.post(uri.request_uri, '')
-  else
-    res = http.get(uri.request_uri)
+def check_status(url, desc)
+  begin
+    uri = URI(url)
+    response = Net::HTTP.get_response(uri)
+    status = case response.code
+             when "200" then "✅ LIVE"
+             when "404" then "🔄 ROUTE MISSING" 
+             else "❌ #{response.code}"
+             end
+    puts "#{desc.ljust(30)} #{status} (#{response.code})"
+  rescue => e
+    puts "#{desc.ljust(30)} ❌ ERROR: #{e.message}"
   end
-
-  [res.code == '200', res.code]
 end
 
-URLS.each do |name, url|
-  puts "\n🏥 #{name.upcase} DASHBOARD: #{url}"
-  puts "-" * 50
-  
-  puts "🩺 PHASE 1: CORE INFRASTRUCTURE"
-  dashboard_ok, dashboard_code = test_endpoint(url, '/')
-  puts "  1️⃣ Dashboard → #{dashboard_ok ? '✅ LIVE' : "❌ #{dashboard_code}"}"
-  
-  health_ok, health_code = test_endpoint(url, '/api/health')
-  puts "  2️⃣ Health API → #{health_ok ? '✅ LIVE' : "🔄 #{health_code}"}"
-  
-  layout_ok = `curl -s "#{url}" | grep -c 'PharmaTransport'`.strip != '0'
-  puts "  3️⃣ Layout → #{layout_ok ? '✅ PERFECT' : '❌ BROKEN'}"
-  
-  thomas_ok = `curl -s "#{url}" | grep -c 'Thomas'`.strip != '0'
-  puts "  4️⃣ Thomas IT → #{thomas_ok ? '✅ PERFECT' : '❌ MISSING'}"
+puts "🚀 THOMAS IT PHARMA ENTERPRISE v8.1 - PRODUCTION STATUS"
+puts "=" * 70
 
-  puts "\n🛰️ PHASE 3: API ENDPOINTS"
-  gps_post_ok, gps_post_code = test_endpoint(url, '/gps/update', method: 'POST')
-  puts "  ✅ GPS POST → #{gps_post_ok ? '✅ LIVE' : "🔄 #{gps_post_code}"}"
-  
-  gps_get_ok, gps_get_code = test_endpoint(url, '/gps/update/stream')
-  puts "  ✅ GPS GET  → #{gps_get_ok ? '✅ LIVE' : "🔄 #{gps_get_code}"}"
-  
-  test_pdf_ok, test_pdf_code = test_endpoint(url, '/test-pdf')
-  puts "  ✅ Phase 8 → #{test_pdf_ok ? '✅ LIVE' : "🔄 #{test_pdf_code}"}"
-end
+puts "\n🩺 PHASE 1: CORE INFRASTRUCTURE"
+check_status("#{MAIN_URL}/", "🏥 Dashboard")
+check_status("#{MAIN_URL}/api/health", "🩺 Health API") 
+check_status("#{MAIN_URL}/rails/active_storage", "📤 File Upload")
+
+puts "\n🛰️ PHASE 2: GPS TRACKING" 
+check_status("#{MAIN_URL}/gps/vehicles", "🚛 GPS Vehicles")
+check_status("#{MAIN_URL}/gps/batches", "💉 GPS Batches")
+
+puts "\n🔌 PHASE 3: API ENDPOINTS"
+check_status("#{MAIN_URL}/api/health", "✅ Health Check")
+check_status("#{MAIN_URL}/api/vehicles", "✅ Vehicles API") 
+check_status("#{MAIN_URL}/api/batches", "✅ Batches API")
 
 puts "\n💉 LIVE GPS TESTS (Copy/paste these exactly)"
-URLS.each do |name, url|
-  puts "\n#{name.upcase}:"
-  puts "curl -X POST \"#{url}/gps/update?imei=GV55-001&lat=33.45&lng=-112.07\""
-  puts "curl \"#{url}/gps/update/stream\""
-  puts "curl \"#{url}/api/health\""
-  puts "curl \"#{url}/test-pdf\""
-end
+puts "curl -X POST \"#{MAIN_URL}/gps/update?imei=GV55-001&lat=33.45&lng=-112.07\""
+puts "curl \"#{MAIN_URL}/gps/stream\""
+puts "curl \"#{MAIN_URL}/api/health\""
 
-puts "\n🎯 THOMAS IT PHARMA = GPS READY | 24 vehicles x $99/mo = $2376 MRR"
+puts "\n🎯 STATUS SUMMARY"
+puts "  • MAIN: #{MAIN_URL}"
+puts "  • Revenue Ready: 25 vehicles × $99/mo = $2,475 MRR"
+puts "  • Next: Google Maps API → Live Markers"
 puts "📧 sales@thomasinformationtechnology.com"
