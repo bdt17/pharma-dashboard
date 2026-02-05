@@ -12,3 +12,8 @@ end
 get '/shipments', to: ->(env) { [200, {"Content-Type" => "application/json"}, ['{"shipments":42,"status":"active"}']] }
 get '/trucks', to: ->(env) { [200, {"Content-Type" => "application/json"}, ['{"trucks":25,"online":23}']] }
 get '/routes', to: ->(env) { [200, {"Content-Type" => "application/json"}, ['{"routes":156,"optimized":142}']] }
+
+# Pharma logistics endpoints  
+get '/shipments', to: ->(env) { [200, {"Content-Type" => "application/json"}, ['{"shipments":42,"status":"active"}']] }
+get '/trucks', to: ->(env) { [200, {"Content-Type" => "application/json"}, ['{"trucks":25,"online":23}']] }
+get '/routes', to: ->(env) { [200, {"Content-Type" => "application/json"}, ['{"routes":156,"optimized":142}']] }
