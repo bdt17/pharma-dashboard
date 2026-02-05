@@ -1,16 +1,20 @@
 class GpsController < ApplicationController
   def index
-    render json: { status: 'GPS tracking ready', count: 42 }, status: 200
+    render json: { status: 'GPS tracking active', vehicles: 42 }, status: 200
   end
 
   def create
-    render json: { status: 'GPS data received' }, status: 201
+    render json: { 
+      status: 'GPS coordinates received', 
+      received_at: Time.now.utc.iso8601 
+    }, status: 201
   end
 
   def stream
-    render plain: "GPS Stream Active", status: 200
+    render plain: "GPS Stream Active - #{Time.now}", status: 200
+  end
+
+  def update
+    render json: { status: 'GPS update processed' }, status: 200
   end
 end
-  def create
-    render json: { status: 'GPS data received', count: 1 }, status: 201
-  end
