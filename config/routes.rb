@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
   root "dashboard#index"
   
-  # API Health Check
-  namespace :api do
-    get "health", to: "health#index"
-  end
+  # Health API
+  get '/api/health', to: 'api/health#index'
   
-  # GPS Endpoints  
-  get "/gps/vehicles", to: "gps#vehicles"
-  get "/gps/batches", to: "gps#batches"
+  # GPS APIs  
+  get '/gps/vehicles', to: 'gps#vehicles'
+  get '/gps/batches', to: 'gps#batches'
 end
