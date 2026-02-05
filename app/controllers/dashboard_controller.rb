@@ -1,5 +1,10 @@
 class DashboardController < ApplicationController
   def index
-    render inline: "<h1>🚀 PHARMA DASHBOARD v8.1 LIVE</h1><p>#{Time.now}</p>", layout: false
+    @trucks_online = 23
+    @trucks_total = 25
+    @shipments = 42
+    @routes = 156
+    @mrr = 2376
+    render layout: false
   end
 end

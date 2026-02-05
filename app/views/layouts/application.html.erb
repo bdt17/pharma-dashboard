@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="data:image/x-icon;base64,">
   <title>Pharma Transport Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -39,6 +40,8 @@
   </div>
   <div class="flex items-center space-x-1">
     <span>💉</span><span>127</span>
+echo '<%= yield %>' >> app/views/layouts/application.html.erb
+<%= yield %>
   </div>
   <div class="flex items-center space-x-1">
     <span>💰</span><span>$12K</span>
