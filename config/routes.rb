@@ -1,19 +1,20 @@
 Rails.application.routes.draw do
-  # Your existing routes...
-  
+  # Existing health route (keep working)
   get '/health', to: 'healthchecks#show'
-  get '/404', to: 'errors#error404', as: :error_404
-  get '/500', to: 'errors#error500', as: :error_500
   
-  # Driver/Pharmacist portals
-  get '/drivers/sign_in', to: 'devise/sessions#new'  # adjust as needed
-  get '/pharmacists/sign_in', to: 'devise/sessions#new'
-  get '/up', to: -> { {status: 'ok'}.to_json }
+  # Pharma dashboard critical routes
+  root 'dashboard#index'
+  get 'dashboard', to: 'dashboard#index', as: :dashboard
+  
+  # GPS logistics endpoints
+  resources :gps, only: [:index, :create] do
+    collection { get :stream, path: 'update/stream' }
+    member { get :update }
+  end
+  
+  # PDF generation
+  get 'test_pdf', to: 'pdfs#test', as: :test_pdf
+  
+  # API health
+  get '/api/health', to: 'healthchecks#index'
 end
-
-root 'dashboard#index'
-get 'dashboard', to: 'dashboard#index', as: :dashboard
-resources :gps, only: [:index, :create] do
-  collection { get :stream }
-end
-get 'test_pdf', to: 'pdfs#test'
