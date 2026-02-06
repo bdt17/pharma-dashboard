@@ -1072,3 +1072,19 @@ puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
 puma (7.2.0) lib/puma/server.rb:503:in `process_client'
 puma (7.2.0) lib/puma/server.rb:262:in `block in run'
 puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.8ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-06 03:30:55.943599', NULL, NULL, NULL, 65.2, '2026-02-06 03:30:55.943599', 'GV55-001', 33.4484, -112.074, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.6ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" IN ('GV55-001', 'GV55-002') /* loading for pp */ LIMIT 11 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.4ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" IN ('GV55-001', 'GV55-002') /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Update (1.3ms)[0m  [1m[33mUPDATE "vehicles" SET "speed" = 66.46368713923891, "updated_at" = '2026-02-06 03:31:21.453081', "latitude" = 33.45494488958845, "longitude" = -112.07296283668312 WHERE "vehicles"."id" = 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (168.4ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Update (1.1ms)[0m  [1m[33mUPDATE "vehicles" SET "speed" = 69.9909689960241, "updated_at" = '2026-02-06 03:31:21.633195', "latitude" = 33.45384130742057, "longitude" = -112.06959172477438 WHERE "vehicles"."id" = 2 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
