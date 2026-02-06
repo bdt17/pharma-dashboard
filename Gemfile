@@ -49,6 +49,6 @@ gem "selenium-webdriver", "~> 4.39", group: :test
 gem 'solid_cable'
 gem 'wkhtmltopdf-binary'
 gem 'audited'
-gem 'prawn'
-gem 'prawn-table'
 gem 'stripe-rails', require: 'stripe'
+gem 'matrix', '~> 0.4'
+gem 'prawn'
