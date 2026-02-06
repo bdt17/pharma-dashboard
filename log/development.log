@@ -844,3 +844,93 @@ Completed 200 OK in 3ms (Views: 0.9ms | ActiveRecord: 0.1ms (1 query, 0 cached) 
   [1m[36mVehicle Create (0.9ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-06 00:34:12.523196', NULL, NULL, NULL, NULL, '2026-02-06 00:34:12.523196', 'GV55-003', 40.7128, -74.006, 'Truck #3 - NYC') RETURNING "id" /*application='PharmaDashboard'*/[0m
   [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Migrating to SeedTestVehicles (20260206021247)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260206021247') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (235.4ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.9ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-06 02:14:31.264314', NULL, NULL, NULL, NULL, '2026-02-06 02:14:31.264314', 'GV55-001', 33.35, -112.16999999999999, 'Truck #1') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+Started GET "/" for ::1 at 2026-02-05 19:15:43 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.5ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 18.2ms | GC: 0.0ms)
+Completed 200 OK in 74ms (Views: 25.5ms | ActiveRecord: 5.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-05 19:15:47 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (2.6ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 1.4ms | ActiveRecord: 2.7ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2026-02-05 19:19:03 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.5ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.7ms | GC: 0.0ms)
+Completed 200 OK in 65ms (Views: 14.1ms | ActiveRecord: 4.0ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-05 19:19:11 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.8ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (1.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.8ms | GC: 0.0ms)
+Completed 200 OK in 15ms (Views: 3.7ms | ActiveRecord: 1.8ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-05 19:19:14 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.5ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.5ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 2.1ms | ActiveRecord: 0.6ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-05 19:19:15 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-05 19:19:48 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  

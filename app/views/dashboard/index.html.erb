@@ -1,18 +1,56 @@
 <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
   <h1 class="text-4xl font-bold text-gray-900 mb-8">🩺 Pharma Transport Dashboard</h1>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white p-6 rounded-xl shadow-lg">
-      <h2 class="text-2xl font-semibold text-gray-800">🚛 Vehicles</h2>
-      <p class="text-3xl font-bold text-blue-600"><%= @vehicles&.count || 0 %></p>
+  
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Metrics -->
+    <div class="bg-white p-8 rounded-2xl shadow-xl">
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <h2 class="text-xl font-semibold text-gray-800">🚛 Live Vehicles</h2>
+          <p class="text-4xl font-bold text-blue-600"><%= @vehicles&.count || 0 %></p>
+        </div>
+        <div>
+          <h2 class="text-xl font-semibold text-gray-800">💉 Active Batches</h2>
+          <p class="text-4xl font-bold text-green-600"><%= @batches %></p>
+        </div>
+      </div>
     </div>
-    <div class="bg-white p-6 rounded-xl shadow-lg">
-      <h2 class="text-2xl font-semibold text-gray-800">💉 Batches</h2>
-      <p class="text-3xl font-bold text-green-600"><%= @batches %></p>
-    </div>
-    <div class="bg-white p-6 rounded-xl shadow-lg">
-      <h2 class="text-2xl font-semibold text-gray-800">🟢 Status</h2>
-      <p class="text-xl font-bold text-green-600">LIVE</p>
-      <%= link_to "Health Check", "/health", class: "mt-2 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+    
+    <!-- LIVE MAP -->
+    <div class="bg-white p-8 rounded-2xl shadow-xl">
+      <h2 class="text-2xl font-semibold mb-4 flex items-center">
+        📍 Live GPS Tracking 
+        <span id="map-status" class="ml-2 px-2 py-1 text-xs rounded-full bg-gray-100">Loading...</span>
+      </h2>
+      <div id="map" class="w-full h-96 rounded-xl bg-gray-200"></div>
     </div>
   </div>
 </div>
+
+<script async defer>
+window.initMap = function() {
+  document.getElementById('map-status').textContent = '✅ LIVE';
+  document.getElementById('map-status').className = 'ml-2 px-2 py-1 text-xs rounded-full bg-green-100 text-green-800';
+  
+  const map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 8,
+    center: {lat: 33.45, lng: -112.07}
+  });
+  
+  // Add truck markers
+  <% @vehicles.each do |vehicle| %>
+    <% next unless vehicle.latitude && vehicle.longitude %>
+    new google.maps.Marker({
+      position: {lat: <%= vehicle.latitude %>, lng: <%= vehicle.longitude %>},
+      map: map,
+      title: '<%= vehicle.name || vehicle.imei %> - <%= vehicle.latitude %>, <%= vehicle.longitude %>',
+      icon: {
+        url: 'https://maps.google.com/mapfiles/ms/icons/truck-red.png',
+        scaledSize: new google.maps.Size(32, 32)
+      }
+    });
+  <% end %>
+};
+</script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] || 'DEMO_KEY' %>&callback=initMap"></script>
