@@ -1,10 +1,6 @@
 class DashboardController < ApplicationController
   def index
-    @trucks_online = 23
-    @trucks_total = 25
-    @shipments = 42
-    @routes = 156
-    @mrr = 2376
-    render layout: false
+    @vehicles = Vehicle.last(12)
+    @batches  = Batch.where(active: true).count
   end
 end

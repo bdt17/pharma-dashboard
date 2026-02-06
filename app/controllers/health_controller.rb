@@ -1,11 +1,5 @@
 class HealthController < ApplicationController
-  def show
-    render json: { 
-      status: 'live', 
-      timestamp: Time.current,
-      batches: 127, 
-      vehicles: 24,
-      gps_active: true
-    }
+  def index
+    render plain: "🩺 PHARMA OK - #{Vehicle.count} vehicles tracked"
   end
 end

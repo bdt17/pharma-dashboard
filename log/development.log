@@ -133,3 +133,205 @@ Migrating to InstallAudited (20260130232854)
   ↳ lib/tasks/seed_gps.rake:4:in `block (2 levels) in <main>'
   [1m[36mBatch Load (0.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" /*application='PharmaDashboard'*/[0m
   ↳ lib/tasks/seed_gps.rake:5:in `block (2 levels) in <main>'
+  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Started GET "/" for ::1 at 2026-02-05 17:12:13 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  
+ArgumentError (Invalid route name, already in use: 'root' 
+You may have defined two routes with the same name using the `:as` option, or you may be overriding a route already defined by a resource with the same naming. For the latter, you can restrict the routes created with `resources` as explained here: 
+https://guides.rubyonrails.org/routing.html#restricting-the-routes-created):
+  
+config/routes.rb:14:in `block in <main>'
+config/routes.rb:13:in `<main>'
+Started GET "/" for 127.0.0.1 at 2026-02-05 17:12:14 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.7ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (1.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+Completed 500 Internal Server Error in 69ms (ActiveRecord: 5.1ms (2 queries, 0 cached) | GC: 2.9ms)
+
+
+  
+ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: batches.active:
+SELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/
+                                     ^)
+Caused by: SQLite3::SQLException (no such column: batches.active:
+SELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/
+                                     ^)
+
+Information for: ActiveRecord::StatementInvalid (SQLite3::SQLException: no such column: batches.active:
+SELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/
+                                     ^):
+  
+
+Information for cause: SQLite3::SQLException (no such column: batches.active:
+SELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/
+                                     ^):
+  
+app/controllers/dashboard_controller.rb:4:in `index'
+Started GET "/favicon.ico" for ::1 at 2026-02-05 17:12:14 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-05 17:12:15 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Migrating to AddActiveToBatches (20260206001359)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[35m (1.8ms)[0m  [1m[35mALTER TABLE "batches" ADD "active" boolean DEFAULT TRUE NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260206001359') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (152.3ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Started GET "/" for ::1 at 2026-02-05 17:15:18 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  
+ArgumentError (Invalid route name, already in use: 'root' 
+You may have defined two routes with the same name using the `:as` option, or you may be overriding a route already defined by a resource with the same naming. For the latter, you can restrict the routes created with `resources` as explained here: 
+https://guides.rubyonrails.org/routing.html#restricting-the-routes-created):
+  
+config/routes.rb:14:in `block in <main>'
+config/routes.rb:13:in `<main>'
+Started GET "/" for 127.0.0.1 at 2026-02-05 17:15:21 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.3ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.3ms | GC: 0.5ms)
+Completed 500 Internal Server Error in 143ms (ActiveRecord: 5.7ms (2 queries, 0 cached) | GC: 2.1ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000078d0630d9560>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000078d0630d9560>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000078d0630d9560>):
+     6:   <meta name="viewport" content="width=device-width, initial-scale=1">
+     7:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+     8:   <%= javascript_importmap_tags %>
+     9:   <%= csrf_meta_tags %>
+    10:   <%= csp_meta_tag %>
+    11: </head>
+    12: <body class="bg-gray-50 antialiased">
+  
+app/views/layouts/application.html.erb:9
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000078d0630d9560>):
+  
+app/views/layouts/application.html.erb:9
+Started GET "/" for ::1 at 2026-02-05 17:17:14 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.3ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.1ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 59ms (ActiveRecord: 4.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000073c3c3f78028>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000073c3c3f78028>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000073c3c3f78028>):
+     6:   <meta name="viewport" content="width=device-width, initial-scale=1">
+     7:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+     8:   <%= javascript_importmap_tags %>
+     9:   <%= csrf_meta_tags %>
+    10:   <%= csp_meta_tag %>
+    11: </head>
+    12: <body class="bg-gray-50 antialiased">
+  
+app/views/layouts/application.html.erb:9
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000073c3c3f78028>):
+  
+app/views/layouts/application.html.erb:9
+Started GET "/" for 127.0.0.1 at 2026-02-05 17:17:19 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (1.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.7ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 1.1ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000073c3c3f78028>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000073c3c3f78028>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000073c3c3f78028>):
+     6:   <meta name="viewport" content="width=device-width, initial-scale=1">
+     7:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+     8:   <%= javascript_importmap_tags %>
+     9:   <%= csrf_meta_tags %>
+    10:   <%= csp_meta_tag %>
+    11: </head>
+    12: <body class="bg-gray-50 antialiased">
+  
+app/views/layouts/application.html.erb:9
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x000073c3c3f78028>):
+  
+app/views/layouts/application.html.erb:9
+Started GET "/" for ::1 at 2026-02-05 17:18:29 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.4ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.2ms | GC: 0.0ms)
+Completed 200 OK in 46ms (Views: 11.6ms | ActiveRecord: 3.5ms (2 queries, 0 cached) | GC: 1.6ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-05 17:18:29 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-05 17:18:31 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:3:in `index'
+  [1m[36mBatch Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" WHERE "batches"."active" = TRUE /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.1ms | GC: 0.0ms)
+Completed 200 OK in 34ms (Views: 11.2ms | ActiveRecord: 0.4ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-05 17:18:32 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/health" for 127.0.0.1 at 2026-02-05 17:18:35 -0700
+Processing by HealthController#index as HTML
+  [1m[36mVehicle Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*action='index',application='PharmaDashboard',controller='health'*/[0m
+  ↳ app/controllers/health_controller.rb:3:in `index'
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 23ms (Views: 18.9ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+

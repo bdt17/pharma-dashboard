@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_30_232854) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_06_001359) do
   create_table "alerts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -55,6 +55,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_30_232854) do
   end
 
   create_table "batches", force: :cascade do |t|
+    t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.date "expiry"
     t.string "lot"
