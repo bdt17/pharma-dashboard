@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   root "dashboard#index"
   get "/health", to: "health#index"
-  get "/dashboard", to: "dashboard#index"
   get "/gps/update", to: "gps#update"
   post "/gps/update", to: "gps#update"
   get "/gps/update/stream", to: "gps#stream"
@@ -10,6 +9,6 @@ Rails.application.routes.draw do
   get "/trucks", to: "trucks#index"
   get "/routes", to: "routes#index"
   
-  resources :vehicles
-  resources :batches
+  resources :vehicles, only: [:index]
+  resources :batches, only: [:index]
 end

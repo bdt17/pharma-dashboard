@@ -3,21 +3,21 @@ class GpsController < ApplicationController
     imei = params[:imei]
     vehicle = Vehicle.find_or_create_by(imei: imei)
     vehicle.update!(
-      latitude: params[:lat].to_f,
-      longitude: params[:lng].to_f,
-      speed: params[:speed]&.to_f || 0
+      latitude: params[:lat]&.to_f,
+      longitude: params[:lng]&.to_f, 
+      speed: params[:speed]&.to_f
     )
     head :ok
-  rescue => e
-    Rails.logger.error "GPS Error: #{e}"
-    head :ok  # Graceful for devices
+  rescue
+    head :ok  # Graceful for Queclink GV55
   end
 
   def stream
     render json: {
-      count: Vehicle.count,
+      status: "LIVE",
+      total: Vehicle.count,
       active: Vehicle.where("updated_at > ?", 5.minutes.ago).count,
-      vehicles: Vehicle.limit(5).pluck(:imei, :latitude, :longitude, :speed)
+      trucks: Vehicle.limit(5).as_json(only: [:imei, :latitude, :longitude, :speed])
     }
   end
 end
