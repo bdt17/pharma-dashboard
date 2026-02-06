@@ -1,6 +1,7 @@
 class DashboardController < ApplicationController
   def index
-    @vehicles = Vehicle.last(12)
-    @batches  = Batch.where(active: true).count
+    @batches = Batch.order(created_at: :desc).limit(10)
+    @vehicles = Vehicle.order(updated_at: :desc).limit(5)
+    render layout: "application"
   end
 end
