@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_06_001359) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_06_002753) do
   create_table "alerts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -59,6 +59,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_06_001359) do
     t.datetime "created_at", null: false
     t.date "expiry"
     t.string "lot"
+    t.string "name"
     t.string "status"
     t.float "temperature_celsius"
     t.datetime "updated_at", null: false
@@ -166,10 +167,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_06_001359) do
     t.integer "batch_id"
     t.datetime "created_at", null: false
     t.float "heading"
+    t.string "imei", null: false
     t.float "lat"
+    t.float "latitude"
     t.float "lng"
+    t.float "longitude"
+    t.string "name"
     t.float "speed"
     t.datetime "updated_at", null: false
+    t.index ["imei"], name: "index_vehicles_on_imei", unique: true
   end
 
   add_foreign_key "audit_logs", "batches"
