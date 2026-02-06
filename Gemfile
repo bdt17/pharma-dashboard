@@ -48,3 +48,4 @@ gem "selenium-webdriver", "~> 4.39", group: :test
 gem 'solid_cable'
 gem 'wkhtmltopdf-binary'
 gem 'audited'
+gem 'stripe'
