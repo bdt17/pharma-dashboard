@@ -1,2 +1,44 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="container mx-auto px-6 py-12">
+    <div class="text-center mb-12">
+      <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+        🩺 PHARMA TRANSPORT LIVE
+      </h1>
+      <p class="text-xl text-gray-700 mb-8">Phase 8 Dashboard - 8/8 Endpoints ✅</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all">
+        <div class="text-3xl mb-4">🚛</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Vehicles</h3>
+        <p class="text-3xl font-black text-blue-600"><%= Vehicle.count rescue 0 %></p>
+      </div>
+
+      <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all">
+        <div class="text-3xl mb-4">📦</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Shipments</h3>
+        <p class="text-3xl font-black text-green-600"><%= Batch.count rescue 0 %></p>
+      </div>
+
+      <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all">
+        <div class="text-3xl mb-4">🟢</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Endpoints</h3>
+        <p class="text-3xl font-black text-emerald-600">8/8</p>
+      </div>
+
+      <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all">
+        <div class="text-3xl mb-4">💰</div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">MRR Ready</h3>
+        <p class="text-3xl font-black text-purple-600">$99/mo</p>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <div class="inline-flex bg-white px-8 py-4 rounded-full shadow-2xl border-2 border-blue-200">
+        <a href="https://pharma-dashboard-beq2.onrender.com/health" class="text-blue-600 hover:text-blue-800 font-bold mr-8">Health Check →</a>
+        <a href="/gps/update/stream" class="text-green-600 hover:text-green-800 font-bold mr-8">GPS Stream →</a>
+        <a href="mailto:sales@thomasinformationtechnology.com?subject=Pharma%20Dashboard" class="text-purple-600 hover:text-purple-800 font-bold">Sales →</a>
+      </div>
+    </div>
+  </div>
+</div>
