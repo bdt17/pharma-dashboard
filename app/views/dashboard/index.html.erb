@@ -1,43 +1,69 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+<div class="min-h-screen bg-white">
   <div class="container mx-auto px-6 py-12">
+    <!-- Header -->
     <div class="text-center mb-12">
-      <h1 class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-        🩺 PHARMA TRANSPORT LIVE
+      <h1 class="text-5xl md:text-6xl font-bold text-[#0984C0] mb-4 tracking-tight">
+        🩺 PHARMA TRANSPORT
       </h1>
-      <p class="text-xl text-gray-700 mb-8">Phase 8 Dashboard - 8/8 Endpoints ✅</p>
+      <p class="text-xl text-[#C0BEC6] mb-8 font-medium">Phase 8 • 8/8 Endpoints Live</p>
+      <div class="w-24 h-1 bg-[#0984C0] mx-auto rounded-full"></div>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-      <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all">
-        <div class="text-3xl mb-4">🚛</div>
-        <h3 class="text-xl font-bold text-gray-900 mb-2">Vehicles</h3>
-        <p class="text-3xl font-black text-blue-600"><%= Vehicle.count rescue 0 %></p>
+    <!-- Stats Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+      <!-- Vehicles -->
+      <div class="group bg-white border-2 border-[#0984C0]/20 hover:border-[#0984C0] rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="text-4xl mb-6 group-hover:scale-110 transition-transform">🚛</div>
+        <h3 class="text-lg font-semibold text-[#AAA7B0] mb-4 tracking-wide uppercase">Vehicles</h3>
+        <p class="text-4xl lg:text-5xl font-black text-[#0984C0] mb-2"><%= Vehicle.count rescue 0 %></p>
+        <p class="text-sm text-[#C0BEC6]">Live GPS Tracking</p>
       </div>
 
-      <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all">
-        <div class="text-3xl mb-4">📦</div>
-        <h3 class="text-xl font-bold text-gray-900 mb-2">Shipments</h3>
-        <p class="text-3xl font-black text-green-600"><%= Batch.count rescue 0 %></p>
+      <!-- Shipments -->
+      <div class="group bg-white border-2 border-[#60BDD1]/20 hover:border-[#60BDD1] rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="text-4xl mb-6 group-hover:scale-110 transition-transform">📦</div>
+        <h3 class="text-lg font-semibold text-[#AAA7B0] mb-4 tracking-wide uppercase">Shipments</h3>
+        <p class="text-4xl lg:text-5xl font-black text-[#60BDD1] mb-2"><%= Batch.count rescue 0 %></p>
+        <p class="text-sm text-[#C0BEC6]">Active Batches</p>
       </div>
 
-      <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all">
-        <div class="text-3xl mb-4">🟢</div>
-        <h3 class="text-xl font-bold text-gray-900 mb-2">Endpoints</h3>
-        <p class="text-3xl font-black text-emerald-600">8/8</p>
+      <!-- Endpoints -->
+      <div class="group bg-white border-2 border-emerald-200/50 hover:border-emerald-400 rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="text-4xl mb-6 group-hover:scale-110 transition-transform">🟢</div>
+        <h3 class="text-lg font-semibold text-[#AAA7B0] mb-4 tracking-wide uppercase">Endpoints</h3>
+        <p class="text-4xl lg:text-5xl font-black text-emerald-600 mb-2">8/8</p>
+        <p class="text-sm text-[#C0BEC6]">Production Ready</p>
       </div>
 
-      <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 hover:shadow-2xl transition-all">
-        <div class="text-3xl mb-4">💰</div>
-        <h3 class="text-xl font-bold text-gray-900 mb-2">MRR Ready</h3>
-        <p class="text-3xl font-black text-purple-600">$99/mo</p>
+      <!-- Revenue -->
+      <div class="group bg-white border-2 border-purple-200/50 hover:border-purple-400 rounded-2xl p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+        <div class="text-4xl mb-6 group-hover:scale-110 transition-transform">💰</div>
+        <h3 class="text-lg font-semibold text-[#AAA7B0] mb-4 tracking-wide uppercase">MRR Ready</h3>
+        <p class="text-4xl lg:text-5xl font-black text-purple-600 mb-2">$99/mo</p>
+        <p class="text-sm text-[#C0BEC6]">Per Vehicle</p>
       </div>
     </div>
 
+    <!-- Action Buttons -->
     <div class="text-center">
-      <div class="inline-flex bg-white px-8 py-4 rounded-full shadow-2xl border-2 border-blue-200">
-        <a href="https://pharma-dashboard-beq2.onrender.com/health" class="text-blue-600 hover:text-blue-800 font-bold mr-8">Health Check →</a>
-        <a href="/gps/update/stream" class="text-green-600 hover:text-green-800 font-bold mr-8">GPS Stream →</a>
-        <a href="mailto:sales@thomasinformationtechnology.com?subject=Pharma%20Dashboard" class="text-purple-600 hover:text-purple-800 font-bold">Sales →</a>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="/health" class="group inline-flex items-center px-8 py-4 bg-[#0984C0] hover:bg-[#0984C0]/90 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-[#0984C0]/20">
+          Health Check <span class="ml-2 transition-transform group-hover:translate-x-1">→</span>
+        </a>
+        <a href="/gps/update/stream" class="group inline-flex items-center px-8 py-4 bg-[#60BDD1] hover:bg-[#60BDD1]/90 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-[#60BDD1]/20">
+          GPS Stream <span class="ml-2 transition-transform group-hover:translate-x-1">→</span>
+        </a>
+        <a href="mailto:sales@thomasinformationtechnology.com?subject=Pharma%20Dashboard%20Demo" class="group inline-flex items-center px-8 py-4 bg-white hover:bg-gray-50 text-[#0984C0] font-bold rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-[#0984C0]/30">
+          Contact Sales <span class="ml-2 transition-transform group-hover:translate-x-1">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-24 pt-12 border-t border-[#C0BEC6]/30">
+      <div class="text-center">
+        <p class="text-sm text-[#AAA7B0]">Thomas Information Technology • Phoenix, AZ</p>
+        <p class="text-xs text-[#C0BEC6] mt-1">Rails 8.1 • Render • Live GPS Tracking</p>
       </div>
     </div>
   </div>
