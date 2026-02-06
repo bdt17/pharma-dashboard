@@ -1,5 +1,5 @@
 class HealthController < ApplicationController
   def index
-    render plain: "🩺 PHARMA OK - #{Vehicle.count} vehicles tracked"
   end
 end
+def index; render plain: "🟢 PHARMA OK #{Time.now}"; end

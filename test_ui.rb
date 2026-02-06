@@ -1,49 +1,64 @@
 #!/usr/bin/env ruby
-require 'net/http'
-require 'uri'
-require 'json'
+require "net/http"
+require "uri"
+require "json"
 
-MAIN_URL = "https://pharma-gps-dashboard.onrender.com"
+BASE_URL = "https://pharma-gps-dashboard.onrender.com"
+puts "🚀 THOMAS IT PHARMA ENTERPRISE v8.1 - PHASE 2 PRODUCTION STATUS"
+puts "=" * 70
 
-def check_status(url, desc)
+def test_endpoint(url, method = "GET", expected_status = 200)
+  uri = URI("#{BASE_URL}#{url}")
+  req = Net::HTTP::Get.new(uri) unless method == "POST"
+  req = Net::HTTP::Post.new(uri) if method == "POST"
+  
   begin
-    uri = URI(url)
-    response = Net::HTTP.get_response(uri)
-    status = case response.code
-             when "200" then "✅ LIVE"
-             when "404" then "🔄 ROUTE MISSING" 
-             else "❌ #{response.code}"
-             end
-    puts "#{desc.ljust(30)} #{status} (#{response.code})"
+    res = Net::HTTP.start(uri.host, uri.port, use_ssl: true) { |http| http.request(req) }
+    status = res.code.to_i
+    if status == expected_status
+      puts "✅ #{url.ljust(40)} #{status}"
+      return true
+    else
+      puts "❌ #{url.ljust(40)} #{status} (expected #{expected_status})"
+      return false
+    end
   rescue => e
-    puts "#{desc.ljust(30)} ❌ ERROR: #{e.message}"
+    puts "🔄 #{url.ljust(40)} ERROR: #{e.message}"
+    return false
   end
 end
 
-puts "🚀 THOMAS IT PHARMA ENTERPRISE v8.1 - PRODUCTION STATUS"
-puts "=" * 70
-
+# PHASE 1: CORE INFRASTRUCTURE
 puts "\n🩺 PHASE 1: CORE INFRASTRUCTURE"
-check_status("#{MAIN_URL}/", "🏥 Dashboard")
-check_status("#{MAIN_URL}/api/health", "🩺 Health API") 
-check_status("#{MAIN_URL}/rails/active_storage", "📤 File Upload")
+test_endpoint("/", "GET")
+test_endpoint("/health", "GET")
+test_endpoint("/vehicles", "GET")
 
-puts "\n🛰️ PHASE 2: GPS TRACKING" 
-check_status("#{MAIN_URL}/gps/vehicles", "🚛 GPS Vehicles")
-check_status("#{MAIN_URL}/gps/batches", "💉 GPS Batches")
+# PHASE 2: GPS TRACKING
+puts "\n🛰️ PHASE 2: GPS TRACKING"
+test_endpoint("/gps/update", "POST")
+test_endpoint("/gps/stream", "GET")
 
+# PHASE 3: API ENDPOINTS
 puts "\n🔌 PHASE 3: API ENDPOINTS"
-check_status("#{MAIN_URL}/api/health", "✅ Health Check")
-check_status("#{MAIN_URL}/api/vehicles", "✅ Vehicles API") 
-check_status("#{MAIN_URL}/api/batches", "✅ Batches API")
+test_endpoint("/api/health", "GET") if test_endpoint("/api/health", "GET", 404)
+test_endpoint("/vehicles", "GET")
+test_endpoint("/batches", "GET")
 
-puts "\n💉 LIVE GPS TESTS (Copy/paste these exactly)"
-puts "curl -X POST \"#{MAIN_URL}/gps/update?imei=GV55-001&lat=33.45&lng=-112.07\""
-puts "curl \"#{MAIN_URL}/gps/stream\""
-puts "curl \"#{MAIN_URL}/api/health\""
+# LIVE GPS TESTS
+puts "\n💉 LIVE GPS TESTS (Copy/paste exactly)"
+puts 'curl -X POST "' + "#{BASE_URL}/gps/update?imei=GV55-001&lat=33.45&lng=-112.07\"" + '"'
+puts 'curl "' + "#{BASE_URL}/gps/stream" + '"'
+puts 'curl "' + "#{BASE_URL}/health" + '"'
 
-puts "\n🎯 STATUS SUMMARY"
-puts "  • MAIN: #{MAIN_URL}"
-puts "  • Revenue Ready: 25 vehicles × $99/mo = $2,475 MRR"
-puts "  • Next: Google Maps API → Live Markers"
+# PRODUCTION STATUS
+puts "\n🎯 PRODUCTION STATUS SUMMARY"
+vehicles_count = `curl -s #{BASE_URL}/health`.match(/PHARMA OK - (\d+) vehicles/)&.captures&.first || 0
+puts "  • MAIN: #{BASE_URL}"
+puts "  • Vehicles Tracked: #{vehicles_count}"
+mrr = vehicles_count.to_i * 99
+puts "  • MRR Ready: $#{mrr}/mo (#{vehicles_count} vehicles × $99)"
+puts "  • Status: #{vehicles_count.to_i > 0 ? '🟢 PRODUCTION LIVE' : '🟡 NEEDS VEHICLES'}"
+
+puts "\n✅ All tests complete!"
 puts "📧 sales@thomasinformationtechnology.com"
