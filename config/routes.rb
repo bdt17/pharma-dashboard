@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
-  get "stripe/checkout"
   root "dashboard#index"
   get "/health", to: "health#index"
-  
-  # Phase 8 - 8 endpoints
   get "/dashboard", to: "dashboard#index"
   get "/gps/update", to: "gps#update"
   post "/gps/update", to: "gps#update"
@@ -16,4 +13,3 @@ Rails.application.routes.draw do
   resources :vehicles
   resources :batches
 end
-post "/stripe/checkout", to: "stripe#checkout"
