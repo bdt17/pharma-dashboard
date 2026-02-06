@@ -1,22 +1,22 @@
 class GpsController < ApplicationController
   def update
-    # Live GPS from Queclink GV55 devices
     imei = params[:imei]
-    lat = params[:lat]&.to_f
-    lng = params[:lng]&.to_f
+    return head :bad_request unless imei
     
-    if imei.present?
-      Vehicle.find_or_create_by(imei: imei).update!(
-        latitude: lat,
-        longitude: lng,
-        updated_at: Time.current
-      ) rescue nil  # Graceful if model missing
-    end
+    vehicle = Vehicle.find_or_create_by(imei: imei)
+    vehicle.update!(
+      latitude: params[:lat]&.to_f,
+      longitude: params[:lng]&.to_f,
+      speed: params[:speed]&.to_f
+    )
     
     head :ok, content_type: 'text/plain'
+  rescue => e
+    head :internal_server_error
   end
   
   def stream
-    render plain: "🟢 GPS STREAM LIVE: #{Vehicle.count rescue 0} vehicles", status: 200
+    count = Vehicle.where("updated_at > ?", 5.minutes.ago).count
+    render plain: "🟢 LIVE GPS: #{Vehicle.count} total | #{count} active", status: :ok
   end
 end

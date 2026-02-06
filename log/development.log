@@ -1088,3 +1088,13 @@ puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
   [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Count (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.4ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Update (0.7ms)[0m  [1m[33mUPDATE "vehicles" SET "speed" = 65.2, "updated_at" = '2026-02-06 03:37:44.298834', "latitude" = 33.4484, "longitude" = -112.074 WHERE "vehicles"."id" = 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (66.9ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.6ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-002' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Update (0.6ms)[0m  [1m[33mUPDATE "vehicles" SET "speed" = 58.7, "updated_at" = '2026-02-06 03:37:44.372120', "latitude" = 33.352, "longitude" = -111.789 WHERE "vehicles"."id" = 2 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m

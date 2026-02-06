@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "stripe/checkout"
   root "dashboard#index"
   get "/health", to: "health#index"
   
@@ -15,3 +16,4 @@ Rails.application.routes.draw do
   resources :vehicles
   resources :batches
 end
+post "/stripe/checkout", to: "stripe#checkout"
