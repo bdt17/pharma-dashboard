@@ -1,60 +1,18 @@
-<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-  <div class="px-4 py-6 sm:px-0">
-    <div class="border-4 border-dashed border-gray-200 rounded-2xl h-96 flex flex-col items-center justify-center text-center bg-gradient-to-br from-emerald-50 to-blue-50 shadow-2xl">
-      <div class="text-center px-8">
-        <div class="text-6xl mb-8 animate-pulse">🚀</div>
-        <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-          Pharma GPS Dashboard
-        </h2>
-        <h3 class="text-xl md:text-2xl font-semibold text-blue-900 mb-8">
-          THOMAS IT • LIVE ON RENDER • Phoenix AZ
-        </h3>
-        
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          <div class="bg-gradient-to-br from-green-400 to-green-600 p-8 rounded-2xl shadow-xl text-white transform hover:scale-105 transition-all">
-            <div class="text-4xl font-black">25</div>
-            <div class="text-lg font-semibold mt-1">Live Vehicles</div>
-          </div>
-          <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-8 rounded-2xl shadow-xl text-white transform hover:scale-105 transition-all">
-            <div class="text-4xl font-black">127</div>
-            <div class="text-lg font-semibold mt-1">Active Batches</div>
-          </div>
-          <div class="bg-gradient-to-br from-emerald-400 to-emerald-600 p-8 rounded-2xl shadow-xl text-white transform hover:scale-105 transition-all">
-            <div class="text-4xl font-black">98.7%</div>
-            <div class="text-lg font-semibold mt-1">Compliance</div>
-          </div>
-          <div class="bg-gradient-to-br from-purple-500 to-purple-700 p-8 rounded-2xl shadow-xl text-white transform hover:scale-105 transition-all">
-            <div class="text-4xl font-black">$2.1M</div>
-            <div class="text-lg font-semibold mt-1">24h Volume</div>
-          </div>
-        </div>
-        
-        <div class="bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-gray-200">
-          <p class="text-lg font-semibold text-gray-800">
-            ✅ Phase 1 LIVE • Puma + Rails 8.1 + PostgreSQL + Solid Cache/Queue/Cable
-          </p>
-        </div>
-      </div>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+  <h1 class="text-4xl font-bold text-gray-900 mb-8">🩺 Pharma Transport Dashboard</h1>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <h2 class="text-2xl font-semibold text-gray-800">🚛 Vehicles</h2>
+      <p class="text-3xl font-bold text-blue-600"><%= @vehicles&.count || 0 %></p>
     </div>
-
-    <!-- GPS Map Section -->
-    <section class="mt-16">
-      <div class="flex items-center mb-8">
-        <h3 class="text-3xl font-black text-gray-900 mr-3">🗺️ Live Tracking</h3>
-        <span class="bg-green-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">25 ACTIVE</span>
-      </div>
-      <div id="vehicles-map" class="w-full h-[500px] bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-3xl shadow-2xl border-4 border-dashed border-blue-200 flex items-center justify-center">
-        <div class="text-center px-8">
-          <div class="text-7xl mb-8">🚛📍</div>
-          <h4 class="text-3xl font-black text-gray-800 mb-4">Phoenix Metro Area</h4>
-          <p class="text-xl text-gray-600 mb-6">25 pharma vehicles • Real-time GPS ready</p>
-          <div class="inline-flex items-center bg-blue-600 text-white text-lg px-8 py-4 rounded-2xl font-bold shadow-xl hover:shadow-2xl transition-all">
-            <svg class="w-6 h-6 mr-2">⬆️</svg>
-            Phase 2 → Google Maps API Tomorrow
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <h2 class="text-2xl font-semibold text-gray-800">💉 Batches</h2>
+      <p class="text-3xl font-bold text-green-600"><%= @batches %></p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <h2 class="text-2xl font-semibold text-gray-800">🟢 Status</h2>
+      <p class="text-xl font-bold text-green-600">LIVE</p>
+      <%= link_to "Health Check", "/health", class: "mt-2 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+    </div>
   </div>
 </div>
