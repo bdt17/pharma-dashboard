@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "billing/index"
   root "dashboard#index"
   get "/health", to: "health#index"
   get "/gps/update", to: "gps#update"
@@ -13,4 +12,3 @@ Rails.application.routes.draw do
   resources :vehicles, only: [:index]
   resources :batches, only: [:index]
 end
-  get "/billing", to: "billing#index"
