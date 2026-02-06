@@ -5,6 +5,5 @@ Vehicle.create!([
 ]) unless Vehicle.count > 0
 
 Batch.create!([
-  {batch_id: 'LOT-PHARMA-20260204-001', status: 'in_transit', vehicle_id: 1},
-  {batch_id: 'LOT-PHARMA-20260204-002', status: 'delivered', vehicle_id: 2}
 ]) unless Batch.count > 0
+25.times { |i| Vehicle.create!(imei: "GV55-\#{i+1.to_s.rjust(3,'0')}", latitude: 33.45+rand(-1..1)/10.0, longitude: -112.07+rand(-1..1)/10.0, name: "Truck \#{i+1}") }
