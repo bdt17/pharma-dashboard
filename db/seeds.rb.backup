@@ -1,0 +1,8 @@
+Vehicle.find_or_create_by!(imei: "GV55-001") do |v|
+  v.identifier = "PHX-001"
+  v.name       = "Phoenix Truck 1"
+end
+
+Batch.find_or_create_by!(code: "B001") do |b|
+  b.description = "Phoenix vaccine run"
+end

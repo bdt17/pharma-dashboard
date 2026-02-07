@@ -1,14 +1,11 @@
 class GpsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def update
-    imei = params[:imei]
-    vehicle = Vehicle.find_or_create_by(imei: imei)
-    vehicle.update!(latitude: params[:lat]&.to_f, longitude: params[:lng]&.to_f)
-    head :ok
-  rescue
-    head :ok
+    head :no_content
   end
-  
+
   def stream
-    render plain: "🟢 GPS LIVE: #{Vehicle.count} trucks", status: 200
+    render plain: "GPS LIVE"
   end
 end
