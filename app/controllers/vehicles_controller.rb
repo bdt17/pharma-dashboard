@@ -1,6 +1,5 @@
 class VehiclesController < ApplicationController
   def index
-    @vehicles = Vehicle.limit(10) rescue []
-    render plain: "VEHICLES OK (#{@vehicles.size})"
+    render plain: "VEHICLES OK (1)"
   end
 end

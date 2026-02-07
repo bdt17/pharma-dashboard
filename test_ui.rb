@@ -3,7 +3,7 @@ require "net/http"
 require "uri"
 require "json"
 
-BASE_URL = "https://pharma-gps-dashboard.onrender.com"
+BASE_URL = "https://pharma-dashboard-beq2.onrender.com"
 puts "🚀 THOMAS IT PHARMA ENTERPRISE v8.1 - PHASE 2 PRODUCTION STATUS"
 puts "=" * 70
 
