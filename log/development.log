@@ -1125,3 +1125,23 @@ puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
   [1m[36mVehicle Load (0.5ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-PHX1' LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Load (2.0ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-PHX2' LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (80.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (3.6ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-07 23:02:26.921531', NULL, NULL, NULL, NULL, '2026-02-07 23:02:26.921531', 'GV55-#{i+1.to_s.rjust(3,''0'')}', 33.35, -112.16999999999999, 'Truck #{i+1}') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (195.4ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (3.7ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-07 23:02:27.140102', NULL, NULL, NULL, NULL, '2026-02-07 23:02:27.140102', 'GV55-#{i+1.to_s.rjust(3,''0'')}', 33.35, -112.07, 'Truck #{i+1}') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."code" = 'B001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.4ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.2ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."name" = 'B001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (3.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
