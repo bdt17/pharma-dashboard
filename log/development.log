@@ -1145,3 +1145,5 @@ puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
   [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-001' LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Count (3.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (2.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (1.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m

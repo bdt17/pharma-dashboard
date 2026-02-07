@@ -1,7 +1,9 @@
 class DashboardController < ApplicationController
   def index
-    @batches = Batch.order(created_at: :desc).limit(10) rescue []
-    @vehicles = Vehicle.order(updated_at: :desc).limit(5) rescue []
-    render layout: "application"
+    @vehicles = Vehicle.limit(10)
+    @batches = Batch.limit(10)
+  rescue
+    @vehicles = []
+    @batches = []
   end
 end
