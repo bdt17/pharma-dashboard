@@ -1,7 +1,6 @@
 class DashboardController < ApplicationController
   def index
-    @vehicles = Vehicle.all
-    @batches = Batch.all
-    @mrr_potential = Vehicle.count * 99
+    @vehicles = Vehicle.limit(10)
+    @batches = Batch.limit(5)
   end
 end
