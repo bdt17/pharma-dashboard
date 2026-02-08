@@ -15,3 +15,16 @@ class BatchesController < ApplicationController
     render json: { error: 'Batch not found' }, status: 404
   end
 end
+  def chain_of_custody
+    @batch = Batch.find_by(id: params[:id]) || Batch.first
+    return render json: {error: 'No batches'}, status: 404 unless @batch
+    
+    pdf_data = PdfChainOfCustodyGenerator.new(@batch).generate rescue "PDF Error"
+    
+    send_data pdf_data,
+      filename: "chain-of-custody-#{@batch.lot_number || 'DEMO'}.pdf",
+      type: 'application/pdf',
+      disposition: 'inline'
+  rescue
+    render json: {error: 'Batch not found'}, status: 404
+  end
