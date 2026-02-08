@@ -52,3 +52,33 @@
     </div>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const apiKey = '<%= ENV["GOOGLE_MAPS_API_KEY"] %>';
+  if (apiKey && apiKey !== 'GOOGLE_MAPS_API_KEY') {
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initPharmaMap`;
+    script.async = true;
+    document.head.appendChild(script);
+  }
+});
+
+function initPharmaMap() {
+  const map = new google.maps.Map(document.getElementById("pharma-map"), {
+    zoom: 11,
+    center: { lat: 33.4484, lng: -112.0740 },
+    mapTypeId: 'roadmap'
+  });
+  
+  // PHX-001 + 5 trucks LIVE
+  [% for i in 1..6 do %]
+    new google.maps.Marker({
+      position: { lat: <%= 33.4484 + (i-1)*0.008 %>, lng: <%= -112.0740 + (i-1)*0.004 %> },
+      map: map,
+      title: "PHX-00<%= i %> (GV55-00<%= i %>)",
+      icon: { url: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIKPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMTgiIGZpbGw9IiNGRjUwMDAiIHN0cm9rZT0iI0ZGMDAwMCIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNGRkYiLz4KPHRleHQgeD0iMjAiIHk9IjI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMwMDAiPlBITEE8L3RleHQ+Cjwvc3ZnPg==" }
+    });
+  [% endfor %]
+}
+</script>
