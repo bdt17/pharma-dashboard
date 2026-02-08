@@ -51,3 +51,4 @@ gem "pay", "~> 11.4"
 
 gem 'prawn'
 gem 'prawn-table'
+

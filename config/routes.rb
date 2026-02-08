@@ -24,3 +24,7 @@ Rails.application.routes.draw do
   rescue
   end
 end
+
+  get '/billing', to: 'billing#index', as: :billing
+  get '/billing/success', to: 'billing#success', as: :billing_success
+  post '/billing/webhook', to: 'billing#create'
