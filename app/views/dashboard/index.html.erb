@@ -1,47 +1,88 @@
-<div class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 p-12">
-  <div class="max-w-4xl mx-auto text-center">
-    <h1 class="text-6xl font-bold text-gray-900 mb-8">💉 Pharma Transport</h1>
-    <p class="text-2xl text-gray-600 mb-12">Phoenix, AZ • Thomas Information Technology</p>
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-emerald-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
     
-    <div class="grid md:grid-cols-3 gap-8 mb-12">
-      <div class="bg-white p-8 rounded-2xl shadow-lg">
-        <div class="text-4xl font-bold text-blue-600 mb-4">🚛 <%= Vehicle.count %></div>
-        <div class="text-xl font-semibold">Live Vehicles</div>
-      </div>
-      <div class="bg-white p-8 rounded-2xl shadow-lg">
-        <div class="text-4xl font-bold text-emerald-600 mb-4">$<%= Vehicle.count * 99 %></div>
-        <div class="text-xl font-semibold">MRR Potential</div>
-      </div>
-      <div class="bg-white p-8 rounded-2xl shadow-lg">
-        <div class="text-4xl font-bold text-green-600 mb-4">✅</div>
-        <div class="text-xl font-semibold">FDA Compliant</div>
+    <!-- PHARMA BRANDING + PHOENIX AZ -->
+    <div class="text-center mb-20">
+      <h1 class="text-6xl md:text-7xl font-black bg-gradient-to-r from-gray-900 via-blue-900 to-emerald-700 bg-clip-text text-transparent mb-6">
+        💉 PHARMA TRANSPORT
+      </h1>
+      <h2 class="text-3xl md:text-4xl font-semibold text-gray-800 mb-8">
+        Thomas Information Technology · <span class="text-blue-600 font-bold">Phoenix, AZ</span>
+      </h2>
+      
+      <!-- MRR DISPLAY + FDA -->
+      <div class="inline-flex items-center bg-gradient-to-r from-green-500 to-emerald-600 text-white px-12 py-8 rounded-3xl shadow-3xl mb-12">
+        <div class="text-5xl font-black mr-8">$<%= @revenue_projection %></div>
+        <div>
+          <div class="text-2xl font-bold mb-2">MRR Potential</div>
+          <div class="text-xl opacity-90"><%= @vehicles.size %> trucks × $99/mo 
+            <span class="ml-4 px-4 py-2 bg-white/30 rounded-2xl text-sm font-bold">✅ FDA 21 CFR Part 11</span>
+          </div>
+        </div>
       </div>
     </div>
-    
-    <a href="/billing" class="inline-block bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white font-bold text-xl px-12 py-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all">
-      🚀 Start Tracking - $99/mo per vehicle
-    </a>
-  </div>
-</div>
 
-<!-- Static Phoenix Live Map (No API key needed) -->
-<div class="bg-white/80 backdrop-blur-xl rounded-4xl p-8 shadow-2xl border border-white/50 mb-12">
-  <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-    🗺️ Live Phoenix Tracking 
-    <span class="ml-4 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">Sky Harbor Area</span>
-  </h3>
-  <iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10568.815511302!2d-112.066769685!3d33.448377480!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x872b06ac4f1b8a83%3A0x9f6c8b5d5b5c5f5c!2sPhoenix%20Sky%20Harbor%20Intl%20Airport%20%28PHX%29!5e0!3m2!1sen!2sus!4v1707412345678!5m2!1sen!2sus"
-    width="100%" height="400" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy">
-  </iframe>
-  <div class="grid md:grid-cols-3 gap-6 mt-8">
-    <% Vehicle.where('speed > 0').limit(6).order(speed: :desc).each do |truck| %>
-      <div class="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border-l-4 border-blue-500 hover:shadow-xl transition-all">
-        <div class="font-bold text-xl mb-2"><%= truck.name %></div>
-        <div class="text-3xl font-black text-blue-600"><%= truck.speed.round(1) %> mph</div>
-        <div class="text-sm text-gray-500 mt-1">Sky Harbor Area</div>
-        <div class="text-xs text-blue-600 font-semibold mt-1">IMEI: <%= truck.imei[0..8] %>...</div>
+    <!-- CTA BUTTON -->
+    <div class="text-center mb-20">
+      <a href="/billing" class="inline-flex items-center bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white font-black text-2xl px-20 py-10 rounded-3xl shadow-4xl hover:shadow-5xl hover:-translate-y-2 transition-all mx-auto">
+        🚀 START TRACKING TODAY $99/mo per vehicle
+      </a>
+    </div>
+
+    <!-- LIVE FLEET -->
+    <div class="bg-white/80 backdrop-blur-xl rounded-4xl p-12 shadow-3xl border border-white/50 mb-16">
+      <h3 class="text-4xl font-bold text-gray-900 mb-12 flex items-center justify-center">
+        🗺️ Live Phoenix Fleet 
+        <span class="ml-8 px-6 py-3 bg-blue-100 text-blue-800 rounded-3xl text-xl font-bold">Sky Harbor Metro</span>
+      </h3>
+      <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <% @vehicles.each do |truck| %>
+          <div class="p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-3xl border-2 border-blue-100 hover:border-blue-300 hover:shadow-2xl transition-all hover:-translate-y-2 text-center">
+            <div class="text-3xl mb-4">🚛</div>
+            <div class="font-bold text-xl text-gray-900 mb-3"><%= truck.name %></div>
+            <div class="text-4xl font-black text-blue-600 mb-4"><%= truck.speed.round %> <span class="text-lg">mph</span></div>
+            <div class="text-sm text-gray-500 mb-6">Phoenix Metro</div>
+            <a href="https://maps.google.com/?q=<%= truck.latitude %>,<%= truck.longitude %>" target="_blank" 
+               class="block w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all">
+              🗺️ Live Location
+            </a>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+
+    <!-- PRICING -->
+    <div class="grid md:grid-cols-3 gap-8 mb-20">
+      <div class="bg-white p-10 rounded-4xl shadow-2xl border-4 border-blue-100">
+        <div class="text-6xl font-black text-blue-600 mb-8">$99<span class="text-3xl">/mo</span></div>
+        <h3 class="text-3xl font-bold mb-8">GPS Basic</h3>
+        <ul class="space-y-3 mb-12 text-lg">
+          <li>✅ Live GPS Tracking</li>
+          <li>✅ Chain-of-Custody PDF</li>
+          <li>✅ Live Dashboard</li>
+        </ul>
+        <a href="/billing" class="w-full block bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-2xl text-center">Get Started</a>
+      </div>
+      <div class="bg-white p-10 rounded-4xl shadow-2xl border-4 border-emerald-100">
+        <div class="text-6xl font-black text-emerald-600 mb-8">$999<span class="text-3xl">/mo</span></div>
+        <h3 class="text-3xl font-bold mb-8">Enterprise</h3>
+        <ul class="space-y-3 mb-12 text-lg">
+          <li>✅ 10+ Trucks</li>
+          <li>✅ FDA 21 CFR Part 11</li>
+          <li>✅ API Access</li>
+        </ul>
+        <a href="/billing" class="w-full block bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-2xl text-center">Enterprise</a>
+      </div>
+      <div class="bg-white p-10 rounded-4xl shadow-2xl border-4 border-purple-100">
+        <div class="text-6xl font-black text-purple-600 mb-8">$1,999<span class="text-3xl">/mo</span></div>
+        <h3 class="text-3xl font-bold mb-8">Compliance Pro</h3>
+        <ul class="space-y-3 mb-12 text-lg">
+          <li>✅ Unlimited Trucks</li>
+          <li>✅ Full FDA Compliance</li>
+          <li>✅ White-label</li>
+        </ul>
+        <a href="/billing" class="w-full block bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-2xl text-center">Enterprise Pro</a>
+      </div>
+    </div>
   </div>
 </div>
