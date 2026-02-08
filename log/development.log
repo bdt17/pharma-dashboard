@@ -1171,3 +1171,19 @@ puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
   [1m[36mCACHE Vehicle Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles"[0m
+  [1m[36mVehicle Load (0.3ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-002' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-003' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-004' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-005' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-006' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mCACHE Vehicle Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles"[0m
+  [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-002' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-003' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-004' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-005' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-006' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mCACHE Vehicle Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles"[0m
