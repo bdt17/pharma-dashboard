@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   get '/health', to: 'health#show'
   
-  # GPS endpoints
+  # GPS endpoints  
   post '/gps/update', to: 'gps#update'
   get '/gps/stream', to: 'gps#stream'
   
@@ -14,17 +14,6 @@ Rails.application.routes.draw do
   end
   
   resources :vehicles
-  
-  # Billing (Phase 9 prep)
   get '/billing', to: 'billing#index'
-  
-  # Devise (safe - skip if broken)
-  begin
-    devise_for :users
-  rescue
-  end
+  get '/billing/success', to: 'billing#success'
 end
-
-  get '/billing', to: 'billing#index', as: :billing
-  get '/billing/success', to: 'billing#success', as: :billing_success
-  post '/billing/webhook', to: 'billing#create'

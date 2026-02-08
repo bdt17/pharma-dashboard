@@ -47,7 +47,6 @@ gem "selenium-webdriver", "~> 4.39", group: :test
 gem 'solid_cable'
 gem 'wkhtmltopdf-binary'
 
-gem "pay", "~> 11.4"
 
 gem 'prawn'
 gem 'prawn-table'
