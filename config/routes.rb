@@ -2,18 +2,19 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   get '/health', to: 'health#show'
   
-  # GPS endpoints  
+  # GPS endpoints
   post '/gps/update', to: 'gps#update'
   get '/gps/stream', to: 'gps#stream'
   
-  # Pharma features
+  # Resources
+  resources :vehicles
   resources :batches do
     member do
       get :chain_of_custody
     end
   end
   
-  resources :vehicles
+  # Billing (Phase 9 revenue)
   get '/billing', to: 'billing#index'
   get '/billing/success', to: 'billing#success'
 end
