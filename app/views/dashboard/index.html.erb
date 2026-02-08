@@ -5,18 +5,18 @@
       <p class="text-xl text-gray-600">Thomas Information Technology · Phoenix, AZ</p>
     </div>
 
-    <!-- METRICS (6 trucks ✓ $594 MRR ✓ FDA ✓) -->
+    <!-- PERFECT METRICS (your screenshot) -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
       <div class="bg-white p-8 rounded-2xl shadow-xl text-center">
-        <div class="text-3xl mb-2 text-blue-600">🚛 <%= Vehicle.count %></div>
+        <div class="text-3xl mb-2 text-blue-600">🚛 <%= @vehicles_count %></div>
         <div class="text-lg font-semibold text-gray-900">Live Vehicles</div>
       </div>
       <div class="bg-white p-8 rounded-2xl shadow-xl text-center">
-        <div class="text-3xl mb-2 text-green-600">💉 <%= Batch.count %></div>
+        <div class="text-3xl mb-2 text-green-600">💉 <%= @batches_count %></div>
         <div class="text-lg font-semibold text-gray-900">Active Batches</div>
       </div>
       <div class="bg-white p-8 rounded-2xl shadow-xl text-center">
-        <div class="text-3xl mb-2 text-purple-600">$<%= (Vehicle.count * 99) %></div>
+        <div class="text-3xl mb-2 text-purple-600">$<%= @mrr %></div>
         <div class="text-lg font-semibold text-gray-900">MRR Potential</div>
       </div>
       <div class="bg-emerald-50 border-2 border-emerald-200 p-8 rounded-2xl shadow-xl text-center">
@@ -25,28 +25,28 @@
       </div>
     </div>
 
-    <!-- SINGLE GPS MAP (PHX-001 → NO DUPLICATES) -->
+    <!-- SINGLE GPS MAP PLACEHOLDER -->
     <div class="bg-white p-8 rounded-2xl shadow-xl mb-8">
       <h2 class="text-2xl font-bold text-gray-900 mb-6">🗺️ LIVE GPS TRACKING</h2>
-      <div id="pharma-map" class="w-full h-96 bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl flex items-center justify-center">
+      <div class="w-full h-96 bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl flex items-center justify-center">
         <div class="text-center">
           <div class="text-4xl mb-2">📍 PHX-001</div>
           <div class="text-lg text-gray-600">Sky Harbor Airport</div>
           <div class="text-sm text-gray-500">33.4484° N, 112.0740° W</div>
-          <div class="text-xs text-gray-400 mt-2">Google Maps API key → LIVE TRACKING</div>
+          <div class="text-xs text-gray-400 mt-2">Google Maps API → LIVE TRACKING</div>
         </div>
       </div>
     </div>
 
-    <!-- SINGLE CTA BUTTON (PERFECT ALIGNMENT) -->
+    <!-- PERFECT SINGLE CTA -->
     <div class="bg-gradient-to-r from-blue-600 to-indigo-700 p-10 rounded-3xl shadow-2xl text-white text-center">
       <h2 class="text-3xl font-bold mb-6">🚀 Start Tracking Today</h2>
       <div class="grid grid-cols-2 gap-8 mb-8 max-w-2xl mx-auto">
         <div><div class="text-3xl font-bold">$99/mo</div><div class="opacity-90">Per Vehicle</div></div>
         <div><div class="text-3xl font-bold">$499/mo</div><div class="opacity-90">Enterprise</div></div>
       </div>
-      <a href="mailto:sales@thomasinformationtechnology.com?subject=Pharma%20Transport%20Demo%20Request" 
-         class="inline-block bg-white text-blue-600 px-12 py-4 rounded-2xl font-bold text-xl hover:shadow-xl hover:-translate-y-1 transition-all">
+      <a href="mailto:sales@thomasinformationtechnology.com?subject=Pharma%20Transport%20Demo" 
+         class="inline-block bg-white text-blue-600 px-12 py-4 rounded-2xl font-bold text-xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
         📞 REQUEST LIVE DEMO
       </a>
     </div>

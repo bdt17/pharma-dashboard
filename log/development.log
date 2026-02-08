@@ -1150,3 +1150,24 @@ puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Create (1.7ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 00:13:21.055217', NULL, 33.35303011615044, -112.04796728317767, NULL, '2026-02-08 00:13:21.055217', 'GV55-001', NULL, NULL, 'PHX-001') RETURNING "id" /*application='PharmaDashboard'*/[0m
   [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Delete All (210.3ms)[0m  [1m[31mDELETE FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (3.4ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 00:20:29.832200', NULL, 33.4484, -112.074, NULL, '2026-02-08 00:20:29.832200', 'GV55-001', NULL, NULL, 'PHX-001') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (2.6ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 00:20:29.843173', NULL, 33.4584, -112.069, NULL, '2026-02-08 00:20:29.843173', 'GV55-002', NULL, NULL, 'PHX-002') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (2.7ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 00:20:29.850277', NULL, 33.4684, -112.064, NULL, '2026-02-08 00:20:29.850277', 'GV55-003', NULL, NULL, 'PHX-003') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (2.3ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 00:20:29.856963', NULL, 33.4784, -112.059, NULL, '2026-02-08 00:20:29.856963', 'GV55-004', NULL, NULL, 'PHX-004') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (2.1ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 00:20:29.862970', NULL, 33.4884, -112.054, NULL, '2026-02-08 00:20:29.862970', 'GV55-005', NULL, NULL, 'PHX-005') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (2.0ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 00:20:29.868584', NULL, 33.4984, -112.04899999999999, NULL, '2026-02-08 00:20:29.868584', 'GV55-006', NULL, NULL, 'PHX-006') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mCACHE Vehicle Count (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles"[0m
