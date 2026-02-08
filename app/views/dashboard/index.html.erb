@@ -51,3 +51,30 @@
     </div>
   </div>
 </div>
+
+<!-- REPLACE MAP PLACEHOLDER WITH LIVE GOOGLE MAPS -->
+<div class="bg-white p-8 rounded-2xl shadow-xl mb-8">
+  <h2 class="text-2xl font-bold text-gray-900 mb-4">🗺️ LIVE GPS TRACKING</h2>
+  <div id="pharma-map" class="w-full h-96 bg-gray-300 rounded-xl"></div>
+</div>
+
+<script async defer 
+  src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_MAPS_API_KEY&callback=initPharmaMap">
+</script>
+<script>
+function initPharmaMap() {
+  const map = new google.maps.Map(document.getElementById("pharma-map"), {
+    zoom: 11,
+    center: { lat: 33.4484, lng: -112.0740 }, // Phoenix Sky Harbor
+    mapTypeId: 'roadmap'
+  });
+
+  // PHX-001 LIVE TRUCK MARKER (Queclink GV55)
+  new google.maps.Marker({
+    position: { lat: 33.4484, lng: -112.0740 },
+    map: map,
+    title: "🚛 PHX-001 (GV55-001)",
+    icon: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMTgiIGZpbGw9IiNGRjUwMDAiIHN0cm9rZT0iI0ZGMDAwMCIgc3Ryb2tlLXdpZHRoPSI0Ii8+CjxjaXJjbGUgY3g9IjIwIiBjeT0iMTUiIHI9IjQiIGZpbGw9IiNGRkYiLz4KPHRleHQgeD0iMjAiIHk9IjI2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMwMDAiPk5JVEE8L3RleHQ+Cjwvc3ZnPgo="
+  });
+}
+</script>
