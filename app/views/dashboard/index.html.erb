@@ -1,41 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Thomas IT Pharma Transport</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 40px; background: linear-gradient(135deg, #d1fae5 0%, #dbeafe 100%); min-height: 100vh; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #059669, #1e40af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 20px; }
+    .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0; }
+    .card { background: white; padding: 40px; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1); }
+    .metric { font-size: 1.5rem; margin: 20px 0; }
+    .big { font-size: 3rem; font-weight: 900; color: #059669; }
+    .cta { background: #10b981; color: white; padding: 20px 40px; font-size: 1.5rem; font-weight: 700; text-decoration: none; border-radius: 16px; display: block; text-align: center; margin-top: 30px; box-shadow: 0 20px 40px rgba(16,185,129,0.3); }
+    .cta:hover { background: #059669; }
+  </style>
 </head>
-<body class="bg-gradient-to-br from-emerald-50 to-blue-50 min-h-screen">
-  <div class="max-w-6xl mx-auto p-12">
-    <div class="text-center mb-16">
-      <h1 class="text-6xl font-black bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-6">
-        💉 Thomas IT Pharma Transport
-      </h1>
-      <p class="text-2xl text-gray-700">Phoenix, AZ • Live Production</p>
-    </div>
+<body>
+  <div class="container">
+    <h1>💉 Thomas IT Pharma Transport</h1>
+    <p style="text-align:center;font-size:1.3rem;color:#64748b;margin-bottom:50px;">Live GPS • FDA Compliance • Phoenix Fleet</p>
     
-    <div class="grid lg:grid-cols-2 gap-12">
-      <div class="bg-white rounded-3xl shadow-2xl p-12">
-        <h2 class="text-4xl font-bold text-gray-900 mb-8">📊 Live Metrics</h2>
-        <div class="space-y-6 text-2xl">
-          <div class="flex justify-between"><span>Vehicles:</span> <span class="font-bold text-emerald-600">25 LIVE</span></div>
-          <div class="flex justify-between"><span>Batches:</span> <span class="font-bold text-emerald-600">128 ACTIVE</span></div>
-          <div class="flex justify-between"><span>MRR Potential:</span> <span class="font-bold text-3xl text-emerald-600">$2,475/mo</span></div>
-        </div>
+    <div class="metrics">
+      <div class="card">
+        <h2 style="font-size:2rem;color:#1e293b;margin-bottom:30px;">📊 Live Metrics</h2>
+        <div class="metric"><strong>Vehicles:</strong> <span class="big">25 LIVE</span></div>
+        <div class="metric"><strong>Batches:</strong> <span class="big">128 ACTIVE</span></div>
+        <div class="metric"><strong>MRR Potential:</strong> <span class="big">$2,475/mo</span></div>
       </div>
       
-      <div class="bg-white rounded-3xl shadow-2xl p-12">
-        <h2 class="text-4xl font-bold text-gray-900 mb-8">🚀 Get Started</h2>
-        <div class="space-y-4 mb-12">
-          <div class="flex items-center p-4 bg-emerald-50 rounded-xl">
-            <span class="w-8">✅</span> Live GPS Tracking
-          </div>
-          <div class="flex items-center p-4 bg-blue-50 rounded-xl">
-            <span class="w-8">✅</span> FDA 21 CFR Part 11
-          </div>
+      <div class="card">
+        <h2 style="font-size:2rem;color:#1e293b;margin-bottom:30px;">🚀 Enterprise Ready</h2>
+        <div style="margin-bottom:20px;padding:15px;background:#ecfdf5;border-radius:12px;border-left:4px solid #10b981;">
+          ✅ Live GPS Tracking (10+ Phoenix trucks)
         </div>
-        <a href="/billing" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6 px-8 rounded-3xl text-2xl font-bold text-center block shadow-2xl">
-          💰 Start $99/mo Trial
-        </a>
+        <div style="margin-bottom:20px;padding:15px;background:#eff6ff;border-radius:12px;border-left:4px solid #3b82f6;">
+          ✅ FDA 21 CFR Part 11 Compliance
+        </div>
+        <a href="/billing" class="cta">💰 Start $99/mo Trial</a>
       </div>
+    </div>
+    
+    <div style="text-align:center;margin-top:60px;padding:30px;background:white;border-radius:24px;">
+      <p style="font-size:1.2rem;color:#64748b;">Thomas Information Technology • Phoenix, AZ</p>
+      <a href="mailto:sales@thomasinformationtechnology.com?subject=Pharma+Demo" style="color:#3b82f6;font-weight:600;">sales@thomasinformationtechnology.com</a>
     </div>
   </div>
 </body>
