@@ -7,3 +7,7 @@ class DashboardController < ApplicationController
     @batches = []
   end
 end
+  def index
+    @vehicles = Vehicle.all rescue []
+    @batches = Batch.all rescue []
+  end
