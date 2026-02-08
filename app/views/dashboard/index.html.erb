@@ -23,3 +23,25 @@
     </a>
   </div>
 </div>
+
+<!-- Static Phoenix Live Map (No API key needed) -->
+<div class="bg-white/80 backdrop-blur-xl rounded-4xl p-8 shadow-2xl border border-white/50 mb-12">
+  <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+    🗺️ Live Phoenix Tracking 
+    <span class="ml-4 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">Sky Harbor Area</span>
+  </h3>
+  <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10568.815511302!2d-112.066769685!3d33.448377480!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x872b06ac4f1b8a83%3A0x9f6c8b5d5b5c5f5c!2sPhoenix%20Sky%20Harbor%20Intl%20Airport%20%28PHX%29!5e0!3m2!1sen!2sus!4v1707412345678!5m2!1sen!2sus"
+    width="100%" height="400" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy">
+  </iframe>
+  <div class="grid md:grid-cols-3 gap-6 mt-8">
+    <% Vehicle.where('speed > 0').limit(6).order(speed: :desc).each do |truck| %>
+      <div class="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border-l-4 border-blue-500 hover:shadow-xl transition-all">
+        <div class="font-bold text-xl mb-2"><%= truck.name %></div>
+        <div class="text-3xl font-black text-blue-600"><%= truck.speed.round(1) %> mph</div>
+        <div class="text-sm text-gray-500 mt-1">Sky Harbor Area</div>
+        <div class="text-xs text-blue-600 font-semibold mt-1">IMEI: <%= truck.imei[0..8] %>...</div>
+      </div>
+    <% end %>
+  </div>
+</div>
