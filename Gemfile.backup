@@ -26,6 +26,7 @@ gem "image_processing"
 # PDF - Use wicked_pdf (production stable)
 
 # Compliance + Monitoring
+gem "audited"
 gem "sentry-rails"
 gem "lograge"
 
@@ -46,8 +47,9 @@ gem "selenium-webdriver", "~> 4.39", group: :test
 
 gem 'solid_cable'
 gem 'wkhtmltopdf-binary'
+gem 'audited'
 
 gem "pay", "~> 11.4"
 
-gem 'prawn'
-gem 'prawn-table'
+gem "prawn", "~> 2.4"
+gem "prawn-table", "~> 0.2.2"

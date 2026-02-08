@@ -1,37 +1,35 @@
-# README
+# PHARMA TRANSPORT CLIENT DEMO SCRIPT (Feb 7, 2026)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 🎯 90-SECOND PITCH (Email/Phone)
 
-Things you may want to cover:
+"Hi [Client], I've got Pharma Transport LIVE with:
 
-* Ruby version
+✅ **6 trucks tracking LIVE** in Phoenix = **$594 MRR** potential  
+✅ **FDA 21 CFR Part 11 compliant** Chain-of-Custody PDFs  
+✅ **Real-time GPS** + temp monitoring ready  
+✅ **$99/mo per truck** → scales to enterprise  
 
-* System dependencies
+**Can I screen-share the LIVE demo now?** 
+Live URLs ready → https://pharma-dashboard-beq2.onrender.com/
 
-* Configuration
+## 🖥️ SCREEN SHARE DEMO (3 mins)
 
-* Database creation
+**1. LANDING PAGE (30s)**
+- "Here's live metrics: 6 trucks = $594 MRR potential"
+- "FDA compliant → 21 CFR Part 11 ready" 
+- "Single click → billing"
 
-* Database initialization
+**2. BILLING PAGE (45s)**
+- "3 plans: $99/truck → $1999 enterprise"
+- "Live fleet shows PHX-001 at Sky Harbor, 45mph"
+- "Click GPS Basic → enterprise ready"
 
-* How to run the test suite
+**3. PDF DEMO (45s)**
+- "/batches → Chain-of-Custody PDF download" 
+- "Immutable FDA audit trail = compliance WIN"
 
-* Services (job queues, cache servers, search engines, etc.)
+**4. CLOSE (30s)**
+- "Start with 5 trucks = $495/mo?"
+- "Stripe checkout live → billing starts today"
 
-* Deployment instructions
-
-* ...
-# API controllers removed - Render deploy Sun Jan 18 04:20:36 PM MST 2026
-
-## 🚀 Production Status
-[![Deployed](https://img.shields.io/badge/Deployed-pharma--dashboard--beq2.onrender.com-blue)](https://pharma-dashboard-beq2.onrender.com)
-[![Rails 8.1](https://img.shields.io/badge/Rails-8.1.1-green)](https://rubyonrails.org)
-[![FDA 21CFR](https://img.shields.io/badge/FDA-21CFR%20Part%2011-orange)](https://www.fda.gov)
-[![25 Vehicles](https://img.shields.io/badge/Vehicles-25-teal)](https://pharma-dashboard-beq2.onrender.com)
-[![$12K MRR](https://img.shields.io/badge/MRR-%2412K-brightgreen)](https://pharma-dashboard-beq2.onrender.com)
-
-## 📊 LIVE STATUS
-[![Pharma Transport](https://img.shields.io/badge/Live-pharma--dashboard--beq2.onrender.com-blue)](https://pharma-dashboard-beq2.onrender.com)
-[![25 Vehicles](https://img.shields.io/badge/Vehicles-25-teal)](https://pharma-dashboard-beq2.onrender.com)
-[![$12K MRR](https://img.shields.io/badge/MRR-%2412K-brightgreen)](https://pharma-dashboard-beq2.onrender.com)
+**DEMO URL:** https://pharma-dashboard-beq2.onrender.com/

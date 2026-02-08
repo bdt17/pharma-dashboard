@@ -1258,3 +1258,368 @@ Migrating to AddVehicleAttributes (20260208014141)
   [1m[36mVehicle Load (0.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (2.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (1.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (2.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.9ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mCACHE Vehicle Load (0.0ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1[0m
+  [1m[36mVehicle Count (1.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.4ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mCACHE Vehicle Load (0.0ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1[0m
+  [1m[36mVehicle Delete All (171.6ms)[0m  [1m[31mDELETE FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.7ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.962497', NULL, NULL, NULL, 38.0, '2026-02-08 02:23:26.962497', '862870627499', 33.4427552728382, -112.07273173474113, 'PHX-TRK-100') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.4ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.966431', NULL, NULL, NULL, 34.0, '2026-02-08 02:23:26.966431', '862540439310', 33.45499960662873, -112.06588591729523, 'PHX-TRK-101') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.3ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.968115', NULL, NULL, NULL, 58.0, '2026-02-08 02:23:26.968115', '861815181364', 33.44364447211791, -112.07599970459678, 'PHX-TRK-102') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.3ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.969428', NULL, NULL, NULL, 45.0, '2026-02-08 02:23:26.969428', '867101660980', 33.445135261050915, -112.07638393663008, 'PHX-TRK-103') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.5ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.970737', NULL, NULL, NULL, 52.0, '2026-02-08 02:23:26.970737', '864368293413', 33.44704048787423, -112.08208962277351, 'PHX-TRK-104') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (1.0ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.974273', NULL, NULL, NULL, 45.0, '2026-02-08 02:23:26.974273', '869881191809', 33.4576983710774, -112.06787258258066, 'PHX-TRK-105') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.3ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.977539', NULL, NULL, NULL, 28.0, '2026-02-08 02:23:26.977539', '862792918624', 33.44212208231097, -112.08017536465861, 'PHX-TRK-106') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.6ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.979100', NULL, NULL, NULL, 27.0, '2026-02-08 02:23:26.979100', '861504186014', 33.44505526564621, -112.06877943923433, 'PHX-TRK-107') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (0.7ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.982301', NULL, NULL, NULL, 26.0, '2026-02-08 02:23:26.982301', '864052950382', 33.44160718153957, -112.06410842566629, 'PHX-TRK-108') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (2.3ms)[0m  [1m[32mINSERT INTO "vehicles" ("batch_id", "created_at", "heading", "lat", "lng", "speed", "updated_at", "imei", "latitude", "longitude", "name") VALUES (NULL, '2026-02-08 02:23:26.985158', NULL, NULL, NULL, 13.0, '2026-02-08 02:23:26.985158', '864160761224', 33.45476201595839, -112.0652977597311, 'PHX-TRK-109') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Migrating to ForceAddVehicleGpsFields (20260208014259)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260208014259') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (200.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."lot_number" = 'LOT-PHARMA-20260207' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.2ms)[0m  [1m[34mSELECT "batches".* FROM "batches" ORDER BY "batches"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Migrating to AddLotNumberToBatches (20260208044313)
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Migrating to AddLotNumberToBatches (20260208044313)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[35m (3.9ms)[0m  [1m[35mALTER TABLE "batches" ADD "lot_number" varchar DEFAULT 'LOT-UNASSIGNED' NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_batches_on_lot_number" ON "batches" ("lot_number") /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260208044313') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (155.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.2ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "vehicles" LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.7ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.1ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (4.6ms)[0m  [1m[32mINSERT INTO "batches" ("id", "active", "created_at", "expiry", "lot", "status", "temperature_celsius", "updated_at", "vehicle_id", "name", "lot_number") VALUES (1, TRUE, '2026-02-08 04:45:08.470151', NULL, NULL, 'in_transit', NULL, '2026-02-08 04:45:08.470151', 23, NULL, 'LOT-PHARMA-20260207') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (276.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+Started GET "/" for ::1 at 2026-02-07 21:45:42 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  
+RuntimeError (User does not respond to 'devise' method. This usually means you haven't loaded your ORM file or it's being loaded too late. To fix it, be sure to require 'devise/orm/YOUR_ORM' inside 'config/initializers/devise.rb' or before your application definition in 'config/application.rb'):
+  
+config/routes.rb:25:in `block in <main>'
+config/routes.rb:1:in `<main>'
+Started GET "/favicon.ico" for ::1 at 2026-02-07 21:45:43 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-07 21:45:45 -0700
+Processing by DashboardController#index as HTML
+  [1m[36mVehicle Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:4:in `index'
+  [1m[36mBatch Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:5:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mVehicle Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM (SELECT 1 AS one FROM "vehicles" LIMIT 12) AS subquery_for_count /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:19
+  [1m[36mVehicle Load (1.0ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."speed" DESC LIMIT 12 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:40
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 29.8ms | GC: 1.2ms)
+  [1m[36mCACHE Vehicle Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles"[0m
+  ↳ app/views/shared/_pharma_header.html.erb:14
+  Rendered shared/_pharma_header.html.erb (Duration: 43.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 79.7ms | GC: 1.7ms)
+Completed 200 OK in 133ms (Views: 93.3ms | ActiveRecord: 7.3ms (5 queries, 1 cached) | GC: 3.4ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-07 21:45:46 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started HEAD "/batches/1/chain_of_custody" for ::1 at 2026-02-07 21:45:47 -0700
+Processing by BatchesController#chain_of_custody as */*
+  Parameters: {"id"=>"1"}
+Completed 404 Not Found in 4ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 2.9ms)
+
+
+  
+AbstractController::ActionNotFound (The show action could not be found for the :set_batch
+callback on BatchesController, but it is listed in the controller's
+:only option.
+
+Raising for missing callback actions is a new default in Rails 7.1, if you'd
+like to turn this off you can delete the option from the environment configurations
+or set `config.action_controller.raise_on_missing_callback_actions` to `false`.
+):
+  
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:64:in `match?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:385:in `block in make_lambda'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `all?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `block in invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `each'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:119:in `block in run_callbacks'
+actiontext (8.1.2) lib/action_text/rendering.rb:24:in `with_renderer'
+actiontext (8.1.2) lib/action_text/engine.rb:72:in `block (4 levels) in <class:Engine>'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `instance_exec'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+activesupport (8.1.2) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:266:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/rescue.rb:36:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:76:in `block in process_action'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `block in instrument'
+activesupport (8.1.2) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `instrument'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:75:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (8.1.2) lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+actionpack (8.1.2) lib/abstract_controller/base.rb:154:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.4) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.4) lib/rack/etag.rb:29:in `call'
+rack (3.2.4) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.4) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+activerecord (8.1.2) lib/active_record/migration.rb:671:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+sentry-rails (6.3.0) lib/sentry/rails/rescued_exception_interceptor.rb:11:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+sentry-ruby (6.3.0) lib/sentry/rack/capture_exceptions.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+request_store (1.7.0) lib/request_store/middleware.rb:19:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/health" for ::1 at 2026-02-07 21:48:16 -0700
+  
+AbstractController::ActionNotFound (The action 'show' could not be found for HealthController):
+  
+actionpack (8.1.2) lib/abstract_controller/base.rb:149:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.4) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.4) lib/rack/etag.rb:29:in `call'
+rack (3.2.4) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.4) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+activerecord (8.1.2) lib/active_record/migration.rb:671:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+sentry-rails (6.3.0) lib/sentry/rails/rescued_exception_interceptor.rb:11:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+sentry-ruby (6.3.0) lib/sentry/rack/capture_exceptions.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+request_store (1.7.0) lib/request_store/middleware.rb:19:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started HEAD "/batches/1/chain_of_custody" for ::1 at 2026-02-07 21:48:16 -0700
+Processing by BatchesController#chain_of_custody as */*
+  Parameters: {"id"=>"1"}
+Completed 404 Not Found in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+AbstractController::ActionNotFound (The show action could not be found for the :set_batch
+callback on BatchesController, but it is listed in the controller's
+:only option.
+
+Raising for missing callback actions is a new default in Rails 7.1, if you'd
+like to turn this off you can delete the option from the environment configurations
+or set `config.action_controller.raise_on_missing_callback_actions` to `false`.
+):
+  
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:64:in `match?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:385:in `block in make_lambda'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `all?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `block in invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `each'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:119:in `block in run_callbacks'
+actiontext (8.1.2) lib/action_text/rendering.rb:24:in `with_renderer'
+actiontext (8.1.2) lib/action_text/engine.rb:72:in `block (4 levels) in <class:Engine>'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `instance_exec'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+activesupport (8.1.2) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:266:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/rescue.rb:36:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:76:in `block in process_action'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `block in instrument'
+activesupport (8.1.2) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `instrument'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:75:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (8.1.2) lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+actionpack (8.1.2) lib/abstract_controller/base.rb:154:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.4) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.4) lib/rack/etag.rb:29:in `call'
+rack (3.2.4) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.4) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+activerecord (8.1.2) lib/active_record/migration.rb:671:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+sentry-rails (6.3.0) lib/sentry/rails/rescued_exception_interceptor.rb:11:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+sentry-ruby (6.3.0) lib/sentry/rack/capture_exceptions.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+request_store (1.7.0) lib/request_store/middleware.rb:19:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'

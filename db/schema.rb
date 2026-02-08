@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_08_014141) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_08_044313) do
   create_table "alerts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -59,12 +59,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_08_014141) do
     t.datetime "created_at", null: false
     t.date "expiry"
     t.string "lot"
+    t.string "lot_number", default: "LOT-UNASSIGNED", null: false
     t.string "name"
     t.string "status"
     t.float "temperature_celsius"
     t.datetime "updated_at", null: false
     t.integer "vehicle_id", null: false
     t.index ["lot"], name: "index_batches_on_lot", unique: true
+    t.index ["lot_number"], name: "index_batches_on_lot_number", unique: true
     t.index ["vehicle_id"], name: "index_batches_on_vehicle_id"
   end
 
