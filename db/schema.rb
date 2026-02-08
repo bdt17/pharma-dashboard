@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_06_021247) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_08_010300) do
   create_table "alerts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -120,6 +120,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_06_021247) do
     t.index ["pharmacy_id"], name: "index_orders_on_pharmacy_id"
   end
 
+  create_table "organizations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.string "plan"
+    t.string "status"
+    t.string "stripe_customer_id"
+    t.string "subdomain"
+    t.datetime "updated_at", null: false
+    t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true
+  end
+
   create_table "patients", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -149,6 +160,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_06_021247) do
     t.datetime "created_at", null: false
     t.date "date"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "current_period_end"
+    t.integer "organization_id", null: false
+    t.decimal "plan_amount"
+    t.string "status"
+    t.string "stripe_subscription_id"
+    t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -186,4 +208,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_06_021247) do
   add_foreign_key "location_points", "vehicles"
   add_foreign_key "orders", "patients"
   add_foreign_key "orders", "pharmacies"
+  add_foreign_key "subscriptions", "organizations"
 end

@@ -10,3 +10,10 @@ Rails.application.routes.draw do
   resources :batches, only: [:index]
   get "/stripe/checkout", to: "stripe/checkout#new"
 end
+
+resources :billing, only: [:index, :create] do
+  collection do
+    get :success
+    get :cancel
+  end
+end
