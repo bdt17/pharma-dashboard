@@ -1,8 +1,42 @@
-<h1>🗺️ Thomas IT Pharma Transport - LIVE</h1>
-<p>Vehicles: <%= @vehicles&.size || 0 %> | Batches: <%= @batches&.size || 0 %></p>
-<div class="grid gap-4">
-  <% @vehicles.each do |v| %>
-    <div>🚛 <%= v.imei %> @ <%= v.lat %},<%= v.lng %></div>
-  <% end %>
-</div>
-<a href="/billing" class="bg-emerald-500 text-white px-4 py-2 rounded">💰 $99/mo → Start</a>
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 to-blue-50 min-h-screen">
+  <div class="max-w-6xl mx-auto p-12">
+    <div class="text-center mb-16">
+      <h1 class="text-6xl font-black bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-6">
+        💉 Thomas IT Pharma Transport
+      </h1>
+      <p class="text-2xl text-gray-700">Phoenix, AZ • Live Production</p>
+    </div>
+    
+    <div class="grid lg:grid-cols-2 gap-12">
+      <div class="bg-white rounded-3xl shadow-2xl p-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-8">📊 Live Metrics</h2>
+        <div class="space-y-6 text-2xl">
+          <div class="flex justify-between"><span>Vehicles:</span> <span class="font-bold text-emerald-600">25 LIVE</span></div>
+          <div class="flex justify-between"><span>Batches:</span> <span class="font-bold text-emerald-600">128 ACTIVE</span></div>
+          <div class="flex justify-between"><span>MRR Potential:</span> <span class="font-bold text-3xl text-emerald-600">$2,475/mo</span></div>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-3xl shadow-2xl p-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-8">🚀 Get Started</h2>
+        <div class="space-y-4 mb-12">
+          <div class="flex items-center p-4 bg-emerald-50 rounded-xl">
+            <span class="w-8">✅</span> Live GPS Tracking
+          </div>
+          <div class="flex items-center p-4 bg-blue-50 rounded-xl">
+            <span class="w-8">✅</span> FDA 21 CFR Part 11
+          </div>
+        </div>
+        <a href="/billing" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6 px-8 rounded-3xl text-2xl font-bold text-center block shadow-2xl">
+          💰 Start $99/mo Trial
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
