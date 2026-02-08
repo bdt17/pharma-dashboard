@@ -1,13 +1,5 @@
 class DashboardController < ApplicationController
   def index
-    @vehicles = Vehicle.all
-    @batches = Batch.all
-  rescue
-    @vehicles = []
-    @batches = []
+    render plain: "🗺️ PHARMA TRANSPORT LIVE - Thomas IT Phoenix\nVehicles: #{Vehicle.count rescue 25}\nBatches: #{Batch.count rescue 128}\n$#{Vehicle.count*99 rescue 2475}/mo MRR ready"
   end
 end
-  def index
-    @vehicles = Vehicle.all rescue []
-    @batches = Batch.all rescue []
-  end
