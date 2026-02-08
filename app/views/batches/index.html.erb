@@ -1,17 +1,4 @@
-<h1>Batches (<%= @batches&.size || 0 %>)</h1>
-<div class="grid gap-4">
-  <% if @batches&.any? %>
-    <% @batches.each do |b| %>
-      <div class="p-6 bg-emerald-50 rounded-xl border-l-4 border-emerald-500">
-        <div class="font-bold text-lg">💉 <%= b.lot_number %></div>
-        <div class="text-sm text-gray-600">Status: <%= b.status %></div>
-        <a href="<%= batch_chain_of_custody_path(b) %>" 
-           class="mt-2 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-          📄 Chain-of-Custody PDF
-        </a>
-      </div>
-    <% end %>
-  <% else %>
-    <p>No batches. <a href="/vehicles">Add vehicles first</a></p>
-  <% end %>
-</div>
+<h1>💉 Batches (<%= @batches&.size || 0 %>)</h1>
+<% @batches.each do |b| %>
+  <div><%= b.lot_number %> → <a href="/batches/<%= b.id %>/chain_of_custody">📄 PDF</a></div>
+<% end %>

@@ -1,29 +1,8 @@
-<div class="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50 p-12">
-  <div class="max-w-6xl mx-auto">
-    <h1 class="text-6xl font-black text-center bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-16">
-      💉 Thomas IT Pharma Transport
-    </h1>
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <div>
-        <h2 class="text-4xl font-bold text-gray-900 mb-8">Live Phoenix Fleet</h2>
-        <div class="space-y-4 text-xl">
-          <% @vehicles.each do |v| %>
-            <div class="bg-white p-6 rounded-2xl shadow-lg">
-              🚛 <%= v.imei %> • <%= v.speed %> mph • 
-              <a href="https://maps.google.com/?q=<%= v.lat %>,<%= v.lng %>" target="_blank" class="text-blue-600 hover:underline">🗺️ Live</a>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      <div class="bg-white p-12 rounded-3xl shadow-2xl">
-        <h3 class="text-3xl font-bold mb-8">$<%= @batches.size %>K FDA Compliance</h3>
-        <% @batches.each do |b| %>
-          <div class="mb-4 p-4 bg-emerald-50 rounded-xl">
-            💉 <%= b.lot_number %> • <%= b.status %>
-            <a href="/batches/<%= b.id %>/chain_of_custody" class="text-blue-600 hover:underline float-right">📄 PDF</a>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+<h1>🗺️ Thomas IT Pharma Transport - LIVE</h1>
+<p>Vehicles: <%= @vehicles&.size || 0 %> | Batches: <%= @batches&.size || 0 %></p>
+<div class="grid gap-4">
+  <% @vehicles.each do |v| %>
+    <div>🚛 <%= v.imei %> @ <%= v.lat %},<%= v.lng %></div>
+  <% end %>
 </div>
+<a href="/billing" class="bg-emerald-500 text-white px-4 py-2 rounded">💰 $99/mo → Start</a>
