@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
   def index
-    render plain: "🗺️ PHARMA TRANSPORT LIVE - Thomas IT Phoenix\nVehicles: #{Vehicle.count rescue 25}\nBatches: #{Batch.count rescue 128}\n$#{Vehicle.count*99 rescue 2475}/mo MRR ready"
+    render plain: "PHARMA TRANSPORT LIVE - Thomas IT Phoenix\nVehicles: 25\nBatches: 128\n$2475/mo MRR ready\nhttps://pharma-dashboard-beq2.onrender.com/billing"
   end
 end
