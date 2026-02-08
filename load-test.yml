@@ -1,0 +1,11 @@
+config:
+  target: "https://pharma-dashboard-beq2.onrender.com"
+  phases:
+    - duration: 30
+      arrivalRate: 5
+  scenarios:
+    - flow:
+        - get:
+            url: "/"
+        - get:
+            url: "/batches"

@@ -52,3 +52,5 @@ gem 'stripe'
 gem 'stripe'
 gem 'stripe-rails'
 gem 'stripe-rails'
+gem 'prawn', '~> 0.9' # PDF generation
+gem 'prawn-table', '~> 0.1'
