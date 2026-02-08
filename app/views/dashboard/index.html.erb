@@ -1,106 +1,25 @@
-<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-emerald-50">
-  <div class="max-w-6xl mx-auto px-6 py-20">
-    <!-- Hero Section -->
-    <div class="text-center mb-24">
-      <div class="inline-flex items-center bg-gradient-to-r from-green-500 to-emerald-600 text-white px-8 py-4 rounded-3xl shadow-2xl mb-12">
-        <span class="text-2xl font-bold mr-3">✅ FDA 21 CFR Part 11 Compliant</span>
-        <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 p-12">
+  <div class="max-w-4xl mx-auto text-center">
+    <h1 class="text-6xl font-bold text-gray-900 mb-8">💉 Pharma Transport</h1>
+    <p class="text-2xl text-gray-600 mb-12">Phoenix, AZ • Thomas Information Technology</p>
+    
+    <div class="grid md:grid-cols-3 gap-8 mb-12">
+      <div class="bg-white p-8 rounded-2xl shadow-lg">
+        <div class="text-4xl font-bold text-blue-600 mb-4">🚛 <%= Vehicle.count %></div>
+        <div class="text-xl font-semibold">Live Vehicles</div>
       </div>
-      <h1 class="text-7xl font-black bg-gradient-to-r from-gray-900 via-blue-900 to-emerald-700 bg-clip-text text-transparent mb-8">
-        💉 PHARMA TRANSPORT LIVE
-      </h1>
-      <h2 class="text-4xl font-semibold text-gray-800 mb-12 max-w-3xl mx-auto leading-tight">
-        Thomas Information Technology · Phoenix, AZ
-      </h2>
-      
-      <div class="grid md:grid-cols-3 gap-8 mb-16 max-w-4xl mx-auto">
-        <div class="text-center p-8 bg-white/70 backdrop-blur-xl rounded-3xl shadow-xl">
-          <div class="text-5xl font-black text-blue-600 mb-4">🚛 <%= Vehicle.count %></div>
-          <div class="text-2xl font-bold text-gray-900">Live Vehicles</div>
-        </div>
-        <div class="text-center p-8 bg-white/70 backdrop-blur-xl rounded-3xl shadow-xl">
-          <div class="text-5xl font-black text-emerald-600 mb-4">💉 <%= Batch.count rescue 1 %></div>
-          <div class="text-2xl font-bold text-gray-900">Active Batches</div>
-        </div>
-        <div class="text-center p-8 bg-white/70 backdrop-blur-xl rounded-3xl shadow-xl">
-          <div class="text-5xl font-black text-green-600 mb-4">$<%= number_with_delimiter(Vehicle.count * 99) %></div>
-          <div class="text-2xl font-bold text-gray-900">MRR Potential</div>
-        </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg">
+        <div class="text-4xl font-bold text-emerald-600 mb-4">$<%= Vehicle.count * 99 %></div>
+        <div class="text-xl font-semibold">MRR Potential</div>
+      </div>
+      <div class="bg-white p-8 rounded-2xl shadow-lg">
+        <div class="text-4xl font-bold text-green-600 mb-4">✅</div>
+        <div class="text-xl font-semibold">FDA Compliant</div>
       </div>
     </div>
-
-    <!-- Single PROMINENT Billing CTA -->
-    <div class="text-center mb-20">
-      <a href="<%= billing_path %>" class="inline-flex items-center bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white font-black text-2xl px-16 py-8 rounded-3xl shadow-3xl hover:shadow-4xl hover:-translate-y-2 transition-all duration-300 mx-auto">
-        🚀 START TRACKING TODAY 
-        <span class="ml-6 text-3xl">💳</span>
-      </a>
-      <p class="text-xl text-gray-600 mt-6">$99/mo per vehicle • Enterprise ready</p>
-    </div>
-
-    <!-- Live GPS Preview -->
-    <div class="grid lg:grid-cols-2 gap-12 mb-20">
-      <div class="bg-white/80 backdrop-blur-xl rounded-4xl p-12 shadow-2xl border border-white/50">
-        <h3 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
-          🗺️ LIVE GPS TRACKING 
-          <span class="ml-4 px-4 py-2 bg-blue-100 text-blue-800 rounded-2xl text-lg font-semibold">Phoenix Metro</span>
-        </h3>
-        <% if Vehicle.any? %>
-          <% Vehicle.order(speed: :desc).first(3).each do |truck| %>
-            <div class="flex items-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-3xl mb-6 shadow-lg hover:shadow-xl transition-all">
-              <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mr-6 shadow-lg">
-                <span class="text-2xl font-bold text-white">🚛</span>
-              </div>
-              <div class="flex-1">
-                <div class="font-bold text-xl text-gray-900"><%= truck.name %></div>
-                <div class="text-3xl font-black text-blue-600 mb-1"><%= truck.speed %> mph</div>
-                <div class="text-lg text-gray-600">33.45°N, 112.07°W</div>
-              </div>
-              <a href="https://maps.google.com/?q=<%= truck.latitude %>,<%= truck.longitude %>" target="_blank" class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all">
-                🗺️ Maps
-              </a>
-            </div>
-          <% end %>
-        <% else %>
-          <div class="text-center py-20 text-gray-500">
-            <div class="text-6xl mb-4">🚛</div>
-            <p class="text-2xl">No vehicles tracking yet</p>
-          </div>
-        <% end %>
-      </div>
-
-      <div class="bg-white/80 backdrop-blur-xl rounded-4xl p-12 shadow-2xl border border-white/50">
-        <h3 class="text-3xl font-bold text-gray-900 mb-8">💰 Pricing Plans</h3>
-        <div class="space-y-4">
-          <div class="flex items-center justify-between p-6 bg-gradient-to-r from-blue-50 to-emerald-50 rounded-3xl">
-            <div>
-              <div class="text-2xl font-bold">$99/mo</div>
-              <div class="text-lg text-gray-600">Per Vehicle</div>
-            </div>
-            <a href="<%= billing_path %>" class="px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-2xl shadow-lg">Get Started</a>
-          </div>
-          <div class="flex items-center justify-between p-6 bg-gradient-to-r from-emerald-50 to-green-50 rounded-3xl">
-            <div>
-              <div class="text-2xl font-bold">$499/mo</div>
-              <div class="text-lg text-gray-600">Enterprise</div>
-            </div>
-            <a href="<%= billing_path %>" class="px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl shadow-lg">Enterprise</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Single FINAL CTA -->
-    <div class="text-center">
-      <h3 class="text-4xl font-bold text-gray-900 mb-8">Ready to protect your pharma shipments?</h3>
-      <div class="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-4xl mx-auto">
-        <a href="mailto:sales@thomasinformationtechnology.com?subject=Pharma%20Transport%20LIVE%20Demo" class="flex-1 max-w-md bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-black text-xl px-12 py-8 rounded-3xl shadow-3xl hover:shadow-4xl hover:-translate-y-2 transition-all text-center">
-          📞 REQUEST LIVE DEMO
-        </a>
-        <a href="<%= billing_path %>" class="flex-1 max-w-md bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white font-black text-xl px-12 py-8 rounded-3xl shadow-3xl hover:shadow-4xl hover:-translate-y-2 transition-all text-center">
-          💳 START BILLING
-        </a>
-      </div>
-    </div>
+    
+    <a href="/billing" class="inline-block bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700 text-white font-bold text-xl px-12 py-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all">
+      🚀 Start Tracking - $99/mo per vehicle
+    </a>
   </div>
 </div>
