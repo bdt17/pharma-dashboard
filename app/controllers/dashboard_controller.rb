@@ -4,14 +4,21 @@ class DashboardController < ApplicationController
 <!DOCTYPE html>
 <html>
 <head><title>Thomas IT Pharma Transport</title>
-<style>*{font-family:'Courier New',monospace;}body{background:#000;color:#00ff00;padding:2rem;font-size:16px;white-space:pre;}</style>
+<style>*{font-family:'Courier New',monospace;}body{background:#000;color:#00ff00;padding:2rem;font-size:22px;line-height:1.4;white-space:pre;}</style>
 </head>
 <body>
 🟢 PHARMA ENTERPRISE v8.1 - 9/9 LIVE (Phoenix AZ)
 ═══════════════════════════════════════════════════════════════
-<a href="/">🏠 Dashboard</a> | <a href="/billing">💰 $99/MO</a> | <a href="/safe">🛡️ SAFE</a>
-<a href="/vehicles">🚛 25 LIVE</a> | <a href="/batches">💉 128 FDA</a> | <a href="/health">🩺 HEALTH</a>
-📧 sales@thomasinformationtechnology.com
+<a href="/" style="color:#00ff00;background:#00aa00;padding:1rem;display:block;margin:1rem 0;">🏠 Dashboard</a>
+<a href="/billing" style="color:#000;background:#ffaa00;padding:1rem;display:block;margin:1rem 0;font-size:24px;">💰 $99/MO → sales@</a>
+<a href="/safe" style="color:#00ff00;background:#00aa00;padding:1rem;display:block;margin:1rem 0;">🛡️ SAFE MODE</a>
+<a href="/vehicles" style="color:#00ff00;background:#00aa00;padding:1rem;display:block;margin:1rem 0;">🚛 25 VEHICLES LIVE</a>
+<a href="/batches" style="color:#00ff00;background:#00aa00;padding:1rem;display:block;margin:1rem 0;">💉 128 FDA BATCHES</a>
+<a href="/health" style="color:#00ff00;background:#00aa00;padding:1rem;display:block;margin:1rem 0;">🩺 HEALTH CHECK</a>
+<a href="/batches/1/chain_of_custody" style="color:#00ff00;background:#00aa00;padding:1rem;display:block;margin:1rem 0;">📄 FDA 21 CFR PART 11</a>
+
+═══════════════════════════════════════════════════════════════
+📧 <a href="mailto:sales@thomasinformationtechnology.com" style="color:#ffaa00;font-size:24px;">sales@thomasinformationtechnology.com</a>
 </body>
 </html>
 HTML
