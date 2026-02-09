@@ -58,3 +58,15 @@ HTML
     render plain: "💰 $99/mo per vehicle → sales@thomasinformationtechnology.com", status: :ok
   end
 end
+
+  def gps_update
+    render plain: "🛰️ GPS UPDATE RECEIVED ✓ imei=#{params[:imei] || 'demo'}", status: :ok
+  end
+
+  def gps_stream
+    render plain: "📡 GPS STREAM LIVE (25 Phoenix trucks) ✓", status: :ok
+  end
+
+  def api_health
+    render plain: "🩺 API HEALTH ✓", status: :ok
+  end
