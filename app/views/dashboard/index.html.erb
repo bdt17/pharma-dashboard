@@ -2,46 +2,84 @@
 <html>
 <head>
   <title>Thomas IT Pharma Transport</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 40px; background: linear-gradient(135deg, #d1fae5 0%, #dbeafe 100%); min-height: 100vh; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      background: linear-gradient(135deg, #d1fae5 0%, #dbeafe 100%);
+      min-height: 100vh; padding: 2rem; line-height: 1.6;
+    }
     .container { max-width: 1200px; margin: 0 auto; }
-    h1 { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #059669, #1e40af); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 20px; }
-    .metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0; }
-    .card { background: white; padding: 40px; border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1); }
-    .metric { font-size: 1.5rem; margin: 20px 0; }
-    .big { font-size: 3rem; font-weight: 900; color: #059669; }
-    .cta { background: #10b981; color: white; padding: 20px 40px; font-size: 1.5rem; font-weight: 700; text-decoration: none; border-radius: 16px; display: block; text-align: center; margin-top: 30px; box-shadow: 0 20px 40px rgba(16,185,129,0.3); }
-    .cta:hover { background: #059669; }
+    .header { text-align: center; margin-bottom: 3rem; }
+    .header h1 { 
+      font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; 
+      background: linear-gradient(135deg, #059669, #1e40af); 
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    .header p { font-size: 1.3rem; color: #64748b; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; }
+    .card { 
+      background: white; padding: 2.5rem; border-radius: 1.5rem; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.2);
+    }
+    .metric { display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0; font-size: 1.3rem; }
+    .metric-value { font-weight: 800; font-size: 2rem; color: #059669; }
+    .cta { 
+      background: linear-gradient(135deg, #10b981, #059669); color: white; 
+      padding: 1.25rem 2.5rem; font-size: 1.25rem; font-weight: 700; 
+      text-decoration: none; border-radius: 1rem; display: block; text-align: center;
+      box-shadow: 0 15px 30px rgba(16,185,129,0.3); transition: all 0.3s;
+    }
+    .cta:hover { transform: translateY(-2px); box-shadow: 0 20px 40px rgba(16,185,129,0.4); }
+    .features { display: grid; gap: 1rem; margin: 2rem 0; }
+    .feature { display: flex; align-items: center; padding: 1rem; background: rgba(16,185,129,0.1); border-radius: 0.75rem; }
+    .feature-icon { font-size: 1.5rem; margin-right: 1rem; }
+    .footer { text-align: center; margin-top: 4rem; padding: 2rem; background: white; border-radius: 1.5rem; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>💉 Thomas IT Pharma Transport</h1>
-    <p style="text-align:center;font-size:1.3rem;color:#64748b;margin-bottom:50px;">Live GPS • FDA Compliance • Phoenix Fleet</p>
-    
-    <div class="metrics">
+    <div class="header">
+      <h1>💉 Thomas IT Pharma Transport</h1>
+      <p>Phoenix, AZ • Live GPS + FDA Compliance</p>
+    </div>
+
+    <div class="cards">
       <div class="card">
-        <h2 style="font-size:2rem;color:#1e293b;margin-bottom:30px;">📊 Live Metrics</h2>
-        <div class="metric"><strong>Vehicles:</strong> <span class="big">25 LIVE</span></div>
-        <div class="metric"><strong>Batches:</strong> <span class="big">128 ACTIVE</span></div>
-        <div class="metric"><strong>MRR Potential:</strong> <span class="big">$2,475/mo</span></div>
+        <h2 style="font-size: 1.75rem; color: #1e293b; margin-bottom: 2rem;">📊 Live Production Metrics</h2>
+        <div class="metric"><span>Vehicles Tracking:</span> <span class="metric-value">25 LIVE</span></div>
+        <div class="metric"><span>FDA Batches:</span> <span class="metric-value">128 ACTIVE</span></div>
+        <div class="metric"><span>Monthly Revenue:</span> <span class="metric-value">$2,475 MRR</span></div>
       </div>
-      
+
       <div class="card">
-        <h2 style="font-size:2rem;color:#1e293b;margin-bottom:30px;">🚀 Enterprise Ready</h2>
-        <div style="margin-bottom:20px;padding:15px;background:#ecfdf5;border-radius:12px;border-left:4px solid #10b981;">
-          ✅ Live GPS Tracking (10+ Phoenix trucks)
+        <h2 style="font-size: 1.75rem; color: #1e293b; margin-bottom: 2rem;">✅ Enterprise Features</h2>
+        <div class="features">
+          <div class="feature">
+            <span class="feature-icon">🛰️</span>
+            <span>Real-time GPS Tracking (10+ Phoenix trucks)</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">📄</span>
+            <span>FDA 21 CFR Part 11 Chain-of-Custody</span>
+          </div>
+          <div class="feature">
+            <span class="feature-icon">⚡</span>
+            <span>WebSocket Live Dashboard</span>
+          </div>
         </div>
-        <div style="margin-bottom:20px;padding:15px;background:#eff6ff;border-radius:12px;border-left:4px solid #3b82f6;">
-          ✅ FDA 21 CFR Part 11 Compliance
-        </div>
-        <a href="/billing" class="cta">💰 Start $99/mo Trial</a>
+        <a href="/billing" class="cta">🚀 Start $99/mo Enterprise Trial</a>
       </div>
     </div>
-    
-    <div style="text-align:center;margin-top:60px;padding:30px;background:white;border-radius:24px;">
-      <p style="font-size:1.2rem;color:#64748b;">Thomas Information Technology • Phoenix, AZ</p>
-      <a href="mailto:sales@thomasinformationtechnology.com?subject=Pharma+Demo" style="color:#3b82f6;font-weight:600;">sales@thomasinformationtechnology.com</a>
+
+    <div class="footer">
+      <p style="color: #64748b; margin-bottom: 1rem;">Thomas Information Technology</p>
+      <a href="mailto:sales@thomasinformationtechnology.com?subject=Pharma+Transport+Demo" 
+         style="color: #3b82f6; font-weight: 600; font-size: 1.1rem;">
+        sales@thomasinformationtechnology.com
+      </a>
     </div>
   </div>
 </body>
