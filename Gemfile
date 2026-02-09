@@ -51,3 +51,4 @@ gem 'wkhtmltopdf-binary'
 gem 'prawn'
 gem 'prawn-table'
 
+gem 'devise'

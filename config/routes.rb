@@ -9,3 +9,7 @@ Rails.application.routes.draw do
   get "/gps/stream", to: "dashboard#gps_stream"
   get "/api/health", to: "dashboard#api_health"
 end
+
+get 'login', to: 'sessions#new'
+post 'login', to: 'sessions#create'
+delete 'logout', to: 'sessions#destroy', as: 'logout'
