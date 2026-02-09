@@ -16,3 +16,8 @@ Rails.application.routes.draw do
   get "/trucks", to: "api#trucks"
   get "/routes", to: "api#routes"
 end
+
+  # 🆕 MISSING GPS + PDF ROUTES
+  post "/gps/update", to: "api#gps_update"
+  get "/gps/update/stream", to: "api#gps_stream" 
+  get "/test-pdf", to: "api#test_pdf"
