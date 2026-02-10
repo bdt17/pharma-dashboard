@@ -1,3 +1,4 @@
 <h1>Pharma Batches (128 ACTIVE)</h1>
-<p>🔬 Temperature controlled shipments</p>
-<p><%= Batch.count rescue 128 %> active batches tracked</p>
+<p>🔬 Temperature controlled shipments in transit</p>
+<% @batches = Batch.all rescue [] %>
+<p><%= pluralize(@batches.count, "batch") %> tracked</p>
