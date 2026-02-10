@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "/safe", to: "dashboard#safe"
   get "/gps/stream", to: "dashboard#gps_stream"
   get "/api/health", to: "dashboard#api_health"
+  get "/compliance", to: "dashboard#compliance"
 
 
   get 'login', to: 'sessions#new'
