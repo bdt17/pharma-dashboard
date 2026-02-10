@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_10_002520) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_10_042801) do
   create_table "alerts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "message"
@@ -199,6 +199,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_10_002520) do
     t.float "lng"
     t.float "longitude"
     t.string "name"
+    t.string "plate"
     t.float "speed"
     t.datetime "updated_at", null: false
     t.index ["imei"], name: "index_vehicles_on_imei", unique: true
