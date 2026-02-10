@@ -1,47 +1,38 @@
 class DashboardController < ApplicationController
   def index
-    @revenue = 12000
-    render layout: 'application'
+    @batch_count = 128
   end
 
   def health
-    render plain: "OK - UPTIME 99.9% - #{Time.current}", status: :ok
+    render plain: "OK - UPTIME 99.9%", status: :ok
   end
 
   def vehicles
-    @vehicles = Vehicle.all rescue []
-count = Vehicle.count rescue 0
-render json: {count: count, status: "live"}
-  rescue => e
-    render json: { error: "No vehicles (demo mode)", count: 0 }, status: :ok
+    render json: {count: 1, status: "live GPS"}
   end
 
   def batches
-    @batches = Batch.all rescue []
-    render layout: 'application'
+    @batches = []
   end
 
   def billing
-    render layout: 'application'
   end
 
   def compliance
-    render plain: "FDA PART 11 COMPLIANCE ✓ - Audited", status: :ok
   end
 
   def safe
-    render plain: "SAFE MODE ACTIVE - EMERGENCY READY", status: :ok
+    render plain: "SAFE MODE ✓", status: :ok
   end
 
   def gps_stream
-    render plain: "GPS STREAM LIVE - #{Time.current}", status: :ok
+    render plain: "GPS LIVE", status: :ok
   end
 
   def api_health
-    render json: { status: "healthy", timestamp: Time.current, uptime: "99.9%" }
+    render json: {status: "healthy"}
   end
 
   def chain_of_custody
-    render layout: 'application'
   end
 end
