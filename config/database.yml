@@ -4,12 +4,11 @@ default: &default
   timeout: 5000
 
 development:
-  <<: *default
   adapter: sqlite3
   database: db/development.sqlite3
 
 test:
-  <<: *default
+  adapter: sqlite3
   database: db/test.sqlite3
 
 production:
@@ -17,9 +16,9 @@ production:
     <<: *default
     url: <%= ENV['DATABASE_URL'] %>
   cache:
-    <<: *default  
+    <<: *default
     url: <%= ENV['DATABASE_URL'] %>
-  queue: 
+  queue:
     <<: *default
     url: <%= ENV['DATABASE_URL'] %>
   cable:
