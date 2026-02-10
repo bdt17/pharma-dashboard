@@ -430,3 +430,78 @@ Migrating to AddPlateToVehicles (20260210042801)
   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Load (0.4ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
+Started GET "/" for ::1 at 2026-02-10 14:58:01 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 65.6ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 136ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `login_path' for an instance of #<Class:0x00007db75e5a0468>)
+Caused by: NameError (undefined local variable or method `login_path' for an instance of #<Class:0x00007db75e5a0468>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `login_path' for an instance of #<Class:0x00007db75e5a0468>):
+    28:       <% else %>
+    29:         <div>
+    30:           <%= link_to "🔐 Login", login_path, 
+    31:               class: "bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" %>
+    32:         </div>
+    33:       <% end %>
+    34:     </div>
+  
+app/views/layouts/application.html.erb:31
+
+Information for cause: NameError (undefined local variable or method `login_path' for an instance of #<Class:0x00007db75e5a0468>):
+  
+app/views/layouts/application.html.erb:31
+Started GET "/favicon.ico" for ::1 at 2026-02-10 14:58:02 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 14:58:04 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.2ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `login_path' for an instance of #<Class:0x00007db75e5a0468>)
+Caused by: NameError (undefined local variable or method `login_path' for an instance of #<Class:0x00007db75e5a0468>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `login_path' for an instance of #<Class:0x00007db75e5a0468>):
+    28:       <% else %>
+    29:         <div>
+    30:           <%= link_to "🔐 Login", login_path, 
+    31:               class: "bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" %>
+    32:         </div>
+    33:       <% end %>
+    34:     </div>
+  
+app/views/layouts/application.html.erb:31
+
+Information for cause: NameError (undefined local variable or method `login_path' for an instance of #<Class:0x00007db75e5a0468>):
+  
+app/views/layouts/application.html.erb:31
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-10 14:58:04 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for ::1 at 2026-02-10 15:01:26 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.5ms | GC: 0.0ms)
+Completed 200 OK in 24ms (Views: 12.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[36mVehicle Count (4.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
