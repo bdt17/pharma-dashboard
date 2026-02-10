@@ -415,3 +415,18 @@ Migrating to AddPlateToVehicles (20260210042801)
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Create (2.5ms)[0m  [1m[32mINSERT INTO "batches" ("active", "created_at", "expiry", "lot", "lot_number", "name", "status", "temperature_celsius", "updated_at", "vehicle_id") VALUES (TRUE, '2026-02-10 04:34:13.131049', NULL, NULL, 'LOT-UNASSIGNED', 'B001', NULL, NULL, '2026-02-10 04:34:13.131049', 1) RETURNING "id" /*application='PharmaDashboard'*/[0m
   [1m[36mTRANSACTION (238.4ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."imei" = 'GV55-001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" ORDER BY "batches"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "vehicles" LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (1.8ms)[0m  [1m[32mINSERT INTO "batches" ("active", "created_at", "expiry", "lot", "lot_number", "name", "status", "temperature_celsius", "updated_at", "vehicle_id") VALUES (TRUE, '2026-02-10 21:42:22.986353', NULL, NULL, 'LOT-UNASSIGNED', NULL, NULL, NULL, '2026-02-10 21:42:22.986353', 1) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='PharmaDashboard'*/[0m
+  [1m[36mUser Count (2.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" /*application='PharmaDashboard'*/[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" DESC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.4ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" DESC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
