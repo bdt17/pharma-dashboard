@@ -1,123 +1,64 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Pharma Transport</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    
-    <style>
-      /* COMPLETE PHARMA DASHBOARD - GUARANTEED TO WORK */
-      * { 
-        box-sizing: border-box !important; 
-        color: #ffffff !important; 
-      }
-      
-      html, body {
-        margin: 0 !important; 
-        padding: 20px !important;
-        background: #0a0a0a !important; 
-        color: #ffffff !important; 
-        font-family: system-ui, -apple-system, sans-serif !important;
-        min-height: 100vh !important;
-      }
-
-      /* DASHBOARD CONTAINER - MATCHES RENDER */
-      body > *:first-child, main, div, article, section {
-        max-width: 1200px !important; 
-        margin: 0 auto !important;
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5a9a 100%) !important;
-        border-radius: 12px !important; 
-        padding: 30px !important;
-      }
-
-      /* STATS GRID */
-      [class*="stats"], [class*="grid"], div:has(strong), div > strong {
-        display: grid !important; 
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important; 
-        gap: 20px !important; 
-        margin: 30px 0 !important;
-      }
-
-      /* STAT CARDS */
-      div[class*="stat"], div:has(.number), div > div {
-        padding: 25px !important; 
-        background: rgba(255,255,255,0.1) !important;
-        border-radius: 12px !important; 
-        text-align: center !important;
-        border: 1px solid rgba(0,255,136,0.3) !important;
-      }
-
-      /* GREEN PHARMA STATS - $12K, 128 BATCHES */
-      .number, .green, strong, b, em, span {
-        color: #00ff88 !important; 
-        font-size: 2.5rem !important;
-        font-weight: 800 !important; 
-        text-shadow: 0 0 10px rgba(0,255,136,0.5) !important;
-      }
-
-      /* HEADERS */
-      h1, h2, h3, h4 { 
-        color: #00ff88 !important; 
-        text-shadow: 0 0 8px rgba(0,255,136,0.3) !important;
-      }
-
-      /* DEVISE FORMS */
-      form { 
-        max-width: 450px !important; 
-        margin: 40px auto !important;
-        background: rgba(30,60,114,0.95) !important; 
-        padding: 40px !important;
-        border-radius: 16px !important; 
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
-      }
-
-      input[type="email"], input[type="password"], input[type="text"] {
-        width: 100% !important; 
-        padding: 15px !important; 
-        margin: 12px 0 !important;
-        background: rgba(255,255,255,0.95) !important; 
-        border: none !important;
-        border-radius: 8px !important; 
-        font-size: 16px !important;
-        color: #000 !important;
-      }
-
-      input[type="submit"], .btn, .button {
-        width: 100% !important; 
-        padding: 16px !important; 
-        margin: 20px 0 !important;
-        background: linear-gradient(45deg, #00ff88, #00cc6a) !important;
-        color: #000 !important; 
-        border: none !important; 
-        border-radius: 10px !important;
-        font-size: 18px !important; 
-        font-weight: 700 !important; 
-        cursor: pointer !important;
-      }
-
-      /* LINKS */
-      a { 
-        color: #00ff88 !important; 
-        text-decoration: none !important; 
-        padding: 8px 16px !important;
-        border-radius: 6px !important;
-        display: inline-block !important;
-      }
-      a:hover { 
-        background: rgba(0,255,136,0.2) !important; 
-        text-shadow: 0 0 10px #00ff88 !important; 
-      }
-
-      /* RESPONSIVE */
-      @media (max-width: 768px) {
-        body { padding: 10px !important; }
-        [class*="stats"] { grid-template-columns: 1fr !important; }
-      }
-    </style>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
-</html>
+<style>
+  /* ===== RESET + BASE ===== */
+  * { box-sizing: border-box; }
+  body { 
+    margin: 0 !important; padding: 20px !important; 
+    background: #0a0a0a !important; 
+    color: #ffffff !important; 
+    font-family: system-ui, -apple-system, sans-serif !important;
+    min-height: 100vh;
+  }
+  
+  /* ===== DASHBOARD ===== */
+  .dashboard, main { 
+    max-width: 1200px; margin: 0 auto; padding: 30px; 
+    background: #1e3c72 !important; border-radius: 12px; 
+  }
+  
+  /* ===== STATS GRID ===== */
+  .stats { 
+    display: grid !important; 
+    grid-template-columns: repeat(3, 1fr) !important; 
+    gap: 20px !important; margin: 30px 0 !important; 
+  }
+  .stat { 
+    padding: 20px !important; 
+    background: rgba(255,255,255,0.1) !important; 
+    border-radius: 8px !important; text-align: center !important;
+  }
+  
+  /* ===== GREEN STATS ===== */
+  .number, [class*="mrr"], [class*="batch"] { 
+    font-size: 40px !important; font-weight: bold !important; 
+    color: #00ff88 !important; 
+  }
+  .green { color: #00ff88 !important; }
+  
+  /* ===== DEVISE FORMS ===== */
+  .devise-form, form { 
+    max-width: 400px; margin: 40px auto; padding: 30px; 
+    background: rgba(30,60,114,0.9) !important; border-radius: 12px;
+  }
+  input[type="email"], input[type="password"], input[type="submit"] { 
+    width: 100% !important; padding: 12px !important; margin: 10px 0 !important; 
+    background: rgba(255,255,255,0.9) !important; border: none !important; 
+    border-radius: 6px !important; font-size: 16px !important;
+  }
+  input[type="submit"] { 
+    background: #00ff88 !important; color: #000 !important; 
+    font-weight: bold !important; cursor: pointer !important;
+  }
+  
+  /* ===== BUTTONS ===== */
+  .button, a[href*="/sign"], a[href*="password"] { 
+    display: inline-block !important; padding: 12px 24px !important; 
+    background: #00ff88 !important; color: #000 !important; 
+    text-decoration: none !important; border-radius: 8px !important; 
+    font-weight: bold !important; margin: 5px;
+  }
+  
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) { 
+    .stats { grid-template-columns: 1fr !important; } 
+  }
+</style>

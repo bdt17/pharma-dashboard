@@ -1,5 +1,6 @@
 class BillingController < ApplicationController
   def index
-    render plain: "$99/mo per vehicle\nLive GPS ✓ FDA Compliance ✓\nsales@thomasinformationtechnology.com\nReply: Demo ready → $5K setup"
+    # Stripe $99/mo pharma subscription
+    @stripe_price_id = "price_12345" # Add your Stripe Price ID
   end
 end
