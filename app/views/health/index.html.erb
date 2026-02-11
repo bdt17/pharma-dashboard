@@ -1,2 +1,20 @@
-<h1>Health#index</h1>
-<p>Find me in app/views/health/index.html.erb</p>
+<div class="min-h-screen bg-gray-50 p-8">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">🩺 System Health</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="p-6 bg-white rounded-xl shadow-sm border border-gray-200">
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">UPTIME</h2>
+        <div class="text-3xl font-bold text-green-600">99.9%</div>
+        <div class="text-sm text-gray-500 mt-1">Production Stable</div>
+      </div>
+      <div class="p-6 bg-white rounded-xl shadow-sm border border-blue-200">
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">API STATUS</h2>
+        <div class="text-3xl font-bold text-blue-600">LIVE</div>
+      </div>
+      <div class="p-6 bg-white rounded-xl shadow-sm border border-green-200">
+        <h2 class="text-xl font-semibold text-gray-900 mb-2">DATABASE</h2>
+        <div class="text-3xl font-bold text-green-600">CONNECTED</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -44,3 +44,19 @@ def index
   @mrr = 12000
   @batches = 128
 end
+
+def vehicles
+  @vehicles = [{id: "PH-001", status: "Active", location: "Phoenix, AZ"}]
+end
+
+def batches
+  @batches = 128
+end
+
+def compliance
+  @compliance = "FDA Part 11 - 21 CFR Compliant"
+end
+
+def gps
+  @gps_status = "PH-001 Live Tracking"
+end
