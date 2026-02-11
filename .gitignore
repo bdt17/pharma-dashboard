@@ -1,3 +1,8 @@
 tmp/cache/
 *.rb
 scraped_content_*.txt
+node_modules/
+package.json
+package-lock.json
+postcss.config.js
+.env

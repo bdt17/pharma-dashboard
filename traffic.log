@@ -211600,3 +211600,423 @@ Phoenix production</div>
 </body>
 </html>
 5382
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="TvaPSjF_L9GCRgbZrnFINiw8ucO-eGHUQi9habwld_52MhbjQzvV1lkKSVgLvva8Ojb7Rf-5iK7Bo4p0JfFrpw" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+6639
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="dySJ-iCuCmkbifPiFh8CTrfsuDn3nzAggqCVydGFi_MDhD_cZOBIY9hjUKunbYMYYbapSYXbeo7_SMQAqh0cBQ" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+6479
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="vLMtdqqned21ZjM3Fqe2DgOoEMYwKhkev0QzkfHDBlUx0rpzN-1DhKoym_gEP5waf8zlUYUZJJDfeJU46mvgGg" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+5879
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="_x75sBOyghczy7_FP2nlMAX7QA9mSswqwQ0B9YYRBe4nqknjaoxCjnJ3AoDD_TFgr7K4Jsjha5pa5HInqYfwiw" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+5646
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="Ks46oVB5SqXFALNzPaBCIqlH8xEIK68hPPOyXnGjwXMv8SDMzQVPrA7qkDNKws8_dLgYTdhI620moQTiQbEZ_w" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+4752
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="9dr79Y6kkkw3WeVS_8bqK1v0pys9R0tskhbTNpTY6xYek8xTL8XmiOd7EQ9rBQQrWDC-6oxvJiqddavdu6I3_A" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+6604
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="VijJZu21ZebAXj0vnuf9KeiZwD7nljuiBtTSx7moRDn5LnYOtVGE_L4hGW8_m8IiNgAUR9MbuRfVwlc5LcZgeA" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+7205
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="TxGV9X3YJeP3JVZ8PS5LaTqsDa1qsrzrkfQ5uzMnMo0l2Y0VOnY63HLZqgVam7f_g-mT9q7s96jEDz3hNNDBGQ" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+5911
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="lgHzkBIn91H0h3531Zw_ma5u-IU7nm5wYhLgiC0tnY-ElttmW4Fp9D51czRG7XdEtcp7G_hAcZ6kF3IOxpEUbA" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+6345
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="YGQpflfyRk_c-iRPdb8py6ycav9Cdc0JUA1W8g_FQTsAYBP6ya_sCEXheLFXFXGqUKEgBtT5jXZWRFFAJQq1tQ" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+7778
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="hovGRv_Y4-JWjqd3WRXkXmX3XigfL9azkobfW6AB3zh1u3JwvdojT5IlO33JPYpucfxQ9eVp07poXa_BqVSW_g" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+6049
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="nVoSrUlhUZ_meUc0F6miQxnQDLuTRwWlp6rUTIopkw_1wZISAjaWfVaHANIsbz5lFzh-EK8qM2OU0WAIryuYtQ" />
+  
+  <link rel="stylesheet" href="/stylesheets/application.css" media="all" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+  <!-- LOGIN NAVBAR -->
+  <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
+
+        <div>
+          <a class="bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" href="/users/sign_in">🔐 Login</a>
+        </div>
+    </div>
+  </nav>
+
+
+  <main class="container mx-auto px-6 pb-12">
+    <h1>Thomas IT Pharma Dashboard ✓</h1>
+<p>💰 MRR: $12K | 🏢 128 Active Batches</p>
+<p>🚛 Live GPS | ✅ FDA Part 11</p>
+
+  </main>
+</body>
+</html>
+7253
