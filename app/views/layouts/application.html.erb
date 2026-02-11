@@ -1,48 +1,123 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Pharma Transport Dashboard</title>
+    <title>Pharma Transport</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    
+    <style>
+      /* COMPLETE PHARMA DASHBOARD - GUARANTEED TO WORK */
+      * { 
+        box-sizing: border-box !important; 
+        color: #ffffff !important; 
+      }
+      
+      html, body {
+        margin: 0 !important; 
+        padding: 20px !important;
+        background: #0a0a0a !important; 
+        color: #ffffff !important; 
+        font-family: system-ui, -apple-system, sans-serif !important;
+        min-height: 100vh !important;
+      }
 
-    <%= stylesheet_link_tag "application", media: "all" %>
-    <script src="https://cdn.tailwindcss.com"></script>
+      /* DASHBOARD CONTAINER - MATCHES RENDER */
+      body > *:first-child, main, div, article, section {
+        max-width: 1200px !important; 
+        margin: 0 auto !important;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5a9a 100%) !important;
+        border-radius: 12px !important; 
+        padding: 30px !important;
+      }
+
+      /* STATS GRID */
+      [class*="stats"], [class*="grid"], div:has(strong), div > strong {
+        display: grid !important; 
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important; 
+        gap: 20px !important; 
+        margin: 30px 0 !important;
+      }
+
+      /* STAT CARDS */
+      div[class*="stat"], div:has(.number), div > div {
+        padding: 25px !important; 
+        background: rgba(255,255,255,0.1) !important;
+        border-radius: 12px !important; 
+        text-align: center !important;
+        border: 1px solid rgba(0,255,136,0.3) !important;
+      }
+
+      /* GREEN PHARMA STATS - $12K, 128 BATCHES */
+      .number, .green, strong, b, em, span {
+        color: #00ff88 !important; 
+        font-size: 2.5rem !important;
+        font-weight: 800 !important; 
+        text-shadow: 0 0 10px rgba(0,255,136,0.5) !important;
+      }
+
+      /* HEADERS */
+      h1, h2, h3, h4 { 
+        color: #00ff88 !important; 
+        text-shadow: 0 0 8px rgba(0,255,136,0.3) !important;
+      }
+
+      /* DEVISE FORMS */
+      form { 
+        max-width: 450px !important; 
+        margin: 40px auto !important;
+        background: rgba(30,60,114,0.95) !important; 
+        padding: 40px !important;
+        border-radius: 16px !important; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+      }
+
+      input[type="email"], input[type="password"], input[type="text"] {
+        width: 100% !important; 
+        padding: 15px !important; 
+        margin: 12px 0 !important;
+        background: rgba(255,255,255,0.95) !important; 
+        border: none !important;
+        border-radius: 8px !important; 
+        font-size: 16px !important;
+        color: #000 !important;
+      }
+
+      input[type="submit"], .btn, .button {
+        width: 100% !important; 
+        padding: 16px !important; 
+        margin: 20px 0 !important;
+        background: linear-gradient(45deg, #00ff88, #00cc6a) !important;
+        color: #000 !important; 
+        border: none !important; 
+        border-radius: 10px !important;
+        font-size: 18px !important; 
+        font-weight: 700 !important; 
+        cursor: pointer !important;
+      }
+
+      /* LINKS */
+      a { 
+        color: #00ff88 !important; 
+        text-decoration: none !important; 
+        padding: 8px 16px !important;
+        border-radius: 6px !important;
+        display: inline-block !important;
+      }
+      a:hover { 
+        background: rgba(0,255,136,0.2) !important; 
+        text-shadow: 0 0 10px #00ff88 !important; 
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        body { padding: 10px !important; }
+        [class*="stats"] { grid-template-columns: 1fr !important; }
+      }
+    </style>
   </head>
 
-  <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-    <!-- LOGIN NAVBAR -->
-    <nav class="bg-gradient-to-r from-blue-900 to-indigo-900 p-6 text-white shadow-2xl">
-      <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-3xl font-black tracking-tight">🚚 Pharma Transport</h1>
-
-        <% if current_user %>
-          <div class="flex items-center space-x-6">
-            <div class="text-lg font-semibold">
-              👋 Welcome <span class="text-yellow-300"><%= current_user.name %></span>
-              (<span class="bg-green-500 px-2 py-1 rounded-full text-xs font-bold"><%= current_user.role || 'user' %></span>)
-            </div>
-            <%= link_to "🚪 Logout", destroy_user_session_path,
-                method: :delete,
-                class: "bg-red-600 hover:bg-red-700 px-6 py-2 rounded-xl font-bold transition-all duration-200" %>
-          </div>
-        <% else %>
-          <div>
-            <%= link_to "🔐 Login", new_user_session_path,
-                class: "bg-green-600 hover:bg-green-700 px-8 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-1" %>
-          </div>
-        <% end %>
-      </div>
-    </nav>
-
-    <!-- flash/error messages -->
-    <% if flash[:alert] %>
-      <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mx-6 mt-4 rounded-lg shadow">
-        <%= flash[:alert] %>
-      </div>
-    <% end %>
-
-    <main class="container mx-auto px-6 pb-12">
-      <%= render "dashboards/index" %>
-    </main>
+  <body>
+    <%= yield %>
   </body>
 </html>

@@ -505,3 +505,2049 @@ Completed 200 OK in 24ms (Views: 12.3ms | ActiveRecord: 0.0ms (0 queries, 0 cach
 
   [1m[36mVehicle Count (4.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
+Started GET "/" for ::1 at 2026-02-10 15:45:03 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.5ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 38ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (Missing partial dashboards/_index with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+)
+Caused by: ActionView::MissingTemplate (Missing partial dashboards/_index with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+)
+
+Information for: ActionView::Template::Error (Missing partial dashboards/_index with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+    43: 
+    44:     <main class="container mx-auto px-6 pb-12">
+    45:       <%= render "dashboards/index" %>
+    46:     </main>
+    47:   </body>
+    48: </html>
+  
+app/views/layouts/application.html.erb:46
+
+Information for cause: ActionView::MissingTemplate (Missing partial dashboards/_index with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/views/layouts/application.html.erb:46
+Started GET "/favicon.ico" for ::1 at 2026-02-10 15:45:04 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 15:45:06 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (Missing partial dashboards/_index with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+)
+Caused by: ActionView::MissingTemplate (Missing partial dashboards/_index with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+)
+
+Information for: ActionView::Template::Error (Missing partial dashboards/_index with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+    43: 
+    44:     <main class="container mx-auto px-6 pb-12">
+    45:       <%= render "dashboards/index" %>
+    46:     </main>
+    47:   </body>
+    48: </html>
+  
+app/views/layouts/application.html.erb:46
+
+Information for cause: ActionView::MissingTemplate (Missing partial dashboards/_index with {:locale=>[:en], :formats=>[:html], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/views/layouts/application.html.erb:46
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-10 15:45:07 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for ::1 at 2026-02-10 15:49:02 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (2.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.5ms | GC: 0.0ms)
+Completed 200 OK in 38ms (Views: 24.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 15:49:02 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 15:49:04 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.8ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 3.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 15:49:04 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for ::1 at 2026-02-10 15:52:33 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.8ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.8ms | GC: 0.4ms)
+Completed 200 OK in 50ms (Views: 30.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 2.3ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 15:52:33 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 15:52:35 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.9ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 15:52:35 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for ::1 at 2026-02-10 15:54:43 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.0ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 7.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for ::1 at 2026-02-10 15:54:43 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 1.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 66.9ms | GC: 2.4ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 68.1ms | GC: 2.4ms)
+Completed 200 OK in 154ms (Views: 120.8ms | ActiveRecord: 4.9ms (0 queries, 0 cached) | GC: 17.3ms)
+
+
+Started GET "/" for ::1 at 2026-02-10 15:58:35 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.2ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.8ms | GC: 0.0ms)
+Completed 200 OK in 33ms (Views: 24.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 15:58:35 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 15:58:37 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.9ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 4.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 15:58:37 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for ::1 at 2026-02-10 15:58:42 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.4ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 9.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 15:58:43 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 15:58:45 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.4ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 2.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 15:58:45 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 15:58:47 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.8ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 15:58:47 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-10 15:58:47 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for ::1 at 2026-02-10 16:01:18 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.1ms | GC: 0.0ms)
+Completed 200 OK in 33ms (Views: 24.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 16:01:18 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/favicon.ico" for ::1 at 2026-02-10 16:01:18 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:01:19 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.8ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 9.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 16:01:20 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 16:01:21 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 2.9ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 16.4ms | GC: 0.7ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 20.3ms | GC: 0.7ms)
+Completed 200 OK in 84ms (Views: 23.6ms | ActiveRecord: 3.2ms (0 queries, 0 cached) | GC: 27.8ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 16:01:21 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 16:01:22 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 3.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 12.5ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 17.0ms | GC: 0.0ms)
+Completed 200 OK in 20ms (Views: 18.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 16:01:22 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for ::1 at 2026-02-10 16:01:24 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 1.6ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 5.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.6ms | GC: 0.0ms)
+Completed 200 OK in 13ms (Views: 10.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 16:01:24 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for ::1 at 2026-02-10 16:04:02 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 20.8ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 40ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (nil is not a valid asset source)
+Caused by: ArgumentError (nil is not a valid asset source)
+
+Information for: ActionView::Template::Error (nil is not a valid asset source):
+     5:     <%= csrf_meta_tags %>
+     6:     <%= csp_meta_tag %>
+     7:  <%= favicon_link_tag nil %>
+     8:     <script src="https://cdn.tailwindcss.com"></script>
+     9:   </head>
+    10: 
+    11:   <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+  
+app/views/layouts/application.html.erb:8
+
+Information for cause: ArgumentError (nil is not a valid asset source):
+  
+app/views/layouts/application.html.erb:8
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:04:05 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.8ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (nil is not a valid asset source)
+Caused by: ArgumentError (nil is not a valid asset source)
+
+Information for: ActionView::Template::Error (nil is not a valid asset source):
+     5:     <%= csrf_meta_tags %>
+     6:     <%= csp_meta_tag %>
+     7:  <%= favicon_link_tag nil %>
+     8:     <script src="https://cdn.tailwindcss.com"></script>
+     9:   </head>
+    10: 
+    11:   <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+  
+app/views/layouts/application.html.erb:8
+
+Information for cause: ArgumentError (nil is not a valid asset source):
+  
+app/views/layouts/application.html.erb:8
+Started GET "/" for ::1 at 2026-02-10 16:06:07 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.5ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 25.2ms | GC: 0.0ms)
+Completed 200 OK in 38ms (Views: 30.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:06:09 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.2ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 13.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for ::1 at 2026-02-10 16:06:21 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 3.6ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 14.5ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.5ms | GC: 0.0ms)
+Completed 200 OK in 57ms (Views: 21.8ms | ActiveRecord: 6.3ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2026-02-10 16:12:12 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 8.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 65.2ms | GC: 26.8ms)
+Completed 500 Internal Server Error in 88ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 26.8ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `compliance_logs_path' for an instance of #<Class:0x00007b0301e7b1a0>)
+Caused by: NameError (undefined local variable or method `compliance_logs_path' for an instance of #<Class:0x00007b0301e7b1a0>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `compliance_logs_path' for an instance of #<Class:0x00007b0301e7b1a0>):
+    17:         class: "underline text-indigo-700 hover:text-indigo-900 transition-colors",
+    18:         data: { turbo: "false" } %>
+    19:     <%= link_to "Compliance / FDA Logs", compliance_logs_path,
+    20:         class: "underline text-indigo-700 hover:text-indigo-900 transition-colors",
+    21:         data: { turbo: "false" } %>
+    22:   </div>
+    23: 
+  
+app/views/dashboards/index.html.erb:20
+app/views/layouts/application.html.erb:44
+
+Information for cause: NameError (undefined local variable or method `compliance_logs_path' for an instance of #<Class:0x00007b0301e7b1a0>):
+  
+app/views/dashboards/index.html.erb:20
+app/views/layouts/application.html.erb:44
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:12:15 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.0ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `compliance_logs_path' for an instance of #<Class:0x00007b0301e7b1a0>)
+Caused by: NameError (undefined local variable or method `compliance_logs_path' for an instance of #<Class:0x00007b0301e7b1a0>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `compliance_logs_path' for an instance of #<Class:0x00007b0301e7b1a0>):
+    17:         class: "underline text-indigo-700 hover:text-indigo-900 transition-colors",
+    18:         data: { turbo: "false" } %>
+    19:     <%= link_to "Compliance / FDA Logs", compliance_logs_path,
+    20:         class: "underline text-indigo-700 hover:text-indigo-900 transition-colors",
+    21:         data: { turbo: "false" } %>
+    22:   </div>
+    23: 
+  
+app/views/dashboards/index.html.erb:20
+app/views/layouts/application.html.erb:44
+
+Information for cause: NameError (undefined local variable or method `compliance_logs_path' for an instance of #<Class:0x00007b0301e7b1a0>):
+  
+app/views/dashboards/index.html.erb:20
+app/views/layouts/application.html.erb:44
+Started GET "/" for ::1 at 2026-02-10 16:18:10 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 23.3ms | GC: 1.3ms)
+Completed 200 OK in 48ms (Views: 31.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 3.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:18:12 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.0ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 4.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:18:59 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.6ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 4.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.3ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 16:18:59 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 16:18:59 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 1.8ms | GC: 0.7ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 42.8ms | GC: 24.6ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 43.9ms | GC: 24.6ms)
+Completed 200 OK in 75ms (Views: 47.1ms | ActiveRecord: 2.8ms (0 queries, 0 cached) | GC: 24.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:19:36 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.0ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 5.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 16:19:40 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:31:12 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.7ms | GC: 0.0ms)
+Completed 200 OK in 32ms (Views: 15.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 16:31:12 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 16:31:12 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 2.1ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 24.6ms | GC: 3.1ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 26.7ms | GC: 3.1ms)
+Completed 200 OK in 76ms (Views: 49.3ms | ActiveRecord: 5.0ms (0 queries, 0 cached) | GC: 23.7ms)
+
+
+Started GET "/" for ::1 at 2026-02-10 16:34:25 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 56.5ms | GC: 1.0ms)
+Completed 200 OK in 66ms (Views: 66.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:34:29 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.2ms | GC: 0.0ms)
+Completed 200 OK in 13ms (Views: 9.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for ::1 at 2026-02-10 16:34:38 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for ::1 at 2026-02-10 16:37:57 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 6.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 16:37:57 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:37:59 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.6ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 3.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 16:37:59 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for ::1 at 2026-02-10 16:38:05 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 16:38:05 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:41:34 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 34.0ms | GC: 32.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 40.4ms | GC: 32.6ms)
+Completed 200 OK in 64ms (Views: 49.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 32.6ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 16:41:35 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 16:41:35 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 1.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 21.8ms | GC: 1.4ms)
+  Rendering dashboards/index.html.erb
+  Rendered dashboards/index.html.erb (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 24.1ms | GC: 1.4ms)
+Completed 200 OK in 56ms (Views: 27.3ms | ActiveRecord: 2.1ms (0 queries, 0 cached) | GC: 3.3ms)
+
+
+Started GET "/" for ::1 at 2026-02-10 16:52:43 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.4ms | GC: 0.5ms)
+Completed 200 OK in 54ms (Views: 32.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 2.9ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 16:52:44 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 16:52:45 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.8ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 9.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 16:52:46 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for ::1 at 2026-02-10 16:52:57 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 16:52:57 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for ::1 at 2026-02-10 18:09:57 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.2ms | GC: 1.2ms)
+Completed 200 OK in 48ms (Views: 30.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 3.5ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 18:09:57 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:09:59 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.7ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 4.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:09:59 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:11:21 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.5ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 4.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:11:21 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:11:21 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 2.0ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 37.3ms | GC: 2.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 39.1ms | GC: 2.8ms)
+Completed 200 OK in 86ms (Views: 40.9ms | ActiveRecord: 2.6ms (0 queries, 0 cached) | GC: 26.7ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for ::1 at 2026-02-10 18:12:22 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 18:12:22 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:14:13 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 7.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:14:13 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 1.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:14:13 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-10 18:14:13 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/assets/application.css" for 127.0.0.1 at 2026-02-10 18:14:13 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.css"):
+  
+Started GET "/assets/application.js" for 127.0.0.1 at 2026-02-10 18:14:13 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js"):
+  
+Started GET "/" for ::1 at 2026-02-10 18:15:28 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (4.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.8ms | GC: 0.0ms)
+Completed 200 OK in 22ms (Views: 13.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 18:15:28 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:15:31 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.7ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 5.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:15:31 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:15:33 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.1ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:15:33 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:15:33 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.1ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:15:33 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:15:33 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 4.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:15:33 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-10 18:15:33 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-10 18:15:33 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for ::1 at 2026-02-10 18:16:25 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-10 18:16:25 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:18:52 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 30.0ms | GC: 0.6ms)
+Completed 500 Internal Server Error in 55ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.9ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007f740dc283e0>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007f740dc283e0>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007f740dc283e0>):
+     8:   
+     9:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    10:   <%= javascript_importmap_tags %>
+    11: </head>
+    12: 
+    13:   <body class="bg-gradient-to-br from-blue-900/10 to-indigo-900/10 min-h-screen antialiased">
+    14:     <!-- LOGIN NAVBAR -->
+  
+app/views/layouts/application.html.erb:11
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007f740dc283e0>):
+  
+app/views/layouts/application.html.erb:11
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:19:56 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 2.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.5ms | GC: 0.0ms)
+Completed 200 OK in 40ms (Views: 29.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:19:56 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-10 18:19:56 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:23:59 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 33.0ms | GC: 0.4ms)
+Completed 200 OK in 82ms (Views: 47.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.5ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:24:00 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-10 18:24:00 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:24:09 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:24:09 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-10 18:24:09 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:24:12 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 1.1ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 37.1ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 38.4ms | GC: 0.7ms)
+Completed 200 OK in 96ms (Views: 41.0ms | ActiveRecord: 5.0ms (0 queries, 0 cached) | GC: 27.6ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:24:12 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-10 18:24:12 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:24:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 4.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.3ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 8.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:24:39 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-10 18:24:39 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started POST "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:26:37 -0700
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"[FILTERED]", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'tech@thomasit.com' ORDER BY "users"."id" ASC LIMIT 1 /*action='create',application='PharmaDashboard',controller='sessions'*/[0m
+Completed 401 Unauthorized in 67ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.9ms)
+
+
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"[FILTERED]", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 1.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.5ms | GC: 0.0ms)
+Completed 200 OK in 284ms (Views: 3.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:26:37 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-10 18:26:37 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started POST "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:27:21 -0700
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"[FILTERED]", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'admin@pharma.com' ORDER BY "users"."id" ASC LIMIT 1 /*action='create',application='PharmaDashboard',controller='sessions'*/[0m
+Completed 401 Unauthorized in 28ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 23.6ms)
+
+
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"[FILTERED]", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 3.9ms | GC: 2.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.6ms | GC: 4.9ms)
+Completed 200 OK in 287ms (Views: 11.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 7.9ms)
+
+
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-10 18:27:22 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:27:22 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:28:56 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.5ms | GC: 0.0ms)
+Completed 200 OK in 33ms (Views: 17.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/assets/application.js" for 127.0.0.1 at 2026-02-10 18:28:57 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js"):
+  
+Started GET "/assets/application.css" for 127.0.0.1 at 2026-02-10 18:28:57 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:28:59 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 2.9ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 14.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.0ms | GC: 0.0ms)
+Completed 200 OK in 52ms (Views: 18.7ms | ActiveRecord: 5.1ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/assets/application.css" for 127.0.0.1 at 2026-02-10 18:28:59 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.css"):
+  
+Started GET "/assets/application.js" for 127.0.0.1 at 2026-02-10 18:28:59 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.js"):
+  
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 18:29:10 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:30:32 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.0ms | GC: 0.6ms)
+Completed 200 OK in 50ms (Views: 28.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 2.0ms)
+
+
+Started GET "/assets/application.css" for 127.0.0.1 at 2026-02-10 18:30:32 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.css"):
+  
+Started GET "/assets/application.css" for 127.0.0.1 at 2026-02-10 18:30:37 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.css"):
+  
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 18:30:37 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started HEAD "/assets/application.css" for 127.0.0.1 at 2026-02-10 18:31:16 -0700
+  
+ActionController::RoutingError (No route matches [HEAD] "/assets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:31:50 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.2ms | GC: 0.0ms)
+Completed 200 OK in 26ms (Views: 20.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/assets/application.css" for 127.0.0.1 at 2026-02-10 18:31:50 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:31:54 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 2.5ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 33.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 35.0ms | GC: 0.0ms)
+Completed 200 OK in 69ms (Views: 37.1ms | ActiveRecord: 8.8ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/assets/application.css" for 127.0.0.1 at 2026-02-10 18:31:54 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.css"):
+  
+Started GET "/assets/application.css" for 127.0.0.1 at 2026-02-10 18:31:57 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application.css"):
+  
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 18:31:57 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:32:50 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.8ms | GC: 0.0ms)
+Completed 200 OK in 33ms (Views: 25.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:32:54 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 8.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.0ms | GC: 0.0ms)
+Completed 200 OK in 46ms (Views: 10.6ms | ActiveRecord: 11.5ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 18:32:57 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-10 18:33:31 -0700
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_error_messages.html.erb (Duration: 1.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 8.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.0ms | GC: 0.0ms)
+Completed 200 OK in 32ms (Views: 30.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:33:35 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 3.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.7ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 5.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 18:33:52 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:34:43 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.6ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:34:45 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.9ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 4.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.3ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 6.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:34:59 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 4.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.4ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 6.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:35:49 -0700
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"[FILTERED]", "password"=>"[FILTERED]", "remember_me"=>"1"}, "commit"=>"Log in"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'driver1@thomasit.com' ORDER BY "users"."id" ASC LIMIT 1 /*action='create',application='PharmaDashboard',controller='sessions'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='PharmaDashboard',controller='sessions'*/[0m
+  [1m[36mUser Update (22.8ms)[0m  [1m[33mUPDATE "users" SET "remember_created_at" = '2026-02-11 01:35:49.898620', "updated_at" = '2026-02-11 01:35:49.899146' WHERE "users"."id" = 1 /*action='create',application='PharmaDashboard',controller='sessions'*/[0m
+  [1m[36mTRANSACTION (119.0ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Completed 303 See Other in 466ms (ActiveRecord: 142.2ms (2 queries, 0 cached) | GC: 21.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:35:50 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.3ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 18:36:02 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:37:59 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 19ms (Views: 6.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:38:07 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.7ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 2.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-10 18:38:07 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:38:47 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 2.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:38:47 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:38:47 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 1.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 26.3ms | GC: 1.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 26.6ms | GC: 1.5ms)
+Completed 200 OK in 80ms (Views: 29.0ms | ActiveRecord: 10.2ms (0 queries, 0 cached) | GC: 23.8ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 18:39:31 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:40:06 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.2ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:41:53 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.3ms | GC: 0.0ms)
+Completed 200 OK in 21ms (Views: 11.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:42:24 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (3.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 5.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:42:26 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-10 18:42:26 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 18:42:32 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:43:04 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.8ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:43:04 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-10 18:43:04 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:45:31 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 15.4ms | GC: 0.0ms)
+Completed 200 OK in 30ms (Views: 21.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:50:17 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (3.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by Devise::SessionsController#new as HTML
+[Devise] Could not find devise mapping for path "/".
+This may happen for two reasons:
+
+1) You forgot to wrap your route inside the scope block. For example:
+
+  devise_scope :user do
+    get "/some/route" => "some_devise_controller"
+  end
+
+2) You are testing a Devise controller bypassing the router.
+   If so, you can explicitly tell Devise which mapping to use:
+
+   @request.env["devise.mapping"] = Devise.mappings[:user]
+
+
+Completed 404 Not Found in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+AbstractController::ActionNotFound (Could not find devise mapping for path "/".
+This may happen for two reasons:
+
+1) You forgot to wrap your route inside the scope block. For example:
+
+  devise_scope :user do
+    get "/some/route" => "some_devise_controller"
+  end
+
+2) You are testing a Devise controller bypassing the router.
+   If so, you can explicitly tell Devise which mapping to use:
+
+   @request.env["devise.mapping"] = Devise.mappings[:user]
+
+):
+  
+devise (5.0.0) app/controllers/devise_controller.rb:104:in `unknown_action!'
+devise (5.0.0) app/controllers/devise_controller.rb:79:in `assert_is_devise_resource!'
+devise (5.0.0) app/controllers/devise_controller.rb:117:in `require_no_authentication'
+activesupport (8.1.2) lib/active_support/callbacks.rb:362:in `block in make_lambda'
+activesupport (8.1.2) lib/active_support/callbacks.rb:179:in `block in call'
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:36:in `block (2 levels) in <module:Callbacks>'
+activesupport (8.1.2) lib/active_support/callbacks.rb:180:in `call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `block in invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `each'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:119:in `block in run_callbacks'
+activesupport (8.1.2) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:266:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/rescue.rb:36:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:76:in `block in process_action'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `block in instrument'
+activesupport (8.1.2) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `instrument'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:75:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (8.1.2) lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+actionpack (8.1.2) lib/abstract_controller/base.rb:154:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.4) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.4) lib/rack/etag.rb:29:in `call'
+rack (3.2.4) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.4) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+activerecord (8.1.2) lib/active_record/migration.rb:671:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+sentry-rails (6.3.0) lib/sentry/rails/rescued_exception_interceptor.rb:11:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+sentry-ruby (6.3.0) lib/sentry/rack/capture_exceptions.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+request_store (1.7.0) lib/request_store/middleware.rb:19:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.4) lib/rack/method_override.rb:28:in `call'
+rack (3.2.4) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.4) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:31 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 51ms (ActiveRecord: 3.7ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 9ms (ActiveRecord: 0.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 9ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 11ms (ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 13ms (ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 13ms (ActiveRecord: 0.7ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 9ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 10ms (ActiveRecord: 1.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 13ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 12ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 2.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 10ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 10ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 14ms (ActiveRecord: 0.7ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 14ms (ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 9ms (ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 8ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:32 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 9ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:33 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 65ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 23.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:33 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 9ms (ActiveRecord: 0.7ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 8ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 11ms (ActiveRecord: 0.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 11ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 10ms (ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 1.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 10ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 11ms (ActiveRecord: 0.7ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 10ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 36ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 22.4ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 4ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 11ms (ActiveRecord: 0.7ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 12ms (ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 2.2ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 13ms (ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:34 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 12ms (ActiveRecord: 0.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 10ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 5ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 9ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 5ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 21ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 13.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 9ms (ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 5ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 15ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 9ms (ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:39 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:40 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:40 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:40 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 5ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:40 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 15ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 1.8ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:40 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 6ms (ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:40 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:51:40 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.9ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:54:43 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 17.7ms | GC: 0.0ms)
+Completed 200 OK in 40ms (Views: 22.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-10 18:55:05 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:55:22 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.1ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 4.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:55:22 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:55:22 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 1.5ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 20.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.2ms | GC: 0.0ms)
+Completed 200 OK in 51ms (Views: 23.1ms | ActiveRecord: 9.1ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
