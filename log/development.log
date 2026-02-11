@@ -2551,3 +2551,35 @@ Processing by Devise::SessionsController#new as */*
 Completed 200 OK in 51ms (Views: 23.1ms | ActiveRecord: 9.1ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:58:50 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.3ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 7.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-10 18:58:50 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-10 18:58:50 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.9ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 4.3ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.7ms | GC: 0.7ms)
+Completed 200 OK in 50ms (Views: 6.8ms | ActiveRecord: 1.8ms (0 queries, 0 cached) | GC: 32.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-10 18:58:50 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.2ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 2.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+

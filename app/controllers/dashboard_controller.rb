@@ -39,3 +39,8 @@ before_action :authenticate_user!, except: [:index]  # Allow public dashboard
   def chain_of_custody
   end
 end
+
+def index
+  @mrr = 12000
+  @batches = 128
+end
