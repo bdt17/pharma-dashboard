@@ -1,5 +1,8 @@
 class DashboardController < ApplicationController
+before_action :authenticate_user!, except: [:index]  # Allow public dashboard
+
   def index
+    @mrr = 12000
     @batch_count = 128
   end
 

@@ -1,0 +1,93 @@
+<div class="p-4 mx-auto max-w-7xl py-6">
+
+  <!-- STATS CARDS APL -->
+  <div class="mb-8 grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div class="p-6 rounded-lg bg-white/10 border border-white/20 text-center shadow-lg">
+      <div class="text-3xl font-bold text-green-400">
+        <%= @total_batches %>
+      </div>
+      <div class="text-sm text-gray-300">Total Batches</div>
+    </div>
+
+    <div class="p-6 rounded-lg bg-white/10 border border-white/20 text-center shadow-lg">
+      <div class="text-3xl font-bold text-blue-400">
+        <%= @active_vehicles %>
+      </div>
+      <div class="text-sm text-gray-300">Active Vehicles</div>
+    </div>
+
+    <div class="p-6 rounded-lg bg-white/10 border border-white/20 text-center shadow-lg">
+      <div class="text-3xl font-bold text-red-400">
+        <%= @non_conformances %>
+      </div>
+      <div class="text-sm text-gray-300">Non‑Conformances</div>
+    </div>
+  </div>
+
+  <!-- TWOCOL CORE -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <!-- LEFT – Batches Table -->
+    <div class="bg-white/8 border border-white/20 p-6 rounded-xl shadow-lg">
+      <h2 class="text-xl font-bold text-white mb-4">Current Transports & Batches</h2>
+      <table class="w-full text-sm text-gray-200 border-collapse mb-4">
+        <thead>
+          <tr class="text-left text-xs uppercase font-semibold tracking-wider text-gray-400">
+            <th class="py-2 px-3 border-b border-gray-600">Batch ID</th>
+            <th class="py-2 px-3 border-b border-gray-600">Status</th>
+            <th class="py-2 px-3 border-b border-gray-600">ETA</th>
+          </tr>
+        </thead>
+        <tbody data-controller="batch-live-table">
+          <% @batches.each do |batch| %>
+            <tr class="hover:bg-white/5">
+              <td class="py-2 px-3 border-b border-gray-700"><%= batch.id %></td>
+              <td class="py-2 px-3 border-b border-gray-700"><%= batch.status %></td>
+              <td class="py-2 px-3 border-b border-gray-700"><%= batch.eta || "N/A" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <p class="text-xs text-gray-400">
+        Last updated: <span data-batch-live-table-target="timestamp"><%= Time.current.strftime("%T %Z") %></span>
+      </p>
+    </div>
+
+    <!-- RIGHT – FDA LOGS + GPS -->
+    <div class="space-y-6">
+
+      <!-- FDA Audit Trail -->
+      <div class="bg-white/8 border border-white/20 p-6 rounded-xl shadow-lg">
+        <h2 class="text-xl font-bold text-white mb-4">Recent FDA‑Audit Logs</h2>
+        <ul class="space-y-3" data-controller="fda-audit-trail">
+          <% @fda_logs.each do |log| %>
+            <li class="p-2 rounded-md bg-white/10 border border-white/20 text-gray-200 flex justify-between">
+              <span class="truncate flex-1">
+                <%= log.event_type %> — <%= log.batch_id %>
+              </span>
+              <span class="text-xs text-gray-400 ml-2">
+                <%= log.created_at.strftime("%T") %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <!-- GPS PlaceHolder -->
+      <div
+        class="bg-white/8 border border-white/20 p-6 rounded-xl shadow-lg overflow-hidden"
+        data-controller="gps-map"
+      >
+        <h2 class="text-xl font-bold text-white mb-4">Live Vehicle Location</h2>
+        <div data-gps-map-target="mapContainer" class="w-full h-48 bg-gray-800 rounded-lg flex items-center justify-center text-gray-300">
+          🚗 Live GPS Widget (Leaflet/Mapbox placeholder)
+        </div>
+        <p class="mt-3 text-xs text-gray-400">
+          Last GPS Update: <span data-gps-map-target="timestamp"><%= Time.current.strftime("%T %Z") %></span>
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
