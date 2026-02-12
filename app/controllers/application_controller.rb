@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true unless Rails.env.test?
   
-  # In-memory GPS vehicle store (Phase 2)
   @@vehicles = []
   
   def index
@@ -21,21 +20,19 @@ class ApplicationController < ActionController::Base
   end
   
   def gps_update
-    # Parse Queclink GPS data
     imei = params[:imei]
     lat = params[:lat]&.to_f
     lng = params[:lng]&.to_f
     speed = params[:speed]&.to_f || 0
     
     if imei && lat && lng
-      # Update or create vehicle
       vehicle = @@vehicles.find { |v| v[:imei] == imei } || {}
       vehicle[:imei] = imei
       vehicle[:lat] = lat
       vehicle[:lng] = lng
       vehicle[:speed] = speed
       vehicle[:updated_at] = Time.now.utc.iso8601
-      vehicle[:location] = "Phoenix, AZ" # Thomas IT HQ
+      vehicle[:location] = "Phoenix, AZ"
       
       @@vehicles.delete_if { |v| v[:imei] == imei }
       @@vehicles << vehicle
@@ -48,8 +45,8 @@ class ApplicationController < ActionController::Base
   def gps_stream
     render plain: "", status: 200
   end
-end
-
+  
   def dashboard
     render "dashboard"
   end
+end

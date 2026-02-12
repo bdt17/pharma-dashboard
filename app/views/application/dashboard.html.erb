@@ -1,80 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Thomas IT Pharma Transport</title>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <title>Thomas IT Pharma Transport Dashboard</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
-    body { font-family: -apple-system, sans-serif; margin: 0; padding: 20px; background: #0f0f23; color: white; }
-    .dashboard { max-width: 1200px; margin: 0 auto; }
-    .header { display: flex; justify-content: space-between; margin-bottom: 30px; }
-    .vehicle-card { background: #1a1a2e; border-radius: 12px; padding: 20px; margin: 10px 0; }
-    .map-placeholder { height: 400px; background: #16213e; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; background: linear-gradient(135deg,#0f0f23 0%,#1a1a2e 100%); color: white; min-height: 100vh; }
+    .dashboard { max-width: 1400px; margin: 0 auto; padding: 20px; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .header h1 { font-size: 2.5rem; background: linear-gradient(45deg,#00d4ff,#0099cc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .status { background: rgba(0,212,255,0.2); padding: 15px 25px; border-radius: 12px; border: 1px solid rgba(0,212,255,0.3); }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+    .card { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border-radius: 16px; padding: 25px; border: 1px solid rgba(255,255,255,0.1); }
+    .vehicle { background: rgba(26,26,46,0.8); border-radius: 12px; padding: 20px; margin: 15px 0; border-left: 4px solid #00d4ff; }
+    .map-placeholder { height: 500px; background: rgba(0,0,0,0.3); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed rgba(0,212,255,0.5); }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <div id="root" class="dashboard"></div>
-  
   <script type="text/babel">
-    const { useState, useEffect } = React;
-
+    const {useState, useEffect} = React;
+    
     function App() {
       const [vehicles, setVehicles] = useState([]);
       const [health, setHealth] = useState({});
-
+      
       useEffect(() => {
-        // Fetch live GPS data
-        fetch('/vehicles')
-          .then(res => res.json())
-          .then(setVehicles);
-
-        fetch('/health')
-          .then(res => res.json())
-          .then(setHealth);
-
-        // GPS refresh every 10s
-        const interval = setInterval(() => {
-          fetch('/vehicles').then(res => res.json()).then(setVehicles);
-        }, 10000);
-
+        const fetchData = async () => {
+          const vehiclesRes = await fetch('/vehicles');
+          const healthRes = await fetch('/health');
+          setVehicles(await vehiclesRes.json());
+          setHealth(await healthRes.json());
+        };
+        
+        fetchData();
+        const interval = setInterval(fetchData, 10000);
         return () => clearInterval(interval);
       }, []);
-
+      
       return (
-        <div class="dashboard">
-          <div class="header">
+        <div className="dashboard">
+          <div className="header">
             <h1>🚛 Thomas IT Pharma Transport</h1>
-            <div>🟢 LIVE | {health.timestamp}</div>
-          </div>
-
-          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px'}}>
-            {/* GPS Tracking */}
-            <div>
-              <h2>📍 Live Vehicles ({vehicles.length})</h2>
-              {vehicles.map(vehicle => (
-                <div key={vehicle.imei} className="vehicle-card">
-                  <h3>🚚 {vehicle.imei}</h3>
-                  <p>📍 {vehicle.lat?.toFixed(4)}, {vehicle.lng?.toFixed(4)}</p>
-                  <p>⚡ {vehicle.speed} mph | {vehicle.location}</p>
-                  <p>🕐 {new Date(vehicle.updated_at).toLocaleTimeString()}</p>
-                </div>
-              ))}
+            <div className="status">
+              🟢 LIVE | {vehicles.length} trucks | {new Date(health.timestamp).toLocaleString()}
             </div>
-
-            {/* Google Maps Placeholder */}
-            <div>
-              <h2>🗺️ Live Map</h2>
+          </div>
+          
+          <div className="grid">
+            <div className="card">
+              <h2>📍 Live GPS Tracking</h2>
+              {vehicles.length === 0 ? (
+                <div className="vehicle">No vehicles online</div>
+              ) : (
+                vehicles.map(v => (
+                  <div key={v.imei} className="vehicle">
+                    <h3>🚚 {v.imei}</h3>
+                    <div>📍 {v.lat?.toFixed(4)}°N, {v.lng?.toFixed(4)}°W</div>
+                    <div>⚡ {v.speed} mph | {v.location}</div>
+                    <div>🕐 {new Date(v.updated_at).toLocaleTimeString()}</div>
+                  </div>
+                ))
+              )}
+            </div>
+            
+            <div className="card">
+              <h2>🗺️ Live Map (Phoenix)</h2>
               <div className="map-placeholder">
-                PHX001 @ 33.4484°N, 112.074°W<br/>
-                I-10 Phoenix @ 65 mph
+                <div>PHX001 @ {vehicles[0]?.lat?.toFixed(4)}°N, {vehicles[0]?.lng?.toFixed(4)}°W</div>
+                <div style={{fontSize:'1.2rem', marginTop:'10px'}}>I-10 @ {vehicles[0]?.speed} mph</div>
+                <div style={{opacity:0.7, fontSize:'0.9rem', marginTop:'5px'}}>Google Maps API Key → Next</div>
               </div>
             </div>
           </div>
         </div>
       );
     }
-
+    
     ReactDOM.render(<App />, document.getElementById('root'));
   </script>
 </body>
