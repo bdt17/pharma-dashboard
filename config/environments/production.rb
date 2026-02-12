@@ -29,5 +29,9 @@ Rails.application.configure do
 
 # Use single DATABASE_URL for everything
 end
-config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-config.assets.compile = true
+
+  # Serve static assets
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+
+  # Allow asset compilation fallback
+  config.assets.compile = true

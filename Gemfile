@@ -10,8 +10,6 @@ gem "rake", "13.2.1"
 gem "pg", "~> 1.6"
 
 
-# Auth (ONE devise only)
-gem "devise"
 gem "pundit"
 gem "jwt"
 
@@ -51,5 +49,5 @@ gem 'wkhtmltopdf-binary'
 gem 'prawn'
 gem 'prawn-table'
 
-gem 'devise'
 
+gem 'devise'
