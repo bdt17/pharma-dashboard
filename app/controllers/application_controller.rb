@@ -20,4 +20,8 @@ class ApplicationController < ActionController::Base
   def batches
     render plain: "FDA 21 CFR Part 11 READY", status: 200
   end
+  
+  def gps_update
+    render json: {status: "GPS OK"}, status: 200
+  end
 end
