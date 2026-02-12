@@ -2659,3 +2659,264 @@ Processing by DashboardController#index as HTML
 Completed 200 OK in 37ms (Views: 26.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/" for 127.0.0.1 at 2026-02-11 16:41:19 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.6ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 6.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-11 16:41:19 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-11 16:41:19 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 2.0ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 16.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.5ms | GC: 0.0ms)
+Completed 200 OK in 54ms (Views: 18.5ms | ActiveRecord: 16.3ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2026-02-11 16:49:21 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.0ms | GC: 0.0ms)
+Completed 200 OK in 18ms (Views: 8.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/favicon.ico" for ::1 at 2026-02-11 16:49:21 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-11 16:49:23 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.5ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 1.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/favicon.ico" for 127.0.0.1 at 2026-02-11 16:49:23 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/" for ::1 at 2026-02-11 16:51:17 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.8ms | GC: 0.0ms)
+Completed 200 OK in 18ms (Views: 9.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-11 16:51:18 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.6ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-11 16:53:27 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-02-11 16:53:27 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/health"):
+  
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-11 16:53:27 -0700
+Processing by DashboardController#vehicles as */*
+Completed 401 Unauthorized in 24ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-11 16:53:27 -0700
+Processing by DashboardController#batches as */*
+Completed 401 Unauthorized in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-11 16:53:27 -0700
+Processing by DashboardController#compliance as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-02-11 16:53:27 -0700
+Processing by BillingController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering billing/index.html.erb within layouts/application
+  Rendered billing/index.html.erb within layouts/application (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.6ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/assets/application-*.css" for 127.0.0.1 at 2026-02-11 16:53:27 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application-*.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-11 16:55:07 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.2ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-02-11 16:55:07 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/health"):
+  
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-11 16:55:07 -0700
+Processing by DashboardController#vehicles as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-11 16:55:07 -0700
+Processing by DashboardController#batches as */*
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-11 16:55:07 -0700
+Processing by DashboardController#compliance as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-02-11 16:55:07 -0700
+Processing by BillingController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering billing/index.html.erb within layouts/application
+  Rendered billing/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.4ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 1.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-11 16:55:07 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 2.6ms | GC: 0.8ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 11.5ms | GC: 0.8ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.8ms | GC: 0.8ms)
+Completed 200 OK in 64ms (Views: 14.2ms | ActiveRecord: 8.4ms (0 queries, 0 cached) | GC: 28.2ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-11 16:55:07 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_error_messages.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.0/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 5.1ms | GC: 0.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.3ms | GC: 0.3ms)
+Completed 200 OK in 7ms (Views: 6.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/assets/application-*.css" for 127.0.0.1 at 2026-02-11 16:55:07 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application-*.css"):
+  
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-11 16:56:23 -0700
+  
+NoMethodError (undefined method `get' for main):
+  
+config/routes.rb:15:in `<main>'
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-11 16:56:27 -0700
+Processing by Devise::SessionsController#new as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='new',application='PharmaDashboard',controller='sessions'*/[0m
+Redirected to http://127.0.0.1:10000/
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 46ms (ActiveRecord: 3.0ms (1 query, 0 cached) | GC: 13.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-11 16:56:27 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.9ms | GC: 0.0ms)
+Completed 200 OK in 11ms (Views: 9.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-02-11 16:56:29 -0700
+Processing by BillingController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering billing/index.html.erb within layouts/application
+  Rendered billing/index.html.erb within layouts/application (Duration: 5.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.7ms | GC: 0.0ms)
+Completed 200 OK in 19ms (Views: 18.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-11 16:56:32 -0700
+Processing by DashboardController#compliance as HTML
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='compliance',application='PharmaDashboard',controller='dashboard'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/compliance.html.erb within layouts/application
+  Rendered dashboard/compliance.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.7ms | GC: 0.0ms)
+Completed 200 OK in 13ms (Views: 1.2ms | ActiveRecord: 1.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-11 16:56:33 -0700
+Processing by DashboardController#batches as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='batches',application='PharmaDashboard',controller='dashboard'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/batches.html.erb within layouts/application
+  Rendered dashboard/batches.html.erb within layouts/application (Duration: 3.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.0ms)
+Completed 200 OK in 13ms (Views: 5.0ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-11 16:56:34 -0700
+Processing by DashboardController#vehicles as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='vehicles',application='PharmaDashboard',controller='dashboard'*/[0m
+Completed 200 OK in 12ms (Views: 0.1ms | ActiveRecord: 0.2ms (1 query, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-02-11 16:56:36 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/health"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-11 16:56:38 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.3ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2026-02-11 17:17:38 -0700
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  
+NoMethodError (undefined method `get' for main):
+  
+config/routes.rb:15:in `<main>'
+Started GET "/" for 127.0.0.1 at 2026-02-11 17:17:44 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 16ms (Views: 4.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-11 17:17:48 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
