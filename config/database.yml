@@ -1,26 +1,6 @@
-default: &default
-  adapter: postgresql
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-
-test:
-  adapter: sqlite3
-  database: db/test.sqlite3
-
 production:
-  primary:
-    <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
-  cache:
-    <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
-  queue:
-    <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
-  cable:
-    <<: *default
-    url: <%= ENV['DATABASE_URL'] %>
+  <<: *default
+  database: pharma_gps_production
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
