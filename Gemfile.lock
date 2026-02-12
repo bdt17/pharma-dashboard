@@ -227,6 +227,7 @@ PLATFORMS
 DEPENDENCIES
   pg (~> 1.1)
   puma (>= 5.0)
+  rackup
   rails (~> 8.1.1)
 
 CHECKSUMS
