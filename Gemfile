@@ -50,4 +50,3 @@ gem 'prawn'
 gem 'prawn-table'
 
 
-gem 'devise'
