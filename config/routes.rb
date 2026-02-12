@@ -6,5 +6,5 @@ Rails.application.routes.draw do
   get "batches", to: "application#batches"
   post "gps/update", to: "application#gps_update"
   get "gps/stream", to: "application#gps_stream"
-  get "dashboard", to: "application#dashboard"  # ← PROPERLY INSIDE BLOCK
+  get "dashboard", to: "application#dashboard"
 end
