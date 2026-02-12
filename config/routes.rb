@@ -7,3 +7,5 @@ Rails.application.routes.draw do
   post "gps/update", to: "application#gps_update"
   get "gps/stream", to: "application#gps_stream"
 end
+
+get "dashboard", to: "application#dashboard"

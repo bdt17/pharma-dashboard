@@ -49,3 +49,7 @@ class ApplicationController < ActionController::Base
     render plain: "", status: 200
   end
 end
+
+  def dashboard
+    render "dashboard"
+  end
