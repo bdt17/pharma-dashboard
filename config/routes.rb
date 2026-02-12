@@ -14,3 +14,4 @@ Rails.application.routes.draw do
 get '/health', to: 'health#index'
 end
 root "dashboard#index"
+get '/reports/:id.pdf', to: 'reports#chain_of_custody'
