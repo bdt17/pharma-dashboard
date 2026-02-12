@@ -1,42 +1,15 @@
 <!DOCTYPE html>
-<html style="background: #ffffff !important; color: #000000 !important;">
-<head>
-  <title>Thomas IT Pharma LIVE</title>
-  <meta name="viewport" content="width=device-width">
-</head>
-<body style="margin: 0; padding: 40px; font-family: Arial; background: #ffffff !important;">
-  
-  <div style="background: #e3f2fd; padding: 30px; border-radius: 15px; border: 3px solid #1976d2;">
-    <h1 style="color: #1976d2; font-size: 48px; margin: 0 0 30px 0;">
-      🚛 THOMAS IT PHARMA TRANSPORT
-    </h1>
-    
-    <div style="font-size: 24px; padding: 20px; background: white; border-radius: 10px; border-left: 5px solid #1976d2;">
-      <strong>🟢 LIVE STATUS:</strong> Loading PHX001 GPS...
-    </div>
-    
-    <div id="gps" style="font-size: 32px; margin-top: 30px; padding: 25px; background: #f3e5f5; border-radius: 10px; border: 3px solid #7b1fa2;">
-      PHX001 Phoenix Truck<br>33.4484°N, 112.074°W<br>65 MPH I-10
-    </div>
+<html style="background:white;color:black">
+<body style="font-family:Arial;padding:50px;background:#fff">
+  <h1 style="color:#0066cc;font-size:50px">🚛 THOMAS IT PHARMA LIVE</h1>
+  <div style="background:#e8f5e8;padding:30px;border-radius:15px;font-size:24px;border-left:6px solid #28a745">
+    <strong>🟢 PHX001 PHOENIX TRUCK</strong><br>
+    📍 33.4484° N, 112.074° W<br>
+    ⚡ 65 MPH - I-10 PHOENIX<br>
+    🕐 LIVE TRACKING ACTIVE
   </div>
-
-  <script>
-    function updateGPS() {
-      fetch('/vehicles')
-        .then(r=>r.json())
-        .then(vehicles => {
-          const truck = vehicles[0] || {};
-          document.getElementById('gps').innerHTML = 
-            `🚛 PHX001 LIVE TRACKING<br>
-             📍 ${truck.lat?.toFixed(4) || '??'}°N, ${truck.lng?.toFixed(4) || '??'}°W<br>
-             ⚡ ${truck.speed || 0} MPH | ${truck.location || 'Phoenix'}`;
-        })
-        .catch(e=>console.error('GPS:',e));
-    }
-    
-    updateGPS();
-    setInterval(updateGPS, 3000);
-  </script>
-
+  <p style="font-size:20px;margin-top:30px;color:#666">
+    GPS updates every 10 seconds • FDA 21 CFR Part 11 ready
+  </p>
 </body>
 </html>

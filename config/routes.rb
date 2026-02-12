@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "application#index"
+  root "application#dashboard"    # ← ROOT = DASHBOARD
   get "/dashboard", to: "application#dashboard"
   get "/health", to: "application#health"
   get "/vehicles", to: "application#vehicles"
