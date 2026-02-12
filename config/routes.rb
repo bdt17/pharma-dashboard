@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   get "/billing", to: "billing#index"
 
 
+get '/health', to: 'health#index'
 end
+root "dashboard#index"
