@@ -7,8 +7,5 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "devise"
 gem "tailwindcss-rails"
-gem "solid_cache_store"
-gem "solid_queue"
-gem "solid_cable"
 gem 'wicked_pdf', '~> 2.8'
 gem 'wkhtmltopdf-binary'
