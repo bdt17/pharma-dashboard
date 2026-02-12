@@ -9,3 +9,4 @@ gem "devise"
 gem "tailwindcss-rails"
 gem 'wicked_pdf', '~> 2.8'
 gem 'wkhtmltopdf-binary'
+gem 'bootsnap', require: false
