@@ -5,6 +5,11 @@ gem "rails", "~> 8.1.1"
 gem "pg", "~> 1.1" 
 gem "puma", ">= 5.0"
 
+gem "sqlite3", "~> 1.5"
 group :development do
   gem "debug", platforms: [:mri, :windows]
+end
+gem "sqlite3", "~> 1.5"
+group :development, :test do
+  gem 'sqlite3', '~> 1.5'
 end
