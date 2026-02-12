@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Thomas IT Pharma Transport</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { font-family: -apple-system, sans-serif; margin: 0; padding: 20px; background: #0f0f23; color: white; }
+    .dashboard { max-width: 1200px; margin: 0 auto; }
+    .header { display: flex; justify-content: space-between; margin-bottom: 30px; }
+    .vehicle-card { background: #1a1a2e; border-radius: 12px; padding: 20px; margin: 10px 0; }
+    .map-placeholder { height: 400px; background: #16213e; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+  </style>
+</head>
+<body>
+  <div id="root" class="dashboard"></div>
+  
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [vehicles, setVehicles] = useState([]);
+      const [health, setHealth] = useState({});
+
+      useEffect(() => {
+        // Fetch live GPS data
+        fetch('/vehicles')
+          .then(res => res.json())
+          .then(setVehicles);
+
+        fetch('/health')
+          .then(res => res.json())
+          .then(setHealth);
+
+        // GPS refresh every 10s
+        const interval = setInterval(() => {
+          fetch('/vehicles').then(res => res.json()).then(setVehicles);
+        }, 10000);
+
+        return () => clearInterval(interval);
+      }, []);
+
+      return (
+        <div class="dashboard">
+          <div class="header">
+            <h1>🚛 Thomas IT Pharma Transport</h1>
+            <div>🟢 LIVE | {health.timestamp}</div>
+          </div>
+
+          <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px'}}>
+            {/* GPS Tracking */}
+            <div>
+              <h2>📍 Live Vehicles ({vehicles.length})</h2>
+              {vehicles.map(vehicle => (
+                <div key={vehicle.imei} className="vehicle-card">
+                  <h3>🚚 {vehicle.imei}</h3>
+                  <p>📍 {vehicle.lat?.toFixed(4)}, {vehicle.lng?.toFixed(4)}</p>
+                  <p>⚡ {vehicle.speed} mph | {vehicle.location}</p>
+                  <p>🕐 {new Date(vehicle.updated_at).toLocaleTimeString()}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Google Maps Placeholder */}
+            <div>
+              <h2>🗺️ Live Map</h2>
+              <div className="map-placeholder">
+                PHX001 @ 33.4484°N, 112.074°W<br/>
+                I-10 Phoenix @ 65 mph
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
