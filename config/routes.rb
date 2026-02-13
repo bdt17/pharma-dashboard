@@ -1,22 +1,21 @@
 Rails.application.routes.draw do
-  # 🔐 DEVISE AUTHENTICATION FIRST (enterprise security)
+  # DEVISE FIRST (no custom names = no conflicts)
   devise_for :users
-  devise_scope :user do
-    get 'login', to: 'users/sessions#new', as: :new_user_session
-    get 'register', to: 'users/registrations#new', as: :new_user_registration
-  end
-
-  # 🌐 PUBLIC ENDPOINTS (no login required)
-  get 'health', to: 'home#health'
-
-  # 🔒 PROTECTED DASHBOARDS (login required via application_controller.rb)
-  root "home#index"                    # / → Pharma dashboard (47 vehicles)
-  get 'dashboard', to: 'home#dashboard' # /dashboard → same dashboard
-  get 'vehicles', to: 'vehicles#index'  # /vehicles → GPS tracking
-  get 'batches', to: 'batches#index'    # /batches → Temperature alerts  
-  get 'compliance', to: 'compliance#index' # /compliance → FDA 21 CFR Part 11
-  get 'billing', to: 'billing#index'    # /billing → $4,653 MRR Stripe
-
-  # 🚀 GPS API (future Phase 2)
+  
+  # PUBLIC LANDING PAGE
+  root "home#index"                    # / → PharmaTransport 2.0 landing
+  
+  # PUBLIC HEALTH CHECK
+  get 'health', to: 'home#health'      # /health → Render monitoring
+  
+  # PROTECTED DASHBOARDS (login required)
+  get 'dashboard', to: 'home#dashboard'
+  get 'vehicles', to: 'vehicles#index'
+  get 'batches', to: 'batches#index'
+  get 'compliance', to: 'compliance#index'
+  get 'billing', to: 'billing#index'
+  
+  # API (Phase 2)
   post '/gps/update', to: 'home#gps_update'
 end
+
