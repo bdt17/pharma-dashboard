@@ -12,4 +12,8 @@ Rails.application.routes.draw do
   # devise_for :users
   
   root to: 'application#index'
+  get '/login', to: 'application#login'
+  post '/login', to: 'application#login_post'
+  get '/logout', to: 'application#logout'
+
 end
