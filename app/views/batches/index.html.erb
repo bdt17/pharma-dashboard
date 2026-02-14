@@ -1,4 +1,6 @@
-<h1>💉 Batches (<%= @batches&.size || 0 %>)</h1>
-<% @batches.each do |b| %>
-  <div><%= b.lot_number %> → <a href="/batches/<%= b.id %>/chain_of_custody">📄 PDF</a></div>
-<% end %>
+<div class="dashboard">
+  <h1>Batches</h1>
+  <% @batches.each do |b| %>
+    <div><%= b[:lot] %> - <%= b[:status] %></div>
+  <% end %>
+</div>

@@ -1,52 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Pharma Transport Dashboard</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-      color: white; 
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      min-height: 100vh;
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    h1 { font-size: 3rem; text-align: center; margin-bottom: 3rem; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
-    .card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 2rem; border: 1px solid rgba(255,255,255,0.2); }
-    .card h2 { margin-bottom: 1rem; opacity: 0.9; }
-    .vehicle { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 0.5rem; }
-    .status { padding: 0.25rem 1rem; border-radius: 999px; font-size: 0.875rem; font-weight: 600; }
-    .status.active { background: #10b981; }
-    .status.in_transit { background: #3b82f6; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>🚚 Pharma Transport Dashboard</h1>
-    <div class="stats">
-      <div class="card">
-        <h2>Vehicles (2 Active)</h2>
-        <div class="vehicle">
-          <span>🏎️ AZ Pharma-001</span>
-          <span class="status active">ACTIVE</span>
-        </div>
-        <div class="vehicle">
-          <span>🚛 CA Pharma-002</span>
-          <span class="status in_transit">IN TRANSIT</span>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Batches (1 Active)</h2>
-        <div class="vehicle">
-          <span>📦 LOT-PHARMA-20260211</span>
-          <span class="status in_transit">IN TRANSIT</span>
-        </div>
-      </div>
+<div class="dashboard">
+  <h1>PharmaTransport 2.0 Dashboard</h1>
+  <div class="stats">
+    <div class="stat">
+      <div class="number">$<%= @mrr %></div>
+      <div>MRR</div>
     </div>
-    <div style="text-align: center; opacity: 0.7;">
-      <p>Phase 1 LIVE ✅ | $99/vehicle/mo | FDA 21 CFR Part 11 Ready</p>
+    <div class="stat">
+      <div class="number"><%= @batches_active %></div>
+      <div>Active Batches</div>
+    </div>
+    <div class="stat">
+      <div class="number"><%= @vehicles_live %></div>
+      <div>Live Vehicles</div>
     </div>
   </div>
-</body>
-</html>
+</div>
