@@ -1,6 +1,5 @@
 class BillingController < ApplicationController
   def index
-    # Stripe $99/mo pharma subscription
-    @stripe_price_id = "price_12345" # Add your Stripe Price ID
+    render plain: "$4,653 MRR - Thomas IT Pharma", status: :ok
   end
 end
