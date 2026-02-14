@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get "home/health"
   get "home/dashboard"
   # DEVISE FIRST (no custom names = no conflicts)
-  devise_for :users
+#   devise_for :users
   
   # PUBLIC LANDING PAGE
   root "home#index"                    # / → PharmaTransport 2.0 landing
