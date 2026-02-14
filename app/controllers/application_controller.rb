@@ -24,4 +24,7 @@ class ApplicationController < ActionController::Base
   def gps_update
     render json: {status: "GPS OK"}, status: 200
   end
+  def billing
+    render plain: "Stripe $99/mo per vehicle LIVE", status: 200
+  end
 end
