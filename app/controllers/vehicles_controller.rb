@@ -1,5 +1,6 @@
 class VehiclesController < ApplicationController
   def index
-    render plain: "VEHICLES OK (1)"
+    @vehicles = [] # Add real data later
+    render
   end
 end
