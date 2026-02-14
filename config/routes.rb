@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   # TEMP: User routes disabled for Render
   # devise_for :users
   
