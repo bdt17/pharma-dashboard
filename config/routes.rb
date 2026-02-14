@@ -1,12 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # TEMP: User routes disabled for Render
-  # devise_for :users
+  get '/', to: 'application#index'
+  get '/dashboard', to: 'application#dashboard'
+  get '/health', to: 'application#health'
+  get '/vehicles', to: 'application#vehicles'
+  get '/batches', to: 'application#batches'
+  post '/gps_update', to: 'application#gps_update'
   
-  root "dashboard#index"
-  get '/health', to: 'health#show'
-  resources :vehicles, only: :index
-  resources :batches, only: :index
-  get '/compliance', to: 'compliance#index'
-  get '/billing', to: 'billing#index'
+  devise_for :users
+  root to: 'application#index'
 end
