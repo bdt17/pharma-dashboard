@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "home/index"
+  get "home/health"
+  get "home/dashboard"
   # DEVISE FIRST (no custom names = no conflicts)
   devise_for :users
   
