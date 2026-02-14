@@ -7,6 +7,9 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
+    <!-- KILL FAVICON 404 -->
+    <%= favicon_link_tag %>
+
     <style>
       /* PHARMA TRANSPORT 2.0 BRAND COLORS */
       :root {
@@ -173,7 +176,7 @@
     </style>
   </head>
   <body>
-    <!-- ADD TOP LINKS TO ALL PAGES -->
+    <!-- TOP LINKS FOR LOGIN PAGES -->
     <% unless user_signed_in? %>
       <div class="top-nav-links">
         <%= link_to "Sign up", new_user_registration_path %>
