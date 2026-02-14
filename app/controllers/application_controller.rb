@@ -27,4 +27,8 @@ class ApplicationController < ActionController::Base
   def billing
     render plain: "Stripe $99/mo per vehicle LIVE", status: 200
   end
+  
+  def compliance
+  render plain: "FDA 21 CFR Part 11 COMPLIANCE LIVE", status: 200
+  end
 end
