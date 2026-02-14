@@ -31,4 +31,22 @@ class ApplicationController < ActionController::Base
   def compliance
   render plain: "FDA 21 CFR Part 11 COMPLIANCE LIVE", status: 200
   end
+  def login
+    if request.post?
+      if params[:email] == 'admin@pharmatransport.com' && params[:password] == 'Pharma2026Secure!'
+        session[:user_id] = 1
+        session[:user_name] = 'System Admin'
+        session[:user_role] = 'super_admin'
+        redirect_to dashboard_path, notice: '✅ Logged in!'
+        return
+      else
+        flash.now[:alert] = '❌ Invalid credentials'
+      end
+    end
+  end
+
+  def logout
+    session.destroy
+    redirect_to root_path, notice: '👋 Logged out'
+  end
 end
