@@ -22,3 +22,6 @@ Rails.application.routes.draw do
   post '/gps/update', to: 'home#gps_update'
 end
 
+get '/health', to: 'health#show'
+resources :vehicles, only: :index
+resources :batches, only: :index
