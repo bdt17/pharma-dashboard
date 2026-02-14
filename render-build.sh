@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-# Rails 8.1 = "rails" NOT "rake"
-bundle exec rails assets:precompile
-bundle exec rails assets:clean
+# Rails 8.1 = rake assets:precompile
+bundle exec rake assets:precompile
+bundle exec rake assets:clean
 bundle exec rails db:migrate
