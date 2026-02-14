@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/batches', to: 'application#batches'
   post '/gps_update', to: 'application#gps_update'
   get '/billing', to: 'application#billing'
+  get '/compliance', to: 'application#compliance'
   
   devise_for :users
   root to: 'application#index'
