@@ -2,7 +2,8 @@
 set -e
 
 echo "==> Installing gems..."
-bundle install --without development test
+bundle config set without 'development test'
+bundle install
 
 echo "==> Migrating database..."
 bundle exec rails db:migrate
