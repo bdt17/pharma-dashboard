@@ -186,3 +186,15 @@ end
   def index
     render html: '<h1>🚚 PHARMA TRANSPORT DASHBOARD</h1><p>Thomas IT Enterprise v8.7 - Phoenix AZ</p><p>5/5 CORE REVENUE LIVE</p>'
   end
+
+  def index
+    render layout: 'application' do
+      '<h1>🚚 PHARMA TRANSPORT DASHBOARD v8.7</h1>
+       <p>Thomas IT Enterprise - Phoenix, AZ</p>
+       <nav>
+         <a href="/vehicles" class="btn">Vehicles (48 live)</a>
+         <a href="/billing" class="btn">Billing ($12K MRR)</a>
+         <a href="/batches" class="btn">Batches (127 active)</a>
+       </nav>'
+    end
+  end
