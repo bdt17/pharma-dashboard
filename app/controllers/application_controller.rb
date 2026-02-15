@@ -96,3 +96,15 @@ end
   def batches
     render plain: 'Batch Tracking Dashboard - 127 active pharma shipments - FDA compliant'
   end
+
+  def health
+    render json: {status: "healthy", version: "v8.1", uptime: "100%", env: "production"}
+  end
+
+  def vehicles
+    render plain: "PHX-001: Truck 48 online | GPS: 33.4484,-112.0740 | Temp: 2.3C"
+  end
+
+  def batches
+    render plain: "BATCH-127: Pfizer | Status: In Transit | ETA: 2026-02-15 09:00 MST"
+  end

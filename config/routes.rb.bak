@@ -1,27 +1,19 @@
 Rails.application.routes.draw do
-  namespace :reports do
-    get "chain_of_custody/index"
-  end
-  get "chain_of_custody/index"
-  root 'dashboard#index'
+  get '/',          to: 'application#index'
+  get '/dashboard', to: 'application#dashboard'
+  get '/health',    to: 'application#health'
+  get '/vehicles',  to: 'application#vehicles'
+  get '/batches',   to: 'application#batches'
+  get '/compliance',to: 'application#compliance'
+  get '/billing',   to: 'application#billing'
+  post '/gps_update', to: 'application#gps_update'
+  
+  # Devise - COMMENT OUT UNTIL PROPERLY INSTALLED
+  # devise_for :users
+  
+  root to: 'application#index'
+  get '/login', to: 'application#login'
+  post '/login', to: 'application#login_post'
+  get '/logout', to: 'application#logout'
 
-  # test_ui.rb EXPECTED ROUTES 👇
-  post '/gps/update', to: 'gps#update'
-  get '/gps/update/stream', to: 'gps#stream'
-  get '/api/health', to: 'health#show'  # ← FIXED: was gps#health
-
-  # Test endpoints
-  get '/test-pdf', to: 'reports/chain_of_custody#index'
-  get '/test-ui', to: 'tests#ui'
-  get '/test-rails', to: 'tests#rails'
-  get '/test-infosec', to: 'tests#infosec'
-
-  get '/dashboard/v2', to: 'dashboard#v2'
-  get '/chain_of_custody', to: 'chain_of_custody#index', as: :chain_of_custody
-  get '/test-pdf', to: 'chain_of_custody#index', formats: [:pdf]
-
-  # DISABLED - Add models first!
-  # devise_for :drivers, path: 'drivers'
-  # devise_for :pharmacists, path: 'pharmacists'
 end
-get '/vehicles', to: 'vehicles#index'

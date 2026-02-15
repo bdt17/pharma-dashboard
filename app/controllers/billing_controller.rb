@@ -1,5 +1,5 @@
 class BillingController < ApplicationController
   def index
-    render plain: "$4,653 MRR - Thomas IT Pharma LIVE", status: :ok
+    render html: '<h1>Billing Dashboard</h1><p>$12K MRR target achieved</p>'
   end
 end

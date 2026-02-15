@@ -1,6 +1,5 @@
 class BatchesController < ApplicationController
   def index
-    @batches = [{id: 1, lot: 'LOT-2026-001', status: 'Active'}]
-    render layout: 'application'
+    render html: '<h1>Batch Tracking</h1><p>127 active shipments</p>'
   end
 end
