@@ -8,3 +8,4 @@ Rails.application.configure do
   config.i18n.fallbacks = true
   config.active_support.perform_deep_freeze = false
 end
+config.assets.compile = true
