@@ -3418,3 +3418,189 @@ Information for cause: NameError (undefined local variable or method `login_path
   
 app/views/dashboard/index.html.erb:18
 app/controllers/application_controller.rb:5:in `index'
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 127.0.0.1 at 2026-02-15 16:21:20 -0700
+Processing by DashboardController#index as */*
+  Rendered layout layouts/application.html.erb (Duration: 7.3ms | GC: 0.1ms)
+Completed 500 Internal Server Error in 16ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c3999e888>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c3999e888>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c3999e888>):
+     8:   <%= csp_meta_tag %>
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12: </head>
+    13: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    14:   
+  
+app/views/layouts/application.html.erb:11
+app/controllers/dashboard_controller.rb:6:in `index'
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c3999e888>):
+  
+app/views/layouts/application.html.erb:11
+app/controllers/dashboard_controller.rb:6:in `index'
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-15 16:21:20 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 3.5ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 36ms (ActiveRecord: 8.8ms (0 queries, 0 cached) | GC: 0.0ms)
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c39886a40>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c39886a40>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c39886a40>):
+     8:   <%= csp_meta_tag %>
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12: </head>
+    13: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    14:   
+  
+app/views/layouts/application.html.erb:11
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c39886a40>):
+  
+app/views/layouts/application.html.erb:11
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-15 16:21:20 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 1.9ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  
+ActionView::Template::Error (protected method `password_required?' called for an instance of User)
+Caused by: NoMethodError (protected method `password_required?' called for an instance of User)
+
+Information for: ActionView::Template::Error (protected method `password_required?' called for an instance of User):
+    18:             placeholder: "Create secure password" %>
+    19:       </div>
+    20: 
+    21:       <% if f.object.password_required? %>
+    22:         <div>
+    23:           <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    24:           <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password",
+  
+app/views/devise/registrations/new.html.erb:21
+app/views/devise/registrations/new.html.erb:6
+
+Information for cause: NoMethodError (protected method `password_required?' called for an instance of User):
+  
+app/views/devise/registrations/new.html.erb:21
+app/views/devise/registrations/new.html.erb:6
+Started GET "/" for 127.0.0.1 at 2026-02-15 16:22:05 -0700
+Processing by DashboardController#index as */*
+  Rendered layout layouts/application.html.erb (Duration: 1.3ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c3999e888>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c3999e888>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c3999e888>):
+     8:   <%= csp_meta_tag %>
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12: </head>
+    13: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    14:   
+  
+app/views/layouts/application.html.erb:11
+app/controllers/dashboard_controller.rb:6:in `index'
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c3999e888>):
+  
+app/views/layouts/application.html.erb:11
+app/controllers/dashboard_controller.rb:6:in `index'
+Started GET "/health" for 127.0.0.1 at 2026-02-15 16:22:05 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-15 16:22:05 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/batches" for 127.0.0.1 at 2026-02-15 16:22:05 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-15 16:22:05 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-15 16:22:05 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-15 16:22:05 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c39886a40>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c39886a40>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c39886a40>):
+     8:   <%= csp_meta_tag %>
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12: </head>
+    13: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    14:   
+  
+app/views/layouts/application.html.erb:11
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000703c39886a40>):
+  
+app/views/layouts/application.html.erb:11
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-15 16:22:05 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 0.7ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+  
+ActionView::Template::Error (protected method `password_required?' called for an instance of User)
+Caused by: NoMethodError (protected method `password_required?' called for an instance of User)
+
+Information for: ActionView::Template::Error (protected method `password_required?' called for an instance of User):
+    18:             placeholder: "Create secure password" %>
+    19:       </div>
+    20: 
+    21:       <% if f.object.password_required? %>
+    22:         <div>
+    23:           <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    24:           <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password",
+  
+app/views/devise/registrations/new.html.erb:21
+app/views/devise/registrations/new.html.erb:6
+
+Information for cause: NoMethodError (protected method `password_required?' called for an instance of User):
+  
+app/views/devise/registrations/new.html.erb:21
+app/views/devise/registrations/new.html.erb:6
+Started GET "/assets/application-*.css" for 127.0.0.1 at 2026-02-15 16:22:05 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/assets/application-*.css"):
+  
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 127.0.0.1 at 2026-02-15 16:23:23 -0700
+Processing by DashboardController#index as HTML
+  Rendered layout layouts/application.html.erb (Duration: 13.3ms | GC: 0.3ms)
+Completed 500 Internal Server Error in 32ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.7ms)
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000711cf821d708>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000711cf821d708>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000711cf821d708>):
+     8:   <%= csp_meta_tag %>
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12: </head>
+    13: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    14:   
+  
+app/views/layouts/application.html.erb:11
+app/controllers/dashboard_controller.rb:6:in `index'
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x0000711cf821d708>):
+  
+app/views/layouts/application.html.erb:11
+app/controllers/dashboard_controller.rb:6:in `index'
