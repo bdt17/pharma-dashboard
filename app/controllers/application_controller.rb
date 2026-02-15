@@ -199,3 +199,24 @@ end
     end
   end
 def index; render layout: "application"; end
+
+  def index
+    render layout: 'application' and return if layout
+    render layout: 'application' do
+      '<div class="card">
+        <h1>🚚 PHARMA TRANSPORT DASHBOARD</h1>
+        <p>Thomas IT Enterprise • v8.7 • Phoenix, AZ</p>
+        <div class="metrics">
+          <div class="metric"><strong>48</strong><br>Vehicles Live</div>
+          <div class="metric"><strong>127</strong><br>Active Batches</div>
+          <div class="metric"><strong>$12K</strong><br>MRR Target</div>
+        </div>
+        <nav>
+          <a href="/vehicles" class="btn">🚛 Vehicles</a>
+          <a href="/billing" class="btn">💰 Billing</a>
+          <a href="/batches" class="btn">💉 Batches</a>
+          <a href="/compliance" class="btn">📋 Compliance</a>
+        </nav>
+      </div>'
+    end
+  end
