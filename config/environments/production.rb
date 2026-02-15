@@ -7,5 +7,4 @@ Rails.application.configure do
   config.public_file_server.enabled = true
   config.i18n.fallbacks = true
   config.active_support.perform_deep_freeze = false
-  config.assets.compile = true
 end
