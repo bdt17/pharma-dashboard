@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport Dashboard</title>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <title>🚚 Pharma Transport Dashboard</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    /* THOMAS IT PHARMA ENTERPRISE v8.7 COLORS */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; 
+      background: #FFFFFF; color: #565759; padding: 20px; line-height: 1.6;
+    }
+    h1 { color: #0984C0; font-size: 2.5em; margin-bottom: 20px; }
+    .btn { 
+      background: #0984C0; color: white; padding: 12px 24px; 
+      border-radius: 6px; text-decoration: none; display: inline-block; 
+      margin: 0 10px 10px 0; font-weight: 500;
+    }
+    .btn:hover { background: #60BDD1; }
+    .card { 
+      background: white; border: 1px solid #C0BEC6; border-radius: 8px; 
+      padding: 24px; margin: 20px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    nav a { color: #60BDD1; margin-right: 20px; font-weight: 500; }
+    .metrics { display: flex; gap: 20px; flex-wrap: wrap; }
+    .metric { background: #F8F9FA; padding: 20px; border-radius: 8px; text-align: center; }
+  </style>
 </head>
 <body>
   <%= yield %>
