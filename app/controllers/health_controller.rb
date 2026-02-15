@@ -1,5 +1,5 @@
 class HealthController < ApplicationController
-  def show
-    render plain: "PharmaTransport 2.0 🟢 LIVE 2026", status: :ok
+  def index
+    render json: { status: 'ok', version: 'v8.7', timestamp: Time.now }, status: :ok
   end
 end
