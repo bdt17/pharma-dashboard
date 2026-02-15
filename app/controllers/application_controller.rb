@@ -220,3 +220,6 @@ def index; render layout: "application"; end
       </div>'
     end
   end
+def index
+  render html: '<h1 style="color:#0984C0">🚚 PHARMA TRANSPORT LIVE</h1><p>Thomas IT v8.7 • 5/5 CORE READY • Phoenix AZ</p>'
+end
