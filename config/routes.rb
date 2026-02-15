@@ -17,3 +17,7 @@ Rails.application.routes.draw do
   get '/logout', to: 'application#logout'
 
 end
+
+  get 'gps/update', to: 'application#gps_update'
+  get 'gps/stream', to: 'application#gps_stream'
+  get 'api/health', to: 'application#api_health'

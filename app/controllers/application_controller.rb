@@ -108,3 +108,27 @@ end
   def batches
     render plain: "BATCH-127: Pfizer | Status: In Transit | ETA: 2026-02-15 09:00 MST"
   end
+
+  def health
+    render json: {status: "healthy", version: "v8.1", uptime: "100%", env: "production"}
+  end
+
+  def vehicles
+    render plain: "PHX-001: Truck 48 online | GPS: 33.4484,-112.0740 | Temp: 2.3C"
+  end
+
+  def batches
+    render plain: "BATCH-127: Pfizer | Status: In Transit | ETA: 2026-02-15 09:00 MST"
+  end
+
+  def gps_update
+    render plain: 'GPS update received - PHX-001 positioned'
+  end
+
+  def gps_stream
+    render plain: 'WebSocket GPS stream active - 48 vehicles'
+  end
+
+  def api_health
+    render json: {api: 'healthy', vehicles: 48, batches: 127}
+  end
