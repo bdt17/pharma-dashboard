@@ -1,41 +1,25 @@
-/* PharmaTransport 2.0 Enterprise - v16.0 Production CSS */
-/* Palette: Deep Ocean Blue #0984C0 | Silver #AAA7B0 | Grey #565759 */
-
+/* PharmaTransport 2.0 v16.0 - Thomas IT Enterprise */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
-  color: #565759; /* Davy's Grey */
-  line-height: 1.6;
-  min-height: 100vh;
+  color: #565759;
 }
 
-/* Typography */
-h1 { 
-  font-size: 2.5rem; 
-  background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%); /* Ocean Blue gradient */
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-weight: 800;
-}
-
-/* Navigation */
+/* Navigation - Sticky gradient bar */
 nav { 
   background: rgba(255,255,255,0.95); 
   backdrop-filter: blur(20px); 
   box-shadow: 0 4px 20px rgba(9,132,192,0.1);
-  border-bottom: 1px solid #C0BEC6; /* Light Silver */
-  position: sticky; 
-  top: 0; 
-  z-index: 50;
+  border-bottom: 1px solid #C0BEC6;
+  position: sticky; top: 0; z-index: 50;
 }
 nav a { 
   color: #565759 !important; 
-  text-decoration: none; 
   padding: 0.75rem 1rem; 
   border-radius: 8px;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
+  text-decoration: none;
   font-weight: 500;
 }
 nav a:hover { 
@@ -44,26 +28,12 @@ nav a:hover {
   transform: translateY(-1px);
 }
 
-/* Hero Section */
-.hero { 
-  text-align: center; 
-  padding: 4rem 2rem; 
-  background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
-  color: white;
-}
-.hero h1 { 
-  font-size: 4rem; 
-  margin-bottom: 1rem; 
-  color: white;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
-
-/* Metric Cards */
+/* Hero & Metrics */
+.hero { text-align: center; padding: 4rem 2rem; }
 .metric-grid { 
   display: grid; 
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-  gap: 2rem; 
-  margin: 4rem 0;
+  gap: 2rem; margin: 4rem 0;
 }
 .metric-card { 
   background: white; 
@@ -71,32 +41,21 @@ nav a:hover {
   border-radius: 16px; 
   padding: 2rem; 
   box-shadow: 0 10px 40px rgba(170,167,176,0.15);
-  transition: all 0.3s ease;
+  transition: all 0.3s;
 }
 .metric-card:hover { 
   transform: translateY(-8px); 
-  box-shadow: 0 20px 60px rgba(9,132,192,0.2);
   border-color: #0984C0;
-}
-.metric-number { 
-  font-size: 3rem; 
-  font-weight: 800; 
-  color: #0984C0; 
-  margin-bottom: 0.5rem;
 }
 
 /* Buttons */
 .btn { 
   background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
-  color: white; 
-  padding: 14px 28px; 
-  border: none; 
-  border-radius: 12px; 
-  font-weight: 600; 
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease;
+  color: white; padding: 14px 28px; border: none;
+  border-radius: 12px; font-weight: 600;
+  text-decoration: none; display: inline-block;
   box-shadow: 0 8px 25px rgba(9,132,192,0.3);
+  transition: all 0.3s;
 }
 .btn:hover { 
   transform: translateY(-2px); 
@@ -105,32 +64,25 @@ nav a:hover {
 
 /* Forms */
 .form-container { 
-  max-width: 400px; 
-  margin: 4rem auto; 
-  padding: 2rem; 
-  background: white; 
-  border-radius: 20px; 
-  box-shadow: 0 20px 60px rgba(170,167,176,0.2);
+  max-width: 400px; margin: 4rem auto; 
+  padding: 2rem; background: white;
+  border-radius: 20px; box-shadow: 0 20px 60px rgba(170,167,176,0.2);
   border: 1px solid #C0BEC6;
 }
 .form-input { 
-  width: 100%; 
-  padding: 16px; 
-  border: 2px solid #C0BEC6; 
-  border-radius: 12px; 
-  font-size: 1rem;
+  width: 100%; padding: 16px; 
+  border: 2px solid #C0BEC6; border-radius: 12px;
   margin-bottom: 1.5rem;
-  transition: border-color 0.3s ease;
 }
-.form-input:focus { 
-  outline: none; 
-  border-color: #0984C0; 
-  box-shadow: 0 0 0 4px rgba(9,132,192,0.1);
+.form-input:focus { border-color: #0984C0; outline: none; }
+
+h1 { 
+  font-size: 2.5rem; 
+  background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; font-weight: 800;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .hero h1 { font-size: 2.5rem; }
-  nav { padding: 1rem; }
+@media (max-width: 768px) { 
   .metric-grid { grid-template-columns: 1fr; }
 }
