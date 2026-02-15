@@ -223,3 +223,6 @@ def index; render layout: "application"; end
 def index
   render html: '<h1 style="color:#0984C0">🚚 PHARMA TRANSPORT LIVE</h1><p>Thomas IT v8.7 • 5/5 CORE READY • Phoenix AZ</p>'
 end
+def index
+  render html: '<h1 style="color:#0984C0;font-size:2.5em;margin-bottom:20px">🚚 PHARMA TRANSPORT DASHBOARD</h1><p style="color:#565759;font-size:1.1em">Thomas IT Enterprise v8.7 • Phoenix, AZ<br>5/5 CORE REVENUE PRODUCTION LIVE</p>'
+end
