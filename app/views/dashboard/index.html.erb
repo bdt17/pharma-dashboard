@@ -1,5 +1,6 @@
 <div class="dashboard">
   <h1>🏥 PharmaTransport 2.0 ENTERPRISE</h1>
+  
   <div class="stats">
     <div class="stat">
       <div class="number">$4,653</div>
@@ -14,8 +15,73 @@
       <div>Live Vehicles</div>
     </div>
   </div>
+  
   <div style="text-align:center; margin-top:40px">
-<%= link_to "🔐 Secure Enterprise Login", new_user_session_path, 
-    class: "block mx-auto w-72 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-8 rounded-2xl font-bold text-lg text-center shadow-2xl hover:from-indigo-700 hover:to-purple-700 mt-10 mx-auto" %>
+    <%= link_to "🔐 Secure Enterprise Login", new_user_session_path, 
+        class: "block mx-auto w-72 bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 px-8 rounded-2xl font-semibold text-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1" %>
   </div>
 </div>
+
+<style>
+  .dashboard {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+  }
+  
+  .dashboard h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    margin-bottom: 3rem;
+    letter-spacing: -0.025em;
+  }
+  
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .stat {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .stat:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  
+  .number {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+  
+  .stat div:last-child {
+    font-size: 1.1rem;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>
