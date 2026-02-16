@@ -1,30 +1,12 @@
 /*
- *= require_tree .
- *= require_self
- */
-/* PharmaTransport 2.0 Enterprise - v16.0 Production CSS */
-/* Forms */
+*= require_self
+*= require_tree .
+*/
+
 .form-container { 
   max-width: 400px; margin: 4rem auto; 
   padding: 2rem; background: white;
   border-radius: 20px; box-shadow: 0 20px 60px rgba(170,167,176,0.2);
   border: 1px solid #C0BEC6;
 }
-.form-input { 
-  width: 100%; padding: 16px; 
-  border: 2px solid #C0BEC6; border-radius: 12px;
-  margin-bottom: 1.5rem;
-}
-.form-input:focus { border-color: #0984C0; outline: none; }
-
-h1 { 
-  font-size: 2.5rem; 
-  background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent; font-weight: 800;
-}
-
-.metric-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-@media (max-width: 768px) { 
-  .metric-grid { grid-template-columns: 1fr; }
-}
+/* ... rest of your CSS ... */

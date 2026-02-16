@@ -8616,3 +8616,772 @@ Information for cause: NameError (undefined local variable or method `javascript
 app/views/layouts/application.html.erb:12
 app/controllers/dashboard_controller.rb:6:in `index'
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 127.0.0.1 at 2026-02-15 20:31:00 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.4ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>):
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12:     <%= javascript_importmap_tags %>
+    13: </head>
+    14: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    15:   
+  
+app/views/layouts/application.html.erb:12
+app/controllers/dashboard_controller.rb:6:in `index'
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>):
+  
+app/views/layouts/application.html.erb:12
+app/controllers/dashboard_controller.rb:6:in `index'
+Started GET "/" for 127.0.0.1 at 2026-02-15 20:31:00 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>):
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12:     <%= javascript_importmap_tags %>
+    13: </head>
+    14: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    15:   
+  
+app/views/layouts/application.html.erb:12
+app/controllers/dashboard_controller.rb:6:in `index'
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>):
+  
+app/views/layouts/application.html.erb:12
+app/controllers/dashboard_controller.rb:6:in `index'
+Started GET "/health" for 127.0.0.1 at 2026-02-15 20:31:00 -0700
+Processing by DashboardController#health as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 2.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 1.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-02-15 20:31:01 -0700
+Processing by DashboardController#health as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-15 20:31:01 -0700
+Processing by DashboardController#vehicles as */*
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-15 20:31:01 -0700
+Processing by DashboardController#vehicles as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-15 20:31:02 -0700
+Processing by DashboardController#batches as */*
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 5.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 2.7ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-15 20:31:02 -0700
+Processing by DashboardController#batches as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-15 20:31:02 -0700
+Processing by DashboardController#compliance as */*
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-15 20:31:02 -0700
+Processing by DashboardController#compliance as */*
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-02-15 20:31:03 -0700
+Processing by DashboardController#billing as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-02-15 20:31:03 -0700
+Processing by DashboardController#billing as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-15 20:31:03 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 5.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.2ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 58ms (ActiveRecord: 8.9ms (0 queries, 0 cached) | GC: 6.4ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>):
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12:     <%= javascript_importmap_tags %>
+    13: </head>
+    14: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    15:   
+  
+app/views/layouts/application.html.erb:12
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>):
+  
+app/views/layouts/application.html.erb:12
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-15 20:31:03 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.4ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>):
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12:     <%= javascript_importmap_tags %>
+    13: </head>
+    14: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    15:   
+  
+app/views/layouts/application.html.erb:12
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>):
+  
+app/views/layouts/application.html.erb:12
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-15 20:31:04 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 3.2ms | GC: 0.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.6ms | GC: 0.6ms)
+Completed 500 Internal Server Error in 10ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.6ms)
+
+
+  
+ActionView::Template::Error (protected method `password_required?' called for an instance of User)
+Caused by: NoMethodError (protected method `password_required?' called for an instance of User)
+
+Information for: ActionView::Template::Error (protected method `password_required?' called for an instance of User):
+    19:       </div>
+    20: 
+    21:       <% if f.object.password_required? %>
+    22:         <div>
+    23:           <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    24:           <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password",
+    25:               class: "w-full px-4 py-4 border border-gray-300 rounded-2xl focus:ring-4 focus:ring-indigo-500 focus:border-indigo-500",
+  
+app/views/devise/registrations/new.html.erb:22
+app/views/devise/registrations/new.html.erb:7
+
+Information for cause: NoMethodError (protected method `password_required?' called for an instance of User):
+  
+app/views/devise/registrations/new.html.erb:22
+app/views/devise/registrations/new.html.erb:7
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-15 20:31:04 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 1.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.6ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (protected method `password_required?' called for an instance of User)
+Caused by: NoMethodError (protected method `password_required?' called for an instance of User)
+
+Information for: ActionView::Template::Error (protected method `password_required?' called for an instance of User):
+    19:       </div>
+    20: 
+    21:       <% if f.object.password_required? %>
+    22:         <div>
+    23:           <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    24:           <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password",
+    25:               class: "w-full px-4 py-4 border border-gray-300 rounded-2xl focus:ring-4 focus:ring-indigo-500 focus:border-indigo-500",
+  
+app/views/devise/registrations/new.html.erb:22
+app/views/devise/registrations/new.html.erb:7
+
+Information for cause: NoMethodError (protected method `password_required?' called for an instance of User):
+  
+app/views/devise/registrations/new.html.erb:22
+app/views/devise/registrations/new.html.erb:7
+Started GET "/" for 127.0.0.1 at 2026-02-15 20:32:58 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.6ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>):
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12:     <%= javascript_importmap_tags %>
+    13: </head>
+    14: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    15:   
+  
+app/views/layouts/application.html.erb:12
+app/controllers/dashboard_controller.rb:6:in `index'
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>):
+  
+app/views/layouts/application.html.erb:12
+app/controllers/dashboard_controller.rb:6:in `index'
+Started GET "/" for 127.0.0.1 at 2026-02-15 20:32:58 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.0ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>):
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12:     <%= javascript_importmap_tags %>
+    13: </head>
+    14: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    15:   
+  
+app/views/layouts/application.html.erb:12
+app/controllers/dashboard_controller.rb:6:in `index'
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433aba11550>):
+  
+app/views/layouts/application.html.erb:12
+app/controllers/dashboard_controller.rb:6:in `index'
+Started GET "/health" for 127.0.0.1 at 2026-02-15 20:32:58 -0700
+Processing by DashboardController#health as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-02-15 20:32:58 -0700
+Processing by DashboardController#health as */*
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 2.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-15 20:32:59 -0700
+Processing by DashboardController#vehicles as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-15 20:32:59 -0700
+Processing by DashboardController#vehicles as */*
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-15 20:32:59 -0700
+Processing by DashboardController#batches as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-15 20:32:59 -0700
+Processing by DashboardController#batches as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-15 20:33:00 -0700
+Processing by DashboardController#compliance as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-15 20:33:00 -0700
+Processing by DashboardController#compliance as */*
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-02-15 20:33:00 -0700
+Processing by DashboardController#billing as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-02-15 20:33:00 -0700
+Processing by DashboardController#billing as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-15 20:33:01 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 1.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.7ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>):
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12:     <%= javascript_importmap_tags %>
+    13: </head>
+    14: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    15:   
+  
+app/views/layouts/application.html.erb:12
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>):
+  
+app/views/layouts/application.html.erb:12
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-15 20:33:01 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.9ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>)
+Caused by: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>):
+     9:   
+    10:   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    11:   <%= javascript_importmap_tags %>
+    12:     <%= javascript_importmap_tags %>
+    13: </head>
+    14: <body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+    15:   
+  
+app/views/layouts/application.html.erb:12
+
+Information for cause: NameError (undefined local variable or method `javascript_importmap_tags' for an instance of #<Class:0x00007433ab96b920>):
+  
+app/views/layouts/application.html.erb:12
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-15 20:33:01 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 2.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.9ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 3.3ms)
+
+
+  
+ActionView::Template::Error (protected method `password_required?' called for an instance of User)
+Caused by: NoMethodError (protected method `password_required?' called for an instance of User)
+
+Information for: ActionView::Template::Error (protected method `password_required?' called for an instance of User):
+    19:       </div>
+    20: 
+    21:       <% if f.object.password_required? %>
+    22:         <div>
+    23:           <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    24:           <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password",
+    25:               class: "w-full px-4 py-4 border border-gray-300 rounded-2xl focus:ring-4 focus:ring-indigo-500 focus:border-indigo-500",
+  
+app/views/devise/registrations/new.html.erb:22
+app/views/devise/registrations/new.html.erb:7
+
+Information for cause: NoMethodError (protected method `password_required?' called for an instance of User):
+  
+app/views/devise/registrations/new.html.erb:22
+app/views/devise/registrations/new.html.erb:7
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-15 20:33:01 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (protected method `password_required?' called for an instance of User)
+Caused by: NoMethodError (protected method `password_required?' called for an instance of User)
+
+Information for: ActionView::Template::Error (protected method `password_required?' called for an instance of User):
+    19:       </div>
+    20: 
+    21:       <% if f.object.password_required? %>
+    22:         <div>
+    23:           <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    24:           <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password",
+    25:               class: "w-full px-4 py-4 border border-gray-300 rounded-2xl focus:ring-4 focus:ring-indigo-500 focus:border-indigo-500",
+  
+app/views/devise/registrations/new.html.erb:22
+app/views/devise/registrations/new.html.erb:7
+
+Information for cause: NoMethodError (protected method `password_required?' called for an instance of User):
+  
+app/views/devise/registrations/new.html.erb:22
+app/views/devise/registrations/new.html.erb:7
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for ::1 at 2026-02-15 20:36:04 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 11.4ms | GC: 0.6ms)
+Completed 200 OK in 25ms (Views: 21.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-15 20:36:04 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/application.js" for ::1 at 2026-02-15 20:36:04 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/application.js"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-15 20:36:06 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.2ms | GC: 0.0ms)
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/views/layouts/application.html.erb:34
+  Rendered layout layouts/application.html.erb (Duration: 152.5ms | GC: 61.5ms)
+Completed 200 OK in 157ms (Views: 84.6ms | ActiveRecord: 71.1ms (1 query, 0 cached) | GC: 63.4ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:36:06 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/application.js" for 127.0.0.1 at 2026-02-15 20:36:06 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/application.js"):
+  
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for ::1 at 2026-02-15 20:36:52 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.8ms | GC: 0.0ms)
+Completed 200 OK in 20ms (Views: 16.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-15 20:36:52 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for ::1 at 2026-02-15 20:36:52 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/" for ::1 at 2026-02-15 20:36:54 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 18.8ms | GC: 9.3ms)
+Completed 200 OK in 28ms (Views: 23.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 15.2ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-15 20:36:54 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for ::1 at 2026-02-15 20:36:54 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for ::1 at 2026-02-15 20:37:45 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.8ms | GC: 0.2ms)
+Completed 200 OK in 33ms (Views: 28.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.8ms)
+
+
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-15 20:37:45 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for ::1 at 2026-02-15 20:37:45 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-15 20:37:47 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.8ms | GC: 1.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 14.2ms | GC: 7.2ms)
+Completed 200 OK in 15ms (Views: 14.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 7.2ms)
+
+
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-15 20:37:47 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:37:47 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/.well-known/appspecific/com.chrome.devtools.json" for 127.0.0.1 at 2026-02-15 20:37:52 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/.well-known/appspecific/com.chrome.devtools.json"):
+  
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:37:52 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for ::1 at 2026-02-15 20:40:21 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.6ms | GC: 0.0ms)
+Completed 200 OK in 21ms (Views: 17.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/javascripts/application.js" for ::1 at 2026-02-15 20:40:21 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/stylesheets/application.css" for ::1 at 2026-02-15 20:40:21 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/" for 127.0.0.1 at 2026-02-15 20:40:23 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.8ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 8.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:40:23 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-15 20:40:23 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-15 20:40:25 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 3.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.0ms)
+Completed 200 OK in 60ms (Views: 6.1ms | ActiveRecord: 10.1ms (0 queries, 0 cached) | GC: 2.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:40:25 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-15 20:40:25 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started POST "/users/sign_in" for 127.0.0.1 at 2026-02-15 20:40:27 -0700
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"vfVq7iNbkUoB_3wdDHvpbw1hTt2KDGwkcU_Q8V6dKZnnOUrvCZsSfpnPsIFQpPpVf63gQOyD9FO79HyxvOYDdQ", "user"=>{"email"=>"driver1@thomasit.com", "password"=>"truck123"}, "commit"=>"🚚 Secure Enterprise Login"}
+  [1m[36mUser Load (3.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'driver1@thomasit.com' ORDER BY "users"."id" ASC LIMIT 1 /*action='create',application='PharmaDashboard',controller='sessions'*/[0m
+Completed 401 Unauthorized in 27ms (ActiveRecord: 3.2ms (1 query, 0 cached) | GC: 1.0ms)
+
+
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"vfVq7iNbkUoB_3wdDHvpbw1hTt2KDGwkcU_Q8V6dKZnnOUrvCZsSfpnPsIFQpPpVf63gQOyD9FO79HyxvOYDdQ", "user"=>{"email"=>"driver1@thomasit.com", "password"=>"truck123"}, "commit"=>"🚚 Secure Enterprise Login"}
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.1ms | GC: 0.0ms)
+Completed 200 OK in 280ms (Views: 3.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:40:28 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-15 20:40:28 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-15 20:40:31 -0700
+Processing by DashboardController#vehicles as HTML
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:40:33 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/health" for 127.0.0.1 at 2026-02-15 20:40:34 -0700
+Processing by DashboardController#health as HTML
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:40:35 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/compliance" for 127.0.0.1 at 2026-02-15 20:40:36 -0700
+Processing by DashboardController#compliance as HTML
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:40:37 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/billing" for 127.0.0.1 at 2026-02-15 20:40:38 -0700
+Processing by DashboardController#billing as HTML
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 1.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:40:40 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-15 20:40:41 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 1.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.6ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 4.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stylesheets/application.css" for 127.0.0.1 at 2026-02-15 20:40:41 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/stylesheets/application.css"):
+  
+Started GET "/javascripts/application.js" for 127.0.0.1 at 2026-02-15 20:40:41 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/javascripts/application.js"):
+  
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for ::1 at 2026-02-15 20:43:50 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 248.1ms | GC: 0.8ms)
+Completed 200 OK in 283ms (Views: 257.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 20.1ms)
+
+
+Started GET "/users/sign_in" for ::1 at 2026-02-15 20:43:59 -0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 5.6ms | GC: 0.1ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.9ms | GC: 0.1ms)
+Completed 200 OK in 67ms (Views: 8.3ms | ActiveRecord: 9.5ms (0 queries, 0 cached) | GC: 20.9ms)
+
+
+Started POST "/users/sign_in" for ::1 at 2026-02-15 20:44:55 -0700
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"authenticity_token"=>"bjH8f1w8DrrotqzJddNyYQf5s0mHMgXWcJEx-6R7fbJ8gl34qlELrgbNUozrs9EUQ166VL9CMW6yqMZ9Dn1-Rg", "user"=>{"email"=>"admin@pharma.com", "password"=>"password123"}, "commit"=>"🚚 Secure Enterprise Login"}
+  [1m[36mUser Load (1.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'admin@pharma.com' ORDER BY "users"."id" ASC LIMIT 1 /*action='create',application='PharmaDashboard',controller='sessions'*/[0m
+Completed 401 Unauthorized in 20ms (ActiveRecord: 1.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Processing by Devise::SessionsController#new as HTML
+  Parameters: {"authenticity_token"=>"bjH8f1w8DrrotqzJddNyYQf5s0mHMgXWcJEx-6R7fbJ8gl34qlELrgbNUozrs9EUQ166VL9CMW6yqMZ9Dn1-Rg", "user"=>{"email"=>"admin@pharma.com", "password"=>"password123"}, "commit"=>"🚚 Secure Enterprise Login"}
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 0.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.5ms | GC: 0.0ms)
+Completed 200 OK in 282ms (Views: 2.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
