@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Enterprise</title>
+  <%= stylesheet_link_tag "application" %>
+  <style>
+    body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
+    .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; border-radius: 20px; text-align: center; }
+    .btn { background: #10b981; color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; }
+    nav { display: flex; gap: 20px; margin: 20px 0; }
+    nav a { color: #374151; text-decoration: none; font-weight: 500; }
+    nav a:hover { color: #1e40af; }
+  </style>
+</head>
+<body>
+  <nav>
+    <%= link_to "🚛 Vehicles", vehicles_path %>
+    <%= link_to "📦 Batches", batches_path %>
+    <%= link_to "📋 Compliance", compliance_path %>
+    <%= link_to "💰 Billing", billing_path %>
+  </nav>
+  
+  <div class="hero">
+    <h1>Pharma Transport Enterprise</h1>
+    <p>FDA 21 CFR Part 11 Compliant • Real-time GPS Tracking</p>
+    <%= yield %>
+    <br><br>
+    <%= link_to "💳 Start $99/mo Trial", billing_path, class: "btn" %>
+  </div>
+  
+  <footer style="margin-top: 40px; text-align: center; color: #6b7280;">
+    Thomas Information Technology • Phoenix, AZ • sales@thomasinformationtechnology.com
+  </footer>
+</body>
+</html>
