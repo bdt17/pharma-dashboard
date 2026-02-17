@@ -6,7 +6,6 @@
 # ✅ GOOD - Replace with proper Devise config:
 config.after_sign_in_path_for = lambda do |user|
   '/dashboard' unless user.admin # or whatever your logic is
-end
 # breaking changes in upgrades (i.e., in the event that future versions of
 # Devise change the default values for those options).
 #
