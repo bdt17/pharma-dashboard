@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
-def index
-  render inline: <<-HTML
+  def index
+    render inline: <<-HTML
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +9,7 @@ def index
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh; 
       color: white; 
@@ -90,7 +90,6 @@ def index
 <body>
   <div class="dashboard">
     <h1>🏥 PharmaTransport 2.0 ENTERPRISE</h1>
-    
     <div class="stats">
       <div class="stat">
         <div class="number">$4,653</div>
@@ -105,17 +104,15 @@ def index
         <div class="label">Live Vehicles</div>
       </div>
     </div>
-    
-    <%= link_to "🔐 Secure Enterprise Login", new_user_session_path, class: "login-btn" %>
-    
+    <a href="/users/sign_in" class="login-btn">🔐 Secure Enterprise Login</a>
     <div style="margin-top: 2rem; opacity: 0.8; font-size: 0.9rem;">
       Thomas IT • Phoenix, AZ • FDA 21 CFR Part 11 Compliant
     </div>
   </div>
 </body>
 </html>
-  HTML
-end
+    HTML
+  end
 
   def health
     render plain: "🟢 OK", layout: false
