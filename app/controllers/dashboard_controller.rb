@@ -137,15 +137,4 @@ def index
   def api_health
     render json: {status: "healthy", vehicles: 25, batches: 128, mrr: "$2475"}, status: 200
   end
-  def gps_update
-    render plain: "GPS update received - PHX-001: 33.4484,-112.0740", status: 200
-  end
-
-  def gps_stream
-    render plain: "WebSocket GPS stream LIVE - 25 vehicles", status: 200
-  end
-
-  def api_health
-    render json: {status: "healthy", vehicles: 25, batches: 128, mrr: "$2475"}, status: 200
-  end
 end
