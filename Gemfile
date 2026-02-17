@@ -9,4 +9,3 @@ gem "rackup", ">= 0"
 gem 'devise'
 gem 'importmap-rails'
 gem "propshaft"
-gem "propshaft"
