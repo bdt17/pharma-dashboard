@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   get "batches", to: "dashboard#batches"
   get "compliance", to: "dashboard#compliance"
   get "billing", to: "dashboard#billing"
+ post '/gps/update', to: 'dashboard#gps_update'
+ get '/gps/stream', to: 'dashboard#gps_stream'
+ get '/api/health', to: 'dashboard#api_health'
 end
