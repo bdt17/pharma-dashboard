@@ -3605,3 +3605,24 @@ Information for cause: NameError (undefined local variable or method `javascript
 app/views/layouts/application.html.erb:11
 app/controllers/dashboard_controller.rb:6:in `index'
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Writing application-0ea86c2f.css
+Writing manifest-a8fcc5de.js
+Writing favicon-356a192b.ico
+Writing application-356a192b.js
+Writing controllers/batch_live_table_controller-32d11a48.js
+Writing controllers/fda_audit_trail_controller-ad6af28e.js
+Writing controllers/gps_map_controller-63ae019c.js
+Writing actiontext.esm-659dec7a.js
+Writing actiontext-47670e28.js
+Writing trix-7e541a8b.js
+Writing trix-d49ab3c9.css
+Writing actioncable-f4368b06.js
+Writing action_cable-8a10591f.js
+Writing actioncable.esm-e5c1e716.js
+Writing activestorage.esm-cd7c12f3.js
+Writing activestorage-f7f66904.js
+Writing rails-ujs.esm-2f36ae4d.js
+Writing rails-ujs-3de06f48.js
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.

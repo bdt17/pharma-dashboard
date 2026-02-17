@@ -2,7 +2,11 @@
 
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
-# are not: uncommented lines are intended to protect your configuration from
+# are not: uncommented lines are intended to protect your 
+# ✅ GOOD - Replace with proper Devise config:
+config.after_sign_in_path_for = lambda do |user|
+  '/dashboard' unless user.admin # or whatever your logic is
+end
 # breaking changes in upgrades (i.e., in the event that future versions of
 # Devise change the default values for those options).
 #
@@ -313,4 +317,6 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+ config.after_sign_in_path_for = lambda { |user| '/dashboard' }
+ config.sign_out_via = :delete
 end
