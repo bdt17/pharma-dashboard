@@ -9,6 +9,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen antialiased">
+<% if user_signed_in? %>
+  <div style="position:fixed;top:10px;right:10px;background:green;color:white;padding:10px;border-radius:5px;">
+    ✅ LOGGED IN: <%= current_user.email %> 
+    <%= link_to "Dashboard", "/dashboard", style:"color:white;" %>
+  </div>
+<% end %>
+
   
   <!-- Enterprise Header -->
   <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">

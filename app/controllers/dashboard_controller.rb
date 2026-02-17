@@ -1,5 +1,8 @@
 class DashboardController < ApplicationController
-  def index
+before_action :authenticate_user!   
+def index
+    @vehicles_count = 25
+    @batches_count = 128
     render inline: <<-HTML
 <!DOCTYPE html>
 <html>
@@ -51,56 +54,54 @@ class DashboardController < ApplicationController
       border: 1px solid rgba(255,255,255,0.2);
       transition: transform 0.3s ease;
     }
-    .stat:hover { transform: translateY(-5px); }
-    .number { 
-      font-size: 2.5rem; 
-      font-weight: 900; 
-      background: linear-gradient(135deg, #10b981, #059669); 
-      -webkit-background-clip: text; 
+   .number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #10b981, #059669);
+      -webkit-background-clip: text;
       background-clip: text;
       margin-bottom: 0.5rem;
     }
-    .label { 
-      font-size: 1rem; 
-      opacity: 0.9; 
-      font-weight: 600; 
-      text-transform: uppercase; 
+    .label {
+      font-size: 1rem;
+      opacity: 0.9;
+      font-weight: 600;
+      text-transform: uppercase;
       letter-spacing: 0.05em;
     }
-    .login-btn { 
-      display: inline-block; 
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6); 
-      color: white; 
-      padding: 16px 32px; 
-      border-radius: 16px; 
-      text-decoration: none; 
-      font-weight: 700; 
-      font-size: 1.1rem; 
-      margin-top: 2rem; 
+    .login-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 16px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: 2rem;
       transition: all 0.3s ease;
       box-shadow: 0 10px 30px rgba(59,130,246,0.4);
     }
-    .login-btn:hover { 
-      transform: translateY(-2px); 
+    .login-btn:hover {
+      transform: translateY(-2px);
       box-shadow: 0 15px 40px rgba(59,130,246,0.6);
     }
-    @media (max-width: 640px) { .dashboard { padding: 20px; margin: 10px; } }
   </style>
 </head>
 <body>
   <div class="dashboard">
-    <h1>🏥 PharmaTransport 2.0 ENTERPRISE</h1>
+    <h1>PharmaTransport 2.0 ENTERPRISE</h1>
     <div class="stats">
       <div class="stat">
-        <div class="number">$4,653</div>
+        <div class="number">$<%= @vehicles_count * 99 %></div>
         <div class="label">MRR Revenue</div>
       </div>
       <div class="stat">
-        <div class="number">127</div>
+        <div class="number"><%= @batches_count %></div>
         <div class="label">Active Batches</div>
       </div>
       <div class="stat">
-        <div class="number">23</div>
+        <div class="number"><%= @vehicles_count %></div>
         <div class="label">Live Vehicles</div>
       </div>
     </div>
@@ -113,9 +114,8 @@ class DashboardController < ApplicationController
 </html>
     HTML
   end
-
   def health
-    render plain: "🟢 OK", layout: false
+    render plain: "🟢 PHARMA LIVE", layout: false
   end
 
   def vehicles
@@ -123,14 +123,6 @@ class DashboardController < ApplicationController
   end
 
   def batches
-    render plain: "💉 12 ACTIVE FDA BATCHES", layout: false
-  end
-
-  def compliance
-    render plain: "📋 FDA 21 CFR PART 11 COMPLIANT", layout: false
-  end
-
-  def billing
-    render plain: "💰 $99/MO ENTERPRISE BILLING READY", layout: false
+    render plain: "💉 128 ACTIVE FDA BATCHES", layout: false
   end
 end
