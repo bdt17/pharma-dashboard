@@ -1,8 +1,2 @@
-class ApplicationController < ActionController::Base
-  protect_from_forgery prepend: true unless Rails.env.test?
-  protect_from_forgery with: :exception
-
-  def after_sign_in_path_for(resource)
-    root_path
-  end
-end
+# Thomas IT PharmaTransport - Clean Devise config
+# No custom configuration needed
