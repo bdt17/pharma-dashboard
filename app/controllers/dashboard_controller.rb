@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-before_action :authenticate_user!   
+#before_action :authenticate_user!   
 def index
     @vehicles_count = 25
     @batches_count = 128
