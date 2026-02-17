@@ -13,8 +13,9 @@ def index
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh; 
+      background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
+      background: linear-gradient(135deg, #AAA7B0, #565759);
+      background: linear-gradient(135deg, #0984C0, #60BDD1);      min-height: 100vh; 
       color: white; 
       display: flex; 
       align-items: center; 
@@ -57,7 +58,9 @@ def index
    .number {
       font-size: 2.5rem;
       font-weight: 900;
-      background: linear-gradient(135deg, #10b981, #059669);
+     background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
+     background: linear-gradient(135deg, #AAA7B0, #565759);
+     background: linear-gradient(135deg, #0984C0, #60BDD1);
       -webkit-background-clip: text;
       background-clip: text;
       margin-bottom: 0.5rem;
