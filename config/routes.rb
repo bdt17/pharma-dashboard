@@ -22,3 +22,4 @@ end
 
 
 
+  get '/batches/:batch_id/chain_of_custody.pdf', to: 'pdf_reports#chain_of_custody', as: :batch_chain_of_custody

@@ -9,5 +9,5 @@ gem "rackup", ">= 0"
 gem 'devise'
 gem 'importmap-rails'
 gem "propshaft"
-gem 'wicked_pdf', group: :production
-gem 'wkhtmltopdf-binary', group: :production
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
