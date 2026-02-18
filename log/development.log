@@ -12934,3 +12934,66 @@ Searched in:
   
 app/controllers/batches_controller.rb:15:in `block (2 levels) in chain_of_custody'
 app/controllers/batches_controller.rb:12:in `chain_of_custody'
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[35m (41.5ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (46.5ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddGpsToVehicle (20260218234329)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (115.7ms)[0m  [1m[35mALTER TABLE "vehicles" ADD "identifier" character varying /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "vehicles" ADD "lat" float /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "vehicles" ADD "lng" float /*application='PharmaDashboard'*/[0m
+  [1m[35m (40.3ms)[0m  [1m[35mALTER TABLE "vehicles" ADD "status" character varying /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Reverting AddDeviseToUsers (20260215024536)
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddGpsToVehicle (20260218234329)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (3.1ms)[0m  [1m[35mALTER TABLE "vehicles" ADD "identifier" character varying /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "vehicles" ADD "lat" float /*application='PharmaDashboard'*/[0m
+  [1m[35m (27.3ms)[0m  [1m[35mALTER TABLE "vehicles" ADD "lng" float /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260218234329') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (140.4ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Migrating to AddStatusToBatch (20260218234337)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (23.2ms)[0m  [1m[35mALTER TABLE "batches" ADD "status" character varying /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddStatusToBatch (20260218234337)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (3.2ms)[0m  [1m[35mALTER TABLE "batches" ADD "batch_number" character varying /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260218234337') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (118.7ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (1.1ms)[0m  [1m[32mINSERT INTO "vehicles" ("name", "latitude", "longitude", "status", "created_at", "updated_at", "plate", "identifier", "lat", "lng") VALUES (NULL, NULL, NULL, 'en_route', '2026-02-18 23:46:18.312313', '2026-02-18 23:46:18.312313', NULL, 'PHX-001', 33.4484, -112.074) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (34.4ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (1.8ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 3 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.8ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 3 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (2.7ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number") VALUES (NULL, NULL, 'cold_chain', NULL, '2026-02-18 23:46:53.825992', '2026-02-18 23:46:53.825992', 3, TRUE, NULL, 'LOT-UNASSIGNED', 'LOT-PHARMA-20260218') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (108.7ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
