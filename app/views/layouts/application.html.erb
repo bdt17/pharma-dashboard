@@ -7,18 +7,26 @@
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   <%= csrf_meta_tags %>
-</head>
-<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen antialiased">
-<% if user_signed_in? %>
-  <div style="position:fixed;top:10px;right:10px;background:green;color:white;padding:10px;border-radius:5px;">
-    ✅ LOGGED IN: <%= current_user.email %> 
-    <%= link_to "Dashboard", "/dashboard", style:"color:white;" %>
-  </div>
-<% end %>
-
   
+  <!-- Tailwind CDN for instant pro styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: { colors: { indigo: { 600: '#4f46e5', 700: '#4338ca' } } } }
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen antialiased font-sans">
+  
+  <% if user_signed_in? %>
+    <div style="position:fixed;top:10px;right:10px;background:green;color:white;padding:10px;border-radius:5px;font-size:12px;">
+      ✅ LOGGED IN: <%= current_user.email %>
+      <%= link_to "Dashboard", "/dashboard", style:"color:white;text-decoration:underline;" %>
+    </div>
+  <% end %>
+
   <!-- Enterprise Header -->
-  <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+  <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-3">
@@ -28,30 +36,39 @@
             </svg>
           </div>
           <div>
-            <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-slate-700 bg-clip-text text-transparent">
+            <h1 class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 to-slate-700 bg-clip-text text-transparent">
               Pharma Transport
             </h1>
-            <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Enterprise Dashboard v2.0</p>
+            <p class="text-xs text-slate-500 font-medium tracking-wide uppercase">Enterprise Dashboard v16.1 • Phase 14</p>
           </div>
         </div>
-        
-        <!-- Enterprise Navigation -->
+
+        <!-- Enterprise Navigation - FULLY FIXED -->
         <nav class="hidden md:flex items-center space-x-1">
-          <%= link_to "🚛 Vehicles", vehicles_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
-          <%= link_to "📦 Batches", batches_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
-          <%= link_to "📋 Compliance", compliance_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
-          <%= link_to "💰 Billing", billing_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+          <%= link_to "🏠 Home", root_path, 
+                class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+          <%= link_to "🚛 Vehicles", vehicles_path, 
+                class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+          <%= link_to "📦 Batches", batches_path, 
+                class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+          <%= link_to "📋 Compliance", compliance_path, 
+                class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+          <%= link_to "💰 Billing", billing_path, 
+                class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+          <%= link_to "🔧 Health", health_path, 
+                class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
         </nav>
       </div>
     </div>
   </header>
 
+  <!-- Main Content -->
   <main class="max-w-7xl mx-auto px-6 py-12">
     <%= yield %>
   </main>
 
   <!-- Enterprise Footer -->
-  <footer class="mt-24 bg-gradient-to-r from-slate-900 to-indigo-900 text-white">
+  <footer class="mt-24 bg-gradient-to-r from-slate-900 via-indigo-900 to-slate-900 text-white">
     <div class="max-w-7xl mx-auto px-6 py-12">
       <div class="grid md:grid-cols-3 gap-8 text-sm">
         <div>
@@ -64,20 +81,22 @@
         <div>
           <h4 class="font-semibold mb-4">Enterprise Features</h4>
           <ul class="space-y-2 text-slate-300">
-            <li>• Real-time GPS Tracking</li>
-            <li>• Chain-of-Custody PDF</li>
-            <li>• $99/mo Stripe Billing</li>
+            <li>• Real-time GPS Tracking (48 trucks)</li>
+            <li>• Chain-of-Custody PDF Generation</li>
+            <li>• $99/mo Stripe Billing (SaaS)</li>
             <li>• Driver PWA Portals</li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold mb-4">Contact</h4>
-          <p class="text-slate-300">Phoenix, AZ</p>
-          <a href="mailto:sales@thomasinformationtechnology.com" class="text-indigo-300 hover:text-white font-semibold">sales@thomasinformationtechnology.com</a>
+          <p class="text-slate-300">Phoenix, Arizona</p>
+          <a href="mailto:sales@thomasinformationtechnology.com" class="text-indigo-300 hover:text-white font-semibold">
+            sales@thomasinformationtechnology.com
+          </a>
         </div>
       </div>
       <div class="border-t border-slate-800 mt-12 pt-8 text-center text-xs text-slate-400">
-        © 2026 Thomas Information Technology. All rights reserved. Phase 14 Complete.
+        © 2026 Thomas Information Technology. All rights reserved. Phase 14 Complete. 🚀💉
       </div>
     </div>
   </footer>
