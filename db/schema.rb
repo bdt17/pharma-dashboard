@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_15_024536) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_18_234337) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,6 +57,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_15_024536) do
 
   create_table "batches", force: :cascade do |t|
     t.boolean "active", default: true, null: false
+    t.string "batch_number"
     t.datetime "created_at", null: false
     t.date "expiry"
     t.string "lot"
@@ -179,7 +180,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_15_024536) do
 
   create_table "vehicles", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "identifier"
+    t.float "lat"
     t.float "latitude"
+    t.float "lng"
     t.float "longitude"
     t.string "name"
     t.string "plate"
