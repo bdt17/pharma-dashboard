@@ -1,0 +1,12 @@
+<h1>Test Scripts (Pharma Dashboard)</h1>
+<table class="table table-striped">
+  <thead><tr><th>Name</th><th>Action</th></tr></thead>
+  <tbody>
+    <% @scripts.each do |script| %>
+      <tr>
+        <td><%= link_to script, asset_path(script), target: "_blank" %></td>
+        <td><%= link_to "Run", "#", class: "btn btn-sm btn-secondary", onclick: "console.log('#{script}')" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
