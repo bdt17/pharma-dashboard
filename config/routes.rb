@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "/batches/:batch_id/chain_of_custody.pdf", to: "pdf_reports#chain_of_custody", as: :batch_chain_of_custody
   get "pdf_reports/chain_of_custody"
   devise_for :users
   
@@ -20,5 +21,4 @@ end
 
 
 
-  get '/batches/:batch_id/chain_of_custody.pdf', to: 'pdf_reports#chain_of_custody', as: :batch_chain_of_custody
 
