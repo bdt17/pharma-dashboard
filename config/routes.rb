@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   
+  # Phase 8: FDA Chain-of-Custody PDF
+  get '/chain_of_custody', to: 'chain_of_custody#pdf', as: :chain_of_custody
+
   root "dashboard#index"
   get "health", to: "dashboard#health"
   get "vehicles", to: "dashboard#vehicles"
@@ -11,3 +14,7 @@ Rails.application.routes.draw do
   get '/gps/stream', to: 'dashboard#gps_stream'
   get '/api/health', to: 'dashboard#api_health'
 end
+
+
+
+
