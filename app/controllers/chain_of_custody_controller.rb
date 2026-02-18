@@ -1,10 +1,26 @@
 class ChainOfCustodyController < ApplicationController
-  def index
-    # Mock data if Batch doesn't exist yet
-    @batches = [
-      OpenStruct.new(lot_number: "LOT-PHARMA-20260128", status: "In Transit", vehicle: "GV55-001"),
-      OpenStruct.new(lot_number: "LOT-PHARMA-20260127", status: "Delivered", vehicle: "GV55-002")
+  before_action :authenticate_user!
+  
+  def pdf
+    @batch = Batch.last || Batch.new(
+      batch_id: "LOT-PHARMA-#{Time.current.strftime('%Y%m%d')}",
+      status: 'in_transit',
+      created_at: Time.current
+    )
+    @user = current_user
+    @audit_trail = [
+      {user: current_user.email, action: 'Generated CoC PDF', timestamp: Time.current},
+      {user: 'warehouse@pharmatransport.com', action: 'Batch sealed', timestamp: 2.hours.ago}
     ]
-    render "index"
+    
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "chain_of_custody_#{@batch.batch_id}",
+               template: 'chain_of_custody/pdf',
+               layout: false,
+               page_size: 'A4'
+      end
+    end
   end
 end
