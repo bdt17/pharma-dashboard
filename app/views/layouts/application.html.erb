@@ -51,10 +51,12 @@
                 class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
           <%= link_to "📦 Batches", batches_path, 
                 class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
-          <%= link_to "📋 Compliance", compliance_path, 
-                class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
-          <%= link_to "💰 Billing", billing_path, 
-                class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+          <%= link_to "📋 Compliance", "/compliance", 
+            class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+
+            <%= link_to "💰 Billing", "/billing", 
+              class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+
           <%= link_to "🔧 Health", health_path, 
                 class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
         </nav>
