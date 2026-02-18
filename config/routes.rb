@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "pdf_reports/chain_of_custody"
   devise_for :users
   
   # Phase 8: FDA Chain-of-Custody PDF
@@ -17,4 +18,7 @@ end
 
 
 
+
+
+  get '/batches/:batch_id/chain_of_custody.pdf', to: 'pdf_reports#chain_of_custody', as: :batch_chain_of_custody
 

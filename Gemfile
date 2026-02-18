@@ -11,3 +11,5 @@ gem 'importmap-rails'
 gem "propshaft"
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'

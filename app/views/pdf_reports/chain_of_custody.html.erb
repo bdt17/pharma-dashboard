@@ -1,0 +1,9 @@
+<h1>Chain of Custody Report</h1>
+<h2>Batch: <%= @batch.id %></h2>
+<table>
+  <tr><th>Batch ID</th><td><%= @batch.id %></td></tr>
+  <tr><th>Status</th><td><%= @batch.status || 'Active' %></td></tr>
+  <tr><th>Created</th><td><%= @batch.created_at %></td></tr>
+</table>
+<p><strong>21 CFR Part 11 Compliant</strong></p>
+<p>Generated: <%= Time.current %></p>
