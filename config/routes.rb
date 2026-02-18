@@ -1,11 +1,10 @@
+# config/routes.rb
 Rails.application.routes.draw do
-  root "dashboard#index"
-  
-  resources :batches do
-    member do
-      get :chain_of_custody, controller: 'pdf_reports'
-    end
-  end
-  
-  get '/test_scripts', to: 'test_scripts#index'
+  resources :batches    # Line 13 should be here
+  resources :vehicles
+  resources :compliance
+  # ... other resources
+  root 'home#index'     # or whatever your home page is
+  get 'health', to: 'health#index'
+  devise_for :users
 end

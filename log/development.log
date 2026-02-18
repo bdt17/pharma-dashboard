@@ -10026,3 +10026,75 @@ Generating image variants require the image_processing gem. Please add `gem "ima
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 127.0.0.1 at 2026-02-17 19:26:39 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 26ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 13.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-17 19:26:39 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-02-17 19:26:39 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/health"):
+  
+Started GET "/health" for 127.0.0.1 at 2026-02-17 19:26:39 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/health"):
+  
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-17 19:26:40 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/vehicles"):
+  
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-17 19:26:40 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/vehicles"):
+  
+Started GET "/batches" for 127.0.0.1 at 2026-02-17 19:26:40 -0700
+Processing by BatchesController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 5.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-17 19:26:40 -0700
+Processing by BatchesController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-17 19:26:41 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/compliance"):
+  
+Started GET "/compliance" for 127.0.0.1 at 2026-02-17 19:26:41 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/compliance"):
+  
+Started GET "/billing" for 127.0.0.1 at 2026-02-17 19:26:41 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/billing"):
+  
+Started GET "/billing" for 127.0.0.1 at 2026-02-17 19:26:41 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/billing"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-17 19:26:42 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/users/sign_in"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-17 19:26:42 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/users/sign_in"):
+  
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-17 19:26:42 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/users/sign_up"):
+  
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-17 19:26:42 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/users/sign_up"):
+  
