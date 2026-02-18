@@ -1,19 +1,15 @@
+# config/routes.rb
 Rails.application.routes.draw do
-  get '/',          to: 'application#index'
-  get '/dashboard', to: 'application#dashboard'
-  get '/health',    to: 'application#health'
-  get '/vehicles',  to: 'application#vehicles'
-  get '/batches',   to: 'application#batches'
-  get '/compliance',to: 'application#compliance'
-  get '/billing',   to: 'application#billing'
-  post '/gps_update', to: 'application#gps_update'
+  root 'home#index'
   
-  # Devise - COMMENT OUT UNTIL PROPERLY INSTALLED
-  # devise_for :users
+  get 'health', to: 'health#index'
+  get 'billing', to: 'billing#index'
   
-  root to: 'application#index'
-  get '/login', to: 'application#login'
-  post '/login', to: 'application#login_post'
-  get '/logout', to: 'application#logout'
-
-end
+  # Dashboard resources (index only)
+  resources :vehicles, only: [:index]
+  resources :batches, only: [:index]
+  resources :compliance, only: [:index]
+  
+  # Authentication
+  devise_for :users
+ end
