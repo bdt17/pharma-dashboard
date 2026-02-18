@@ -10098,3 +10098,202 @@ Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-17 19:26:42 -0700
   
 ActionController::RoutingError (No route matches [GET] "/users/sign_up"):
   
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started HEAD "/vehicles" for 127.0.0.1 at 2026-02-17 19:30:52 -0700
+Processing by VehiclesController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 5.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/batches" for 127.0.0.1 at 2026-02-17 19:30:59 -0700
+Processing by BatchesController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for 127.0.0.1 at 2026-02-17 19:36:17 -0700
+Processing by HomeController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 0.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-02-17 19:36:17 -0700
+Processing by HomeController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-02-17 19:36:18 -0700
+Processing by HealthController#index as */*
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-02-17 19:36:18 -0700
+Processing by HealthController#index as */*
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-17 19:36:18 -0700
+Processing by VehiclesController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-17 19:36:18 -0700
+Processing by VehiclesController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-17 19:36:19 -0700
+Processing by BatchesController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-02-17 19:36:19 -0700
+Processing by BatchesController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-17 19:36:19 -0700
+Processing by ComplianceController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-02-17 19:36:19 -0700
+Processing by ComplianceController#index as */*
+  Rendering html template
+  Rendered html template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-02-17 19:36:20 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/billing"):
+  
+Started GET "/billing" for 127.0.0.1 at 2026-02-17 19:36:20 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/billing"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-17 19:36:20 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 25.9ms | GC: 15.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 29.7ms | GC: 15.9ms)
+Completed 500 Internal Server Error in 80ms (ActiveRecord: 14.7ms (0 queries, 0 cached) | GC: 15.9ms)
+
+
+  
+ActionView::Template::Error (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id])
+Caused by: ActionController::UrlGenerationError (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id])
+
+Information for: ActionView::Template::Error (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id]):
+    40:           <%= link_to "🚛 Vehicles", vehicles_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    41:           <%= link_to "📦 Batches", batches_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    42:           <%= link_to "📋 Compliance", compliance_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    43:           <%= link_to "💰 Billing", billing_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    44:         </nav>
+    45:       </div>
+    46:     </div>
+  
+app/views/layouts/application.html.erb:43
+
+Information for cause: ActionController::UrlGenerationError (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id]):
+  
+app/views/layouts/application.html.erb:43
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-17 19:36:20 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 1.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | GC: 0.3ms)
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+  
+ActionView::Template::Error (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id])
+Caused by: ActionController::UrlGenerationError (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id])
+
+Information for: ActionView::Template::Error (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id]):
+    40:           <%= link_to "🚛 Vehicles", vehicles_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    41:           <%= link_to "📦 Batches", batches_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    42:           <%= link_to "📋 Compliance", compliance_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    43:           <%= link_to "💰 Billing", billing_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    44:         </nav>
+    45:       </div>
+    46:     </div>
+  
+app/views/layouts/application.html.erb:43
+
+Information for cause: ActionController::UrlGenerationError (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id]):
+  
+app/views/layouts/application.html.erb:43
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-17 19:36:21 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 1.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.9ms | GC: 0.4ms)
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+  
+ActionView::Template::Error (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id])
+Caused by: ActionController::UrlGenerationError (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id])
+
+Information for: ActionView::Template::Error (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id]):
+    40:           <%= link_to "🚛 Vehicles", vehicles_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    41:           <%= link_to "📦 Batches", batches_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    42:           <%= link_to "📋 Compliance", compliance_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    43:           <%= link_to "💰 Billing", billing_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    44:         </nav>
+    45:       </div>
+    46:     </div>
+  
+app/views/layouts/application.html.erb:43
+
+Information for cause: ActionController::UrlGenerationError (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id]):
+  
+app/views/layouts/application.html.erb:43
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-02-17 19:36:21 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 3.7ms | GC: 2.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.1ms | GC: 7.1ms)
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 10.0ms)
+
+
+  
+ActionView::Template::Error (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id])
+Caused by: ActionController::UrlGenerationError (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id])
+
+Information for: ActionView::Template::Error (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id]):
+    40:           <%= link_to "🚛 Vehicles", vehicles_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    41:           <%= link_to "📦 Batches", batches_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    42:           <%= link_to "📋 Compliance", compliance_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    43:           <%= link_to "💰 Billing", billing_path, class: "px-4 py-2 text-sm font-semibold text-slate-700 hover:text-indigo-600 rounded-xl hover:bg-indigo-50 transition-all duration-200 flex items-center space-x-1" %>
+    44:         </nav>
+    45:       </div>
+    46:     </div>
+  
+app/views/layouts/application.html.erb:43
+
+Information for cause: ActionController::UrlGenerationError (No route matches {:action=>"show", :controller=>"compliance"}, missing required keys: [:id]):
+  
+app/views/layouts/application.html.erb:43
