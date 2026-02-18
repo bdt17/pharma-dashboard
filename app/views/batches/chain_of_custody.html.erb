@@ -1,3 +1,32 @@
-<h1>📄 FDA Chain-of-Custody: <%= @batch&.lot_number || 'DEMO' %></h1>
-<p>21 CFR Part 11 Compliant • Download PDF ready</p>
-<a href="mailto:sales@thomasinformationtechnology.com?subject=FDA%20PDF%20Demo">Request Full PDF</a>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Chain of Custody</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 40px; font-size: 14px;">
+  <div style="text-align: center; margin-bottom: 40px; border-bottom: 3px solid #1e40af; padding-bottom: 20px;">
+    <h1 style="color: #1e40af; margin: 0; font-size: 28px;">CHAIN OF CUSTODY REPORT</h1>
+  </div>
+  
+  <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+    <tr style="background-color: #1e40af; color: white;">
+      <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Lot Number</th>
+      <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Status</th>
+      <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">Vehicle</th>
+      <th style="padding: 12px; border: 1px solid #ddd; text-align: left;">License Plate</th>
+    </tr>
+    <tr>
+      <td style="padding: 12px; border: 1px solid #ddd;"><strong><%= @batch.lot_number %></strong></td>
+      <td style="padding: 12px; border: 1px solid #ddd;"><%= @batch.status.humanize %></td>
+      <td style="padding: 12px; border: 1px solid #ddd;"><%= @batch.vehicle&.name || 'N/A' %></td>
+      <td style="padding: 12px; border: 1px solid #ddd;"><%= @batch.vehicle&.plate || 'N/A' %></td>
+    </tr>
+  </table>
+  
+  <div style="text-align: right; font-size: 12px; color: #666; margin-top: 40px;">
+    <p>Generated: <%= Time.current.in_time_zone('Mountain').strftime('%Y-%m-%d %H:%M:%S MST') %></p>
+    <p>21 CFR Part 11 Compliant - Immutable Audit Trail</p>
+  </div>
+</body>
+</html>

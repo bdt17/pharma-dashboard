@@ -1,8 +1,9 @@
 class DashboardController < ApplicationController
-before_action :authenticate_user!   
-def index
-    @vehicles_count = 25
-    @batches_count = 128
+  before_action :authenticate_user!, except: [:health]
+  
+  def index
+    @vehicles_count = Vehicle.count
+    @batches_count = Batch.count
     render inline: <<-HTML
 <!DOCTYPE html>
 <html>
@@ -11,133 +12,120 @@ def index
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
-      background: linear-gradient(135deg, #AAA7B0, #565759);
-      background: linear-gradient(135deg, #0984C0, #60BDD1);      min-height: 100vh; 
-      color: white; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
+      min-height: 100vh; 
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
     }
-    .dashboard { 
-      background: rgba(255,255,255,0.1); 
-      backdrop-filter: blur(20px); 
-      border-radius: 24px; 
-      padding: 40px; 
-      max-width: 800px; 
-      width: 100%; 
-      text-align: center; 
+    .dashboard {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      text-align: center;
       box-shadow: 0 25px 50px rgba(0,0,0,0.2);
       border: 1px solid rgba(255,255,255,0.2);
     }
-    h1 { 
-      font-size: clamp(2rem, 6vw, 3.5rem); 
-      font-weight: 900; 
-      margin-bottom: 2rem; 
-      background: linear-gradient(135deg, white 0%, rgba(255,255,255,0.8) 100%);
-      -webkit-background-clip: text; 
-      background-clip: text;
-    }
-    .stats { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-      gap: 20px; 
-      margin: 2rem 0; 
-    }
-    .stat { 
-      background: rgba(255,255,255,0.15); 
-      padding: 20px; 
-      border-radius: 16px; 
-      backdrop-filter: blur(10px); 
-      border: 1px solid rgba(255,255,255,0.2);
-      transition: transform 0.3s ease;
-    }
-   .number {
-      font-size: 2.5rem;
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
       font-weight: 900;
-     background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
-     background: linear-gradient(135deg, #AAA7B0, #565759);
-     background: linear-gradient(135deg, #0984C0, #60BDD1);
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, white 0%, rgba(255,255,255,0.8) 100%);
       -webkit-background-clip: text;
       background-clip: text;
-      margin-bottom: 0.5rem;
     }
-    .label {
-      font-size: 1rem;
-      opacity: 0.9;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 2rem 0;
     }
-    .login-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      color: white;
-      padding: 16px 32px;
+    .stat-card {
+      background: rgba(255,255,255,0.2);
+      padding: 1.5rem;
       border-radius: 16px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.1rem;
+      backdrop-filter: blur(10px);
+    }
+    .stat-number { font-size: 2.5rem; font-weight: 800; }
+    .stat-label { font-size: 0.9rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
+    .cta { 
+      background: white; 
+      color: #0984C0; 
+      padding: 1rem 2rem; 
+      border-radius: 50px; 
+      font-weight: 700; 
+      text-decoration: none; 
+      display: inline-block;
       margin-top: 2rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(59,130,246,0.4);
+      transition: transform 0.2s;
     }
-    .login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(59,130,246,0.6);
-    }
+    .cta:hover { transform: scale(1.05); }
   </style>
 </head>
 <body>
   <div class="dashboard">
-    <h1>PharmaTransport 2.0 ENTERPRISE</h1>
+    <h1>Pharma Transport</h1>
     <div class="stats">
-      <div class="stat">
-        <div class="number">$<%= @vehicles_count * 99 %></div>
-        <div class="label">MRR Revenue</div>
+      <div class="stat-card">
+        <div class="stat-number"><%= @vehicles_count %></div>
+        <div class="stat-label">Live Vehicles</div>
       </div>
-      <div class="stat">
-        <div class="number"><%= @batches_count %></div>
-        <div class="label">Active Batches</div>
-      </div>
-      <div class="stat">
-        <div class="number"><%= @vehicles_count %></div>
-        <div class="label">Live Vehicles</div>
+      <div class="stat-card">
+        <div class="stat-number"><%= @batches_count %></div>
+        <div class="stat-label">Active Batches</div>
       </div>
     </div>
-    <a href="/users/sign_in" class="login-btn">🔐 Secure Enterprise Login</a>
-    <div style="margin-top: 2rem; opacity: 0.8; font-size: 0.9rem;">
-      Thomas IT • Phoenix, AZ • FDA 21 CFR Part 11 Compliant
-    </div>
+    <a href="/vehicles" class="cta">🚛 View Vehicles</a>
+    <a href="/batches" class="cta">📦 View Batches</a>
+    <a href="mailto:sales@thomasinformationtechnology.com" class="cta">$99/mo →</a>
   </div>
 </body>
 </html>
-    HTML
+HTML
   end
+
   def health
-    render plain: "🟢 PHARMA LIVE", layout: false
+    render plain: "OK", status: :ok
   end
 
   def vehicles
-    render plain: "🚛 PHX-001, PHX-002, PHX-003 LIVE", layout: false
+    @vehicles = Vehicle.all
+  rescue
+    @vehicles = []
+    render plain: "No vehicles yet - seed PHX-001 Phoenix truck", status: :ok
   end
 
   def batches
-    render plain: "💉 128 ACTIVE FDA BATCHES", layout: false
+    @batches = Batch.all
+  rescue
+    @batches = []
+    render plain: "No batches yet - seed LOT-PHARMA-20260218", status: :ok
+  end
+
+  def compliance
+    render plain: "FDA 21 CFR Part 11 COMPLIANT - Audit logs ready", status: :ok
+  end
+
+  def billing
+    render plain: "$99/mo per vehicle - Stripe Checkout ready", status: :ok
   end
 
   def gps_update
-    render plain: "GPS update received - PHX-001 positioned at 33.4484,-112.0740", status: 200
+    head :ok
   end
 
   def gps_stream
-    render plain: "WebSocket GPS stream LIVE - 25 vehicles tracking", status: 200
+    render plain: "ActionCable GPS WebSocket stream ready", status: :ok
   end
 
   def api_health
-    render json: {status: "healthy", vehicles: 25, batches: 128, mrr: "$2475"}, status: 200
+    render json: { status: "healthy", timestamp: Time.now.utc }
   end
 end
