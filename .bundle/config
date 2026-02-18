@@ -1,3 +1,0 @@
----
-BUNDLE_WITHOUT: "development:test"
-BUNDLE_FROZEN: "false"
