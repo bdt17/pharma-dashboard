@@ -1,25 +1,11 @@
 Rails.application.routes.draw do
-  get "/batches/:batch_id/chain_of_custody.pdf", to: "pdf_reports#chain_of_custody", as: :batch_chain_of_custody
-  get "pdf_reports/chain_of_custody"
-  devise_for :users
-  
-  # Phase 8: FDA Chain-of-Custody PDF
-  get '/chain_of_custody', to: 'chain_of_custody#pdf', as: :chain_of_custody
-
   root "dashboard#index"
-  get "health", to: "dashboard#health"
-  get "vehicles", to: "dashboard#vehicles"
-  get "batches", to: "dashboard#batches"
-  get "compliance", to: "dashboard#compliance"
-  get "billing", to: "dashboard#billing"
-  post '/gps/update', to: 'dashboard#gps_update'
-  get '/gps/stream', to: 'dashboard#gps_stream'
-  get '/api/health', to: 'dashboard#api_health'
+  
+  resources :batches do
+    member do
+      get :chain_of_custody, controller: 'pdf_reports'
+    end
+  end
+  
+  # Add your other existing routes here later
 end
-
-
-
-
-
-
-  get '/batches/:batch_id/chain_of_custody.pdf', to: 'pdf_reports#chain_of_custody', as: :batch_chain_of_custody
