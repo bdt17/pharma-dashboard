@@ -15,7 +15,7 @@ class DashboardController < ApplicationController
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
-      min-height: 100vh; 
+      min-height: 100dvh; 
       color: white;
       display: flex;
       align-items: center;
