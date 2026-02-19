@@ -15,3 +15,6 @@ Rails.application.routes.draw do
   # Phase 3 API (FIX 404)
   get "/api/health", to: "dashboard#api_health"
 end
+  post "/gps/update", to: "dashboard#gps_update"
+  get "/gps/stream", to: "dashboard#gps_stream"
+  get "/api/health", to: "dashboard#api_health"
