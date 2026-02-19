@@ -15,7 +15,7 @@ def index
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
       background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
       background: linear-gradient(135deg, #AAA7B0, #565759);
-      background: linear-gradient(135deg, #0984C0, #60BDD1);      min-height: 100vh; 
+      background: linear-gradient(135deg, #0984C0, #60BDD1);      min-height: 100dvh; 
       color: white; 
       display: flex; 
       align-items: center; 
