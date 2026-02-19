@@ -96,6 +96,7 @@ HTML
   end
 
   def vehicles
+    @vehicles = Vehicle.where(identifier: "PHX-001")
     @vehicles = Vehicle.all
   rescue
     @vehicles = []

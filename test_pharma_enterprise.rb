@@ -101,5 +101,5 @@ puts ""
 puts "📧 sales@thomasinformationtechnology.com"
 puts "=" * 80
 # Count LIVE PHX-001 data
-puts "  🚛 Live Vehicles:    #{JSON.parse(`curl -s https://pharma-dashboard-beq2.onrender.com/api/health`)['vehicles'] || Net::HTTP.get(URI('https://pharma-dashboard-beq2.onrender.com/vehicles')).scan('PHX-001').count}"
+puts "  🚛 Live Vehicles:    #{require 'json'; JSON.parse(`curl -s https://pharma-dashboard-beq2.onrender.com/api/health`)['vehicles'] || Net::HTTP.get(URI('https://pharma-dashboard-beq2.onrender.com/vehicles')).scan('PHX-001').count}"
 puts "  💉 Active Batches:   #{Net::HTTP.get(URI('https://pharma-dashboard-beq2.onrender.com/batches')).scan('LOT-PHARMA').count}"
