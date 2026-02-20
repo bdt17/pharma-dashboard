@@ -1,11 +1,9 @@
 class GpsController < ApplicationController
-  skip_before_action :authenticate_user!
-
   def update
-    head :ok
+    render plain: "GPS OK", status: :ok
   end
 
   def stream
-    render plain: "GPS ActionCable stream ready", status: :ok
+    render plain: "GPS stream OK", status: :ok
   end
 end
