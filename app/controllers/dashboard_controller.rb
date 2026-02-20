@@ -1,35 +1,25 @@
 class DashboardController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:health, :api_health]
-
   def index
-    render plain: "Thomas IT Pharma Dashboard - Truck 001 LIVE", status: :ok
+    render plain: "PHARMA DASHBOARD LIVE - Truck 001", status: :ok
   end
 
   def health
-    render plain: "Thomas IT Pharma LIVE", status: :ok
+    render plain: "OK", status: :ok
   end
 
   def api_health
-    render json: { 
-      status: "ok", 
-      vehicles: 1,
-      batches: 1
-    }
+    render json: {status: "ok", trucks: 1, batches: 1}
   end
 
   def vehicles
-    render plain: "Truck 001 ACTIVE - Phoenix GPS (33.4484, -112.0740)", status: :ok
+    render plain: "Truck 001 ACTIVE", status: :ok
   end
 
   def batches
-    render plain: "LOT-PHARMA-20260217 - 4.2°C IN TRANSIT", status: :ok
-  end
-
-  def compliance
-    render plain: "FDA 21 CFR Part 11 READY", status: :ok
+    render plain: "LOT-PHARMA-20260217", status: :ok
   end
 
   def billing
-    render plain: "Phase 8: $99/mo per vehicle", status: :ok
+    render plain: "$99/mo", status: :ok
   end
 end
