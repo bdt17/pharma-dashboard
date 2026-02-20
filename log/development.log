@@ -13012,3 +13012,24 @@ Generating image variants require the image_processing gem. Please add `gem "ima
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (83.0ms)[0m  [1m[32mINSERT INTO "vehicles" ("name", "latitude", "longitude", "status", "created_at", "updated_at", "plate", "identifier", "lat", "lng") VALUES ('PHX-001', NULL, NULL, 'active', '2026-02-20 19:16:26.350332', '2026-02-20 19:16:26.350332', 'ABC123', 'PHX-001', 33.4484, -112.074) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (49.0ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (2.0ms)[0m  [1m[32mINSERT INTO "vehicles" ("name", "latitude", "longitude", "status", "created_at", "updated_at", "plate", "identifier", "lat", "lng") VALUES ('PHX-001', NULL, NULL, 'active', '2026-02-20 19:16:48.821655', '2026-02-20 19:16:48.821655', 'ABC123', 'PHX-001', 33.4484, -112.074) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (141.1ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (2.3ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 5 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (146.5ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number") VALUES ('LOT-PHARMA-20260218', NULL, 'in_transit', 4.2, '2026-02-20 19:16:49.045605', '2026-02-20 19:16:49.045605', 5, TRUE, 'LOT-PHARMA-20260218', 'LOT-PHARMA', NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (124.2ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+  [1m[36mVehicle Load (0.7ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.8ms)[0m  [1m[34mSELECT "batches".* FROM "batches" ORDER BY "batches"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
