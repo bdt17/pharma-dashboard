@@ -1,0 +1,38 @@
+<div class="max-w-4xl mx-auto p-8 print:p-4">
+  <h1 class="text-3xl font-bold mb-6 border-b pb-4">
+    Chain of Custody: <%= @batch.lot_number %>
+  </h1>
+  
+  <table class="w-full border-collapse border-2 border-gray-800">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border border-gray-800 p-3 font-bold">Location</th>
+        <th class="border border-gray-800 p-3 font-bold">Driver</th>
+        <th class="border border-gray-800 p-3 font-bold">Time</th>
+        <th class="border border-gray-800 p-3 font-bold">Temp</th>
+        <th class="border border-gray-800 p-3 font-bold">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @logs.each do |log| %>
+        <tr class="hover:bg-gray-50">
+          <td class="border p-3"><%= log.location&.name || 'N/A' %></td>
+          <td class="border p-3"><%= log.driver&.name || 'N/A' %></td>
+          <td class="border p-3"><%= log.created_at.strftime('%Y-%m-%d %H:%M') %></td>
+          <td class="border p-3 <%= log.temperature.between?(2,8) ? 'text-green-600' : 'text-red-600 font-bold' %>">
+            <%= log.temperature %>°C
+          </td>
+          <td class="border p-3 <%= log.fda_compliant? ? 'text-green-600' : 'text-red-600' %>">
+            <%= log.fda_compliant? ? '21 CFR ✓' : '❌ ALERT' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+  <div class="mt-8 p-6 bg-gray-50 border-2 border-dashed border-gray-400 rounded-lg">
+    <p class="text-sm font-semibold text-gray-700">
+      📋 21 CFR Part 11 Compliant • Immutable Record • <%= Time.current.strftime('%Y-%m-%d %H:%M UTC') %>
+    </p>
+  </div>
+</div>

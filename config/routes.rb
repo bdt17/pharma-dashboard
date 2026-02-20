@@ -15,7 +15,13 @@ Rails.application.routes.draw do
       get :stream
     end
   end
-  
+
+resources :batches, only: [] do
+  member do
+    get :custody_report, to: 'custody_reports#show', as: :custody_report
+  end
+end
+
   # Phase 3 API
   get "/api/health", to: "dashboard#api_health"
 end

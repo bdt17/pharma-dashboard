@@ -1,51 +1,41 @@
-# db/seeds.rb
-# Safe pharma transport seed – works with any schema
+# Phase 8 Test Data - Chain of Custody PDFs
+puts "🌡️ Seeding Pharma Dashboard test data..."
 
-puts "Seeding Vehicles..."
-
-# Create or find the truck first, then set plate
-truck = Vehicle.find_or_create_by!(imei: "GV55-001") do |v|
-  v.identifier = "PHX-001"  if v.respond_to?(:identifier=)
-  v.name       = "Phoenix Truck 1" if v.respond_ty?(:name=)
+User.find_or_create_by!(email: 'admin@pharmagps.com') do |user|
+  user.password = 'password123'
+  user.password_confirmation = 'password123'
 end
+puts "✅ Admin: admin@pharmagps.com / password123"
 
-# Only update plate if the column exists
-if truck.respond_to?(:plate=) && truck.plate.nil?
-  truck.update!(plate: "TRK-PHX-001")
+batch = Batch.find_or_create_by!(lot_number: 'LOT-PHARMA-20260219') do |b|
+  b.user = User.first
 end
+puts "✅ Batch: #{batch.lot_number} (ID: #{batch.id})"
 
-puts "✅ Vehicle seeded: #{truck.name} (IMEI: #{truck.imei})"
+# Locations
+locations = [
+  { name: 'Phoenix Depot', lat: 33.4484, lng: -112.0740 },
+  { name: 'Mesa Distribution', lat: 33.4152, lng: -111.8315 },
+  { name: 'Tempe Hospital', lat: 33.4255, lng: -111.9400 }
+].map { |loc| Location.find_or_create_by!(loc) }
 
+# Drivers
+drivers = [
+  { name: 'John Driver', phone: '+14805551234' },
+  { name: 'Sarah Haul', phone: '+14805556789' },
+  { name: 'Mike Transport', phone: '+14805552345' }
+].map { |drv| Driver.find_or_create_by!(drv) }
 
-puts "Seeding Batches (safe mode)..."
-begin
-  existing_batch = Batch.first
-
-  if Batch.column_names.include?("name") && existing_batch.nil?
-    Batch.find_or_create_by!(
-      name: "B001",
-      vehicle: Vehicle.last
-    )
-  elsif Batch.column_names.include?("description") && existing_batch.nil?
-    Batch.find_or_create_by!(
-      description: "Phoenix vaccine run",
-      vehicle: Vehicle.last
-    )
-  elsif Batch.column_names.include?("lot_number") && existing_batch.nil?
-    Batch.find_or_create_by!(
-      lot_number: "B001",
-      vehicle: Vehicle.last
-    )
-  else
-    # Fallback: only create if we have at least one vehicle
-    if Vehicle.any?
-      Batch.create!(vehicle: Vehicle.last)
-    end
-  end
-
-  puts "✅ Batch seeded successfully"
-rescue => e
-  puts "⚠️  Batch seed skipped (table empty?): #{e.message}"
+# Compliance logs
+3.times do |i|
+  ComplianceLog.create!(
+    batch: batch,
+    location: locations[i],
+    driver: drivers[i],
+    temperature: [4.2, 6.8, 3.1][i],
+    fda_compliant: true,
+    notes: "2-8°C maintained ✓"
+  )
 end
-
-puts "✅ PHARMA SEED COMPLETE - 1 truck + 1 batch ready"
+puts "✅ 3 compliance logs"
+puts "🎉 Test: /batches/#{batch.id}/custody_report.pdf"
