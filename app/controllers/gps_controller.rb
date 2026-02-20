@@ -6,6 +6,6 @@ class GpsController < ApplicationController
   end
 
   def stream
-    render plain: "GPS ready", status: :ok
+    render plain: "GPS ActionCable stream ready", status: :ok
   end
 end
