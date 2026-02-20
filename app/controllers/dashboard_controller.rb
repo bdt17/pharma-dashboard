@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:health]
 
   def index
     @vehicles = Vehicle.limit(10)
@@ -8,6 +8,16 @@ class DashboardController < ApplicationController
 
   def health
     render plain: "OK", status: :ok
+  end
+
+  def api_health
+    render json: {
+      status: "ok",
+      rails: Rails.version,
+      vehicles: Vehicle.count,
+      batches: Batch.count,
+      ts: Time.now.utc.iso8601
+    }
   end
 
   def vehicles
@@ -23,16 +33,6 @@ class DashboardController < ApplicationController
   end
 
   def billing
-    render plain: "Stripe $99/mo coming soon"
-  end
-
-  def api_health
-    render json: {
-      status: "ok",
-      rails: Rails.version,
-      vehicles: Vehicle.count,
-      batches: Batch.count,
-      ts: Time.now.utc.iso8601
-    }
+    render plain: "Stripe $99/mo per vehicle"
   end
 end
