@@ -12,3 +12,4 @@ end
 # Silence Stripe production warning
 Rails.application.config.stripe.secret_key = "sk_test_dummy_key"
 Rails.application.config.stripe.secret_key = "sk_test_dummy"
+Rails.application.config.stripe.secret_key = "sk_test_dummy"

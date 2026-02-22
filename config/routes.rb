@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  root "application#root"
   # Devise first (mounts /users/sign_in, /users/sign_out, etc.)
-  devise_for :users
+  devise_for :users, controllers: {
+  sessions: 'users/sessions',
+  registrations: 'users/registrations'
+ }
 
   # Public health check (for Render + your test script)
   get "health", to: "dashboard#health"
