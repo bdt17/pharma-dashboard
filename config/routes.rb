@@ -1,27 +1,18 @@
 Rails.application.routes.draw do
+  # Landing page
   root "application#root"
   
-  get "/api/health", to: "api_health#index"
+  # Explicit API routes (bypass resources)
   get "/health", to: "health#index"
-  
-  # Dashboard - index actions  
-  resources :vehicles, only: [:index]
-  resources :batches, only: [:index] do
-    member do
-      get :custody_report
-    end
-  end
+  get "/api/health", to: "api_health#index"
+  get "/vehicles", to: "vehicles#index"
+  get "/batches", to: "batches#index"
+  get "/billing", to: "billing#index"
   
   # GPS endpoints
   get "/gps/stream", to: "gps#stream"
-  get "/gps/update", to: "gps#update"
+  post "/gps/update", to: "gps#update"
   
-  # Enterprise
-  get "/billing", to: "billing#index"
+  # DEBUG routes
+  get "/debug/test", to: proc { [200, {"Content-Type" => "text/plain"}, ["Phase 8 LIVE"]] }
 end
-get "/sign-up", to: "application#signup"
-
-# DEBUG: Direct controller bypass
-get "/debug/health", to: "health#index"
-get "/debug/vehicles", to: "vehicles#index"  
-get "/debug/test", to: proc { [200, {"Content-Type" => "text/plain"}, ["Phase 8 LIVE"]] }
