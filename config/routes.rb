@@ -20,3 +20,8 @@ Rails.application.routes.draw do
   get "/billing", to: "billing#index"
 end
 get "/sign-up", to: "application#signup"
+
+# DEBUG: Direct controller bypass
+get "/debug/health", to: "health#index"
+get "/debug/vehicles", to: "vehicles#index"  
+get "/debug/test", to: proc { [200, {"Content-Type" => "text/plain"}, ["Phase 8 LIVE"]] }
