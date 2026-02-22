@@ -1,15 +1,11 @@
 class ApplicationController < ActionController::Base
-  # No global auth - public Phase 8 endpoints
   protect_from_forgery prepend: true
   
   def root
+    render plain: "🚚 Pharma Transport Dashboard - Phase 8 Enterprise LIVE"
   end
-end
-
-def signup
-  render plain: "🚀 Phase 8 Enterprise - Contact sales@pharmatransport.com | $99/mo per vehicle"
-end
-
-def signup
-  render plain: "🚀 Pharma Transport Enterprise - sales@pharmatransport.com | $99/mo per vehicle"
+  
+  def signup
+    render plain: "Enterprise Sign-up: sales@pharmatransport.com | $99/mo"
+  end
 end
