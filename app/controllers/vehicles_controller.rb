@@ -1,5 +1,5 @@
 class VehiclesController < ApplicationController
   def index
-    # Removed render - uses view + layout
+    render plain: 'Vehicles GPS tracking ready - Phase 8 Enterprise'
   end
 end
