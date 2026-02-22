@@ -13033,3 +13033,16 @@ Generating image variants require the image_processing gem. Please add `gem "ima
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
   [1m[36mVehicle Load (0.7ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Load (0.8ms)[0m  [1m[34mSELECT "batches".* FROM "batches" ORDER BY "batches"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/" for ::1 at 2026-02-22 15:03:58 -0700
+  
+NoMethodError (undefined method `root' for main):
+  
+config/routes.rb:41:in `<top (required)>'
+Started GET "/" for 127.0.0.1 at 2026-02-22 15:04:01 -0700
+  
+ArgumentError (Before process_action callback :authenticate_user! has not been defined):
+  
+app/controllers/application_controller.rb:3:in `<class:ApplicationController>'
+app/controllers/application_controller.rb:1:in `<top (required)>'
+app/controllers/dashboard_controller.rb:1:in `<top (required)>'
