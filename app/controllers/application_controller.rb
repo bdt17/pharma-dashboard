@@ -9,3 +9,7 @@ end
 def signup
   render plain: "🚀 Phase 8 Enterprise - Contact sales@pharmatransport.com | $99/mo per vehicle"
 end
+
+def signup
+  render plain: "🚀 Pharma Transport Enterprise - sales@pharmatransport.com | $99/mo per vehicle"
+end
