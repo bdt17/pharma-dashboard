@@ -9,3 +9,7 @@ class ApplicationController < ActionController::Base
     render plain: "🚀 Enterprise Trial: sales@pharmatransport.com | $99/mo"
   end
 end
+
+  def health
+    render plain: "Pharma Transport Enterprise v9.2 - OK", status: 200
+  end
