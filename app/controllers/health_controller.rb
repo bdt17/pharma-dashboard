@@ -3,10 +3,9 @@ class HealthController < ApplicationController
     render json: { 
       status: 'ok', 
       rails: '8.1.2', 
-      phase: '8-enterprise', 
+      phase: '8-complete',
       database: 'connected',
-      puma: 'live',
-      render: 'pharma-beq2'
+      uptime: 'production'
     }
   end
 end
