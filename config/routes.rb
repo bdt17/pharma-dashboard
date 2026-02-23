@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+  get "health/index"
   # Landing page
   root "application#root"
   
   # Core enterprise endpoints - EXPLICIT routes
   get "/health", to: "health#index"
-  get "/api/health", to: "api_health#index"
+  get "/api/health", to: "health#index"
   get "/vehicles", to: "vehicles#index"
   get "/batches", to: "batches#index"
   get "/billing", to: "billing#index"
@@ -16,3 +17,6 @@ Rails.application.routes.draw do
   # Sign-up (no Devise crash)
   get "/sign-up", to: "application#signup"
 end
+
+  get '/health', to: 'health#index'
+  get '/api/health', to: 'health#index'
