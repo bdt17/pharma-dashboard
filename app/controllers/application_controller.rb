@@ -2,10 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true
   
   def root
-    render plain: "🚚 Pharma Transport Dashboard - Phase 8 Enterprise LIVE"
+    render 'root'  # Uses app/views/application/root.html.erb
   end
   
   def signup
-    render plain: "Enterprise Sign-up: sales@pharmatransport.com | $99/mo"
+    render plain: "Enterprise Trial: sales@pharmatransport.com | $99/mo per vehicle"
   end
 end
