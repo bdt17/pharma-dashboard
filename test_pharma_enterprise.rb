@@ -3,14 +3,15 @@ require 'net/http'
 require 'uri'
 
 base = 'https://pharma-dashboard-beq2.onrender.com'
-puts "🚀 THOMAS IT PHARMA ENTERPRISE v9.2 - PRODUCTION CERTIFIED"
-puts "="*80
 
 def test_path(path)
   uri = URI.join(base, path)
   resp = Net::HTTP.get_response(uri)
   [resp.code, resp.body.size]
 end
+
+puts "🚀 THOMAS IT PHARMA ENTERPRISE v9.2 - PRODUCTION CERTIFIED"
+puts "="*80
 
 puts "🩺 PHASE 1: CORE INFRASTRUCTURE"
 puts "  /#{test_path('/')[0] == '200' ? '                            200 ✅' : '                            500 ❌'} (#{test_path('/')[1]} bytes)"
