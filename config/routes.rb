@@ -20,3 +20,5 @@ end
 
   get '/health', to: 'health#index'
   get '/api/health', to: 'health#index'
+  get "/health", to: "application#health"
+  get "/api/health", to: "application#health"

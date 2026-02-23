@@ -18,3 +18,9 @@ end
     render plain: 'Pharma Transport Enterprise v9.2 - OK', status: 200
   end
 
+
+protected
+
+def health
+  render plain: "Pharma Transport Enterprise v9.2 - OK", status: 200
+end
