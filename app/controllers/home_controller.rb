@@ -9,3 +9,4 @@ end
     render plain: 'Pharma Transport Dashboard v9.2', status: 200
   end
 
+def index; render plain: 'Pharma Transport Dashboard v9.2'; end
