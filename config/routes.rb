@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  get "health/index"
+  get "home/index"
   # Root
-  root to: 'application#index'
+  root "home#index"
   
   # Health checks
   get '/health', to: 'application#health'
