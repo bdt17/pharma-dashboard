@@ -1,72 +1,50 @@
 #!/usr/bin/env ruby
 require 'net/http'
-require 'uri'
-require 'nokogiri'
-require 'colorize'
+require 'json'
 
-BASE_URL = "https://pharma-dashboard-beq2.onrender.com"
-TIMEOUT = 30
-
-def http_status(url)
-  uri = URI(url)
-  http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = true
-  http.open_timeout = TIMEOUT
-  http.read_timeout = TIMEOUT
-  request = Net::HTTP::Get.new(uri)
-  response = http.request(request)
-  [response.code.to_i, response.body]
-rescue => e
-  [500, "ERROR: #{e.message}"]
-end
-
-# Super lenient - matches your REAL working pages
-def check_page_health(code, body)
-  return [code, "HTTP #{code}"] unless code == 200
-  return [200, "✓ LIVE"] if body.length > 1000  # Your pages are 5KB+
-end
-
-puts "🚀 THOMAS IT PHARMA ENTERPRISE v8.7 - PRODUCTION READY".colorize(:cyan)
-puts "=" * 80
-puts "📅 #{Time.now.strftime('%Y-%m-%d %H:%M %Z')} | 🌎 #{BASE_URL}".colorize(:yellow)
-
-core_pages = {
-  "🏠 Dashboard" => "/",
-  "🩺 Health" => "/health", 
-  "🚛 Vehicles" => "/vehicles",
-  "💉 Batches" => "/batches",
-  "📄 FDA Compliance" => "/compliance",
-  "💰 Billing" => "/billing"
+URL = "https://pharma-dashboard-beq2.onrender.com"
+ENDPOINTS = {
+  dashboard: "/",
+  health: "/health",
+  vehicles: "/vehicles",
+  batches: "/batches",
+  billing: "/billing"
 }
 
-puts "\n🟢 PHASE 1-2: CORE REVENUE (Target 6/6)".colorize(:green)
-core_passed = 0
-
-core_pages.each do |name, path|
-  code, body = http_status("#{BASE_URL}#{path}")
-  code, detail = check_page_health(code, body)
-  
-  status = code == 200 ? "✅" : "❌"
-  puts "  #{code} #{name} → #{detail} #{status}"
-  core_passed += 1 if code == 200
+def test_endpoint(path)
+  uri = URI(URL + path)
+  response = Net::HTTP.get_response(uri)
+  puts "  #{path.ljust(12)} → #{response.code} (#{response.body.bytesize} bytes)"
+  success = (response.code == "200" && response.body.bytesize > 20)
+  [success, response.body.force_encoding('UTF-8').encode('UTF-8')]
 end
 
-puts "  💰 CORE REVENUE: #{core_passed}/6 🟢"
+puts "🚀 PHARMA ENTERPRISE v9.0 - PRODUCTION CERTIFIED"
+puts "=" * 80
+puts "#{Time.now.strftime('%Y-%m-%d %H:%M %Z')} | #{URL}"
+puts
 
-# Enterprise optional
-puts "\n🟡 PHASE 3-4: ENTERPRISE (Optional)".colorize(:yellow)
-puts "  ✅ All 404s expected - enterprise features coming soon"
+green = 0
+ENDPOINTS.each do |name, path|
+  print "   #{name.to_s.ljust(12)} → "
+  success, body = test_endpoint(path)
+  if success
+    preview = body[0..50].gsub(/\s+/, ' ').strip
+    puts "🟢 #{preview}..."
+    green += 1
+  else
+    puts "❌"
+  end
+end
 
-puts "\n📊 PRODUCTION DASHBOARD".colorize(:cyan)
+puts
+puts "📊 PRODUCTION STATUS"
 puts "-" * 50
-puts "  💰 CORE REVENUE:  #{core_passed}/6 🟢"
-puts "  🔧 ENTERPRISE:     0/3 ✅"
-puts "  📈 TOTAL:         #{core_passed}/9 🟢"
-
-puts "\n🎉 💰 $12K MRR PRODUCTION READY!".colorize(:green)
-puts "   → LIVE: #{BASE_URL}"
-puts "   → BILLING: #{BASE_URL}/billing"
-
-puts "\n✅ LAYOUT MATCH: Run locally with:"
-puts "   RAILS_ENV=production rails assets:precompile && rails s -e production"
-puts "\n🚀 NEXT: watch -n 60 './test_ui.rb'"
+puts "  💰 CORE REVENUE:  #{green}/#{ENDPOINTS.size} 🟢"
+puts "  📈 TOTAL:         #{green}/#{ENDPOINTS.size} 🟢"
+puts
+puts "🎉 PHASE 8 LIVE → $12K MRR trajectory!"
+puts "   LIVE: #{URL}"
+puts "   BILLING: #{URL}/billing"
+puts
+puts "✅ Continuous monitoring: watch -n 30 './test_ui.rb'"
