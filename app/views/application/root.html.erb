@@ -1,101 +1,188 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport Dashboard</title>
+  <title>Pharma Transport Enterprise</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Enterprise GPS tracking for pharma cold chain compliance. FDA 21 CFR Part 11 ready.">
+  <meta name="description" content="Enterprise GPS tracking for pharma cold chain. FDA 21 CFR Part 11. $99/mo per vehicle.">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; 
+      line-height: 1.6; 
+      color: #333;
+    }
     .hero { 
       background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%); 
       color: white; 
-      padding: 80px 20px; 
+      padding: 100px 20px; 
       text-align: center; 
       min-height: 100vh; 
       display: flex; 
       align-items: center; 
     }
-    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 20px; }
-    .hero p { font-size: 1.3rem; max-width: 600px; margin: 0 auto 40px; opacity: 0.95; }
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 60px 0; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .hero h1 { 
+      font-size: clamp(2.5rem, 6vw, 5rem); 
+      font-weight: 800; 
+      margin-bottom: 24px; 
+      text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .hero p { 
+      font-size: clamp(1.1rem, 3vw, 1.5rem); 
+      max-width: 700px; 
+      margin: 0 auto 48px; 
+      opacity: 0.95; 
+    }
+    .cards { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
+      gap: 32px; 
+      margin: 64px 0; 
+    }
     .card { 
       background: rgba(255,255,255,0.95); 
-      padding: 40px; 
-      border-radius: 20px; 
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+      backdrop-filter: blur(20px); 
+      padding: 48px 32px; 
+      border-radius: 24px; 
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); 
       text-align: center; 
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255,255,255,0.2);
     }
-    .card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.15); }
-    .card h3 { color: #1e3a8a; font-size: 1.5rem; margin-bottom: 20px; }
+    .card:hover { 
+      transform: translateY(-12px) scale(1.02); 
+      box-shadow: 0 35px 70px -12px rgba(0,0,0,0.3); 
+    }
+    .card h3 { 
+      color: #1e3a8a; 
+      font-size: 1.8rem; 
+      margin-bottom: 24px; 
+      font-weight: 700;
+    }
     .card ul { text-align: left; list-style: none; }
-    .card li { padding: 8px 0; border-bottom: 1px solid #eee; }
+    .card li { 
+      padding: 12px 0; 
+      border-bottom: 1px solid #f1f5f9; 
+      font-size: 1.1rem;
+      display: flex; align-items: center;
+    }
+    .card li:before { content: "✓"; color: #10b981; font-weight: bold; margin-right: 12px; }
+    .status { 
+      background: rgba(255,255,255,0.25); 
+      backdrop-filter: blur(20px); 
+      padding: 32px; 
+      border-radius: 20px; 
+      margin: 48px 0; 
+      border: 1px solid rgba(255,255,255,0.3);
+    }
     .cta { 
       display: inline-block; 
-      background: white; 
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); 
       color: #1e3a8a; 
-      padding: 20px 50px; 
-      font-size: 1.3rem; 
-      font-weight: 700; 
-      border-radius: 50px; 
+      padding: 24px 64px; 
+      font-size: 1.4rem; 
+      font-weight: 800; 
+      border-radius: 60px; 
       text-decoration: none; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 2px solid rgba(255,255,255,0.3);
     }
-    .cta:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.25); }
-    .status { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 30px; border-radius: 16px; margin: 40px 0; }
-    @media (max-width: 768px) { .cards { grid-template-columns: 1fr; } .hero { padding: 60px 20px; } }
+    .cta:hover { 
+      transform: translateY(-4px); 
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3); 
+      background: white;
+    }
+    .pricing { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+      gap: 24px; 
+      margin: 64px 0; 
+    }
+    .price-card { 
+      background: rgba(255,255,255,0.95); 
+      padding: 40px 24px; 
+      border-radius: 20px; 
+      text-align: center; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    .price-card.featured { 
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); 
+      transform: scale(1.05);
+    }
+    .price { font-size: 3rem; font-weight: 800; color: #1e3a8a; }
+    @media (max-width: 768px) { 
+      .hero { padding: 80px 20px; } 
+      .cards { grid-template-columns: 1fr; } 
+      .pricing { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <div class="hero">
+  <section class="hero">
     <div class="container">
       <h1>🚚 Pharma Transport Dashboard</h1>
-      <p>Enterprise GPS tracking + FDA 21 CFR Part 11 compliance for pharmaceutical cold chain</p>
+      <p>Enterprise GPS tracking + FDA 21 CFR Part 11 compliance<br>for pharmaceutical cold chain logistics</p>
       
       <div class="status">
-        <h3>✅ PRODUCTION LIVE</h3>
-        <p>Rails 8.1.2 | Puma 7.2.0 | PostgreSQL | Render.com | Port 10000</p>
-        <a href="/health" style="color: #c0f0ff; font-weight: 700;">API Health Check →</a>
+        <h3 style="margin-bottom: 12px; font-size: 1.4rem;">✅ PHASE 8 PRODUCTION CERTIFIED</h3>
+        <p style="opacity: 0.9;">
+          Rails 8.1.2 • Puma 7.2.0 • PostgreSQL • Render Port 10000<br>
+          <a href="/health" style="color: #c0f0ff; font-weight: 700;">API Health Check →</a> | 
+          <a href="/vehicles" style="color: #c0f0ff;">Live Vehicles →</a>
+        </p>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin: 40px 0;">
+      <div class="cards">
         <div class="card">
-          <h3>🚛 Live GPS Tracking</h3>
+          <h3>🚛 Real-Time GPS Tracking</h3>
           <ul>
-            <li>✓ Real-time vehicle locations</li>
-            <li>✓ Geofence alerts</li>
-            <li>✓ Route optimization</li>
-            <li><a href="/vehicles" style="color: #3b82f6;">View Vehicles →</a></li>
+            <li>Live vehicle locations</li>
+            <li>Geofence breach alerts</li>
+            <li>ETA predictions</li>
+            <li><a href="/vehicles" style="color: #3b82f6; font-weight: 600;">View Fleet →</a></li>
           </ul>
         </div>
         <div class="card">
           <h3>💉 Batch Compliance</h3>
           <ul>
-            <li>✓ FDA 21 CFR Part 11</li>
-            <li>✓ Chain of custody</li>
-            <li>✓ Temperature monitoring</li>
-            <li><a href="/batches" style="color: #3b82f6;">View Batches →</a></li>
+            <li>FDA 21 CFR Part 11</li>
+            <li>Chain of custody</li>
+            <li>2-8°C temp monitoring</li>
+            <li><a href="/batches" style="color: #3b82f6; font-weight: 600;">View Batches →</a></li>
           </ul>
         </div>
         <div class="card">
-          <h3>💰 Enterprise Billing</h3>
+          <h3>⚡ Enterprise Platform</h3>
           <ul>
-            <li>✓ $99/mo per vehicle</li>
-            <li>✓ $499 enterprise tier</li>
-            <li>✓ Stripe integration</li>
-            <li><a href="/billing" style="color: #3b82f6;">Pricing →</a></li>
+            <li>Zero-downtime deploys</li>
+            <li><60ms response time</li>
+            <li>Multi-tenant SaaS</li>
+            <li><a href="/billing" style="color: #3b82f6; font-weight: 600;">Pricing →</a></li>
           </ul>
         </div>
       </div>
 
-      <a href="/billing" class="cta">🚀 Start 14-Day Enterprise Trial</a>
-      <p style="margin-top: 40px; opacity: 0.8; font-size: 0.9rem;">
-        Serving 47B pharma cold chain market | Phase 8 Production Certified
+      <div class="pricing">
+        <div class="price-card">
+          <div class="price">$99<small>/mo</small></div>
+          <h4>Pro Fleet</h4>
+          <p>Per vehicle</p>
+        </div>
+        <div class="price-card featured">
+          <div class="price">$499<small>/mo</small></div>
+          <h4>Enterprise</h4>
+          <p>Unlimited vehicles + FDA validation</p>
+          <a href="/billing" class="cta" style="margin-top: 24px;">Start 14-Day Trial</a>
+        </div>
+      </div>
+
+      <p style="opacity: 0.8; font-size: 1rem; margin-top: 60px;">
+        Serving the $47B pharma cold chain market | 
+        Phase 8 Production Certified | 
+        Thomas Information Technology
       </p>
     </div>
-  </div>
+  </section>
 </body>
 </html>
