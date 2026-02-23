@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "reports/pdf"
   get "health/index"
   get "home/index"
   # Root
@@ -23,3 +24,6 @@ Rails.application.routes.draw do
   # Enterprise
   get '/billing', to: 'billing#index'
 end
+  member do
+    get :pdf, action: :pdf
+  end
