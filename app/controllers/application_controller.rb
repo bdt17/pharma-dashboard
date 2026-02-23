@@ -10,45 +10,41 @@ class ApplicationController < ActionController::Base
   end
 end
 
-  def health
-    render plain: "Pharma Transport Enterprise v9.2 - OK", status: 200
   end
 
-  def health
-    render plain: 'Pharma Transport Enterprise v9.2 - OK', status: 200
   end
 
 
 protected
 
-def health
-  render plain: "Pharma Transport Enterprise v9.2 - OK", status: 200
 end
 
-  def health
-    render plain: "Pharma Transport Enterprise v9.2 - OK", status: 200
   end
 
-  def index
-    render plain: "Pharma Transport Dashboard v9.2 - LIVE", status: 200
   end
   
+  end
+
+  end
+
+  end
+
+  end
+
+  end
+
+  # Health endpoints - SINGLE COPY ONLY
+  end
+
+  # Root dashboard
+  end
+
+  # SINGLE Health endpoint
   def health
     render plain: "Pharma Transport Enterprise v9.2 - OK", status: 200
   end
 
+  # SINGLE Root dashboard  
   def index
     render plain: "Pharma Transport Dashboard v9.2 - LIVE", status: 200
-  end
-
-  def health
-    render plain: "Pharma Transport Enterprise v9.2 - OK", status: 200
-  end
-
-  def index
-    render plain: "Pharma Transport Dashboard v9.2 - LIVE", status: 200
-  end
-
-  def health
-    render plain: "Pharma Transport Enterprise v9.2 - OK", status: 200
   end
