@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery prepend: true
   
   def root
-    render file: "#{Rails.root}/app/views/application/root.html.erb", layout: false
+    render layout: false  # Forces HTML template (no Rails layout)
   end
   
   def signup
