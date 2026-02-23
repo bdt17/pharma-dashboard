@@ -51,7 +51,11 @@ custody = test_endpoint("/batches/1/custody_report", [200, 404, 302])
 puts "\n💉 PHASE 7: FDA COMPLIANCE"
 fda_ready = root[:body].to_s.include?("Pharma") || 
             vehicles[:body].to_s.include?("truck") ||
-            api_health[:json]['status'] == 'ok'
+if api_health             api_health[:json]['status'] == 'ok'            api_health[:json]['status'] == 'ok' api_health.status_code == 200
+  puts "  /api/health                  200 ✅ (#{api_health.body.size} bytes)"
+else
+  puts "  /api/health                  ERROR NoMethodError ❌"
+end
 
 puts "  FDA Compliance           #{fda_ready ? '✅ LIVE' : '⚠️ Scaffold Ready'}"
 

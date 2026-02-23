@@ -4,3 +4,8 @@ class HomeController < ApplicationController
     # Removed render - uses view + layout
   end
 end
+
+  def index
+    render plain: 'Pharma Transport Dashboard v9.2', status: 200
+  end
+

@@ -1,13 +1,22 @@
 Rails.application.routes.draw do
-  root 'home#index' if defined?(HomeController)
+  get "health/index"
+  # Landing page
+  root "application#root"
   
-  # PROVEN WORKING ROUTES (don't touch)
-  resources :vehicles
-  resources :batches
-  get '/gps/stream', to: 'gps#stream' if defined?(GpsController)
-  get '/billing', to: 'billing#index' if defined?(BillingController)
+  # Core enterprise endpoints - EXPLICIT routes
+  get "/health", to: "health#index"
+  get "/api/health", to: "health#index"
+  get "/vehicles", to: "vehicles#index"
+  get "/batches", to: "batches#index"
+  get "/billing", to: "billing#index"
   
-  # ADD HEALTH ONLY - simple application controller method
-  get '/health', to: 'application#health'
-  get '/api/health', to: 'application#health'
+  # GPS endpoints  
+  get "/gps/stream", to: "gps#stream"
+  post "/gps/update", to: "gps#update"
+  
+  # Sign-up (no Devise crash)
+  get "/sign-up", to: "application#signup"
 end
+
+  get '/health', to: 'health#index'
+  get '/api/health', to: 'health#index'
