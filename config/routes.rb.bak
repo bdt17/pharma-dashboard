@@ -1,15 +1,22 @@
-# config/routes.rb
 Rails.application.routes.draw do
-  root 'home#index'
+  get "health/index"
+  # Landing page
+  root "application#root"
   
-  get 'health', to: 'health#index'
-  get 'billing', to: 'billing#index'
+  # Core enterprise endpoints - EXPLICIT routes
+  get "/health", to: "health#index"
+  get "/api/health", to: "health#index"
+  get "/vehicles", to: "vehicles#index"
+  get "/batches", to: "batches#index"
+  get "/billing", to: "billing#index"
   
-  # Dashboard resources (index only)
-  resources :vehicles, only: [:index]
-  resources :batches, only: [:index]
-  resources :compliance, only: [:index]
+  # GPS endpoints  
+  get "/gps/stream", to: "gps#stream"
+  post "/gps/update", to: "gps#update"
   
-  # Authentication
-  devise_for :users
- end
+  # Sign-up (no Devise crash)
+  get "/sign-up", to: "application#signup"
+end
+
+  get '/health', to: 'health#index'
+  get '/api/health', to: 'health#index'
