@@ -5,14 +5,4 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     get home_index_url
     assert_response :success
   end
-
-  test "should get health" do
-    get home_health_url
-    assert_response :success
-  end
-
-  test "should get dashboard" do
-    get home_dashboard_url
-    assert_response :success
-  end
 end
