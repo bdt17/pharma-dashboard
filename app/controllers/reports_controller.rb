@@ -1,10 +1,12 @@
 class ReportsController < ApplicationController
-  def chain_of_custody
-    @batch = Batch.last || Batch.new(lot_number: "DEMO-#{Time.now.to_i}")
+  def pdf
+    @batch = Batch.find(params[:id])
     respond_to do |format|
+      format.html
       format.pdf do
-        pdf = WickedPdf.new.pdf_from_string(render_to_string)
-        send_data pdf, filename: "chain-of-custody #{@batch.lot_number}.pdf"
+        render pdf: "batch_#{@batch.id}_custody",
+               template: "reports/pdf",
+               layout: 'pdf'
       end
     end
   end
