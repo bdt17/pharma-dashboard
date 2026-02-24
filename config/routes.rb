@@ -1,42 +1,28 @@
 Rails.application.routes.draw do
   # Devise FIRST (before everything else)
-devise_for :users  # Use Devise defaults (no custom controllers yet)
+  devise_for :users
 
-  # Root
-  root "home#index"
-
-  # Health checks
-  get '/health', to: 'application#health'
-  get '/api/health', to: 'application#health'
-
-  # Core resources
+  # Root + Core endpoints (public + dual-mode) - Phase 8 LIVE
+  root to: "dashboard#index"
+  get '/public', to: 'dashboard#public_dashboard'
+  get '/enterprise', to: 'dashboard#index'
+  
+  # Public revenue/health endpoints (test_ui.rb green)
+  get '/health', to: 'dashboard#health'
+  get '/vehicles', to: 'dashboard#vehicles'
+  get '/batches', to: 'dashboard#batches'
+  get '/billing', to: 'dashboard#billing'
+  get '/billing/plans', to: 'billing#plans'
+  post '/billing/subscribe', to: 'billing#subscribe'
+  
+  # Resources (protected by controller before_action)
   resources :vehicles
   resources :batches do
     member do
-      get :custody_report
+      get :custody_report, path: 'custody_report'
     end
   end
-  resources :sensors
-  resources :trackings
-  resources :audits
-
-  # GPS tracking
-  get '/gps/update', to: 'gps#update'
-  get '/gps/stream', to: 'gps#stream'
-  get '/api/gps/:id', to: 'sensors#gps'
-
-  # Billing dashboard (Phase 8 Revenue)
-  get 'billing', to: 'billing#index'
-  get 'billing/plans', to: 'billing#plans'
-  post 'billing/subscribe', to: 'billing#subscribe'
-
-  # Stripe Webhooks (Phase 8 Revenue)
-  namespace :stripe do
-    post 'webhooks', to: 'webhooks#create'
-  end
-
-  # Phase 9 IoT APIs
-  post '/api/forecast/:vehicle_id', to: 'sensors#forecast'
-  post '/api/tamper/:vehicle_id', to: 'sensors#tamper'
-  get '/api/vision', to: 'sensors#vision'
+  
+  # Stripe Webhooks (Phase 8 Revenue - KEEP)
+  post '/stripe/webhooks', to: 'stripe/webhooks#create'
 end
