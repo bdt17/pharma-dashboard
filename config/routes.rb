@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'health', to: 'health#show'
   # Devise FIRST (before everything else)
   devise_for :users
 
@@ -26,4 +27,3 @@ Rails.application.routes.draw do
   # Stripe Webhooks (Phase 8 Revenue - KEEP)
   post '/stripe/webhooks', to: 'stripe/webhooks#create'
 end
-get 'health', to: 'health#show'
