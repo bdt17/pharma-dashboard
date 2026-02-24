@@ -13226,3 +13226,9 @@ Generating image variants require the image_processing gem. Please add `gem "ima
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started GET "/health" for ::1 at 2026-02-24 15:19:57 -0700
+  
+ArgumentError (Before process_action callback :authenticate_user! has not been defined):
+  
+app/controllers/dashboard_controller.rb:2:in `<class:DashboardController>'
+app/controllers/dashboard_controller.rb:1:in `<top (required)>'
