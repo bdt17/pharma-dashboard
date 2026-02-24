@@ -3,5 +3,3 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 end
 
-devise :database_authenticatable, :registerable,
-       :recoverable, :rememberable, :validatable
