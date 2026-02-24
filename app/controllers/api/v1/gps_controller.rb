@@ -4,16 +4,16 @@ module Api
       skip_before_action :verify_authenticity_token
       
       def update
-        telemetry = Telemetry.create!(
+        Telemetry.create!(
           vehicle_id: params[:vehicle_id],
-          lat: params[:lat]&.to_f,
-          lng: params[:lng]&.to_f, 
-          speed: params[:speed]&.to_f,
-          temp: params[:temp]&.to_f,
-          battery: params[:battery]&.to_f,
+          lat: params[:lat]&.to_f || 0,
+          lng: params[:lng]&.to_f || 0,
+          speed: params[:speed]&.to_f || 0,
+          temp: params[:temp]&.to_f || 0,
+          battery: params[:battery]&.to_f || 0,
           recorded_at: Time.current
         )
-        render json: {status: 'created', id: telemetry.id}
+        render json: {status: 'success', vehicle_id: params[:vehicle_id]}
       end
     end
   end
