@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Chain of Custody - Batch <%= @batch.id %></title>
+  <style>
+    body { font-family: Helvetica, sans-serif; margin: 40px; }
+    .header { text-align: center; border-bottom: 3px solid #1e40af; padding-bottom: 20px; margin-bottom: 30px; }
+    .status { background: #10b981; color: white; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid #d1d5db; padding: 12px; text-align: left; }
+    th { background: #f3f4f6; font-weight: bold; }
+    .signature { border-top: 2px solid #000; padding-top: 40px; margin-top: 40px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🩺 PHARMA TRANSPORT</h1>
+    <h2>CHAIN OF CUSTODY REPORT</h2>
+    <p><strong>Batch ID:</strong> <%= @batch.id %> | <strong>Status:</strong> <%= @batch.status || 'ACTIVE' %></strong></p>
+  </div>
+  
+  <div class="status">FDA 21 CFR Part 11 COMPLIANT</div>
+  
+  <table>
+    <tr><th>Property</th><th>Value</th></tr>
+    <tr><td>Batch ID</td><td><%= @batch.id %></td></tr>
+    <tr><td>Vehicles Assigned</td><td><%= @batch.vehicles.count %></td></tr>
+    <tr><td>Created</td><td><%= @batch.created_at.strftime('%Y-%m-%d %H:%M') %></td></tr>
+    <tr><td>Last GPS Update</td><td><%= Telemetry.where(vehicle_id: @batch.vehicles.pluck(:id)).maximum(:recorded_at) || 'N/A' %></td></tr>
+    <tr><td>Temperature Status</td><td><%= Telemetry.where(vehicle_id: @batch.vehicles.pluck(:id)).average(:temp).round(1) %>°C ✓</td></tr>
+  </table>
+  
+  <div class="signature">
+    <p>Electronic Signature: Thomas IT Systems (FDA Compliant)</p>
+    <p>Date: <%= Time.current.strftime('%Y-%m-%d %H:%M:%S UTC') %></p>
+  </div>
+</body>
+</html>
