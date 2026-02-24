@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  get "reports/pdf"
-  get "health/index"
-  get "home/index"
-  
+  # Devise FIRST (before everything else)
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+
   # Root
   root "home#index"
 
@@ -10,7 +12,7 @@ Rails.application.routes.draw do
   get '/health', to: 'application#health'
   get '/api/health', to: 'application#health'
 
-  # Existing working routes
+  # Existing working routes  
   resources :vehicles
   resources :batches do
     member do
@@ -27,16 +29,13 @@ Rails.application.routes.draw do
   get 'billing/plans', to: 'billing#plans'
   post 'billing/subscribe', to: 'billing#subscribe'
 
-  # API ROUTES FIRST - Before React SPA catch-all
+  # API ROUTES
   post '/api/forecast/:vehicle_id', to: 'sensors#forecast'
   post '/api/tamper/:vehicle_id', to: 'sensors#tamper'
   get '/api/vision', to: 'sensors#vision'
-  
-  # Add your Phase 8+ routes here
+
+  # Phase 8+ resources
   resources :sensors
   resources :trackings
   resources :audits
-  
-  # Devise (add if using authentication)
-  devise_for :users
 end
