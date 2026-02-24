@@ -13,3 +13,4 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 gem "stripe-rails", "~> 2.6"
+gem 'image_processing', '~> 1.2'
