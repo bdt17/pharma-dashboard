@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  skip_before_action :authenticate_user!  # PUBLIC FOR LAUNCH
+  skip_skip_before_action :authenticate_user!, only: [:index]  # PUBLIC FOR LAUNCH
   
   def index
     render plain: "🚚 PHARMA ENTERPRISE v16.1 - 500+ Queclink GV55 GPS | Phoenix AZ Live", status: 200

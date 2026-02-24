@@ -26,3 +26,4 @@ Rails.application.routes.draw do
   # Stripe Webhooks (Phase 8 Revenue - KEEP)
   post '/stripe/webhooks', to: 'stripe/webhooks#create'
 end
+get 'health', to: 'health#show'
