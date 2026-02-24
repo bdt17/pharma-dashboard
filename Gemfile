@@ -1,16 +1,34 @@
 source "https://rubygems.org"
 ruby "3.3.5"
 
+# Core Rails
 gem "rails", "~> 8.1.1"
-gem 'pg', '~> 1.5.5'
+gem "pg", "~> 1.5.5"
 gem "puma", ">= 5.0"
-
-gem "rackup", ">= 0"
-gem 'devise'
-gem 'importmap-rails'
+gem "importmap-rails"
 gem "propshaft"
-gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
 
+# Authentication
+gem "devise"
+
+# PDF Generation
+gem "wicked_pdf"
+gem "wkhtmltopdf-binary"
+
+# Payments & Billing
 gem "stripe-rails", "~> 2.6"
-gem 'image_processing', '~> 1.2'
+
+# Image Processing (ActiveStorage)
+gem "image_processing", "~> 1.2"
+
+# Asset pipeline
+gem "bootsnap", require: false
+
+# Production only
+group :production do
+  gem "rack-cache"
+end
+
+group :development, :test do
+  gem "debug", platforms: %i[mri mingw x64_mingw]
+end
