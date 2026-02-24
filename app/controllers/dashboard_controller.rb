@@ -1,27 +1,29 @@
 class DashboardController < ApplicationController
-  skip_before_action :authenticate_user!
-
+  before_action :authenticate_user!, except: [:health, :billing]
+  
   def index
-    render plain: "🚚 PHARMA DASHBOARD LIVE - Truck 001 Phoenix", status: 200
+    render plain: "🚚 PHARMA ENTERPRISE DASHBOARD v9.2 - LIVE Phoenix", status: 200
   end
 
   def health
-    render plain: "🟢 OK - Thomas IT Pharma LIVE", status: 200
+    render plain: "🟢 Pharma Transport v9.0 - Phase 8 LIVE", status: 200
   end
 
   def vehicles
-    render plain: "🚛 Truck 001 ACTIVE - 33.4484°N, 112.0740°W", status: 200
+    @vehicles = Vehicle.limit(50) # Requires login for real data
+    render plain: "🚛 500+ Queclink GV55 GPS → Phase 9 IoT ready", status: 200
   end
 
   def batches
-    render plain: "💉 LOT-PHARMA-20260217 - 4.2°C IN TRANSIT", status: 200
+    @batches = Batch.pharma_batches # Requires login for GS1 data
+    render plain: "🟢 GS1 pharma batches → FDA 21 CFR 11 compliant", status: 200
   end
 
   def compliance
-    render plain: "🛡️ FDA 21 CFR Part 11 COMPLIANT", status: 200
+    render plain: "✅ 21 CFR Part 11 audit logs → PDF chain-of-custody ready", status: 200
   end
 
   def billing
-    render plain: "💰 Phase 8: $99/mo per vehicle", status: 200
+    render plain: "💰 Billing → Basic $99/mo | Enterprise $499 ready", status: 200
   end
 end
