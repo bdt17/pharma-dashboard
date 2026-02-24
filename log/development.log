@@ -13232,3 +13232,25 @@ ArgumentError (Before process_action callback :authenticate_user! has not been d
   
 app/controllers/dashboard_controller.rb:2:in `<class:DashboardController>'
 app/controllers/dashboard_controller.rb:1:in `<top (required)>'
+  [1m[35m (32.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (51.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (8.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to CreateTelemetries (20260224222913)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (468.0ms)[0m  [1m[35mCREATE TABLE "telemetries" ("id" bigserial primary key, "vehicle_id" bigint NOT NULL, "batch_id" bigint NOT NULL, "lat" float, "lng" float, "speed" float, "temp" float, "battery" float, "recorded_at" timestamp(6), "signal_strength" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_e5c29873d5"
+FOREIGN KEY ("vehicle_id")
+  REFERENCES "vehicles" ("id")
+, CONSTRAINT "fk_rails_5353cba999"
+FOREIGN KEY ("batch_id")
+  REFERENCES "batches" ("id")
+) /*application='PharmaDashboard'*/[0m
+  [1m[35m (130.9ms)[0m  [1m[35mCREATE INDEX "index_telemetries_on_vehicle_id" ON "telemetries" ("vehicle_id") /*application='PharmaDashboard'*/[0m
+  [1m[35m (135.7ms)[0m  [1m[35mCREATE INDEX "index_telemetries_on_batch_id" ON "telemetries" ("batch_id") /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260224222913') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (31.2ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
