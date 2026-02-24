@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
   # Devise FIRST (before everything else)
-  devise_for :users, controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
-  }
+devise_for :users  # Use Devise defaults (no custom controllers yet)
 
   # Root
   root "home#index"
