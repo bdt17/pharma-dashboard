@@ -1,5 +1,3 @@
 class VehiclesController < ApplicationController
-  def index
-    render plain: 'Vehicles GPS tracking ready - Phase 8 Enterprise'
-  end
+  def index; render plain: "Queclink GV55 GPS → 500+ vehicles"; end
 end
