@@ -3650,3 +3650,13 @@ app/controllers/application_controller.rb:3:in `<class:ApplicationController>'
 app/controllers/application_controller.rb:1:in `<top (required)>'
 app/controllers/dashboard_controller.rb:1:in `<top (required)>'
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Migrating to CreateLocationPoints (20251218015132)
+Migrating to CreateBatches (20260116202142)
+Migrating to CreateLocations (20260116202253)
+Migrating to CreateAuditLogs (20260116202255)
+Migrating to CreateAlerts (20260117233007)
+Migrating to CreateDrivers (20260117233009)
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
