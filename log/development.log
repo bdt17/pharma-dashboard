@@ -13254,3 +13254,34 @@ FOREIGN KEY ("batch_id")
   [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
   [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
   [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (20.5ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (2.6ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (29.0ms)[0m  [1m[32mINSERT INTO "vehicles" ("name", "latitude", "longitude", "status", "created_at", "updated_at", "plate", "identifier", "lat", "lng") VALUES ('Truck-108', NULL, NULL, NULL, '2026-02-25 00:01:16.988818', '2026-02-25 00:01:16.988818', NULL, NULL, NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (39.4ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (2.2ms)[0m  [1m[32mINSERT INTO "vehicles" ("name", "latitude", "longitude", "status", "created_at", "updated_at", "plate", "identifier", "lat", "lng") VALUES ('Truck-119', NULL, NULL, NULL, '2026-02-25 00:01:17.064439', '2026-02-25 00:01:17.064439', NULL, NULL, NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (30.2ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (2.9ms)[0m  [1m[32mINSERT INTO "vehicles" ("name", "latitude", "longitude", "status", "created_at", "updated_at", "plate", "identifier", "lat", "lng") VALUES ('Truck-119', NULL, NULL, NULL, '2026-02-25 00:01:17.116797', '2026-02-25 00:01:17.116797', NULL, NULL, NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (23.4ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (3.9ms)[0m  [1m[32mINSERT INTO "vehicles" ("name", "latitude", "longitude", "status", "created_at", "updated_at", "plate", "identifier", "lat", "lng") VALUES ('Truck-105', NULL, NULL, NULL, '2026-02-25 00:01:17.147539', '2026-02-25 00:01:17.147539', NULL, NULL, NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (27.2ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (4.1ms)[0m  [1m[32mINSERT INTO "vehicles" ("name", "latitude", "longitude", "status", "created_at", "updated_at", "plate", "identifier", "lat", "lng") VALUES ('Truck-109', NULL, NULL, NULL, '2026-02-25 00:01:17.183427', '2026-02-25 00:01:17.183427', NULL, NULL, NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (26.6ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "vehicles" LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.7ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Exists? (100.6ms)[0m  [1m[34mSELECT 1 AS one FROM "batches" LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTelemetry Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "telemetries" LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.6ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (2.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
