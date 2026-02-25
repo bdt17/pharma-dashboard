@@ -1,6 +1,7 @@
-User.create!(
-  email: 'admin@pharmagps.com',
-  password: 'UZtkv5twaoaIH1gCGBuYetXC',
-  password_confirmation: 'UZtkv5twaoaIH1gCGBuYetXC'
-)
-puts "✅ PRO Admin created: admin@pharmagps.com / UZtkv5twaoaIH1gCGBuYetXC"
+User.find_or_create_by!(email: 'admin@pharmagps.com') do |u|
+  u.password = 'l4XaO5ZbjHGnqXEfFbfsv3ao'
+  u.password_confirmation = 'l4XaO5ZbjHGnqXEfFbfsv3ao'
+end
+
+puts "✅ Admin: admin@pharmagps.com"
+puts "🔑 Password: l4XaO5ZbjHGnqXEfFbfsv3ao"
