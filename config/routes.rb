@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'dashboard#index'
   get '/logout', to: 'dashboard#logout'
   
-  # ALL 8 TEST_UI_CONTENT.SH ENDPOINTS
+  # 8 ENDPOINTS FOR test_ui_content.sh
   get '/health', to: 'dashboard#health'
   get '/vehicles', to: 'dashboard#vehicles'
   get '/batches', to: 'dashboard#batches'
@@ -13,10 +13,6 @@ Rails.application.routes.draw do
   get '/compliance', to: 'dashboard#compliance'
   get '/login', to: 'dashboard#login'
   
-  # PDF Chain of Custody
-  resources :batches do
-    member do
-      get :custody_report, :custody_pdf
-    end
-  end
+  # PDF custody reports
+  get '/batches/:id/custody_report', to: 'batches#custody_report'
 end
