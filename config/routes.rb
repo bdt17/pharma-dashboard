@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   get '/shipments', to: 'dashboard#shipments'
   get '/trucks', to: 'dashboard#trucks'
   get '/routes', to: 'dashboard#routes'
+  get '/batches', to: 'dashboard#batches'
 end

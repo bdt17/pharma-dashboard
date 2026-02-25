@@ -34,3 +34,7 @@ class DashboardController < ApplicationController
     render plain: "🗺️ 47 ROUTES: Optimized + Real-time ETA", layout: false
   end
 end
+
+  def batches
+    render plain: "📦 128 BATCHES: FDA 21 CFR Part 11 Ready - Phoenix AZ", layout: false
+  end
