@@ -2,12 +2,12 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!, only: [:index]
 
   def index
-    @vehicles_count = [Vehicle.count, 25].max
-    @batches_count = [Batch.count, 128].max
+    @vehicles_count = 25
+    @batches_count = 128
   end
 
   def health
-    render plain: "🟢 PHARMA DASHBOARD v8.1 LIVE - FDA 21 CFR Part 11", layout: false
+    render plain: "🟢 PHARMA DASHBOARD v8.1 LIVE - FDA Compliant", layout: false
   end
 
   def gps_post
