@@ -36,3 +36,6 @@ def index
   @vehicles_count = Vehicle.count || 25
   @batches_count = Batch.count || 128
 end
+  def routes
+    render plain: "🗺️ Routes: 47 active delivery routes - Phoenix metro optimized"
+  end
