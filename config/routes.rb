@@ -12,11 +12,6 @@ Rails.application.routes.draw do
   get '/shipments', to: 'dashboard#shipments'
   get '/trucks', to: 'dashboard#trucks'
   get '/routes', to: 'dashboard#routes'
-  get '/batches', to: 'dashboard#batches'
-  get '/vehicles', to: 'dashboard#vehicles'
-  get '/billing', to: 'dashboard#billing'
-  get '/compliance', to: 'dashboard#compliance'
-  get '/login', to: 'dashboard#login'
   
   resources :batches do
     member do
