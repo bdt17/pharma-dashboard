@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  devise_for :users
   
   root 'dashboard#index'
-  get '/dashboard' => 'dashboard#index', as: :dashboard
+  get '/dashboard', to: 'dashboard#index'
   
   resources :batches do
     member do
@@ -10,10 +10,8 @@ Rails.application.routes.draw do
     end
   end
   
-  # Public API endpoints (keep unprotected)
+  # Public APIs
   get '/dashboard/vehicles', to: 'dashboard#vehicles'
-  get '/dashboard/batches', to: 'dashboard#batches'
-  get '/dashboard/billing', to: 'dashboard#billing'
-  get '/dashboard/compliance', to: 'dashboard#compliance'
+  get '/dashboard/batches', to: 'dashboard#batches'  
   get '/dashboard/health', to: 'dashboard#health'
 end
