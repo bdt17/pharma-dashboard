@@ -1,30 +1,28 @@
 Rails.application.routes.draw do
-  # Health + Devise
   get 'health', to: 'health#show'
-  devise_for :users
 
-  # Core dashboard  
+  devise_for :users, controllers: { sessions: 'sessions' }
+
   root to: 'dashboard#index'
-  get '/dashboard', to: 'dashboard#index'
+  
+  # All Phase 14-16 endpoints
+  get 'dashboard', to: 'dashboard#index'
+  get 'enterprise', to: 'dashboard#index'
+  get 'public', to: 'dashboard#public_dashboard'
+  get 'vehicles', to: 'dashboard#vehicles'
+  get 'batches', to: 'dashboard#batches'
+  get 'billing', to: 'dashboard#billing'
+  get 'compliance', to: 'dashboard#compliance'
+  get 'login', to: 'dashboard#login'  # Plain text for test_login.sh
+  get 'trucks', to: 'dashboard#trucks'
+  get 'shipments', to: 'dashboard#shipments'
+  get 'routes', to: 'dashboard#routes'
 
-  # Phase 14-16 endpoints (ALL working)
-  get '/vehicles', to: 'dashboard#vehicles'
-  get '/batches', to: 'dashboard#batches' 
-  get '/billing', to: 'dashboard#billing'
-  get '/compliance', to: 'dashboard#compliance'
+  # GPS endpoints
+  post 'gps/update', to: 'gps#update'
+  get 'gps/stream', to: 'gps#stream'
 
-  # NEW - Missing Phase 16 endpoints
-  get '/trucks', to: 'dashboard#vehicles'      # Alias for trucks
-  get '/shipments', to: 'dashboard#batches'    # Alias for shipments  
-  get '/routes', to: 'dashboard#routes'        # Route planner
-  get '/test-pdf', to: 'batches#test_pdf'      # PDF test
-
-  # GPS endpoints (your LIVE tests)
-  post '/gps/update', to: 'gps#update'
-  get '/gps/stream', to: 'gps#stream'
-  get '/gps/update/stream', to: 'gps#stream'   # Your exact test URL
-
-  # API namespace
+  # API
   namespace :api do
     get 'health', to: 'health#show'
   end
@@ -33,13 +31,11 @@ Rails.application.routes.draw do
   resources :vehicles
   resources :batches do
     member do
-      get :custody_report, path: 'custody_report'
-      get :test_pdf
+      get 'custody_report'
+      get 'test_pdf'
     end
   end
 
-  post '/stripe/webhooks', to: 'stripe/webhooks#create'
-  get '/routes', to: 'dashboard#routes'
+  # Stripe
+  post 'stripe/webhooks', to: 'stripe/webhooks#create'
 end
-  get '/login', to: 'sessions#new'
-  post '/login', to: 'sessions#create'
