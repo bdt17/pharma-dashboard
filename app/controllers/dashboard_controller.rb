@@ -1,5 +1,8 @@
 class DashboardController < ApplicationController
   layout 'application', only: [:index]
+  def routes
+  render plain: "🗺️ Routes: 47 delivery routes - Phoenix metro optimized", layout: false
+  end
   
   def index
     @vehicles_count = [Vehicle.count, 25].max
