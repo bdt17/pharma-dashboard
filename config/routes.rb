@@ -41,3 +41,4 @@ Rails.application.routes.draw do
 
   post '/stripe/webhooks', to: 'stripe/webhooks#create'
 end
+  get '/routes', to: 'dashboard#routes'
