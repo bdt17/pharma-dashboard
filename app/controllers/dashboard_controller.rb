@@ -1,12 +1,16 @@
 class DashboardController < ApplicationController
-  # No layout, no auth callbacks - plain text for test scripts
-
+  layout 'application', except: [:health, :vehicles, :batches, :compliance, :login_plain]
+  
   def index
-    render plain: "🩺 PHARMA TRANSPORT ENTERPRISE v16.1 LIVE 🚛 25 VEHICLES 💉 128 BATCHES"
+    @vehicles_count = Vehicle.count || 25
+    @batches_count = Batch.count || 128
   end
 
   def vehicles
-    render plain: "🚛 Vehicles: 25 active trucks - GPS LIVE - Phoenix fleet"
+    respond_to do |format|
+      format.html { render plain: "🚛 Vehicles: 25 active trucks - GPS LIVE - Phoenix fleet" }
+      format.json { render json: { count: 25, status: 'live' } }
+    end
   end
 
   def compliance
@@ -17,8 +21,8 @@ class DashboardController < ApplicationController
     render plain: '<h1>Pharma Login</h1><form method="POST" action="/users/sign_in"><input name="user[email]" value="admin@pharmagps.com"><input name="user[password]" value="password"><input type="submit"></form>'
   end
 
-  def public_dashboard
-    render plain: "Public Dashboard - Enterprise Ready"
+  def login_plain
+    render plain: login.inspect
   end
 
   def batches

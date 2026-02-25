@@ -30,3 +30,4 @@ Rails.application.routes.draw do
 
   post '/stripe/webhooks', to: 'stripe/webhooks#create'
 end
+  post '/login', to: 'dashboard#create'
