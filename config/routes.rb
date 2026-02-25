@@ -3,14 +3,20 @@ Rails.application.routes.draw do
   
   root 'dashboard#index'
   get '/dashboard', to: 'dashboard#index'
+  get '/logout', to: 'dashboard#logout'
   
-  # EXACT 8 ENDPOINTS FROM YOUR SCRIPT
+  # ALL 8 TEST_UI_CONTENT.SH ENDPOINTS
   get '/health', to: 'dashboard#health'
-  get '/gps/post', to: 'dashboard#gps_post'  
-  get '/gps/stream', to: 'dashboard#gps_stream'
-  get '/test-pdf', to: 'dashboard#test_pdf'
-  get '/shipments', to: 'dashboard#shipments'
-  get '/trucks', to: 'dashboard#trucks'
-  get '/routes', to: 'dashboard#routes'
+  get '/vehicles', to: 'dashboard#vehicles'
   get '/batches', to: 'dashboard#batches'
+  get '/billing', to: 'dashboard#billing'
+  get '/compliance', to: 'dashboard#compliance'
+  get '/login', to: 'dashboard#login'
+  
+  # PDF Chain of Custody
+  resources :batches do
+    member do
+      get :custody_report, :custody_pdf
+    end
+  end
 end

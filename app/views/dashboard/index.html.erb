@@ -1,21 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head><title>Pharma Dashboard</title>
-<script src="https://cdn.tailwindcss.com"></script></head>
-<body class="p-8 max-w-6xl mx-auto">
-  <h1 class="text-4xl font-bold text-blue-900 mb-8">🚛 Pharma Transport Dashboard</h1>
-  <div class="grid md:grid-cols-2 gap-6">
-    <div class="bg-gradient-to-br from-blue-500 to-blue-700 text-white p-8 rounded-2xl">
-      <h2 class="text-3xl font-bold mb-2">📦 Batches</h2>
-      <div class="text-5xl font-black"><%= @batches_count || 128 %></div>
-      <p class="mt-2 opacity-90">FDA 21 CFR Part 11 Compliant</p>
+<head>
+  <title>Pharma Dashboard</title>
+  <meta name="viewport" content="width=device-width">
+  <%= stylesheet_link_tag "tailwind/application.css", "data-turbo-track": "reload" %>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-blue-50 min-h-screen">
+  <nav class="bg-white shadow-lg border-b-2 border-blue-100">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-black text-blue-900 flex items-center">
+          <span class="text-4xl mr-3">🚛</span>
+          Pharma Transport Dashboard
+        </h1>
+        <div class="flex space-x-4">
+          <%= link_to "🚀 GPS Live", "/vehicles", class: "px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 shadow-lg transition-all duration-200" %>
+          <%= link_to "📦 Batches", "/batches", class: "px-6 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 shadow-lg transition-all duration-200" %>
+          <%= link_to "💰 Billing", "/billing", class: "px-6 py-3 bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 shadow-lg transition-all duration-200" %>
+          <%= link_to "📄 Chain of Custody", "/batches/1/custody_report", class: "px-6 py-3 bg-orange-600 text-white font-bold rounded-xl hover:bg-orange-700 shadow-lg transition-all duration-200" %>
+          <%= button_to "🚪 Logout", logout_path, method: :post, class: "px-6 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 shadow-lg transition-all duration-200" %>
+        </div>
+      </div>
     </div>
-    <div class="bg-gradient-to-br from-green-500 to-emerald-600 text-white p-8 rounded-2xl">
-      <h2 class="text-3xl font-bold mb-2">🚛 Vehicles</h2>
-      <div class="text-5xl font-black"><%= @vehicles_count || 25 %></div>
-      <p class="mt-2 opacity-90">GPS Live Tracking</p>
+  </nav>
+
+  <div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="grid lg:grid-cols-3 gap-8">
+      <!-- Vehicles -->
+      <div class="bg-gradient-to-br from-blue-500 to-blue-700 text-white p-10 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
+        <div class="text-6xl mb-6">🚛</div>
+        <h2 class="text-4xl font-black mb-6">Live Vehicles</h2>
+        <div class="text-7xl font-black mb-6"><%= @vehicles_count %></div>
+        <p class="text-2xl opacity-90">GPS Tracking Active</p>
+      </div>
+
+      <!-- Batches -->
+      <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-10 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
+        <div class="text-6xl mb-6">📦</div>
+        <h2 class="text-4xl font-black mb-6">FDA Batches</h2>
+        <div class="text-7xl font-black mb-6"><%= @batches_count %></div>
+        <p class="text-2xl opacity-90">21 CFR Part 11 Compliant</p>
+      </div>
+
+      <!-- Compliance -->
+      <div class="bg-gradient-to-br from-purple-500 to-indigo-600 text-white p-10 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2">
+        <div class="text-6xl mb-6">✅</div>
+        <h2 class="text-4xl font-black mb-6">Compliance</h2>
+        <div class="text-7xl font-black mb-6">100%</div>
+        <p class="text-2xl opacity-90">Audit Trail Active</p>
+      </div>
+    </div>
+
+    <div class="mt-20 text-center">
+      <div class="inline-flex bg-white/80 backdrop-blur-xl px-8 py-4 rounded-2xl shadow-2xl border border-blue-200">
+        <p class="text-xl text-gray-700 font-semibold">
+          Production Ready • Phoenix, AZ • <%= Time.current.strftime("%Y-%m-%d %H:%M MST") %>
+        </p>
+      </div>
     </div>
   </div>
-  <p class="mt-8 text-sm text-gray-600">Production Ready • Phoenix, AZ • <%= Time.current.strftime("%Y-%m-%d %H:%M") %></p>
 </body>
 </html>
