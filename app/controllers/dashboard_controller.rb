@@ -32,3 +32,7 @@ class DashboardController < ApplicationController
     render plain: "🟢 OK - Rails 8.1 LIVE - Render.com Production", layout: false
   end
 end
+def index
+  @vehicles_count = Vehicle.count || 25
+  @batches_count = Batch.count || 128
+end
