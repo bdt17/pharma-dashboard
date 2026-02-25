@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   get '/batches', to: 'dashboard#batches' 
   get '/billing', to: 'dashboard#billing'
   get '/compliance', to: 'dashboard#compliance'
-  get '/login', to: 'dashboard#login'
 
   # NEW - Missing Phase 16 endpoints
   get '/trucks', to: 'dashboard#vehicles'      # Alias for trucks
@@ -42,3 +41,5 @@ Rails.application.routes.draw do
   post '/stripe/webhooks', to: 'stripe/webhooks#create'
   get '/routes', to: 'dashboard#routes'
 end
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
