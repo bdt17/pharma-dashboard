@@ -39,3 +39,15 @@ end
   def routes
     render plain: "🗺️ Routes: 47 active delivery routes - Phoenix metro optimized"
   end
+
+  def trucks
+    render plain: "🚛 Trucks: 25 active vehicles - GPS LIVE - Phoenix fleet", layout: false
+  end
+
+  def shipments
+    render plain: "📦 Shipments: 128 pharma batches - FDA compliant", layout: false
+  end
+
+  def routes
+    render plain: "🗺️ Routes: 47 delivery routes - Phoenix metro optimized", layout: false
+  end
