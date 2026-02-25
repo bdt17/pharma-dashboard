@@ -1,15 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pharma Transport Dashboard</title>
+  <title>Pharma Transport Dashboard - Thomas IT</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary-blue': '#0984C0',
+            'accent-silver': '#AAA7B0',
+            'mid-grey': '#565759',
+            'light-variant': '#C0BEC6',
+            'lighter-blue': '#60BDD1'
+          }
+        }
+      }
+    }
+  </script>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <%= javascript_importmap_tags %>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen">
+<body class="bg-white font-sans antialiased">
   <%= yield %>
 </body>
 </html>
