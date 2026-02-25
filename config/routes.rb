@@ -1,30 +1,32 @@
 Rails.application.routes.draw do
   get 'health', to: 'health#show'
-  # Devise FIRST (before everything else)
   devise_for :users
 
-  # Root + Core endpoints (public + dual-mode) - Phase 8 LIVE
-  root to: "dashboard#index"
-  get '/public', to: 'dashboard#public_dashboard'
+  root to: 'dashboard#index'
+  get '/dashboard', to: 'dashboard#index'
   get '/enterprise', to: 'dashboard#index'
+  get '/public', to: 'dashboard#public_dashboard'
   
-  # Public revenue/health endpoints (test_ui.rb green)
-  get '/health', to: 'dashboard#health'
+  # Phase 14 endpoints
   get '/vehicles', to: 'dashboard#vehicles'
   get '/batches', to: 'dashboard#batches'
   get '/billing', to: 'dashboard#billing'
-  get '/billing/plans', to: 'billing#plans'
-  post '/billing/subscribe', to: 'billing#subscribe'
-  
-  # Resources (protected by controller before_action)
+  get '/compliance', to: 'dashboard#compliance'
+  get '/login', to: 'dashboard#login'
+
   resources :vehicles
   resources :batches do
     member do
       get :custody_report, path: 'custody_report'
     end
   end
-  
-  # Stripe Webhooks (Phase 8 Revenue - KEEP)
+
+  get '/gps/stream', to: 'gps#stream'
+  post '/gps/update', to: 'gps#update'
+
+  namespace :api do
+    get 'health', to: 'health#show'
+  end
+
   post '/stripe/webhooks', to: 'stripe/webhooks#create'
 end
-

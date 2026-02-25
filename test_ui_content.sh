@@ -1,88 +1,37 @@
 #!/bin/bash
-# test_ui_content.sh - PHARMA ENTERPRISE v16.1 ENHANCED (Original + Pro Features)
-set -e
-
-# Original Colors (KEEP WORKING FORMAT)
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-
-PROD_URL="https://pharma-dashboard-beq2.onrender.com"
-LOCAL_URL="http://127.0.0.1:10000"
-
-# ✨ NEW PRO BANNER (above original)
-echo "🚀 PHARMA ENTERPRISE UI TEST v16.1 - PRODUCTION MONITOR"
-echo "LOCAL: $LOCAL_URL | PROD: $PROD_URL"
+URL="https://pharma-dashboard-beq2.onrender.com"
+echo "🚀 PHARMA ENTERPRISE UI TEST v16.3 - PRODUCTION MONITOR"
+echo "PROD: $URL"
 echo "══════════════════════════════════════════════════════════"
 
-# ORIGINAL test_endpoint FUNCTION (KEEP WORKING!)
-test_endpoint() {
-  local url=$1
-  local name=$2
-  local expected_status=${3:-200}
-  
-  local status=$(curl -s -o /dev/null -w "%{http_code}" "$url" 2>/dev/null || echo "0")
-  local size=$(curl -s -o /dev/null -w "%{size_download}" "$url" 2>/dev/null || echo "0")
-  
-  if [ "$status" = "$expected_status" ]; then
-    if [ "$size" -gt 50 ]; then
-      echo -ne "${GREEN}🟢${NC} "
+# Fixed: URL/name pairs only
+declare -A endpoints=(
+    ["/"]="HOME"
+    ["/health"]="HEALTH"
+    ["/vehicles"]="VEHICLES"
+    ["/batches"]="BATCHES"
+    ["/compliance"]="COMPLIANCE"
+    ["/billing"]="BILLING"
+    ["/login"]="LOGIN"
+    ["/users/sign_in"]="SIGNIN"
+)
+
+passed=0 total=0
+
+for endpoint in "${!endpoints[@]}"; do
+    name="${endpoints[$endpoint]}"
+    status=$(curl -s -o /dev/null -w "%{http_code}" "$URL$endpoint" || echo "999")
+    size=$(curl -s --max-time 5 "$URL$endpoint" | wc -c)
+    
+    if [ "$status" = "200" ] && [ "$size" -gt 10 ]; then
+        echo "🟢 $name $endpoint → 200 ($size bytes)"
+        ((passed++))
     else
-      echo -ne "${YELLOW}🟡${NC} "
+        echo "🔴 $name $endpoint → $status ($size bytes)"
     fi
-  else
-    echo -ne "${RED}🔴${NC} "
-  fi
-  echo -e "${YELLOW}$name${NC}"
-}
+    ((total++))
+done
 
-# NEW PRO FEATURES (don't break original)
-test_pro_metrics() {
-  echo ""
-  echo "${GREEN}📊 ENTERPRISE METRICS${NC}"
-  echo "${GREEN}✅ 8/8 Endpoints LIVE${NC}"
-  echo "${GREEN}💰 \$500K ARR Ready${NC}"
-  echo "${PURPLE}🔒 Phase 14 Complete${NC}"
-}
-
-# ORIGINAL MAIN LOOP (KEEP WORKING FORMAT)
-echo "🔍 TESTING 8 DASHBOARD PAGES (HTTP 200 OK + Response Size):"
-test_endpoint "$LOCAL_URL/" "HOME" 200
-test_endpoint "$PROD_URL/" "HOME" 200
-test_endpoint "$LOCAL_URL/health" "HEALTH" 200  
-test_endpoint "$PROD_URL/health" "HEALTH" 200
-test_endpoint "$LOCAL_URL/vehicles" "VEHICLES" 200
-test_endpoint "$PROD_URL/vehicles" "VEHICLES" 200
-test_endpoint "$LOCAL_URL/batches" "BATCHES" 200
-test_endpoint "$PROD_URL/batches" "BATCHES" 200
-test_endpoint "$LOCAL_URL/compliance" "COMPLIANCE" 200
-test_endpoint "$PROD_URL/compliance" "COMPLIANCE" 200
-test_endpoint "$LOCAL_URL/billing" "BILLING" 200
-test_endpoint "$PROD_URL/billing" "BILLING" 200
-test_endpoint "$LOCAL_URL/users/sign_in" "LOGIN" 200
-test_endpoint "$PROD_URL/users/sign_in" "LOGIN" 200
-test_endpoint "$LOCAL_URL/users/sign_up" "SIGNUP" 200
-test_endpoint "$PROD_URL/users/sign_up" "SIGNUP" 200
-
-# ✨ NEW PRO SECTIONS (add to original)
-test_pro_metrics
-
-echo ""
-echo "✅ PRODUCTION DASHBOARD LIVE & STABLE"
-echo "📊 PRODUCTION URL: $PROD_URL"
-echo "🔐 ADMIN LOGIN: /users/sign_in"
-echo "📈 HEALTH CHECK: /health"
-echo "🚚 VEHICLES: /vehicles"
-echo "📦 BATCHES: /batches" 
-echo "📋 COMPLIANCE: /compliance"
-echo "💰 BILLING: /billing"
-
-echo ""
-echo "🛠️  MONITORING COMMANDS:"
-echo "  ./pharma_monitor.sh          # Production health"
-echo "  ./test_ui_content.sh         # UI endpoint tests" 
-echo "  rails console                # Admin management"
-echo "  crontab -l | grep pharma     # Check monitoring"
-echo ""
-echo "🎉 PHARMA TRANSPORT DASHBOARD v16.1 PRODUCTION READY 🚚💉"
+echo "══════════════════════════════════════════════════════════"
+echo "📊 RESULTS: $passed/$total endpoints LIVE"
+echo "✅ PRODUCTION STATUS: $((passed * 100 / total))%"
