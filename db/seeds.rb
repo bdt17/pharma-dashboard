@@ -1,6 +1,7 @@
 User.create!(
   email: 'admin@pharmagps.com',
-  password: 'password123',
-  password_confirmation: 'password123'
+  password: 'lHqSbio9S4pKfBvMndboSnlA',
+  password_confirmation: 'lHqSbio9S4pKfBvMndboSnlA'
 )
-puts "✅ Admin created: admin@pharmagps.com / password123"
+puts "✅ PRO Admin created: admin@pharmagps.com"
+puts "🔑 Password: lHqSbio9S4pKfBvMndboSnlA"
