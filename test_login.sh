@@ -4,7 +4,7 @@
 
 URL="https://pharma-dashboard-beq2.onrender.com"
 ADMIN_EMAIL="admin@pharmagps.com"
-ADMIN_PASS="password123"
+ADMIN_PASS="Pharma2026\$trongPass!"
 
 echo "🚀 Testing: [Pharma Dashboard]($URL)"
 echo "=================================="
