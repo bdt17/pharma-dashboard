@@ -3,9 +3,8 @@ Rails.application.routes.draw do
   
   root 'dashboard#index'
   get '/dashboard', to: 'dashboard#index'
-  get '/logout', to: 'dashboard#logout'
   
-  # 8 ENDPOINTS FOR test_ui_content.sh
+  # 8 PRODUCTION ENDPOINTS
   get '/health', to: 'dashboard#health'
   get '/vehicles', to: 'dashboard#vehicles'
   get '/batches', to: 'dashboard#batches'
@@ -13,7 +12,9 @@ Rails.application.routes.draw do
   get '/compliance', to: 'dashboard#compliance'
   get '/login', to: 'dashboard#login'
   
+  # Logout (simple GET)
+  get '/logout', to: 'dashboard#logout'
+  
   # PDF custody reports
   get '/batches/:id/custody_report', to: 'batches#custody_report'
 end
-get '/logout', to: 'dashboard#logout'
