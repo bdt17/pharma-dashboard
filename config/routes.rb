@@ -2,9 +2,11 @@ Rails.application.routes.draw do
   devise_for :users
   
   root 'dashboard#index'
+  
+  # Dashboard + core endpoints
   get '/dashboard', to: 'dashboard#index'
   
-  # 8 PRODUCTION ENDPOINTS
+  # Production endpoints
   get '/health', to: 'dashboard#health'
   get '/vehicles', to: 'dashboard#vehicles'
   get '/batches', to: 'dashboard#batches'
@@ -12,9 +14,13 @@ Rails.application.routes.draw do
   get '/compliance', to: 'dashboard#compliance'
   get '/login', to: 'dashboard#login'
   
-  # Logout (simple GET)
+  # LOGOUT (simple GET)
   get '/logout', to: 'dashboard#logout'
   
-  # PDF custody reports
-  get '/batches/:id/custody_report', to: 'batches#custody_report'
+  # PDF Custody (simple member route)
+  resources :batches, only: [] do
+    member do
+      get :custody_report
+    end
+  end
 end
