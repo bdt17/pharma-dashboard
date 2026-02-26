@@ -13890,3 +13890,46 @@ Completed 200 OK in 5ms (Views: 0.4ms | ActiveRecord: 0.7ms (2 queries, 0 cached
 
 
   [1m[36mUser Load (177.8ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = 'admin@pharmagps.com' LIMIT 1 /*application='PharmaDashboard'*/[0m
+Started GET "/" for ::1 at 2026-02-25 18:59:23 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 17ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/" for ::1 at 2026-02-25 19:02:12 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/health" for ::1 at 2026-02-25 19:02:12 -0700
+Processing by DashboardController#health as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 5.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/vehicles" for ::1 at 2026-02-25 19:02:12 -0700
+Processing by DashboardController#vehicles as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/batches" for ::1 at 2026-02-25 19:02:12 -0700
+Processing by DashboardController#batches as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started HEAD "/trucks" for ::1 at 2026-02-25 19:02:12 -0700
+  
+ActionController::RoutingError (No route matches [HEAD] "/trucks"):
+  
+Started HEAD "/shipments" for ::1 at 2026-02-25 19:02:12 -0700
+  
+ActionController::RoutingError (No route matches [HEAD] "/shipments"):
+  
+Started HEAD "/login" for ::1 at 2026-02-25 19:02:12 -0700
+  
+ActionController::RoutingError (No route matches [HEAD] "/login"):
+  
