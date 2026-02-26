@@ -16,3 +16,4 @@ Rails.application.routes.draw do
   # PDF custody reports
   get '/batches/:id/custody_report', to: 'batches#custody_report'
 end
+get '/logout', to: 'dashboard#logout'
