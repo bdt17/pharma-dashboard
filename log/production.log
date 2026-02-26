@@ -3660,3 +3660,257 @@ Migrating to CreateDrivers (20260117233009)
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
 Generating image variants require the image_processing gem. Please add `gem "image_processing", "~> 1.2"` to your Gemfile or set `config.active_storage.variant_processor = :disabled`.
+Started HEAD "/health" for 127.0.0.1 at 2026-02-25 19:05:48 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 8ms (Views: 4.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started HEAD "/vehicles" for 127.0.0.1 at 2026-02-25 19:05:48 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started HEAD "/batches" for 127.0.0.1 at 2026-02-25 19:05:48 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started HEAD "/trucks" for 127.0.0.1 at 2026-02-25 19:05:48 -0700
+Started HEAD "/api/v1/gps/update" for 127.0.0.1 at 2026-02-25 19:11:23 -0700
+  
+ActionController::RoutingError (No route matches [HEAD] "/api/v1/gps/update"):
+  
+Started HEAD "/api/v1/health" for 127.0.0.1 at 2026-02-25 19:11:23 -0700
+Processing by Api::V1::HealthController#show as */*
+Completed 200 OK in 4ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started HEAD "/health" for 127.0.0.1 at 2026-02-25 19:11:23 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 7ms (Views: 7.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:39:30 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:39:30 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:39:30 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:39:30 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:39:30 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 8ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:39:31 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:39:31 -0700
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:39:31 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:39:31 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:39:31 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:39:32 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 7.2ms | GC: 0.0ms)
+Completed 200 OK in 917ms (Views: 41.6ms | ActiveRecord: 850.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:39:33 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 2.7ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:39:33 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:39:33 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:39:34 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:39:34 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:42:19 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:42:19 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:42:19 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:42:19 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:42:20 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:42:20 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:42:20 -0700
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:42:20 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:42:20 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:42:20 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:42:21 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:42:21 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 2.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:42:21 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:42:21 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:42:22 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:42:22 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:44:32 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:44:32 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:44:32 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:44:32 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:44:32 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:44:32 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:44:33 -0700
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:44:33 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:44:33 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:44:33 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:44:34 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 4.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:44:34 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 4.6ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 5.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:44:35 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:44:35 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:44:35 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:44:35 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:50:56 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:50:56 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:50:57 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:50:57 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:50:57 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:50:57 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:50:57 -0700
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:50:57 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:50:58 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:50:58 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:50:58 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 23.5ms | GC: 20.8ms)
+Completed 200 OK in 25ms (Views: 24.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 20.8ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:50:58 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 2.3ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:50:59 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:50:59 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:50:59 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:50:59 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:53:08 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/billing" for 127.0.0.1 at 2026-02-25 19:53:08 -0700
+Processing by DashboardController#billing as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:53:09 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/compliance" for 127.0.0.1 at 2026-02-25 19:53:09 -0700
+Processing by DashboardController#compliance as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:53:09 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/" for 127.0.0.1 at 2026-02-25 19:53:09 -0700
+Processing by DashboardController#index as */*
+Completed 401 Unauthorized in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:53:09 -0700
+Started GET "/login" for 127.0.0.1 at 2026-02-25 19:53:09 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:53:10 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/batches" for 127.0.0.1 at 2026-02-25 19:53:10 -0700
+Processing by DashboardController#batches as */*
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:53:10 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 18.9ms | GC: 0.0ms)
+Completed 200 OK in 24ms (Views: 19.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-02-25 19:53:10 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendered layout layouts/application.html.erb (Duration: 1.8ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:53:11 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/vehicles" for 127.0.0.1 at 2026-02-25 19:53:11 -0700
+Processing by DashboardController#vehicles as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:53:11 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Started GET "/health" for 127.0.0.1 at 2026-02-25 19:53:11 -0700
+Processing by DashboardController#health as */*
+Completed 200 OK in 0ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+Writing tailwind-a92767b2.css
+Writing manifest-2f9ad8ef.js
+Writing stripe_elements-5051c7d7.css
+Writing stripe_elements-9a39c605.js
