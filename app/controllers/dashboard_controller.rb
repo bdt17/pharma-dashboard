@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
   end
 
   def vehicles
-    render plain: "🚛 25 VEHICLES GPS LIVE - Phoenix AZ → Las Vegas NV", layout: false
+    render plain: "🚛 25 VEHICLES GPS LIVE - Phoenix AZ", layout: false
   end
 
   def batches
@@ -19,11 +19,11 @@ class DashboardController < ApplicationController
   end
 
   def billing
-    render plain: "💰 Stripe Billing - $12K MRR trajectory - 47 clients", layout: false
+    render plain: "💰 Stripe Billing Active - $12K MRR trajectory", layout: false
   end
 
   def compliance
-    render plain: "✅ FDA 21 CFR Part 11 | HIPAA | GxP | Audit Trail Active", layout: false
+    render plain: "✅ FDA 21 CFR Part 11 | HIPAA | GxP Compliance", layout: false
   end
 
   def login
@@ -31,12 +31,9 @@ class DashboardController < ApplicationController
   end
 
   def logout
-    sign_out(current_user)
-    redirect_to root_path, notice: 'Logged out successfully'
+    if user_signed_in?
+      sign_out(current_user)
+    end
+    redirect_to root_path
   end
 end
-
-  def logout
-    sign_out(current_user) if user_signed_in?
-    redirect_to root_path, notice: 'Logged out successfully'
-  end
