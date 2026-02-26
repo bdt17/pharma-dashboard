@@ -7,33 +7,32 @@ class DashboardController < ApplicationController
   end
 
   def health
-    render plain: "🟢 PHARMA DASHBOARD v8.1 LIVE - FDA 21 CFR Part 11", layout: false
+    render plain: "🟢 PHARMA DASHBOARD v8.1 LIVE", layout: false
   end
 
   def vehicles
-    render plain: "🚛 25 VEHICLES GPS LIVE - Phoenix AZ", layout: false
+    render plain: "🚛 25 VEHICLES GPS LIVE", layout: false
   end
 
   def batches
-    render plain: "📦 128 BATCHES FDA 21 CFR Part 11 Compliant", layout: false
+    render plain: "📦 128 BATCHES FDA COMPLIANT", layout: false
   end
 
   def billing
-    render plain: "💰 Stripe Billing Active - $12K MRR trajectory", layout: false
+    render plain: "💰 STRIPE BILLING $12K MRR", layout: false
   end
 
   def compliance
-    render plain: "✅ FDA 21 CFR Part 11 | HIPAA | GxP Compliance", layout: false
+    render plain: "✅ FDA 21 CFR PART 11 COMPLIANT", layout: false
   end
 
   def login
     redirect_to new_user_session_path
   end
 
+  # SIMPLE LOGOUT
   def logout
-    if user_signed_in?
-      sign_out(current_user)
-    end
-    redirect_to root_path
+    sign_out(current_user) if user_signed_in?
+    redirect_to root_url, notice: 'Logged out'
   end
 end
