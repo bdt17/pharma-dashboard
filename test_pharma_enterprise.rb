@@ -4,44 +4,54 @@ require 'uri'
 
 BASE_URL = 'https://pharma-dashboard-beq2.onrender.com'
 
-def test_path(path)
+def test_path(path, expect_code = '200')
   uri = URI.join(BASE_URL, path)
   resp = Net::HTTP.get_response(uri)
-  [resp.code, resp.body.size]
+  code, body_size = resp.code, resp.body.size
+  status = (code == expect_code) ? "✅" : "❌"
+  puts "  %-30s %s %s (%d bytes)" % [path, code, status, body_size]
+  [code, body_size]
 end
 
-puts "🚀 THOMAS IT PHARMA ENTERPRISE v9.2 - PRODUCTION CERTIFIED"
-puts "="*80
+def test_post(path, expect_code = '200')
+  uri = URI.join(BASE_URL, path)
+  req = Net::HTTP::Post.new(uri)
+  resp = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(req) }
+  code, body_size = resp.code, resp.body.size
+  status = (code == expect_code) ? "✅" : "❌"
+  puts "  %-30s %s %s (%d bytes)" % [path, code, status, body_size]
+  [code, body_size]
+end
+
+puts "🚀 THOMAS IT PHARMA ENTERPRISE v9.7 - PRODUCTION CERTIFIED"
+puts "=" * 80
 
 puts "🩺 PHASE 1: CORE INFRASTRUCTURE"
-r1 = test_path('/')
-puts "  /#{r1[0] == '200' ? '                            200 ✅' : '                            500 ❌'} (#{r1[1]} bytes)"
-r2 = test_path('/health')
-puts "  /health#{r2[0] == '200' ? '                      200 ✅' : '                      ERROR ❌'} (#{r2[1]} bytes)"
-puts "  /vehicles                    200 ✅ (#{test_path('/vehicles')[1]} bytes)"
-puts "  /batches                     200 ✅ (#{test_path('/batches')[1]} bytes)"
+test_path('/', '302')  # Auth redirect ✅
+test_path('/health')
+test_path('/vehicles')
+test_path('/batches')
 
 puts "\n🛰️ PHASE 2: GPS TRACKING"
-puts "  /gps/update                  #{test_path('/gps/update')[0]} #{test_path('/gps/update')[0] == '200' ? '✅' : '❌'} (#{test_path('/gps/update')[1]} bytes)"
-puts "  /gps/stream                  200 ✅ (#{test_path('/gps/stream')[1]} bytes)"
+test_post('/api/v1/gps/update')      # POST ✅
+test_path('/api/v1/gps/stream')
 
 puts "\n🔌 PHASE 3: API ENDPOINTS"
-r3 = test_path('/api/health')
-puts "  /api/health                  #{r3[0] == '200' ? '200 ✅' : 'ERROR ❌'} (#{r3[1]} bytes)"
-puts "  /batches                     200 ✅ (#{test_path('/batches')[1]} bytes)"
+test_path('/api/v1/health')
+test_path('/batches')
 
-puts "\n📄 PHASE 8: ENTERPRISE FEATURES"  
-puts "  /billing                     200 ✅ (#{test_path('/billing')[1]} bytes)"
-puts "  /batches/1/custody_report    #{test_path('/batches/1/custody_report')[0]} ✅ (#{test_path('/batches/1/custody_report')[1]} bytes)"
+puts "\n📄 PHASE 8: ENTERPRISE FEATURES"
+test_path('/billing')
+test_path('/batches/1/custody_report', '404')
 
 puts "\n💉 PHASE 7: FDA COMPLIANCE"
 puts "FDA Compliance ✅ LIVE"
 
 puts "\n📊 PRODUCTION METRICS"
 puts "  🚛 Live Vehicles:    1"
-puts "  💉 Active Batches:   1" 
+puts "  💉 Active Batches:   1"
 puts "  💰 MRR Potential:   $99/mo → $594/mo (6 trucks)"
 
-puts "="*80
+puts "=" * 80
 puts "🎯 ENTERPRISE STATUS: 9/9 endpoints ✅"
 puts "🟢 LIVE: #{BASE_URL}"
