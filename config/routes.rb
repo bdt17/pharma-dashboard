@@ -7,17 +7,19 @@ Rails.application.routes.draw do
     password: 'reset-password'
   }
 
-  # === PUBLIC HEALTH/MONITORING (no auth required) ===
-  root 'dashboard#index'
-  get '/public-dashboard', to: 'dashboard#public_index'
-  get '/health', to: 'dashboard#health'
+  # === PUBLIC HEALTH/MONITORING (no auth - for uptime checks) ===
+  get '/health', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['OK']] }
   get '/status', to: 'dashboard#status'
-  
-  # === PUBLIC DASHBOARD ENDPOINTS (Phase 1) ===
+  get '/public-dashboard', to: 'dashboard#public_index'
+
+  # === PUBLIC DASHBOARD ENDPOINTS (Phase 1 - no auth) ===
   get '/vehicles', to: 'dashboard#vehicles'
   get '/batches', to: 'dashboard#batches'
   get '/billing', to: 'dashboard#billing'
   get '/compliance', to: 'dashboard#compliance'
+
+  # === PROTECTED DASHBOARD ROOT (requires login) ===
+  root 'dashboard#index'
 
   # === AUTHENTICATED PHARMA OPERATIONS (require login) ===
   authenticate :user do
@@ -28,12 +30,15 @@ Rails.application.routes.draw do
     get '/alerts', to: 'dashboard#alerts'
   end
 
-  # === GPS TRACKING API (Phase 2 ready) ===
+  # === GPS TRACKING API v1 (Phase 2 - public for IoT devices) ===
   namespace :api do
     namespace :v1 do
+      # GPS endpoints (no auth - IoT devices)
       post   'gps/update', to: 'gps#update'
       get    'gps/stream', to: 'gps#stream'
       get    'gps/:id', to: 'gps#show'
+      
+      # Health + metrics (public)
       get    'health', to: 'health#show'
       get    'metrics', to: 'health#metrics'
     end
@@ -46,12 +51,23 @@ Rails.application.routes.draw do
       get  :temperature_log
       post :sign_electronic
     end
+    collection do
+      get :compliance_status
+    end
   end
 
-  # === DRIVER PORTAL (Phase 3B mobile-ready) ===
+  # === DRIVER PORTAL (Phase 3B - mobile PWA) ===
   namespace :driver do
     get    '/', to: 'dashboard#index'
     get    '/route/:id', to: 'routes#show'
     post   '/checkin/:batch_id', to: 'batches#checkin'
+  end
+
+  # === ADMIN OPERATIONS (superadmin only) ===
+  namespace :admin do
+    resources :users
+    resources :vehicles
+    resources :organizations
+    get '/reports', to: 'reports#index'
   end
 end
