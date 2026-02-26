@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 ruby "3.3.5"
 
+gem 'matrix', '~> 0.4.2'
+
 # Core Rails
 gem "rails", "~> 8.1.1"
 gem "pg", "~> 1.5.5"
@@ -33,3 +35,5 @@ group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
 end
 gem 'tailwindcss-rails'
+
+gem "prawn", "~> 2.4"
