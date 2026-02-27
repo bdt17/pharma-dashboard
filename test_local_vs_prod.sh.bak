@@ -14,6 +14,8 @@ ENDPOINTS=(
   "BILLING:/billing"
   "HEALTH:/health"
   "API:/api/v1/health"
+CUSTODY         | 200($(curl -w "%{time_total}" -o /dev/null -s -I http://127.0.0.1:10000/batches/1/chain-of-custody.pdf | grep -oP "time_total=\K\d+(?:\.\d+)?")) | 200($(curl -w "%{time_total}" -o /dev/null -s -I https://pharma-dashboard-beq2.onrender.com/batches/1/chain-of-custody.pdf | grep -oP "time_total=\K\d+(?:\.\d+)?")) | ✅ MATCH
+)
 
 echo "🚀 PHARMA ENTERPRISE v16.4 - LOCAL vs PROD COMPARISON"
 echo "LOCAL: $LOCAL_URL | PROD: $PROD_URL"

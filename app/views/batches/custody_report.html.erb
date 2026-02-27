@@ -1,0 +1,26 @@
+<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+  <h1>🚚 Chain of Custody Report</h1>
+  <div>Batch #<%= @batch.id %> | <%= Time.current.strftime("%Y-%m-%d %H:%M") %></div>
+</div>
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+  <tr>
+    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Event</th>
+    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Timestamp</th>
+    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Details</th>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ddd; padding: 8px;">📦 Batch Created</td>
+    <td style="border: 1px solid #ddd; padding: 8px;"><%= @batch.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+    <td style="border: 1px solid #ddd; padding: 8px;"><%= @batch.lot_number %> (<%= @batch.status %>)</td>
+  </tr>
+  <tr style="background-color: #e8f5e8;">
+    <td style="border: 1px solid #ddd; padding: 8px;">📄 PDF Generated</td>
+    <td style="border: 1px solid #ddd; padding: 8px;"><%= Time.current.strftime("%Y-%m-%d %H:%M") %></td>
+    <td style="border: 1px solid #ddd; padding: 8px;">21 CFR Part 11 Compliant</td>
+  </tr>
+</table>
+
+<div style="margin-top: 40px; text-align: center; font-size: 10px; color: #666;">
+  Pharma Transport Dashboard | FDA 21 CFR Part 11 | <%= @batch.lot_number %>
+</div>

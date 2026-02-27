@@ -33,11 +33,11 @@ echo "   $DASHBOARD"
 echo "   $(echo "$DASHBOARD" | grep -i "vehicles\\|batches" || echo "❌ No dashboard content")"
 
 # 4. Custody Report PDF (auth required)
-echo "4. [Custody PDF](https://pharma-dashboard-beq2.onrender.com/batches/1/custody_report)"
-PDF_STATUS=$(curl -s -b cookies.txt -o custody_report.txt \
-  -w "HTTP: %{http_code}" "$URL/batches/1/custody_report")
+echo "4. [Custody PDF](https://pharma-dashboard-beq2.onrender.com/batches/1/chain-of-custody.pdf)"
+PDF_STATUS=$(curl -s -b cookies.txt -o chain-of-custody.pdf.txt \
+  -w "HTTP: %{http_code}" "$URL/batches/1/chain-of-custody.pdf")
 echo "   $PDF_STATUS"
-cat custody_report.txt
+cat chain-of-custody.pdf.txt
 
 # 5. Public APIs (no auth needed)
 echo "5. [Health Check](https://pharma-dashboard-beq2.onrender.com/dashboard/health)"
