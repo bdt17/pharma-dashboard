@@ -21,7 +21,9 @@ echo "════════════════════════�
 printf "%-15s | %-6s | %-6s | %s\n" "ENDPOINT" "LOCAL" "PROD" "STATUS"
 echo "---------------|--------|--------|--------"
 
-local_ok=0; local_total=0
+local_ok=0
+local_ok=0
+local_total=0 local_total=0
 prod_ok=0; prod_total=0
 
 for endpoint in "${ENDPOINTS[@]}"; do
