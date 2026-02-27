@@ -16097,3 +16097,596 @@ Migrating to AddOrganizationRefToBatches (20260226232430)
   [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
   [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Load (0.5ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."external_id" = 'TRK001' LIMIT 1 /*application='PharmaDashboard'*/[0m
+Started HEAD "/" for ::1 at 2026-02-26 20:30:57 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 6.3ms | GC: 0.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.1ms | GC: 0.7ms)
+Completed 500 Internal Server Error in 12ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.7ms)
+
+
+  
+ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template located at: app/views/dashboard/index.html.erb)
+Caused by: ActiveSupport::SyntaxErrorProxy (/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+...eeze; @output_buffer.append=( <%= link_to "🚪 Logout", log...
+...                              ^
+/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+          end
+          ^~~
+)
+
+Information for: ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template located at: app/views/dashboard/index.html.erb):
+1:    <!DOCTYPE html>
+2:    <html>
+3:    <head>
+4:      <title>Pharma Transport Dashboard</title>
+5:      <script src="https://cdn.tailwindcss.com"></script>
+6:      <script>
+7:        tailwind.config = {
+8:          theme: {
+9:            extend: {
+10:              colors: {
+11:                'ocean-blue': '#0984C0',
+12:                'metallic-silver': '#AAA7B0', 
+13:                'davys-grey': '#565759',
+14:                'silver-sand': '#C0BEC6',
+15:                'sea-serpent': '#60BDD1'
+16:              }
+17:            }
+18:          }
+19:        }
+20:      </script>
+21:    </head>
+22:    <body class="bg-white min-h-screen font-sans antialiased">
+23:      
+24:      <!-- Professional Navigation -->
+25:      <nav class="bg-white shadow-sm border-b border-silver-sand/50">
+26:        <div class="max-w-6xl mx-auto px-6 py-4">
+27:          <div class="flex items-center justify-between">
+28:            <!-- Logo -->
+29:            <div class="flex items-center space-x-3">
+30:              <div class="w-12 h-12 bg-ocean-blue rounded-xl flex items-center justify-center shadow-md">
+31:                <span class="text-white font-bold text-xl">PT</span>
+32:              </div>
+33:              <div>
+34:                <h1 class="text-2xl font-bold text-davys-grey tracking-tight">Pharma Transport</h1>
+35:                <p class="text-sm text-silver-sand font-medium">Production Dashboard</p>
+36:              </div>
+37:            </div>
+38:    
+39:            <!-- Clean Nav Links -->
+40:            <div class="flex items-center space-x-1">
+41:              <%= link_to "Health", "/health", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-ocean-blue hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+42:              <%= link_to "Vehicles", "/vehicles", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+43:              <%= link_to "Batches", "/batches", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+44:              <%= link_to "Billing", "/billing", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+45:              <%= link_to "Compliance", "/compliance", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+46:              <%= <%= link_to "🚪 Logout", logout_path, "data-method": "delete", class: "..."", logout_path, method: :delete, class: "ml-4 px-5 py-2 bg-ocean-blue text-white text-sm font-semibold rounded-lg hover:bg-opacity-90 shadow-sm transition-all duration-200" %>
+47:            </div>
+48:          </div>
+49:        </div>
+50:      </nav>
+51:    
+52:      <!-- Main Metrics -->
+53:      <div class="max-w-6xl mx-auto px-6 py-12">
+54:        <div class="grid lg:grid-cols-4 gap-8 mb-12">
+55:          
+56:          <!-- Vehicles Card -->
+57:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-ocean-blue/50">
+58:            <div class="flex items-center mb-6">
+59:              <div class="w-16 h-16 bg-ocean-blue/10 rounded-xl flex items-center justify-center mr-4">
+60:                <span class="text-2xl">🚛</span>
+61:              </div>
+62:              <div>
+63:                <h3 class="text-lg font-semibold text-davys-grey">Live Vehicles</h3>
+64:                <p class="text-sm text-silver-sand">GPS Tracking</p>
+65:              </div>
+66:            </div>
+67:            <div class="text-5xl font-bold text-ocean-blue mb-2"><%= @vehicles_count %></div>
+68:            <%= link_to "View Details →", "/vehicles", class: "text-sea-serpent hover:text-ocean-blue font-semibold text-sm transition-colors" %>
+69:          </div>
+70:    
+71:          <!-- Batches Card -->
+72:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-sea-serpent/50">
+73:            <div class="flex items-center mb-6">
+74:              <div class="w-16 h-16 bg-sea-serpent/10 rounded-xl flex items-center justify-center mr-4">
+75:                <span class="text-2xl">📦</span>
+76:              </div>
+77:              <div>
+78:                <h3 class="text-lg font-semibold text-davys-grey">FDA Batches</h3>
+79:                <p class="text-sm text-silver-sand">21 CFR Part 11</p>
+80:              </div>
+81:            </div>
+82:            <div class="text-5xl font-bold text-sea-serpent mb-2"><%= @batches_count %></div>
+83:            <%= link_to "Chain of Custody →", "/batches/1/custody_report", class: "text-sea-serpent hover:text-ocean-blue font-semibold text-sm transition-colors" %>
+84:          </div>
+85:    
+86:          <!-- Billing Card -->
+87:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-purple-400/50">
+88:            <div class="flex items-center mb-6">
+89:              <div class="w-16 h-16 bg-purple-500/10 rounded-xl flex items-center justify-center mr-4">
+90:                <span class="text-2xl">💰</span>
+91:              </div>
+92:              <div>
+93:                <h3 class="text-lg font-semibold text-davys-grey">Monthly Revenue</h3>
+94:                <p class="text-sm text-silver-sand">MRR Trajectory</p>
+95:              </div>
+96:            </div>
+97:            <div class="text-4xl font-bold text-purple-600 mb-2">$12K</div>
+98:            <%= link_to "Billing Portal →", "/billing", class: "text-purple-600 hover:text-purple-700 font-semibold text-sm transition-colors" %>
+99:          </div>
+100:    
+101:          <!-- Compliance Card -->
+102:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-emerald-400/50">
+103:            <div class="flex items-center mb-6">
+104:              <div class="w-16 h-16 bg-emerald-500/10 rounded-xl flex items-center justify-center mr-4">
+105:                <span class="text-2xl">✅</span>
+106:              </div>
+107:              <div>
+108:                <h3 class="text-lg font-semibold text-davys-grey">Compliance</h3>
+109:                <p class="text-sm text-silver-sand">Audit Status</p>
+110:              </div>
+111:            </div>
+112:            <div class="text-5xl font-bold text-emerald-600 mb-2">100%</div>
+113:            <%= link_to "Audit Report →", "/compliance", class: "text-emerald-600 hover:text-emerald-700 font-semibold text-sm transition-colors" %>
+114:          </div>
+115:        </div>
+116:    
+117:        <!-- Status Footer -->
+118:        <div class="bg-gradient-to-r from-silver-sand/20 to-white/50 border border-silver-sand/30 rounded-2xl p-8 backdrop-blur-sm">
+119:          <div class="flex items-center justify-between flex-wrap gap-6">
+120:            <div class="flex items-center space-x-6">
+121:              <span class="px-4 py-2 bg-emerald-100 text-emerald-800 font-semibold rounded-xl text-sm">🟢 PRODUCTION LIVE</span>
+122:              <span class="text-lg font-semibold text-davys-grey">Phoenix, AZ</span>
+123:              <span class="text-sm text-silver-sand"><%= Time.current.strftime("%Y-%m-%d %H:%M MST") %></span>
+124:            </div>
+125:            <div class="flex items-center space-x-4 text-sm text-davys-grey">
+126:              <span>FDA 21 CFR Part 11 Compliant</span>
+127:              <span>•</span>
+128:              <span>Audit Trail Active</span>
+129:            </div>
+130:          </div>
+131:        </div>
+132:      </div>
+133:    </body>
+134:    </html>
+  
+app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+
+Information for cause: ActiveSupport::SyntaxErrorProxy (/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+...eeze; @output_buffer.append=( <%= link_to "🚪 Logout", log...
+...                              ^
+/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+          end
+          ^~~
+):
+  
+app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+Started HEAD "/batches/1/chain_of_custody.pdf" for ::1 at 2026-02-26 20:30:57 -0700
+  
+ArgumentError (Reported error must be an Exception, got: #<SyntaxError:"/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/controllers/batches_controller.rb:32: syntax error, unexpected constant, expecting end-of-input or '}'\n...21 CFR Part 11 COMPLIANT\\n\#{$5M ARR TARGET}\"\n...                              ^\n/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/controllers/batches_controller.rb:38: syntax error, unexpected `end'\n  end\n  ^~~\n">)
+Caused by: SyntaxError (/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/controllers/batches_controller.rb:32: syntax error, unexpected constant, expecting end-of-input or '}'
+...21 CFR Part 11 COMPLIANT\n#{$5M ARR TARGET}"
+...                              ^
+/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/controllers/batches_controller.rb:38: syntax error, unexpected `end'
+  end
+  ^~~
+)
+
+Information for: ArgumentError (Reported error must be an Exception, got: #<SyntaxError:"/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/controllers/batches_controller.rb:32: syntax error, unexpected constant, expecting end-of-input or '}'\n...21 CFR Part 11 COMPLIANT\\n\#{$5M ARR TARGET}\"\n...                              ^\n/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/controllers/batches_controller.rb:38: syntax error, unexpected `end'\n  end\n  ^~~\n">):
+  
+activesupport (8.1.2) lib/active_support/error_reporter.rb:235:in `report'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:36:in `rescue in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:32:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.5) lib/rack/method_override.rb:28:in `call'
+rack (3.2.5) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.5) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+
+Information for cause: SyntaxError (/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/controllers/batches_controller.rb:32: syntax error, unexpected constant, expecting end-of-input or '}'
+...21 CFR Part 11 COMPLIANT\n#{$5M ARR TARGET}"
+...                              ^
+/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/controllers/batches_controller.rb:38: syntax error, unexpected `end'
+  end
+  ^~~
+):
+  
+app/controllers/batches_controller.rb:32: syntax error, unexpected constant, expecting end-of-input or '}'
+app/controllers/batches_controller.rb:38: syntax error, unexpected `end'
+Started GET "/" for ::1 at 2026-02-26 20:32:55 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 5.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.2ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 21ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template located at: app/views/dashboard/index.html.erb)
+Caused by: ActiveSupport::SyntaxErrorProxy (/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+...eeze; @output_buffer.append=( <%= link_to "🚪 Logout", log...
+...                              ^
+/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+          end
+          ^~~
+)
+
+Information for: ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template located at: app/views/dashboard/index.html.erb):
+1:    <!DOCTYPE html>
+2:    <html>
+3:    <head>
+4:      <title>Pharma Transport Dashboard</title>
+5:      <script src="https://cdn.tailwindcss.com"></script>
+6:      <script>
+7:        tailwind.config = {
+8:          theme: {
+9:            extend: {
+10:              colors: {
+11:                'ocean-blue': '#0984C0',
+12:                'metallic-silver': '#AAA7B0', 
+13:                'davys-grey': '#565759',
+14:                'silver-sand': '#C0BEC6',
+15:                'sea-serpent': '#60BDD1'
+16:              }
+17:            }
+18:          }
+19:        }
+20:      </script>
+21:    </head>
+22:    <body class="bg-white min-h-screen font-sans antialiased">
+23:      
+24:      <!-- Professional Navigation -->
+25:      <nav class="bg-white shadow-sm border-b border-silver-sand/50">
+26:        <div class="max-w-6xl mx-auto px-6 py-4">
+27:          <div class="flex items-center justify-between">
+28:            <!-- Logo -->
+29:            <div class="flex items-center space-x-3">
+30:              <div class="w-12 h-12 bg-ocean-blue rounded-xl flex items-center justify-center shadow-md">
+31:                <span class="text-white font-bold text-xl">PT</span>
+32:              </div>
+33:              <div>
+34:                <h1 class="text-2xl font-bold text-davys-grey tracking-tight">Pharma Transport</h1>
+35:                <p class="text-sm text-silver-sand font-medium">Production Dashboard</p>
+36:              </div>
+37:            </div>
+38:    
+39:            <!-- Clean Nav Links -->
+40:            <div class="flex items-center space-x-1">
+41:              <%= link_to "Health", "/health", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-ocean-blue hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+42:              <%= link_to "Vehicles", "/vehicles", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+43:              <%= link_to "Batches", "/batches", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+44:              <%= link_to "Billing", "/billing", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+45:              <%= link_to "Compliance", "/compliance", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+46:              <%= <%= link_to "🚪 Logout", logout_path, "data-method": "delete", class: "..."", logout_path, method: :delete, class: "ml-4 px-5 py-2 bg-ocean-blue text-white text-sm font-semibold rounded-lg hover:bg-opacity-90 shadow-sm transition-all duration-200" %>
+47:            </div>
+48:          </div>
+49:        </div>
+50:      </nav>
+51:    
+52:      <!-- Main Metrics -->
+53:      <div class="max-w-6xl mx-auto px-6 py-12">
+54:        <div class="grid lg:grid-cols-4 gap-8 mb-12">
+55:          
+56:          <!-- Vehicles Card -->
+57:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-ocean-blue/50">
+58:            <div class="flex items-center mb-6">
+59:              <div class="w-16 h-16 bg-ocean-blue/10 rounded-xl flex items-center justify-center mr-4">
+60:                <span class="text-2xl">🚛</span>
+61:              </div>
+62:              <div>
+63:                <h3 class="text-lg font-semibold text-davys-grey">Live Vehicles</h3>
+64:                <p class="text-sm text-silver-sand">GPS Tracking</p>
+65:              </div>
+66:            </div>
+67:            <div class="text-5xl font-bold text-ocean-blue mb-2"><%= @vehicles_count %></div>
+68:            <%= link_to "View Details →", "/vehicles", class: "text-sea-serpent hover:text-ocean-blue font-semibold text-sm transition-colors" %>
+69:          </div>
+70:    
+71:          <!-- Batches Card -->
+72:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-sea-serpent/50">
+73:            <div class="flex items-center mb-6">
+74:              <div class="w-16 h-16 bg-sea-serpent/10 rounded-xl flex items-center justify-center mr-4">
+75:                <span class="text-2xl">📦</span>
+76:              </div>
+77:              <div>
+78:                <h3 class="text-lg font-semibold text-davys-grey">FDA Batches</h3>
+79:                <p class="text-sm text-silver-sand">21 CFR Part 11</p>
+80:              </div>
+81:            </div>
+82:            <div class="text-5xl font-bold text-sea-serpent mb-2"><%= @batches_count %></div>
+83:            <%= link_to "Chain of Custody →", "/batches/1/custody_report", class: "text-sea-serpent hover:text-ocean-blue font-semibold text-sm transition-colors" %>
+84:          </div>
+85:    
+86:          <!-- Billing Card -->
+87:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-purple-400/50">
+88:            <div class="flex items-center mb-6">
+89:              <div class="w-16 h-16 bg-purple-500/10 rounded-xl flex items-center justify-center mr-4">
+90:                <span class="text-2xl">💰</span>
+91:              </div>
+92:              <div>
+93:                <h3 class="text-lg font-semibold text-davys-grey">Monthly Revenue</h3>
+94:                <p class="text-sm text-silver-sand">MRR Trajectory</p>
+95:              </div>
+96:            </div>
+97:            <div class="text-4xl font-bold text-purple-600 mb-2">$12K</div>
+98:            <%= link_to "Billing Portal →", "/billing", class: "text-purple-600 hover:text-purple-700 font-semibold text-sm transition-colors" %>
+99:          </div>
+100:    
+101:          <!-- Compliance Card -->
+102:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-emerald-400/50">
+103:            <div class="flex items-center mb-6">
+104:              <div class="w-16 h-16 bg-emerald-500/10 rounded-xl flex items-center justify-center mr-4">
+105:                <span class="text-2xl">✅</span>
+106:              </div>
+107:              <div>
+108:                <h3 class="text-lg font-semibold text-davys-grey">Compliance</h3>
+109:                <p class="text-sm text-silver-sand">Audit Status</p>
+110:              </div>
+111:            </div>
+112:            <div class="text-5xl font-bold text-emerald-600 mb-2">100%</div>
+113:            <%= link_to "Audit Report →", "/compliance", class: "text-emerald-600 hover:text-emerald-700 font-semibold text-sm transition-colors" %>
+114:          </div>
+115:        </div>
+116:    
+117:        <!-- Status Footer -->
+118:        <div class="bg-gradient-to-r from-silver-sand/20 to-white/50 border border-silver-sand/30 rounded-2xl p-8 backdrop-blur-sm">
+119:          <div class="flex items-center justify-between flex-wrap gap-6">
+120:            <div class="flex items-center space-x-6">
+121:              <span class="px-4 py-2 bg-emerald-100 text-emerald-800 font-semibold rounded-xl text-sm">🟢 PRODUCTION LIVE</span>
+122:              <span class="text-lg font-semibold text-davys-grey">Phoenix, AZ</span>
+123:              <span class="text-sm text-silver-sand"><%= Time.current.strftime("%Y-%m-%d %H:%M MST") %></span>
+124:            </div>
+125:            <div class="flex items-center space-x-4 text-sm text-davys-grey">
+126:              <span>FDA 21 CFR Part 11 Compliant</span>
+127:              <span>•</span>
+128:              <span>Audit Trail Active</span>
+129:            </div>
+130:          </div>
+131:        </div>
+132:      </div>
+133:    </body>
+134:    </html>
+  
+app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+
+Information for cause: ActiveSupport::SyntaxErrorProxy (/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+...eeze; @output_buffer.append=( <%= link_to "🚪 Logout", log...
+...                              ^
+/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+          end
+          ^~~
+):
+  
+app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+Started GET "/" for 127.0.0.1 at 2026-02-26 20:33:02 -0700
+Processing by DashboardController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.4ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template located at: app/views/dashboard/index.html.erb)
+Caused by: ActiveSupport::SyntaxErrorProxy (/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+...eeze; @output_buffer.append=( <%= link_to "🚪 Logout", log...
+...                              ^
+/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+          end
+          ^~~
+)
+
+Information for: ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template located at: app/views/dashboard/index.html.erb):
+1:    <!DOCTYPE html>
+2:    <html>
+3:    <head>
+4:      <title>Pharma Transport Dashboard</title>
+5:      <script src="https://cdn.tailwindcss.com"></script>
+6:      <script>
+7:        tailwind.config = {
+8:          theme: {
+9:            extend: {
+10:              colors: {
+11:                'ocean-blue': '#0984C0',
+12:                'metallic-silver': '#AAA7B0', 
+13:                'davys-grey': '#565759',
+14:                'silver-sand': '#C0BEC6',
+15:                'sea-serpent': '#60BDD1'
+16:              }
+17:            }
+18:          }
+19:        }
+20:      </script>
+21:    </head>
+22:    <body class="bg-white min-h-screen font-sans antialiased">
+23:      
+24:      <!-- Professional Navigation -->
+25:      <nav class="bg-white shadow-sm border-b border-silver-sand/50">
+26:        <div class="max-w-6xl mx-auto px-6 py-4">
+27:          <div class="flex items-center justify-between">
+28:            <!-- Logo -->
+29:            <div class="flex items-center space-x-3">
+30:              <div class="w-12 h-12 bg-ocean-blue rounded-xl flex items-center justify-center shadow-md">
+31:                <span class="text-white font-bold text-xl">PT</span>
+32:              </div>
+33:              <div>
+34:                <h1 class="text-2xl font-bold text-davys-grey tracking-tight">Pharma Transport</h1>
+35:                <p class="text-sm text-silver-sand font-medium">Production Dashboard</p>
+36:              </div>
+37:            </div>
+38:    
+39:            <!-- Clean Nav Links -->
+40:            <div class="flex items-center space-x-1">
+41:              <%= link_to "Health", "/health", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-ocean-blue hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+42:              <%= link_to "Vehicles", "/vehicles", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+43:              <%= link_to "Batches", "/batches", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+44:              <%= link_to "Billing", "/billing", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+45:              <%= link_to "Compliance", "/compliance", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+46:              <%= <%= link_to "🚪 Logout", logout_path, "data-method": "delete", class: "..."", logout_path, method: :delete, class: "ml-4 px-5 py-2 bg-ocean-blue text-white text-sm font-semibold rounded-lg hover:bg-opacity-90 shadow-sm transition-all duration-200" %>
+47:            </div>
+48:          </div>
+49:        </div>
+50:      </nav>
+51:    
+52:      <!-- Main Metrics -->
+53:      <div class="max-w-6xl mx-auto px-6 py-12">
+54:        <div class="grid lg:grid-cols-4 gap-8 mb-12">
+55:          
+56:          <!-- Vehicles Card -->
+57:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-ocean-blue/50">
+58:            <div class="flex items-center mb-6">
+59:              <div class="w-16 h-16 bg-ocean-blue/10 rounded-xl flex items-center justify-center mr-4">
+60:                <span class="text-2xl">🚛</span>
+61:              </div>
+62:              <div>
+63:                <h3 class="text-lg font-semibold text-davys-grey">Live Vehicles</h3>
+64:                <p class="text-sm text-silver-sand">GPS Tracking</p>
+65:              </div>
+66:            </div>
+67:            <div class="text-5xl font-bold text-ocean-blue mb-2"><%= @vehicles_count %></div>
+68:            <%= link_to "View Details →", "/vehicles", class: "text-sea-serpent hover:text-ocean-blue font-semibold text-sm transition-colors" %>
+69:          </div>
+70:    
+71:          <!-- Batches Card -->
+72:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-sea-serpent/50">
+73:            <div class="flex items-center mb-6">
+74:              <div class="w-16 h-16 bg-sea-serpent/10 rounded-xl flex items-center justify-center mr-4">
+75:                <span class="text-2xl">📦</span>
+76:              </div>
+77:              <div>
+78:                <h3 class="text-lg font-semibold text-davys-grey">FDA Batches</h3>
+79:                <p class="text-sm text-silver-sand">21 CFR Part 11</p>
+80:              </div>
+81:            </div>
+82:            <div class="text-5xl font-bold text-sea-serpent mb-2"><%= @batches_count %></div>
+83:            <%= link_to "Chain of Custody →", "/batches/1/custody_report", class: "text-sea-serpent hover:text-ocean-blue font-semibold text-sm transition-colors" %>
+84:          </div>
+85:    
+86:          <!-- Billing Card -->
+87:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-purple-400/50">
+88:            <div class="flex items-center mb-6">
+89:              <div class="w-16 h-16 bg-purple-500/10 rounded-xl flex items-center justify-center mr-4">
+90:                <span class="text-2xl">💰</span>
+91:              </div>
+92:              <div>
+93:                <h3 class="text-lg font-semibold text-davys-grey">Monthly Revenue</h3>
+94:                <p class="text-sm text-silver-sand">MRR Trajectory</p>
+95:              </div>
+96:            </div>
+97:            <div class="text-4xl font-bold text-purple-600 mb-2">$12K</div>
+98:            <%= link_to "Billing Portal →", "/billing", class: "text-purple-600 hover:text-purple-700 font-semibold text-sm transition-colors" %>
+99:          </div>
+100:    
+101:          <!-- Compliance Card -->
+102:          <div class="bg-white border border-silver-sand/30 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:border-emerald-400/50">
+103:            <div class="flex items-center mb-6">
+104:              <div class="w-16 h-16 bg-emerald-500/10 rounded-xl flex items-center justify-center mr-4">
+105:                <span class="text-2xl">✅</span>
+106:              </div>
+107:              <div>
+108:                <h3 class="text-lg font-semibold text-davys-grey">Compliance</h3>
+109:                <p class="text-sm text-silver-sand">Audit Status</p>
+110:              </div>
+111:            </div>
+112:            <div class="text-5xl font-bold text-emerald-600 mb-2">100%</div>
+113:            <%= link_to "Audit Report →", "/compliance", class: "text-emerald-600 hover:text-emerald-700 font-semibold text-sm transition-colors" %>
+114:          </div>
+115:        </div>
+116:    
+117:        <!-- Status Footer -->
+118:        <div class="bg-gradient-to-r from-silver-sand/20 to-white/50 border border-silver-sand/30 rounded-2xl p-8 backdrop-blur-sm">
+119:          <div class="flex items-center justify-between flex-wrap gap-6">
+120:            <div class="flex items-center space-x-6">
+121:              <span class="px-4 py-2 bg-emerald-100 text-emerald-800 font-semibold rounded-xl text-sm">🟢 PRODUCTION LIVE</span>
+122:              <span class="text-lg font-semibold text-davys-grey">Phoenix, AZ</span>
+123:              <span class="text-sm text-silver-sand"><%= Time.current.strftime("%Y-%m-%d %H:%M MST") %></span>
+124:            </div>
+125:            <div class="flex items-center space-x-4 text-sm text-davys-grey">
+126:              <span>FDA 21 CFR Part 11 Compliant</span>
+127:              <span>•</span>
+128:              <span>Audit Trail Active</span>
+129:            </div>
+130:          </div>
+131:        </div>
+132:      </div>
+133:    </body>
+134:    </html>
+  
+app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+
+Information for cause: ActiveSupport::SyntaxErrorProxy (/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+...eeze; @output_buffer.append=( <%= link_to "🚪 Logout", log...
+...                              ^
+/home/zero/Pharma_Transport_all_BACKUP/pharma-dashboard/app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+          end
+          ^~~
+):
+  
+app/views/dashboard/index.html.erb:47: syntax error, unexpected '<'
+app/views/dashboard/index.html.erb:138: syntax error, unexpected `end', expecting ')'
+Started HEAD "/" for ::1 at 2026-02-26 20:35:03 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 8.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.4ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 31ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `logout_path' for an instance of #<Class:0x0000712120f0e800>)
+Caused by: NameError (undefined local variable or method `logout_path' for an instance of #<Class:0x0000712120f0e800>)
+
+Information for: ActionView::Template::Error (undefined local variable or method `logout_path' for an instance of #<Class:0x0000712120f0e800>):
+    44:           <%= link_to "Billing", "/billing", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+    45:           <%= link_to "Compliance", "/compliance", class: "px-4 py-2 text-sm font-semibold text-davys-grey hover:text-sea-serpent hover:bg-silver-sand/50 rounded-lg transition-colors duration-200" %>
+    46:           <%= link_to "🚪 Logout", logout_path, method: :delete, class: "ml-4 px-5 py-2 bg-ocean-blue text-white text-sm font-semibold rounded-lg hover:bg-opacity-90 shadow-sm transition-all duration-200" %>
+    47:         </div>
+    48:       </div>
+    49:     </div>
+    50:   </nav>
+  
+app/views/dashboard/index.html.erb:47
+
+Information for cause: NameError (undefined local variable or method `logout_path' for an instance of #<Class:0x0000712120f0e800>):
+  
+app/views/dashboard/index.html.erb:47
+Started HEAD "/" for ::1 at 2026-02-26 20:36:33 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 3.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.9ms | GC: 0.0ms)
+Completed 200 OK in 14ms (Views: 13.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
