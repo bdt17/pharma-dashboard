@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       post   'gps/update', to: 'gps#update'
       get    'gps/stream', to: 'gps#stream'
       get    'gps/:id', to: 'gps#show'
-      
+
       # Health + metrics (public)
       get    'health', to: 'health#show'
       get    'metrics', to: 'health#metrics'
@@ -70,6 +70,8 @@ Rails.application.routes.draw do
     resources :organizations
     get '/reports', to: 'reports#index'
   end
-end
 
-\npost '/create-checkout-session', to: 'stripe#create_checkout_session'
+  # === ENTERPRISE FEATURES (Phase 8-9) ===
+  post '/create-checkout-session', to: 'stripe#create_checkout_session'
+  get '/batches/:id/chain_of_custody.pdf', to: 'batches#chain_of_custody', as: :batch_chain_of_custody
+end
