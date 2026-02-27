@@ -1,0 +1,81 @@
+<div class="max-w-4xl mx-auto p-8">
+  <h1 class="text-4xl font-bold text-blue-900 mb-8">💰 Pharma Transport Billing</h1>
+  
+  <div class="grid md:grid-cols-3 gap-6">
+    <!-- Vehicle Plan -->
+    <div class="bg-white p-8 rounded-xl shadow-lg border-2 border-blue-100 hover:shadow-xl transition-shadow">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">$99<span class="text-lg">/mo</span></h2>
+      <p class="text-xl text-gray-600 mb-6">Per Vehicle Tracking</p>
+      <ul class="space-y-2 mb-8 text-left">
+        <li class="flex items-center"><span class="text-green-500 mr-2">✅</span>GPS + Cold Chain</li>
+        <li class="flex items-center"><span class="text-green-500 mr-2">✅</span>21 CFR Part 11 Logs</li>
+        <li class="flex items-center"><span class="text-green-500 mr-2">✅</span>Queclink GV55 Ready</li>
+        <li class="flex items-center"><span class="text-green-500 mr-2">✅</span>Real-time Dashboard</li>
+      </ul>
+      <%= form_with url: "/create-checkout-session", method: :post, local: true, class: "space-y-4" do |form| %>
+        <%= form.hidden_field :price_id, value: "vehicle" %>
+        <%= form.submit "Start Free Trial", class: "w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg" %>
+      <% end %>
+    </div>
+
+    <!-- Enterprise Plan -->
+    <div class="bg-gradient-to-br from-purple-600 to-blue-600 text-white p-8 rounded-xl shadow-2xl hover:shadow-3xl transition-all transform hover:-translate-y-1">
+      <h2 class="text-3xl font-bold mb-4">$499<span class="text-lg">/mo</span></h2>
+      <p class="text-xl mb-6 font-semibold">Enterprise Multi-Tenant</p>
+      <ul class="space-y-2 mb-8 text-left">
+        <li class="flex items-center"><span class="text-emerald-300 mr-2">✅</span>Unlimited Vehicles</li>
+        <li class="flex items-center"><span class="text-emerald-300 mr-2">✅</span>Org Isolation</li>
+        <li class="flex items-center"><span class="text-emerald-300 mr-2">✅</span>API + White-label</li>
+        <li class="flex items-center"><span class="text-emerald-300 mr-2">✅</span>Custom Compliance</li>
+      </ul>
+      <button class="w-full bg-white text-purple-600 py-3 px-6 rounded-lg font-semibold hover:bg-gray-100 transition-colors shadow-lg hover:shadow-xl">
+        Contact Sales
+      </button>
+    </div>
+
+    <!-- Compliance Setup -->
+    <div class="bg-emerald-600 text-white p-8 rounded-xl shadow-2xl hover:shadow-3xl transition-all transform hover:-translate-y-1 border-4 border-emerald-400">
+      <h2 class="text-3xl font-bold mb-4">$5,000<span class="text-sm">one-time</span></h2>
+      <p class="text-xl mb-6 font-semibold">FDA Compliance Suite</p>
+      <ul class="space-y-2 mb-8 text-left">
+        <li class="flex items-center"><span class="text-yellow-300 mr-2">⭐</span>FDA 21 CFR Part 11</li>
+        <li class="flex items-center"><span class="text-yellow-300 mr-2">⭐</span>GS1 Serialization</li>
+        <li class="flex items-center"><span class="text-yellow-300 mr-2">⭐</span>Electronic Signatures</li>
+        <li class="flex items-center"><span class="text-yellow-300 mr-2">⭐</span>2-8°C Cold Chain</li>
+      </ul>
+      <button class="w-full border-2 border-white text-white py-3 px-6 rounded-lg font-semibold hover:bg-white hover:text-emerald-600 transition-all duration-300">
+        Schedule Audit
+      </button>
+    </div>
+  </div>
+
+  <!-- Current Metrics -->
+  <div class="mt-16 p-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border-2 border-blue-100">
+    <h3 class="text-2xl font-bold text-gray-800 mb-6">📊 Your Current Usage</h3>
+    <div class="grid md:grid-cols-4 gap-6 text-center">
+      <div>
+        <div class="text-3xl font-bold text-blue-600">1</div>
+        <div class="text-sm text-gray-600 uppercase tracking-wider">Active Vehicles</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold text-emerald-600">1</div>
+        <div class="text-sm text-gray-600 uppercase tracking-wider">Live Batches</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold text-purple-600">$99</div>
+        <div class="text-sm text-gray-600 uppercase tracking-wider">Monthly Recurring</div>
+      </div>
+      <div>
+        <div class="text-3xl font-bold text-orange-600">$594</div>
+        <div class="text-sm text-gray-600 uppercase tracking-wider">6 Truck Potential</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase Roadmap Teaser -->
+  <div class="mt-12 p-6 bg-white rounded-xl shadow-lg border border-gray-200">
+    <h3 class="text-xl font-bold text-gray-800 mb-4">🚀 Next Phase Live: Rural Telehealth (Q4 2026)</h3>
+    <p class="text-gray-600 mb-4">$15M ARR potential - Mobile clinics + HRSA grants ready</p>
+    <a href="#" class="text-blue-600 hover:text-blue-800 font-semibold">Learn More →</a>
+  </div>
+</div>
