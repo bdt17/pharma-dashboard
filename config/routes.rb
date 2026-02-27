@@ -73,5 +73,7 @@ Rails.application.routes.draw do
 
   # === ENTERPRISE FEATURES (Phase 8-9) ===
   post '/create-checkout-session', to: 'stripe#create_checkout_session'
+  get '/batches/:id/chain-of-custody.pdf', to: 'batches#chain_of_custody', as: :batch_chain_of_custody_html
+   # Test script expects BOTH formats
   get '/batches/:id/chain_of_custody.pdf', to: 'batches#chain_of_custody', as: :batch_chain_of_custody
 end
