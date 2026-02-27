@@ -72,3 +72,4 @@ Rails.application.routes.draw do
   end
 end
 
+\npost '/create-checkout-session', to: 'stripe#create_checkout_session'
