@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_222913) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_26_232605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -63,20 +63,44 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_222913) do
     t.string "lot"
     t.string "lot_number", default: "LOT-UNASSIGNED", null: false
     t.string "name"
+    t.bigint "organization_id", null: false
     t.string "status"
     t.float "temperature_celsius"
     t.datetime "updated_at", null: false
     t.bigint "vehicle_id", null: false
     t.index ["lot"], name: "index_batches_on_lot", unique: true
     t.index ["lot_number"], name: "index_batches_on_lot_number", unique: true
+    t.index ["organization_id"], name: "index_batches_on_organization_id"
     t.index ["vehicle_id"], name: "index_batches_on_vehicle_id"
   end
 
   create_table "drivers", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "email"
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
     t.string "name"
-    t.string "phone"
+    t.string "status"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_drivers_on_user_id"
+  end
+
+  create_table "gps_logs", id: :serial, force: :cascade do |t|
+    t.string "imei", limit: 15
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.integer "speed"
+    t.decimal "temperature"
+    t.datetime "timestamp", precision: nil, default: -> { "now()" }
+  end
+
+  create_table "knowledge_bases", force: :cascade do |t|
+    t.string "category"
+    t.text "client_instructions"
+    t.text "commands"
+    t.datetime "created_at", null: false
+    t.text "steps"
+    t.string "title"
     t.datetime "updated_at", null: false
   end
 
@@ -153,6 +177,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_222913) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "shipments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "delivery_location"
+    t.integer "driver_id"
+    t.string "pickup_location"
+    t.integer "status"
+    t.text "temperature_logs"
+    t.string "tracking_number"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "subscriptions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "current_period_end"
@@ -180,6 +215,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_222913) do
     t.index ["vehicle_id"], name: "index_telemetries_on_vehicle_id"
   end
 
+  create_table "tickets", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "email"
+    t.string "status"
+    t.string "title"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -188,10 +232,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_222913) do
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
-    t.string "role"
+    t.string "role", default: "client"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role"], name: "index_users_on_role"
   end
 
   create_table "vehicles", force: :cascade do |t|
@@ -202,15 +247,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_222913) do
     t.float "lng"
     t.float "longitude"
     t.string "name"
+    t.bigint "organization_id", null: false
     t.string "plate"
     t.string "status"
     t.datetime "updated_at", null: false
+    t.index ["organization_id"], name: "index_vehicles_on_organization_id"
   end
 
   add_foreign_key "audit_logs", "batches"
+  add_foreign_key "batches", "organizations"
   add_foreign_key "batches", "vehicles"
+  add_foreign_key "drivers", "users"
   add_foreign_key "orders", "patients"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "telemetries", "batches"
   add_foreign_key "telemetries", "vehicles"
+  add_foreign_key "vehicles", "organizations"
 end
