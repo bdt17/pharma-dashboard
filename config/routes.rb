@@ -44,11 +44,11 @@ Rails.application.routes.draw do
     end
   end
 
-  # === FDA COMPLIANCE REPORTS (Phase 3A) ===
+  # === FDA COMPLIANCE REPORTS (Phase 3A) - FIXED ✅
   resources :batches, only: [:index, :show] do
     member do
-      get  :custody_report, path: 'chain-of-custody'
-      get  :temperature_log
+      get :custody_report, path: 'chain-of-custody', defaults: { format: :pdf }  # 👈 FIXED: forces PDF
+      get :temperature_log
       post :sign_electronic
     end
     collection do
