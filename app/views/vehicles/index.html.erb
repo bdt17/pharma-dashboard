@@ -1,11 +1,24 @@
-<h1>Live Vehicle Fleet</h1>
-<div class="grid grid-cols-2 gap-4 p-6">
-  <% @vehicles.each do |vehicle| %>
-    <div class="bg-blue-50 p-4 rounded shadow">
-      <h2><%= vehicle.name || vehicle.plate %></h2>
-      <p>📍 <%= vehicle.latitude %>, <%= vehicle.longitude %></p>
-      <p>Status: <span class="font-bold <%= vehicle.status == 'online' ? 'text-green-600' : 'text-red-600' %>"><%= vehicle.status %></span></p>
-    </div>
+<!DOCTYPE html>
+<html>
+<head><title>Vehicle Fleet</title></head>
+<body>
+  <h1>🚛 Live Vehicle Fleet (Pharma Transport)</h1>
+  <p><strong><%= @online_vehicles %> online vehicles</strong></p>
+  
+  <% if @vehicles.any? %>
+    <ul>
+    <% @vehicles.each do |vehicle| %>
+      <li>
+        <strong><%= vehicle.name || vehicle.plate %></strong> 
+        📍 <%= vehicle.latitude %>, <%= vehicle.longitude %>
+        <span style="color: <%= vehicle.status == 'online' ? 'green' : 'red' %>;">
+          <%= vehicle.status.upcase %>
+        </span>
+      </li>
+    <% end %>
+    </ul>
+  <% else %>
+    <p>No vehicles with GPS data yet</p>
   <% end %>
-</div>
-<p><strong><%= @online_vehicles %> online vehicles</strong></p>
+</body>
+</html>
