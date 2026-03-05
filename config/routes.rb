@@ -1,20 +1,23 @@
 Rails.application.routes.draw do
-  # Authentication (Devise)
+  # Authentication
   devise_for :users
   
-  # Dashboard & Standard UI
+  # Dashboard & Pages
+  root 'batches#index'
   get 'dashboard', to: 'dashboard#index'
   get 'vehicles', to: 'vehicles#index'
   get 'health', to: 'health#index'
+  get 'billing', to: 'billing#index'
+  get 'compliance', to: 'compliance#index'
   
-  # API endpoints  
+  # API
   get 'api/health', to: 'api/health#index'
   
-  # GPS IoT endpoints
+  # GPS IoT
   post 'gps/update', to: 'gps#update'
   get 'gps/update/stream', to: 'gps#stream'
   
-  # PDF endpoints
+  # PDF
   get 'test-pdf', to: 'batches#custody_report', defaults: { id: 1 }
   
   # Core resources
@@ -23,9 +26,4 @@ Rails.application.routes.draw do
       get 'chain-of-custody', to: 'batches#custody_report'
     end
   end
-  
-  # Default root
-  root 'batches#index'
 end
-  get 'billing', to: 'billing#index'
-  get 'compliance', to: 'compliance#index'
