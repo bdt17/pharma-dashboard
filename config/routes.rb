@@ -29,3 +29,5 @@ Rails.application.routes.draw do
   # Default root (batches index)
   root 'batches#index'
 end
+  get 'vehicles', to: 'vehicles#index'
+  get 'vehicles', to: 'vehicles#index'

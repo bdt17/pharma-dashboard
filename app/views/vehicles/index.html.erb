@@ -1,4 +1,26 @@
-<div>
-  <h1>Vehicles Dashboard</h1>
-  <p>48 active trucks online</p>
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-8">Live Vehicle Fleet</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @vehicles.each do |vehicle| %>
+      <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+        <h3 class="text-xl font-semibold text-gray-900"><%= vehicle.name || vehicle.plate %></h3>
+        <p class="text-sm text-gray-500 mt-1">Plate: <%= vehicle.plate %></p>
+        <p class="text-lg font-bold text-green-600 mt-2">
+          📍 <%= vehicle.latitude %>, <%= vehicle.longitude %>
+        </p>
+        <p class="text-sm <%= vehicle.status == 'online' ? 'text-green-600' : 'text-red-600' %>">
+          <%= vehicle.status.upcase %>
+        </p>
+        <% if vehicle.status == 'online' %>
+          <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 mt-2">LIVE GPS</span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+    <h3 class="text-lg font-medium text-gray-900">Fleet Summary</h3>
+    <p class="text-2xl font-bold text-blue-600 mt-2"><%= @online_vehicles %> online vehicles</p>
+  </div>
 </div>
