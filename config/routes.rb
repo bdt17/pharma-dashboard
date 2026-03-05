@@ -1,18 +1,31 @@
 Rails.application.routes.draw do
-root 'batches#index'
+  # Auth first
   devise_for :users
   
-  resources :batches do
+  # Dashboard
+  get 'dashboard', to: 'dashboard#index'
+  
+  # API Health
   namespace :api do
-    get "health", to: "api/health#index"
+    get 'health', to: 'health#index'
   end
+  
+  # GPS IoT endpoints  
+  post 'gps/update', to: 'gps#update'
+  get 'gps/update/stream', to: 'gps#stream'
+  
+  # PDF endpoints
+  get 'test-pdf', to: 'batches#custody_report', defaults: { id: 1 }
+  
+  # Core resources
+  resources :batches do
     member do
       get 'chain-of-custody', to: 'batches#custody_report'
     end
   end
   
-  root to: 'batches#index'
+  resources :vehicles, path: 'trucks'
+  
+  # Default root (batches index)
+  root 'batches#index'
 end
-  get 'test-pdf', to: 'batches#custody_report', defaults: { id: 1 }
-  post 'gps/update', to: 'gps#update'
-  get 'dashboard', to: 'dashboard#index'
