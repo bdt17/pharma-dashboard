@@ -75,3 +75,9 @@ Rails.application.routes.draw do
   # === ENTERPRISE FEATURES (Phase 8-9) ===
   post '/create-checkout-session', to: 'stripe#create_checkout_session'
 end
+
+  resources :batches do
+    member do
+      get 'chain-of-custody', action: :custody_report
+    end
+  end
