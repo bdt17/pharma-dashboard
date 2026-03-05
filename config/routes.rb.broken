@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+ get 'batches/:id/chain-of-custody.pdf', to: 'batches#custody_report', as: :batch_chain_of_custody_pdf
   # === DEVise AUTH (clean /login → /logout) ===
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
@@ -37,18 +38,18 @@ Rails.application.routes.draw do
       post   'gps/update', to: 'gps#update'
       get    'gps/stream', to: 'gps#stream'
       get    'gps/:id', to: 'gps#show'
-      
+
       # Health + metrics (public)
       get    'health', to: 'health#show'
       get    'metrics', to: 'health#metrics'
     end
   end
 
-  # === FDA COMPLIANCE REPORTS (Phase 3A) ===
+  # === FDA COMPLIANCE REPORTS (Phase 3A) - FIXED ✅
   resources :batches, only: [:index, :show] do
     member do
-      get  :custody_report, path: 'chain-of-custody'
-      get  :temperature_log
+      get :custody_report, path: 'chain-of-custody', defaults: { format: :pdf }  # 👈 FIXED: forces PDF
+      get :temperature_log
       post :sign_electronic
     end
     collection do
@@ -70,6 +71,13 @@ Rails.application.routes.draw do
     resources :organizations
     get '/reports', to: 'reports#index'
   end
+
+  # === ENTERPRISE FEATURES (Phase 8-9) ===
+  post '/create-checkout-session', to: 'stripe#create_checkout_session'
 end
 
-\npost '/create-checkout-session', to: 'stripe#create_checkout_session'
+  resources :batches do
+    member do
+      get 'chain-of-custody', action: :custody_report
+    end
+  end

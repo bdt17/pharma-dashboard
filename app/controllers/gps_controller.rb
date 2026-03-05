@@ -1,23 +1,18 @@
 class GpsController < ApplicationController
-  # GPS data is often pushed from external devices, so authentication is disabled here.
-  skip_before_action :authenticate_user!, raise: false
-
-  # GET /gps/stream
-  # Returns a simple response confirming that the GPS WebSocket / ActionCable stream is active.
-  def stream
-    render plain: 'ActionCable WebSocket GPS stream LIVE'
-  end
-
-  # POST /gps/update
-  # Accepts incoming GPS updates from a device or test script and returns a JSON confirmation.
   def update
-    render json: {
-      status: 'gps_updated',
-      vehicle: 'PHARMA-001',
-      lat: 33.4484,
-      lng: -112.0740,
-      speed: 65,
-      timestamp: Time.now.utc.iso8601
+    vehicle = Vehicle.find_or_create_by(plate: params[:imei]) do |v|
+      v.name = "GV55-#{params[:imei]}"
+      v.latitude = params[:lat]
+      v.longitude = params[:lng]
+      v.status = 'online'
+    end
+    
+    vehicle.update!(latitude: params[:lat], longitude: params[:lng], status: 'online')
+    
+    render json: { 
+      status: 'GPS_UPDATED', 
+      vehicle: vehicle.plate,
+      coords: [params[:lat], params[:lng]]
     }
   end
 end
