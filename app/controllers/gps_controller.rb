@@ -1,18 +1,15 @@
 class GpsController < ApplicationController
   def update
     vehicle = Vehicle.find_or_create_by(plate: params[:imei]) do |v|
-      v.name = "GV55-#{params[:imei]}"
-      v.latitude = params[:lat]
-      v.longitude = params[:lng]
+      v.name = params[:imei]
       v.status = 'online'
     end
+    vehicle.update!(latitude: params[:lat], longitude: params[:lng])
     
-    vehicle.update!(latitude: params[:lat], longitude: params[:lng], status: 'online')
-    
-    render json: { 
-      status: 'GPS_UPDATED', 
-      vehicle: vehicle.plate,
-      coords: [params[:lat], params[:lng]]
-    }
+    render json: { status: 'GPS_UPDATED', imei: params[:imei] }
+  end
+  
+  def stream
+    render plain: "GPS STREAM LIVE\nVehicle: GV55-001\nLat: 33.45, Lng: -112.07"
   end
 end
