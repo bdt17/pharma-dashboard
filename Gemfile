@@ -3,7 +3,7 @@ ruby "3.3.5"
 
 # Core Rails
 gem "rails", "~> 8.1.1"
-gem "pg", "~> 1.5.5"
+gem "pg", "~> 1.6.3"
 gem "puma", ">= 5.0"
 gem "importmap-rails"
 gem "propshaft"
