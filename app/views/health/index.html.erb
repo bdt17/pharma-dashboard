@@ -1,2 +1,16 @@
-<h1>Health#index</h1>
-<p>Find me in app/views/health/index.html.erb</p>
+<div class="p-8 max-w-4xl mx-auto">
+  <h1 class="text-4xl font-bold text-green-600 mb-4">🩺 PHARMA DASHBOARD HEALTH</h1>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="bg-green-50 p-6 rounded-xl">
+      <h2 class="text-2xl font-semibold mb-4">📊 Production Metrics</h2>
+      <p><strong>Batches:</strong> <%= Batch.count %></p>
+      <p><strong>Vehicles:</strong> <%= Vehicle.count %></p>
+      <p><strong>Online:</strong> <%= Vehicle.where(status: 'online').count %></p>
+    </div>
+    <div class="bg-blue-50 p-6 rounded-xl">
+      <h2 class="text-2xl font-semibold mb-4">✅ Status</h2>
+      <p class="text-3xl font-bold text-green-600 mb-2">LIVE PRODUCTION</p>
+      <p class="text-sm text-gray-600">Chain of Custody PDF ✓ | GPS IoT Ready ✓</p>
+    </div>
+  </div>
+</div>

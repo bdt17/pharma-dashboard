@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index'
   get 'vehicles', to: 'vehicles#index'
   get 'health', to: 'health#index'
-  get 'login', to: redirect('/users/sign_in')
   
   # API endpoints  
   namespace :api, path: '' do
