@@ -1,22 +1,31 @@
 Rails.application.routes.draw do
-  get "health/index"
-  # Landing page
-  root "application#root"
+  resources :custody_logs
+  # Authentication
+  devise_for :users
   
-  # Core enterprise endpoints - EXPLICIT routes
-  get "/health", to: "health#index"
-  get "/api/health", to: "health#index"
-  get "/vehicles", to: "vehicles#index"
-  get "/batches", to: "batches#index"
-  get "/billing", to: "billing#index"
+  # Dashboard & Pages
+  root 'batches#index'
+  get 'dashboard', to: 'dashboard#index'
+  get 'vehicles', to: 'vehicles#index'
+  get 'health', to: 'health#index'
+  get 'billing', to: 'billing#index'
+  get 'compliance', to: 'compliance#index'
   
-  # GPS endpoints  
-  get "/gps/stream", to: "gps#stream"
-  post "/gps/update", to: "gps#update"
+  # API
+  get 'api/health', to: 'api/health#index'
   
-  # Sign-up (no Devise crash)
-  get "/sign-up", to: "application#signup"
+  # GPS IoT
+  post 'gps/update', to: 'gps#update'
+  get 'gps/update/stream', to: 'gps#stream'
+  
+  # PDF
+  get 'test-pdf', to: 'batches#custody_report', defaults: { id: 1 }
+  
+  # Core resources
+  resources :batches do
+    member do
+      get 'chain-of-custody', to: 'batches#custody_report'
+    end
+  end
+get '/batches/:id/coc_pdf', to: 'batches#coc_pdf', as: :coc_pdf
 end
-
-  get '/health', to: 'health#index'
-  get '/api/health', to: 'health#index'

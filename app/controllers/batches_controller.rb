@@ -1,31 +1,88 @@
 class BatchesController < ApplicationController
+before_action :set_batch, only: [:show, :update, :destroy, :custody_report, :coc_pdf]  
+  def index
+    @batches = Batch.all
+  end
+
+  def show
+  end
+
+  def new
+    @batch = Batch.new
+  end
+
+  def create
+    @batch = Batch.new(batch_params)
+    if @batch.save
+      redirect_to @batch, notice: 'Batch created.'
+    else
+      render :new
+    end
+  end
+
+  def update
+    if @batch.update(batch_params)
+      redirect_to @batch, notice: 'Batch updated.'
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @batch.destroy
+    redirect_to batches_path, notice: 'Batch deleted.'
+  end
+
   def custody_report
-    batch = Batch.find(params[:id])
-    
+    # YOUR EXISTING RAW PDF - WORKS
     pdf_content = <<~PDF
 %PDF-1.4
 1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
 2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
-3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>>>
+3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>
 4 0 obj<</Length 400>>stream
 BT /F1 24 Tf
-100 700 Td (CHAIN OF CUSTODY - BATCH #{batch.id}) Tj
-100 650 Td (LOT: #{batch.lot_number || 'LOT-1'}) Tj
-100 600 Td (Vehicle: #{batch.vehicle&.plate || 'N/A'}) Tj
-100 550 Td (Temp: #{batch.temperature_celsius || 4.2}C) Tj
-100 500 Td (Status: #{batch.status || 'active'}) Tj
+100 700 Td (CHAIN OF CUSTODY - BATCH #{@batch.id}) Tj
+100 650 Td (LOT: #{@batch.lot_number || 'LOT-1'}) Tj
+100 600 Td (Vehicle: #{@batch.vehicle&.plate || 'N/A'}) Tj
+100 550 Td (Temp: #{@batch.temperature_celsius || 4.2}C) Tj
+100 500 Td (Status: #{@batch.status || 'active'}) Tj
 100 450 Td (Generated: #{Time.now.utc}) Tj
 ET endstream endobj
 5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj
 trailer<</Size 6/Root 1 0 R>>%%EOF
     PDF
 
-    send_data pdf_content, 
-      filename: "Chain-of-Custody-Batch-#{batch.id}.pdf",
-      type: 'application/pdf', 
+    send_data pdf_content,
+      filename: "Chain-of-Custody-Batch-#{@batch.id}.pdf",
+      type: 'application/pdf',
       disposition: 'inline'
   rescue => e
     Rails.logger.error "PDF ERROR: #{e.message}"
     head :internal_server_error
+  end
+
+def coc_pdf
+  @batch.lot_number ||= "BATCH-#{@batch.id}"
+  @batch.save! if @batch.changed?
+  
+  html = ApplicationController.render(template: 'batches/coc_pdf', layout: 'coc_layout')
+  pdf = WickedPdf.new.pdf_from_string(html)
+  
+  send_data pdf, filename: "coc_#{@batch.lot_number}.pdf", 
+            type: 'application/pdf', disposition: 'inline'
+rescue => e
+  Rails.logger.error "CoC PDF Error: #{e.message}"
+  head :internal_server_error
+end
+
+  private
+
+  def set_batch
+    @batch = Batch.find(params[:id])
+  end
+
+  def batch_params
+    params.require(:batch).permit(:lot_number, :status, :vehicle_id, :temperature_celsius)
   end
 end

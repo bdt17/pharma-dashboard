@@ -1,0 +1,12 @@
+<h1>CHAIN OF CUSTODY - <%= @batch.lot_number.presence || "BATCH-#{@batch.id}" %></h1>
+<table border="1" style="width:100%;border-collapse:collapse;">
+<tr style="background:#eee;"><th>Time</th><th>Handler</th><th>Location</th><th>Action</th><th>Notes</th></tr>
+<% if @batch.custody_logs.exists? %>
+  <% @batch.custody_logs.each do |log| %>
+  <tr><td><%= log.timestamp || Time.now %></td><td><%= log.handler_name %></td><td><%= log.location %></td><td><%= log.action_type %></td><td><%= log.condition_notes || '-' %></td></tr>
+  <% end %>
+<% else %>
+  <tr><td colspan="5">No custody records</td></tr>
+<% end %>
+</table><p>Batch ID: <%= @batch.id %> | Generated: <%= Time.now %></p>
+

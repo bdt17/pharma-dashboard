@@ -17286,3 +17286,746 @@ FOREIGN KEY ("user_id")
   [1m[36mBatch Load (0.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."name" = 'Oxycodone Lot #4' LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Load (0.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."name" = 'Oxycodone Lot #5' LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to CreateCustodyLogs (20260305225551)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (649.3ms)[0m  [1m[35mCREATE TABLE "custody_logs" ("id" bigserial primary key, "batch_id" bigint NOT NULL, "handler_name" character varying, "signature_data" jsonb, "location" character varying, "condition_notes" text, "action_type" character varying, "timestamp" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_e8d3acf884"
+FOREIGN KEY ("batch_id")
+  REFERENCES "batches" ("id")
+) /*application='PharmaDashboard'*/[0m
+  [1m[35m (79.3ms)[0m  [1m[35mCREATE INDEX "index_custody_logs_on_batch_id" ON "custody_logs" ("batch_id") /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260305225551') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (29.4ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddTenantIdToApplicationRecord (20260305225610)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (2.3ms)[0m  [1m[35mALTER TABLE "application_records" ADD "tenant_id" uuid /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddTenantIdToBatches (20260305225613)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (2.8ms)[0m  [1m[35mALTER TABLE "batches" ADD "tenant_id" uuid /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260305225613') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (103.1ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Migrating to AddTenantIdToUsers (20260305225617)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (3.1ms)[0m  [1m[35mALTER TABLE "users" ADD "tenant_id" uuid /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260305225617') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (149.1ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to CreateTenants (20260305225747)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (444.9ms)[0m  [1m[35mCREATE TABLE "tenants" ("id" bigserial primary key, "name" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260305225747') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (30.5ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddTenantRefToUsers (20260305225830)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (2.6ms)[0m  [1m[35mALTER TABLE "users" ADD "tenant_id" bigint NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.8ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."lot_number" = 'LOT-PHARMA-20260305' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mCustodyLog Create (1.3ms)[0m  [1m[32mINSERT INTO "custody_logs" ("batch_id", "handler_name", "signature_data", "location", "condition_notes", "action_type", "timestamp", "created_at", "updated_at") VALUES (NULL, 'Tech1', NULL, 'Phoenix Hub', NULL, 'pickup', NULL, '2026-03-05 23:04:24.594370', '2026-03-05 23:04:24.594370') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (1.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (1.7ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number", "organization_id", "tenant_id") VALUES (NULL, NULL, NULL, NULL, '2026-03-05 23:05:18.535432', '2026-03-05 23:05:18.535432', 1, TRUE, NULL, 'LOT-PHARMA-20260305', NULL, NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (106.3ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (1.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 32 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mCustodyLog Create (2.0ms)[0m  [1m[32mINSERT INTO "custody_logs" ("batch_id", "handler_name", "signature_data", "location", "condition_notes", "action_type", "timestamp", "created_at", "updated_at") VALUES (32, 'Tech1', NULL, 'Phoenix Hub', NULL, 'pickup', NULL, '2026-03-05 23:05:26.387448', '2026-03-05 23:05:26.387448') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (41.5ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:06:05 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.7ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:32:in `coc_pdf'
+  Rendering layout layouts/coc_layout.html.erb
+  Rendering batches/coc_pdf.html.erb within layouts/coc_layout
+  Rendered batches/coc_pdf.html.erb within layouts/coc_layout (Duration: 5.6ms | GC: 0.0ms)
+  Rendered layout layouts/coc_layout.html.erb (Duration: 6.4ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 194ms (ActiveRecord: 26.9ms (1 query, 0 cached) | GC: 32.8ms)
+
+
+  
+ActionView::Template::Error (undefined method `lot_number' for nil)
+Caused by: NoMethodError (undefined method `lot_number' for nil)
+
+Information for: ActionView::Template::Error (undefined method `lot_number' for nil):
+    1: <h1>CHAIN OF CUSTODY - <%= @batch.lot_number %></h1>
+    2: <table border="1" style="width:100%;border-collapse:collapse;">
+    3: <tr style="background:#eee;"><th>Time</th><th>Handler</th><th>Location</th><th>Action</th><th>Notes</th></tr>
+    4: <% @batch.custody_logs.each do |log| %>
+    5: <tr><td><%= log.timestamp || Time.now %></td><td><%= log.handler_name %></td><td><%= log.location %></td><td><%= log.action_type %></td><td><%= log.condition_notes || '-' %></td></tr>
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:33:in `coc_pdf'
+
+Information for cause: NoMethodError (undefined method `lot_number' for nil):
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:33:in `coc_pdf'
+  [1m[36mBatch Load (0.6ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Update (1.4ms)[0m  [1m[33mUPDATE "batches" SET "updated_at" = '2026-03-05 23:07:34.033891', "lot_number" = 'LOT-PHARMA-20260305' WHERE "batches"."id" = 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.6ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (1.1ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mCustodyLog Create (1.2ms)[0m  [1m[32mINSERT INTO "custody_logs" ("batch_id", "handler_name", "signature_data", "location", "condition_notes", "action_type", "timestamp", "created_at", "updated_at") VALUES (1, 'Tech1', NULL, 'Phoenix Hub', NULL, 'pickup', NULL, '2026-03-05 23:08:07.755765', '2026-03-05 23:08:07.755765') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (104.6ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Started GET "/" for 127.0.0.1 at 2026-03-05 16:08:37 -0700
+Processing by BatchesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering batches/index.html.erb within layouts/application
+  [1m[36mVehicle Count (1.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" WHERE "vehicles"."status" = 'online' /*action='index',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/views/batches/index.html.erb:16
+  Rendered batches/index.html.erb within layouts/application (Duration: 44.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 50.4ms | GC: 0.0ms)
+Completed 200 OK in 87ms (Views: 69.1ms | ActiveRecord: 10.0ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2026-03-05 16:08:40 -0700
+Processing by BatchesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering batches/index.html.erb within layouts/application
+  [1m[36mVehicle Count (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" WHERE "vehicles"."status" = 'online' /*action='index',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/views/batches/index.html.erb:16
+  Rendered batches/index.html.erb within layouts/application (Duration: 2.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.5ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 5.5ms | ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/chain-of-custody.pdf" for ::1 at 2026-03-05 16:08:43 -0700
+Processing by BatchesController#custody_report as PDF
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (1.4ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='custody_report',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:3:in `custody_report'
+  [1m[36mVehicle Load (0.9ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*action='custody_report',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:14:in `custody_report'
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Sent data Chain-of-Custody-Batch-1.pdf (46.9ms)
+Completed 200 OK in 162ms (Views: 40.2ms | ActiveRecord: 13.2ms (2 queries, 0 cached) | GC: 5.3ms)
+
+
+Started GET "/batches.pdf" for 127.0.0.1 at 2026-03-05 16:08:49 -0700
+Processing by BatchesController#index as PDF
+Completed 406 Not Acceptable in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionController::UnknownFormat (BatchesController#index is missing a template for this request format and variant.
+
+request.formats: ["application/pdf"]
+request.variant: []):
+  
+actionpack (8.1.2) lib/action_controller/metal/implicit_render.rb:46:in `default_render'
+actionpack (8.1.2) lib/action_controller/metal/basic_implicit_render.rb:8:in `send_action'
+actionpack (8.1.2) lib/abstract_controller/base.rb:221:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/rendering.rb:199:in `process_action'
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:267:in `block in process_action'
+activesupport (8.1.2) lib/active_support/callbacks.rb:121:in `block in run_callbacks'
+actiontext (8.1.2) lib/action_text/rendering.rb:24:in `with_renderer'
+actiontext (8.1.2) lib/action_text/engine.rb:72:in `block (4 levels) in <class:Engine>'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `instance_exec'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+activesupport (8.1.2) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:266:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/rescue.rb:36:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:76:in `block in process_action'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `block in instrument'
+activesupport (8.1.2) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `instrument'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:75:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (8.1.2) lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+actionpack (8.1.2) lib/abstract_controller/base.rb:154:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.5) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.5) lib/rack/etag.rb:29:in `call'
+rack (3.2.5) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.5) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.5) lib/rack/method_override.rb:28:in `call'
+rack (3.2.5) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.5) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:09:13 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (5.9ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:32:in `coc_pdf'
+  Rendering layout layouts/coc_layout.html.erb
+  Rendering batches/coc_pdf.html.erb within layouts/coc_layout
+  Rendered batches/coc_pdf.html.erb within layouts/coc_layout (Duration: 23.0ms | GC: 0.0ms)
+  Rendered layout layouts/coc_layout.html.erb (Duration: 23.7ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 59ms (ActiveRecord: 5.9ms (1 query, 0 cached) | GC: 0.3ms)
+
+
+  
+ActionView::Template::Error (undefined method `lot_number' for nil)
+Caused by: NoMethodError (undefined method `lot_number' for nil)
+
+Information for: ActionView::Template::Error (undefined method `lot_number' for nil):
+    1: <h1>CHAIN OF CUSTODY - <%= @batch.lot_number %></h1>
+    2: <table border="1" style="width:100%;border-collapse:collapse;">
+    3: <tr style="background:#eee;"><th>Time</th><th>Handler</th><th>Location</th><th>Action</th><th>Notes</th></tr>
+    4: <% @batch.custody_logs.each do |log| %>
+    5: <tr><td><%= log.timestamp || Time.now %></td><td><%= log.handler_name %></td><td><%= log.location %></td><td><%= log.action_type %></td><td><%= log.condition_notes || '-' %></td></tr>
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:33:in `coc_pdf'
+
+Information for cause: NoMethodError (undefined method `lot_number' for nil):
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:33:in `coc_pdf'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (1.0ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mCustodyLog Create (0.9ms)[0m  [1m[32mINSERT INTO "custody_logs" ("batch_id", "handler_name", "signature_data", "location", "condition_notes", "action_type", "timestamp", "created_at", "updated_at") VALUES (1, 'Tech1', NULL, 'Phoenix Hub', NULL, 'pickup', '2026-03-05 23:05:30.177698', '2026-03-05 23:10:30.284489', '2026-03-05 23:10:30.284489') RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (37.9ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:11:12 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.7ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:32:in `coc_pdf'
+  Rendering layout layouts/coc_layout.html.erb
+  Rendering batches/coc_pdf.html.erb within layouts/coc_layout
+  Rendered batches/coc_pdf.html.erb within layouts/coc_layout (Duration: 2.5ms | GC: 0.0ms)
+  Rendered layout layouts/coc_layout.html.erb (Duration: 2.8ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 86ms (ActiveRecord: 22.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::Template::Error (undefined method `lot_number' for nil)
+Caused by: NoMethodError (undefined method `lot_number' for nil)
+
+Information for: ActionView::Template::Error (undefined method `lot_number' for nil):
+    1: <h1>CHAIN OF CUSTODY - <%= @batch.lot_number.presence || "BATCH-#{@batch.id}" %></h1>
+    2: <table border="1" style="width:100%;border-collapse:collapse;">
+    3: <tr style="background:#eee;"><th>Time</th><th>Handler</th><th>Location</th><th>Action</th><th>Notes</th></tr>
+    4: <% if @batch.custody_logs.exists? %>
+    5:   <% @batch.custody_logs.each do |log| %>
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:33:in `coc_pdf'
+
+Information for cause: NoMethodError (undefined method `lot_number' for nil):
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:33:in `coc_pdf'
+Started GET "/batches/1/chain-of-custody" for ::1 at 2026-03-05 16:15:45 -0700
+Processing by BatchesController#custody_report as HTML
+  Parameters: {"id"=>"1"}
+Completed 404 Not Found in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+AbstractController::ActionNotFound (The edit action could not be found for the :set_batch
+callback on BatchesController, but it is listed in the controller's
+:only option.
+
+Raising for missing callback actions is a new default in Rails 7.1, if you'd
+like to turn this off you can delete the option from the environment configurations
+or set `config.action_controller.raise_on_missing_callback_actions` to `false`.
+):
+  
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:64:in `match?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:385:in `block in make_lambda'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `all?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `block in invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `each'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:119:in `block in run_callbacks'
+actiontext (8.1.2) lib/action_text/rendering.rb:24:in `with_renderer'
+actiontext (8.1.2) lib/action_text/engine.rb:72:in `block (4 levels) in <class:Engine>'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `instance_exec'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+activesupport (8.1.2) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:266:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/rescue.rb:36:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:76:in `block in process_action'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `block in instrument'
+activesupport (8.1.2) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `instrument'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:75:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (8.1.2) lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+actionpack (8.1.2) lib/abstract_controller/base.rb:154:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.5) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.5) lib/rack/etag.rb:29:in `call'
+rack (3.2.5) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.5) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.5) lib/rack/method_override.rb:28:in `call'
+rack (3.2.5) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.5) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:15:54 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+Completed 404 Not Found in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+AbstractController::ActionNotFound (The edit action could not be found for the :set_batch
+callback on BatchesController, but it is listed in the controller's
+:only option.
+
+Raising for missing callback actions is a new default in Rails 7.1, if you'd
+like to turn this off you can delete the option from the environment configurations
+or set `config.action_controller.raise_on_missing_callback_actions` to `false`.
+):
+  
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:64:in `match?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:385:in `block in make_lambda'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `all?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `block in invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `each'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:119:in `block in run_callbacks'
+actiontext (8.1.2) lib/action_text/rendering.rb:24:in `with_renderer'
+actiontext (8.1.2) lib/action_text/engine.rb:72:in `block (4 levels) in <class:Engine>'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `instance_exec'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+activesupport (8.1.2) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:266:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/rescue.rb:36:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:76:in `block in process_action'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `block in instrument'
+activesupport (8.1.2) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `instrument'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:75:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (8.1.2) lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+actionpack (8.1.2) lib/abstract_controller/base.rb:154:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.5) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.5) lib/rack/etag.rb:29:in `call'
+rack (3.2.5) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.5) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.5) lib/rack/method_override.rb:28:in `call'
+rack (3.2.5) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.5) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:15:54 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+Completed 404 Not Found in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+AbstractController::ActionNotFound (The edit action could not be found for the :set_batch
+callback on BatchesController, but it is listed in the controller's
+:only option.
+
+Raising for missing callback actions is a new default in Rails 7.1, if you'd
+like to turn this off you can delete the option from the environment configurations
+or set `config.action_controller.raise_on_missing_callback_actions` to `false`.
+):
+  
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:64:in `match?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:385:in `block in make_lambda'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `all?'
+activesupport (8.1.2) lib/active_support/callbacks.rb:178:in `call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `block in invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `each'
+activesupport (8.1.2) lib/active_support/callbacks.rb:560:in `invoke_before'
+activesupport (8.1.2) lib/active_support/callbacks.rb:119:in `block in run_callbacks'
+actiontext (8.1.2) lib/action_text/rendering.rb:24:in `with_renderer'
+actiontext (8.1.2) lib/action_text/engine.rb:72:in `block (4 levels) in <class:Engine>'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `instance_exec'
+activesupport (8.1.2) lib/active_support/callbacks.rb:130:in `block in run_callbacks'
+activesupport (8.1.2) lib/active_support/callbacks.rb:141:in `run_callbacks'
+actionpack (8.1.2) lib/abstract_controller/callbacks.rb:266:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/rescue.rb:36:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:76:in `block in process_action'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `block in instrument'
+activesupport (8.1.2) lib/active_support/notifications/instrumenter.rb:58:in `instrument'
+activesupport (8.1.2) lib/active_support/notifications.rb:210:in `instrument'
+actionpack (8.1.2) lib/action_controller/metal/instrumentation.rb:75:in `process_action'
+actionpack (8.1.2) lib/action_controller/metal/params_wrapper.rb:259:in `process_action'
+activerecord (8.1.2) lib/active_record/railties/controller_runtime.rb:39:in `process_action'
+actionpack (8.1.2) lib/abstract_controller/base.rb:154:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.5) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.5) lib/rack/etag.rb:29:in `call'
+rack (3.2.5) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.5) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.5) lib/rack/method_override.rb:28:in `call'
+rack (3.2.5) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.5) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/batches/1/coc_pdf%20%20%20%20%20%20%20%20%20%20%20%E2%9C%85%20WickedPDF" for ::1 at 2026-03-05 16:17:35 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/coc_pdf%20%20%20%20%20%20%20%20%20%20%20%E2%9C%85%20WickedPDF"):
+  
+Started GET "/batches/1/chain-of-custody%20%20%E2%9C%85%20Raw%20PDF%20(your%20method)" for ::1 at 2026-03-05 16:17:52 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/chain-of-custody%20%20%E2%9C%85%20Raw%20PDF%20(your%20method)"):
+  
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:18:26 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.7ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:90:in `set_batch'
+  Rendering layout layouts/coc_layout.html.erb
+  Rendering batches/coc_pdf.html.erb within layouts/coc_layout
+  Rendered batches/coc_pdf.html.erb within layouts/coc_layout (Duration: 2.3ms | GC: 0.0ms)
+  Rendered layout layouts/coc_layout.html.erb (Duration: 2.5ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 110ms (ActiveRecord: 29.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  
+NameError (uninitialized constant WickedPdf::Error)
+Caused by: ActionView::Template::Error (undefined method `lot_number' for nil)
+Caused by: NoMethodError (undefined method `lot_number' for nil)
+
+Information for: NameError (uninitialized constant WickedPdf::Error):
+  
+app/controllers/batches_controller.rb:79:in `rescue in coc_pdf'
+app/controllers/batches_controller.rb:65:in `coc_pdf'
+
+Information for cause: ActionView::Template::Error (undefined method `lot_number' for nil):
+    1: <h1>CHAIN OF CUSTODY - <%= @batch.lot_number.presence || "BATCH-#{@batch.id}" %></h1>
+    2: <table border="1" style="width:100%;border-collapse:collapse;">
+    3: <tr style="background:#eee;"><th>Time</th><th>Handler</th><th>Location</th><th>Action</th><th>Notes</th></tr>
+    4: <% if @batch.custody_logs.exists? %>
+    5:   <% @batch.custody_logs.each do |log| %>
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:70:in `coc_pdf'
+
+Information for cause: NoMethodError (undefined method `lot_number' for nil):
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:70:in `coc_pdf'
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:18:28 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (4.4ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:90:in `set_batch'
+  Rendering layout layouts/coc_layout.html.erb
+  Rendering batches/coc_pdf.html.erb within layouts/coc_layout
+  Rendered batches/coc_pdf.html.erb within layouts/coc_layout (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/coc_layout.html.erb (Duration: 0.4ms | GC: 0.0ms)
+Completed 500 Internal Server Error in 12ms (ActiveRecord: 4.3ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  
+NameError (uninitialized constant WickedPdf::Error)
+Caused by: ActionView::Template::Error (undefined method `lot_number' for nil)
+Caused by: NoMethodError (undefined method `lot_number' for nil)
+
+Information for: NameError (uninitialized constant WickedPdf::Error):
+  
+app/controllers/batches_controller.rb:79:in `rescue in coc_pdf'
+app/controllers/batches_controller.rb:65:in `coc_pdf'
+
+Information for cause: ActionView::Template::Error (undefined method `lot_number' for nil):
+    1: <h1>CHAIN OF CUSTODY - <%= @batch.lot_number.presence || "BATCH-#{@batch.id}" %></h1>
+    2: <table border="1" style="width:100%;border-collapse:collapse;">
+    3: <tr style="background:#eee;"><th>Time</th><th>Handler</th><th>Location</th><th>Action</th><th>Notes</th></tr>
+    4: <% if @batch.custody_logs.exists? %>
+    5:   <% @batch.custody_logs.each do |log| %>
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:70:in `coc_pdf'
+
+Information for cause: NoMethodError (undefined method `lot_number' for nil):
+  
+app/views/batches/coc_pdf.html.erb:2
+app/controllers/batches_controller.rb:70:in `coc_pdf'
+Started GET "/batches/1/chain-of-custody" for ::1 at 2026-03-05 16:18:38 -0700
+Processing by BatchesController#custody_report as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.4ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='custody_report',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:90:in `set_batch'
+  [1m[36mVehicle Load (1.8ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*action='custody_report',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:47:in `custody_report'
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Sent data Chain-of-Custody-Batch-1.pdf (9.2ms)
+Completed 200 OK in 70ms (Views: 1.0ms | ActiveRecord: 11.4ms (2 queries, 0 cached) | GC: 0.9ms)
+
+
+Started GET "/batches/1/chain-of-custody" for ::1 at 2026-03-05 16:18:45 -0700
+Processing by BatchesController#custody_report as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (1.5ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='custody_report',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:90:in `set_batch'
+  [1m[36mVehicle Load (1.6ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*action='custody_report',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:47:in `custody_report'
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Sent data Chain-of-Custody-Batch-1.pdf (1.5ms)
+Completed 200 OK in 14ms (Views: 1.1ms | ActiveRecord: 2.9ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/chain-of-custody" for ::1 at 2026-03-05 16:21:08 -0700
+Processing by BatchesController#custody_report as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (2.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='custody_report',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:82:in `set_batch'
+  [1m[36mVehicle Load (0.6ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*action='custody_report',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:47:in `custody_report'
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Sent data Chain-of-Custody-Batch-1.pdf (3.6ms)
+Completed 200 OK in 83ms (Views: 2.7ms | ActiveRecord: 8.7ms (2 queries, 0 cached) | GC: 3.5ms)
+
+
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:21:17 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.4ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:82:in `set_batch'
+  Rendering layout layouts/coc_layout.html.erb
+  Rendering batches/coc_pdf.html.erb within layouts/coc_layout
+  Rendered batches/coc_pdf.html.erb within layouts/coc_layout (Duration: 1.0ms | GC: 0.0ms)
+  Rendered layout layouts/coc_layout.html.erb (Duration: 1.4ms | GC: 0.0ms)
+CoC PDF Error: undefined method `lot_number' for nil
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.4ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:21:18 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (1.5ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:82:in `set_batch'
+  Rendering layout layouts/coc_layout.html.erb
+  Rendering batches/coc_pdf.html.erb within layouts/coc_layout
+  Rendered batches/coc_pdf.html.erb within layouts/coc_layout (Duration: 0.4ms | GC: 0.0ms)
+  Rendered layout layouts/coc_layout.html.erb (Duration: 0.8ms | GC: 0.0ms)
+CoC PDF Error: undefined method `lot_number' for nil
+Completed 500 Internal Server Error in 10ms (ActiveRecord: 1.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/coc_pdf" for ::1 at 2026-03-05 16:21:52 -0700
+Processing by BatchesController#coc_pdf as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.5ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:82:in `set_batch'
+  Rendering layout layouts/coc_layout.html.erb
+  Rendering batches/coc_pdf.html.erb within layouts/coc_layout
+  Rendered batches/coc_pdf.html.erb within layouts/coc_layout (Duration: 0.2ms | GC: 0.0ms)
+  Rendered layout layouts/coc_layout.html.erb (Duration: 0.4ms | GC: 0.0ms)
+CoC PDF Error: undefined method `lot_number' for nil
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.5ms (1 query, 0 cached) | GC: 0.0ms)
+
+

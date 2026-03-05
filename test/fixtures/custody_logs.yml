@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  batch: one
+  handler_name: MyString
+  signature_data: 
+  location: MyString
+  condition_notes: MyText
+  action_type: MyString
+  timestamp: 2026-03-05 15:55:51
+
+two:
+  batch: two
+  handler_name: MyString
+  signature_data: 
+  location: MyString
+  condition_notes: MyText
+  action_type: MyString
+  timestamp: 2026-03-05 15:55:51

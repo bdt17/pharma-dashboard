@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_05_223403) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_05_225747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,11 +68,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_05_223403) do
     t.bigint "organization_id"
     t.string "status"
     t.float "temperature_celsius"
+    t.uuid "tenant_id"
     t.datetime "updated_at", null: false
     t.bigint "vehicle_id", null: false
     t.index ["lot"], name: "index_batches_on_lot", unique: true
     t.index ["lot_number"], name: "index_batches_on_lot_number", unique: true
     t.index ["vehicle_id"], name: "index_batches_on_vehicle_id"
+  end
+
+  create_table "custody_logs", force: :cascade do |t|
+    t.string "action_type"
+    t.bigint "batch_id", null: false
+    t.text "condition_notes"
+    t.datetime "created_at", null: false
+    t.string "handler_name"
+    t.string "location"
+    t.jsonb "signature_data"
+    t.datetime "timestamp"
+    t.datetime "updated_at", null: false
+    t.index ["batch_id"], name: "index_custody_logs_on_batch_id"
   end
 
   create_table "drivers", force: :cascade do |t|
@@ -183,6 +197,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_05_223403) do
     t.index ["vehicle_id"], name: "index_telemetries_on_vehicle_id"
   end
 
+  create_table "tenants", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -192,6 +212,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_05_223403) do
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
     t.string "role"
+    t.uuid "tenant_id"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -214,6 +235,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_05_223403) do
   add_foreign_key "audit_logs", "batches"
   add_foreign_key "audit_logs", "users"
   add_foreign_key "batches", "vehicles"
+  add_foreign_key "custody_logs", "batches"
   add_foreign_key "orders", "patients"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "telemetries", "batches"
