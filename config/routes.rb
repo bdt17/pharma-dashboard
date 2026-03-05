@@ -28,3 +28,4 @@ Rails.application.routes.draw do
   root 'batches#index'
 end
   get 'billing', to: 'billing#index'
+  get 'compliance', to: 'compliance#index'
