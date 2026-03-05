@@ -1,33 +1,39 @@
-<div style="max-width: 1200px; margin: 0 auto; padding: 2rem; font-family: Arial, sans-serif;">
-  <h1 style="color: #1f2937; font-size: 2.5rem; margin-bottom: 2rem;">🚛 Live Vehicle Fleet</h1>
-  
-  <div style="background: #f9fafb; padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 2rem;">
-    <h2 style="font-size: 1.5rem; color: #374151;">Fleet Summary</h2>
-    <p style="font-size: 2rem; font-weight: bold; color: #2563eb;">
-      <%= @online_vehicles %> Online Vehicles
-    </p>
+<div class="space-y-8">
+  <div>
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">🚛 Live Vehicle Fleet</h1>
+    <p class="text-xl text-gray-600">Real-time GPS tracking for cold chain compliance</p>
   </div>
   
-  <% if @vehicles.any? %>
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem;">
-      <% @vehicles.each do |vehicle| %>
-        <div style="background: white; padding: 1.5rem; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border-left: 4px solid #10b981;">
-          <h3 style="margin: 0 0 0.5rem 0; font-size: 1.25rem; color: #111827;">
-            <%= vehicle.name || vehicle.plate %>
-          </h3>
-          <p style="margin: 0 0 1rem 0; color: #6b7280;">Plate: <%= vehicle.plate %></p>
-          <p style="font-size: 1.25rem; font-weight: bold; color: #059669; margin: 0 0 0.5rem 0;">
-            📍 <%= vehicle.latitude %>, <%= vehicle.longitude %>
-          </p>
-          <span style="padding: 0.25rem 0.75rem; background: <%= vehicle.status == 'online' ? '#d1fae5' : '#fee2e2' %>; color: <%= vehicle.status == 'online' ? '#065f46' : '#991b1b' %>; border-radius: 9999px; font-size: 0.875rem; font-weight: 500;">
-            <%= vehicle.status.upcase %>
-          </span>
-        </div>
-      <% end %>
+  <div class="bg-white shadow-xl rounded-2xl p-8">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-semibold text-gray-900">Fleet Summary</h2>
+      <span class="px-4 py-2 bg-emerald-100 text-emerald-800 rounded-full font-semibold">
+        <%= @online_vehicles %> online
+      </span>
     </div>
-  <% else %>
-    <div style="text-align: center; padding: 4rem; background: #f3f4f6; border-radius: 0.5rem;">
-      <p style="font-size: 1.25rem; color: #6b7280;">No vehicles with GPS location data yet</p>
-    </div>
-  <% end %>
+    
+    <% if @vehicles.any? %>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @vehicles.each do |vehicle| %>
+          <div class="border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-all">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-xl font-bold text-gray-900"><%= vehicle.name || vehicle.plate %></h3>
+              <span class="px-3 py-1 bg-<%= vehicle.status == 'online' ? 'emerald' : 'gray' %>-100 text-<%= vehicle.status == 'online' ? 'emerald' : 'gray' %>-800 rounded-full text-sm font-medium">
+                <%= vehicle.status %>
+              </span>
+            </div>
+            <p class="text-2xl font-bold text-emerald-600 mb-2">
+              📍 <%= vehicle.latitude %>, <%= vehicle.longitude %>
+            </p>
+            <p class="text-sm text-gray-500">Plate: <%= vehicle.plate %></p>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-16">
+        <p class="text-2xl text-gray-500 mb-4">No vehicles online</p>
+        <p class="text-gray-400">GPS data will appear here when trucks report location</p>
+      </div>
+    <% end %>
+  </div>
 </div>
