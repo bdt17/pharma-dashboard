@@ -17186,3 +17186,103 @@ Reverting FixBatchesOrganizationIdNulls (20260305003022)
   [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
   [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
   [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (50.6ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (45.8ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number", "organization_id") VALUES (NULL, NULL, NULL, NULL, '2026-03-05 22:33:26.209639', '2026-03-05 22:33:26.209639', 1, TRUE, 'Oxycodone Lot #1', 'LOT20260305-1', NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mUser Load (27.0ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to FixBatchesOrganizationIdNulls (20260305003022)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260305003022') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (90.0ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Migrating to AddDeaFieldsToAuditLogs (20260305220644)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (3.1ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "auditable_type" character varying NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "auditable_id" bigint NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[35m (204.9ms)[0m  [1m[35mCREATE INDEX "index_audit_logs_on_auditable" ON "audit_logs" ("auditable_type", "auditable_id") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "details" jsonb /*application='PharmaDashboard'*/[0m
+  [1m[35m (1.5ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "ip_address" character varying /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Reverting FixBatchesOrganizationIdNulls (20260305003022)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Destroy (1.9ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = '20260305003022' /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (186.3ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to FixBatchesOrganizationIdNulls (20260305003022)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260305003022') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (50.9ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Migrating to FinishDeaAuditSetup (20260305221006)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (2.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260305221006') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (29.9ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Migrating to AddUserToAuditLogs (20260305223403)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (2.3ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "user_id" bigint NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[35m (198.5ms)[0m  [1m[35mCREATE INDEX "index_audit_logs_on_user_id" ON "audit_logs" ("user_id") /*application='PharmaDashboard'*/[0m
+  [1m[35m (144.4ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD CONSTRAINT "fk_rails_1f26bc34ae"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+ /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260305223403') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (105.6ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.8ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (1.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (1.0ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (1.4ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number", "organization_id") VALUES (NULL, NULL, NULL, NULL, '2026-03-05 22:39:57.633782', '2026-03-05 22:39:57.633782', 1, TRUE, 'Oxycodone Lot #1', 'LOT20260305-1', NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (148.2ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (1.2ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (0.7ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number", "organization_id") VALUES (NULL, NULL, NULL, NULL, '2026-03-05 22:39:57.821228', '2026-03-05 22:39:57.821228', 1, TRUE, 'Oxycodone Lot #2', 'LOT20260305-2', NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (141.6ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (1.4ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (0.7ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number", "organization_id") VALUES (NULL, NULL, NULL, NULL, '2026-03-05 22:39:57.969681', '2026-03-05 22:39:57.969681', 1, TRUE, 'Oxycodone Lot #3', 'LOT20260305-3', NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (28.6ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.9ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (0.4ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number", "organization_id") VALUES (NULL, NULL, NULL, NULL, '2026-03-05 22:39:58.004484', '2026-03-05 22:39:58.004484', 1, TRUE, 'Oxycodone Lot #4', 'LOT20260305-4', NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (31.0ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (1.1ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (2.1ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number", "organization_id") VALUES (NULL, NULL, NULL, NULL, '2026-03-05 22:39:58.040295', '2026-03-05 22:39:58.040295', 1, TRUE, 'Oxycodone Lot #5', 'LOT20260305-5', NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (27.7ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (23.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (14.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Pluck (0.3ms)[0m  [1m[34mSELECT "batches"."name" FROM "batches" /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (1.1ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."name" = 'Oxycodone Lot #1' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.4ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."name" = 'Oxycodone Lot #2' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."name" = 'Oxycodone Lot #3' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."name" = 'Oxycodone Lot #4' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (0.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."name" = 'Oxycodone Lot #5' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*application='PharmaDashboard'*/[0m

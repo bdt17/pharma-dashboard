@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_26_232605) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_05_223403) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -28,9 +28,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_26_232605) do
     t.string "event", null: false
     t.string "ip_address", limit: 45
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["batch_id"], name: "index_audit_logs_on_batch_id"
     t.index ["event"], name: "index_audit_logs_on_event"
     t.index ["ip_address"], name: "index_audit_logs_on_ip_address"
+    t.index ["user_id"], name: "index_audit_logs_on_user_id"
   end
 
   create_table "audits", force: :cascade do |t|
@@ -210,6 +212,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_26_232605) do
   end
 
   add_foreign_key "audit_logs", "batches"
+  add_foreign_key "audit_logs", "users"
   add_foreign_key "batches", "vehicles"
   add_foreign_key "orders", "patients"
   add_foreign_key "subscriptions", "organizations"
