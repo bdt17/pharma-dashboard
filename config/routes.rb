@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+ get 'batches/:id/chain-of-custody.pdf', to: 'batches#custody_report', as: :batch_chain_of_custody_pdf
   # === DEVise AUTH (clean /login → /logout) ===
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
