@@ -17082,3 +17082,107 @@ Migrating to AddOrganizationRefToBatches (20260226232430)
   [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
   [1m[36mVehicle Load (33.5ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" ORDER BY "vehicles"."id" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Load (1.8ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[35m (33.6ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (63.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (31.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.9ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddPolymorphicToExistingAuditLogs (20260305220532)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (3.4ms)[0m  [1m[35mALTER TABLE "existing_audit_logs" ADD "auditable_type" character varying NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddPolymorphicToExistingAuditLogs (20260305220532)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (2.8ms)[0m  [1m[35mALTER TABLE "existing_audit_logs" ADD "auditable_type" character varying NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.6ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddDeaFieldsToAuditLogs (20260305220644)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (23.0ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "auditable_type" character varying NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "auditable_id" bigint NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[35m (316.8ms)[0m  [1m[35mCREATE INDEX "index_audit_logs_on_auditable" ON "audit_logs" ("auditable_type", "auditable_id") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "details" jsonb /*application='PharmaDashboard'*/[0m
+  [1m[35m (32.2ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "ip_address" character varying /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Reverting FixBatchesOrganizationIdNulls (20260305003022)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Destroy (2.5ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = '20260305003022' /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (43.5ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Reverting AddOrganizationIdToVehicles (20260226232605)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Destroy (1.4ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = '20260226232605' /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (31.4ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.7ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+Migrating to AddOrganizationIdToVehicles (20260226232605)
+  [1m[36mTRANSACTION (2.4ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260226232605') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (78.3ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Migrating to FixBatchesOrganizationIdNulls (20260305003022)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.8ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20260305003022') RETURNING "version" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (28.5ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Migrating to AddDeaFieldsToAuditLogs (20260305220644)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[35m (1.8ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "auditable_type" character varying NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "auditable_id" bigint NOT NULL /*application='PharmaDashboard'*/[0m
+  [1m[35m (121.4ms)[0m  [1m[35mCREATE INDEX "index_audit_logs_on_auditable" ON "audit_logs" ("auditable_type", "auditable_id") /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "details" jsonb /*application='PharmaDashboard'*/[0m
+  [1m[35m (1.1ms)[0m  [1m[35mALTER TABLE "audit_logs" ADD "ip_address" character varying /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+Reverting FixBatchesOrganizationIdNulls (20260305003022)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Destroy (2.1ms)[0m  [1m[31mDELETE FROM "schema_migrations" WHERE "schema_migrations"."version" = '20260305003022' /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (49.4ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
