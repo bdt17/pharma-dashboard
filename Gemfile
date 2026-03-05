@@ -1,7 +1,6 @@
 source "https://rubygems.org"
 ruby "3.3.5"
 
-
 # Core Rails
 gem "rails", "~> 8.1.1"
 gem "pg", "~> 1.5.5"
@@ -15,6 +14,9 @@ gem "devise"
 # PDF Generation
 gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
+gem 'prawn'           # Proper PDFs (bye raw PDF strings)
+gem 'prawn-table'     # Tables for batch data
+gem 'rqrcode'         # GS1 QR codes
 
 # Payments & Billing
 gem "stripe-rails", "~> 2.6"
@@ -36,5 +38,3 @@ end
 gem 'tailwindcss-rails'
 
 
-gem "prawn", "~> 2.4"
-gem "prawn-table", "~> 0.2.2"
