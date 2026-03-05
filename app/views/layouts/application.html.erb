@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pharma Transport Dashboard - Thomas IT</title>
+  <title>Pharma Transport Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="csrf-param" content="authenticity_token" />
+  <meta name="csrf-token" content="<%= form_authenticity_token() %>" />
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -11,19 +15,36 @@
         extend: {
           colors: {
             'primary-blue': '#0984C0',
-            'accent-silver': '#AAA7B0',
-            'mid-grey': '#565759',
-            'light-variant': '#C0BEC6',
-            'lighter-blue': '#60BDD1'
+            'accent-silver': '#AAA7B0'
           }
         }
       }
     }
   </script>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
+  
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
 </head>
-<body class="bg-white font-sans antialiased">
-  <%= yield %>
+
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+  <nav class="bg-white shadow-lg border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <h1 class="text-2xl font-bold text-gray-900">💉 Pharma Transport</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <%= link_to "Dashboard", dashboard_path, class: "text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md font-medium" %>
+          <%= link_to "Vehicles", vehicles_path, class: "text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md font-medium" %>
+          <%= link_to "Health", health_path, class: "text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md font-medium" %>
+          <%= link_to "PDF", batches_path(1, format: :pdf), class: "bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700" %>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <%= yield %>
+  </main>
 </body>
 </html>
