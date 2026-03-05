@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
-  # Authentication (Devise)
+  # Auth first
   devise_for :users
   
-  # Dashboard & Standard UI
+  # Dashboard
   get 'dashboard', to: 'dashboard#index'
-  get 'vehicles', to: 'vehicles#index'
-  get 'health', to: 'health#index'
   
-  # API endpoints  
-  get 'api/health', to: 'api/health#index'
+  # API Health
+  namespace :api do
+    get 'health', to: 'health#index'
+  end
   
-  # GPS IoT endpoints
+  # GPS IoT endpoints  
   post 'gps/update', to: 'gps#update'
   get 'gps/update/stream', to: 'gps#stream'
   
@@ -24,7 +24,12 @@ Rails.application.routes.draw do
     end
   end
   
-  # Default root
+  resources :vehicles, path: 'trucks'
+  
+  # Default root (batches index)
   root 'batches#index'
 end
-  get 'billing', to: 'billing#index'
+  get 'vehicles', to: 'vehicles#index'
+  get 'vehicles', to: 'vehicles#index'
+  get 'health', to: 'health#index'
+  get 'login', to: redirect('/users/sign_in')
