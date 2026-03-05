@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'health', to: 'health#index'
   
   # API endpoints  
-  namespace :api, path: '' do
+  get "api/health", to: "api/health#index"
     get 'health', to: 'health#index'
   end
   
