@@ -20,6 +20,7 @@ class BatchesController < ApplicationController
     Rails.logger.info "Batch vehicle_id: #{@batch.vehicle_id}"
     Rails.logger.info "Vehicle exists: #{@batch.vehicle.present?}"
     Rails.logger.info "Driver exists: #{@batch.vehicle&.driver.present? rescue 'no vehicle'}"
+    Rails.logger.info "Temp Celsius: #{@batch.temperature_celsius}"
     Rails.logger.info "========================"
 
     pdf_content = <<~PDF
@@ -34,7 +35,7 @@ BT
 100 650 Td (LOT: #{@batch.lot_number || "LOT-#{@batch.id}"}) Tj
 100 620 Td (Vehicle: #{@batch.vehicle&.identifier || 'N/A'}) Tj
 100 590 Td (Driver: #{@batch.vehicle&.driver&.name || 'N/A'}) Tj
-100 560 Td (Temp: #{@batch.temperature || 4.2}C (2-8C Cold Chain)) Tj
+100 560 Td (Temp: #{@batch.temperature_celsius || 4.2}C (2-8C Cold Chain)) Tj
 100 530 Td (Status: #{@batch.status || 'active'}) Tj
 100 500 Td (Generated: #{Time.now.utc.strftime('%Y-%m-%d %H:%M UTC')}) Tj
 100 470 Td (User: #{current_user&.email || 'PHARMA_API_TOKEN'}) Tj
