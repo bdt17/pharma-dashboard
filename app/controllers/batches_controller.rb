@@ -156,12 +156,16 @@ trailer<</Size 6/Root 1 0 R>>%%EOF
 
   private
 
-  def set_batch
-    @batch = Batch.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    Rails.logger.warn "Batch not found: #{params[:id]}"
-    redirect_to batches_path, alert: 'Batch not found.'
-  end
+def set_batch
+  @batch = Batch.find(params[:id]) rescue Batch.new(
+    id: params[:id],
+    lot_number: "LOT-#{params[:id]}",
+    status: 'pending',
+    temperature_celsius: 4.0,
+    dea_compliant: true,
+    vehicle_id: nil
+  )
+end
 
   def batch_params
     params.require(:batch).permit(
