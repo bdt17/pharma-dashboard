@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "checkout/create"
   # Authentication
   devise_for :users
 

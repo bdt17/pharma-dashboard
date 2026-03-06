@@ -13,3 +13,13 @@ end
 Rails.application.config.stripe.secret_key = "sk_test_dummy_key"
 Rails.application.config.stripe.secret_key = "sk_test_dummy"
 Rails.application.config.stripe.secret_key = "sk_test_dummy"
+
+# Enterprise pharma subdomain
+config.action_controller.default_url_options = { 
+  host: 'pharma.thomasinformationtechnology.com', 
+  protocol: 'https' 
+}
+config.action_mailer.default_url_options = { 
+  host: 'pharma.thomasinformationtechnology.com', 
+  protocol: 'https' 
+}

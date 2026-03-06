@@ -1,0 +1,16 @@
+GEM
+  specs:
+    stripe (18.4.0)
+
+PLATFORMS
+  ruby
+  x86_64-linux
+
+DEPENDENCIES
+  stripe
+
+CHECKSUMS
+  stripe (18.4.0)
+
+BUNDLED WITH
+  4.0.3
