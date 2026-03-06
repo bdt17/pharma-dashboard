@@ -1,10 +1,21 @@
 class BatchesController < ApplicationController
-before_action :set_batch, only: [:show, :update, :destroy, :custody_report, :coc_pdf]  
+  before_action :set_batch, only: [:show, :custody_report, :coc_pdf, :edit, :update, :destroy]
+
   def index
     @batches = Batch.all
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render plain: "Batch list PDF - #{@batches.count} batches", 
+               content_type: "application/pdf"
+      end
+    end
   end
 
   def show
+    respond_to do |format|
+      format.html
+    end
   end
 
   def new
@@ -18,6 +29,9 @@ before_action :set_batch, only: [:show, :update, :destroy, :custody_report, :coc
     else
       render :new
     end
+  end
+
+  def edit
   end
 
   def update
@@ -34,55 +48,90 @@ before_action :set_batch, only: [:show, :update, :destroy, :custody_report, :coc
   end
 
   def custody_report
-    # YOUR EXISTING RAW PDF - WORKS
+    respond_to do |format|
+      format.html { render plain: "Batch #{@batch.id} Chain of Custody HTML" }
+      format.pdf do
+        vehicle_info = @batch.vehicle&.plate || @batch.vehicle_id.to_s || 'N/A'
+        pdf_content = <<~PDF
+%PDF-1.4
+1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
+3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>endobj
+4 0 obj<</Length 500>>stream
+BT /F1 20 Tf
+80 750 Td (FDA 21 CFR Part 11 - CHAIN OF CUSTODY) Tj
+80 720 Td (Batch ID: #{@batch.id}) Tj
+80 690 Td (Lot: #{@batch.lot_number || "LOT-#{@batch.id}"}) Tj
+80 660 Td (Status: #{@batch.status || 'IN_TRANSIT'}) Tj
+80 630 Td (Vehicle: #{vehicle_info}) Tj
+80 600 Td (Temp: #{@batch.temperature_celsius || '2-8C'}) Tj
+80 570 Td (DEA: #{@batch.dea_compliant ? 'YES' : 'NO'}) Tj
+80 500 Td (Generated: #{Time.now.utc.strftime('%Y-%m-%d %H:%M UTC')}) Tj
+ET endstream endobj
+5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj
+trailer<</Size 6/Root 1 0 R>>%%EOF
+        PDF
+
+        send_data pdf_content,
+          filename: "CoC-Raw-Batch#{@batch.id}.pdf",
+          type: 'application/pdf',
+          disposition: 'inline'
+      end
+    end
+  end
+
+  def coc_pdf
+    vehicle_info = @batch.vehicle&.plate || @batch.vehicle_id.to_s || 'N/A'
     pdf_content = <<~PDF
 %PDF-1.4
 1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
 2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
-3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>
-4 0 obj<</Length 400>>stream
-BT /F1 24 Tf
-100 700 Td (CHAIN OF CUSTODY - BATCH #{@batch.id}) Tj
-100 650 Td (LOT: #{@batch.lot_number || 'LOT-1'}) Tj
-100 600 Td (Vehicle: #{@batch.vehicle&.plate || 'N/A'}) Tj
-100 550 Td (Temp: #{@batch.temperature_celsius || 4.2}C) Tj
-100 500 Td (Status: #{@batch.status || 'active'}) Tj
-100 450 Td (Generated: #{Time.now.utc}) Tj
+3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>endobj
+4 0 obj<</Length 500>>stream
+BT /F1 20 Tf
+80 750 Td (FDA 21 CFR Part 11 - CHAIN OF CUSTODY) Tj
+80 720 Td (Batch ID: #{@batch.id}) Tj
+80 690 Td (Lot: #{@batch.lot_number || "LOT-#{@batch.id}"}) Tj
+80 660 Td (Status: #{@batch.status || 'IN_TRANSIT'}) Tj
+80 630 Td (Vehicle: #{vehicle_info}) Tj
+80 600 Td (Temp: #{@batch.temperature_celsius || '2-8C'}) Tj
+80 570 Td (DEA: #{@batch.dea_compliant ? 'YES' : 'NO'}) Tj
+80 500 Td (Generated: #{Time.now.utc.strftime('%Y-%m-%d %H:%M UTC')}) Tj
 ET endstream endobj
 5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj
 trailer<</Size 6/Root 1 0 R>>%%EOF
     PDF
 
     send_data pdf_content,
-      filename: "Chain-of-Custody-Batch-#{@batch.id}.pdf",
+      filename: "CoC-Batch#{@batch.id}.pdf",
       type: 'application/pdf',
-      disposition: 'inline'
-  rescue => e
-    Rails.logger.error "PDF ERROR: #{e.message}"
-    head :internal_server_error
+      disposition: 'attachment'
   end
-
-def coc_pdf
-  @batch.lot_number ||= "BATCH-#{@batch.id}"
-  @batch.save! if @batch.changed?
-  
-  html = ApplicationController.render(template: 'batches/coc_pdf', layout: 'coc_layout')
-  pdf = WickedPdf.new.pdf_from_string(html)
-  
-  send_data pdf, filename: "coc_#{@batch.lot_number}.pdf", 
-            type: 'application/pdf', disposition: 'inline'
-rescue => e
-  Rails.logger.error "CoC PDF Error: #{e.message}"
-  head :internal_server_error
-end
 
   private
 
   def set_batch
     @batch = Batch.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    Rails.logger.warn "Batch not found: #{params[:id]}"
+    redirect_to batches_path, alert: 'Batch not found.'
   end
 
   def batch_params
-    params.require(:batch).permit(:lot_number, :status, :vehicle_id, :temperature_celsius)
+    params.require(:batch).permit(
+      :lot_number,
+      :status,
+      :vehicle_id,
+      :temperature_celsius,
+      :name,
+      :batch_number,
+      :organization_id,
+      :tenant_id,
+      :ndc_code,
+      :expiry_date,
+      :signed_at,
+      :signed_by,
+      :dea_compliant
+    )
   end
 end

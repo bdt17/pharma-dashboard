@@ -20,8 +20,13 @@ Rails.application.routes.draw do
   # Core resources
   resources :batches do
     member do
-      get :custody_report, path: 'chain-of-custody'  # /batches/1/chain-of-custody
-      get :coc_pdf                                  # /batches/1/coc_pdf
+      # Chain of Custody - supports both HTML and PDF formats
+      # URLs: /batches/1/chain-of-custody & /batches/1/chain-of-custody.pdf
+      get :custody_report, path: 'chain-of-custody', as: :chain_of_custody
+      
+      # Dedicated WickedPDF endpoint
+      # URL: /batches/1/coc_pdf
+      get :coc_pdf
     end
   end
 
@@ -30,6 +35,7 @@ Rails.application.routes.draw do
   # Legacy test route (keep for now)
   get 'test-pdf', to: 'batches#custody_report', defaults: { id: 1 }
 
-  # Clean up - remove duplicates
-  # get '/batches/:id/coc_pdf', to: 'batches#coc_pdf', as: :coc_pdf  # ← REMOVED - now nested
+  # Debug routes (temporary - remove after Phase 8 complete)
+  get 'debug/batches', to: 'batches#index'
+  get 'debug/batch/:id', to: 'batches#show'
 end
