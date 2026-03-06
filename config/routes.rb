@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get "checkout/create"
+  
   # Authentication
   devise_for :users
 
@@ -18,16 +19,23 @@ Rails.application.routes.draw do
   post 'gps/update', to: 'gps#update'
   get 'gps/update/stream', to: 'gps#stream'
 
-  # Core resources
+  # Core resources - FIXED PDF ROUTING
   resources :batches do
     member do
-      # Chain of Custody - supports both HTML and PDF formats
-      # URLs: /batches/1/chain-of-custody & /batches/1/chain-of-custody.pdf
-      get :custody_report, path: 'chain-of-custody', as: :chain_of_custody
+      # Chain of Custody - HTML viewer + PDF download
+      # URLs: 
+      # /batches/1/chain-of-custody → HTML viewer  
+      # /batches/1/chain-of-custody.pdf → Raw PDF download
+      get :custody_report, path: 'chain-of-custody'
       
-      # Dedicated WickedPDF endpoint
-      # URL: /batches/1/coc_pdf
+      # Dedicated WickedPDF endpoint (legacy)
       get :coc_pdf
+      
+      # Batches list PDF
+      # URL: /batches.pdf → Full batches list PDF
+      collection do
+        get :batches_pdf, path: 'batches', defaults: { format: :pdf }
+      end
     end
   end
 
