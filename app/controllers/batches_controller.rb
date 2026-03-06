@@ -1,30 +1,28 @@
 class BatchesController < ApplicationController
   before_action :set_batch, only: [:show, :custody_report, :coc_pdf, :edit, :update, :destroy]
-
 def index
   @batches = Batch.all
   respond_to do |format|
     format.html
     format.pdf do
-      # Raw PDF - matches your chain-of-custody style
       pdf_content = <<~PDF
 %PDF-1.4
 1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
 2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
 3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>endobj
-4 0 obj<</Length 500>>stream
-BT /F1 20 Tf
-80 750 Td (PHARMA TRANSPORT - BATCHES LIST) Tj
+4 0 obj<</Length 600>>stream
+BT /F1 18 Tf
+80 750 Td (PHARMA TRANSPORT - BATCH SUMMARY) Tj
 80 720 Td (Generated: #{Time.now.utc.strftime('%Y-%m-%d %H:%M UTC')}) Tj
-80 690 Td (Total Batches: #{@batches.count}) Tj
-80 660 Td (Active: #{@batches.where(status: 'active').count}) Tj
-80 630 Td (In Transit: #{@batches.where(status: 'in_transit').count}) Tj
-80 600 Td (Completed: #{@batches.where(status: 'completed').count}) Tj
+80 680 Td (Total Batches: #{@batches.count}) Tj
+80 640 Td (Active: #{@batches.where(status: 'active').count}) Tj
+80 600 Td (In Transit: #{@batches.where(status: 'in_transit').count}) Tj
+80 560 Td (Completed: #{@batches.where(status: 'completed').count}) Tj
+80 520 Td (DEA Compliant: #{@batches.where(dea_compliant: true).count}/#{@batches.count}) Tj
 ET endstream endobj
 5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj
 trailer<</Size 6/Root 1 0 R>>%%EOF
       PDF
-
       send_data pdf_content,
         filename: "Pharma-Batches-#{Date.today}.pdf",
         type: 'application/pdf',

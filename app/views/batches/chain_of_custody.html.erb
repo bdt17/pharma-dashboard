@@ -1,30 +1,9 @@
-<div style="text-align: center; margin-bottom: 30px;">
-  <h1>🔗 FDA 21 CFR Part 11 Chain of Custody</h1>
+<div class="pdf-viewer-container">
+  <iframe src="/batches/1/chain-of-custody.pdf" 
+          width="100%" height="800px" 
+          style="border: 1px solid #ddd; border-radius: 8px;">
+    <p>Your browser doesn't support PDF viewing. 
+       <a href="/batches/1/chain-of-custody.pdf">Download PDF</a>
+    </p>
+  </iframe>
 </div>
-
-<table>
-  <tr>
-    <th>Batch ID</th>
-    <td><%= @batch.id %></td>
-  </tr>
-  <tr>
-    <th>Lot Number</th>
-    <td><%= @batch.lot_number || "PHARMA-#{@batch.id}" %></td>
-  </tr>
-  <tr>
-    <th>Status</th>
-    <td><span class="status-<%= @batch.status %>"><%= @batch.status %></span></td>
-  </tr>
-  <tr>
-    <th>Vehicle ID</th>
-    <td><%= @batch.vehicle_id %></td>
-  </tr>
-  <tr>
-    <th>DEA Compliant</th>
-    <td class="fda-compliance"><%= @batch.dea_compliant? ? '✅ YES' : '⚠️  PENDING' %></td>
-  </tr>
-  <tr>
-    <th>Generated</th>
-    <td><%= Time.current.in_time_zone('Mountain') %></td>
-  </tr>
-</table>
