@@ -21,3 +21,6 @@ tmp/
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+script/audit/*.pdf
+.env
+script/audit/*.pdf

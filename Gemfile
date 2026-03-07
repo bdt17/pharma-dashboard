@@ -38,3 +38,6 @@ end
 gem 'tailwindcss-rails'
 
 
+gem 'prawn'
+gem 'prawn-table'
+gem 'stripe'

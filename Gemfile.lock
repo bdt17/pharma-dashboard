@@ -313,6 +313,7 @@ DEPENDENCIES
   rack-cache
   rails (~> 8.1.1)
   rqrcode
+  stripe
   stripe-rails (~> 2.6)
   tailwindcss-rails
   wicked_pdf

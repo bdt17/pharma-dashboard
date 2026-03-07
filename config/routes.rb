@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   # Authentication
   devise_for :users
 
+  post '/stripe/create_intent', to: 'stripe#create_intent'
+  post '/stripe/webhook_test', to: 'stripe#webhook_test'
+
   # Dashboard & Pages
   root 'batches#index'
   get 'dashboard', to: 'dashboard#index'
@@ -48,3 +51,5 @@ Rails.application.routes.draw do
   get 'debug/batches', to: 'batches#index'
   get 'debug/batch/:id', to: 'batches#show'
 end
+post '/stripe/create_intent', to: 'stripe#create_intent'
+post '/stripe/webhook_test', to: 'stripe#webhook_test'
