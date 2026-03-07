@@ -2,7 +2,7 @@ require 'stripe'
 
 class StripeController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :webhook_test
-  
+
   def create_intent
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
     
@@ -22,7 +22,7 @@ class StripeController < ApplicationController
   rescue => e
     render json: { error: e.message }, status: 500
   end
-  
+
   def webhook_test
     head :ok
   end

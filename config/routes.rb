@@ -53,3 +53,5 @@ Rails.application.routes.draw do
 end
 post '/stripe/create_intent', to: 'stripe#create_intent'
 post '/stripe/webhook_test', to: 'stripe#webhook_test'
+post '/stripe/create_intent', to: 'stripe#create_intent'
+post '/stripe/webhook_test', to: 'stripe#webhook_test'
