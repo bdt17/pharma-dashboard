@@ -55,3 +55,12 @@ Rails.application.routes.draw do
   get 'debug/batches', to: 'batches#index'
   get 'debug/batch/:id', to: 'batches#show'
 end
+namespace :api do
+  namespace :v1 do
+    resources :vehicles
+    resources :batches
+  end
+end
+post '/gps/update', to: 'gps#update'
+get '/gps/stream', to: 'gps#stream'
+get '/up', to: 'rails/health#show'

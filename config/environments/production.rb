@@ -23,3 +23,6 @@ config.action_mailer.default_url_options = {
   host: 'pharma.thomasinformationtechnology.com', 
   protocol: 'https' 
 }
+config.hosts << "pharmatransport.org"
+config.hosts << "dashboard.pharmatransport.org"
+config.hosts << "api.pharmatransport.org"
