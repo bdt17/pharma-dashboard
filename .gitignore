@@ -25,3 +25,4 @@ script/audit/*.pdf
 .env
 script/audit/*.pdf
 .env
+.env
