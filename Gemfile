@@ -35,10 +35,6 @@ end
 group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
 end
+
 gem 'tailwindcss-rails'
-
-
-gem 'prawn'
-gem 'prawn-table'
-gem 'stripe'
-gem 'stripe'
+# DELETE THIS LINE: gem 'stripe'  <<<<--- DUPLICATE
