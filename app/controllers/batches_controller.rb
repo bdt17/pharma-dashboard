@@ -1,7 +1,19 @@
 class BatchesController < ApplicationController
+  before_action :set_batch, only: [:custody_report]
+
+  def index
+    @batches = Batch.all # Add this - was missing!
+    respond_to do |format|
+      format.html 
+      format.json { render json: @batches }
+      format.pdf do
+        pdf = BatchesPdf.new(@batches)
+        send_data pdf.render, filename: "batches.pdf", type: "application/pdf"
+      end
+    end
+  end
+
   def custody_report
-    batch = Batch.find(params[:id])
-    
     pdf_content = <<~PDF
 %PDF-1.4
 1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
@@ -9,23 +21,29 @@ class BatchesController < ApplicationController
 3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>>>
 4 0 obj<</Length 400>>stream
 BT /F1 24 Tf
-100 700 Td (CHAIN OF CUSTODY - BATCH #{batch.id}) Tj
-100 650 Td (LOT: #{batch.lot_number || 'LOT-1'}) Tj
-100 600 Td (Vehicle: #{batch.vehicle&.plate || 'N/A'}) Tj
-100 550 Td (Temp: #{batch.temperature_celsius || 4.2}C) Tj
-100 500 Td (Status: #{batch.status || 'active'}) Tj
+100 700 Td (CHAIN OF CUSTODY - BATCH #{@batch.id}) Tj
+100 650 Td (LOT: #{@batch.lot_number || 'LOT-1'}) Tj
+100 600 Td (Vehicle: #{@batch.vehicle&.plate || 'N/A'}) Tj
+100 550 Td (Temp: #{@batch.temperature_celsius || 4.2}C) Tj
+100 500 Td (Status: #{@batch.status || 'active'}) Tj
 100 450 Td (Generated: #{Time.now.utc}) Tj
 ET endstream endobj
 5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj
 trailer<</Size 6/Root 1 0 R>>%%EOF
     PDF
 
-    send_data pdf_content, 
-      filename: "Chain-of-Custody-Batch-#{batch.id}.pdf",
-      type: 'application/pdf', 
+    send_data pdf_content,
+      filename: "Chain-of-Custody-Batch-#{@batch.id}.pdf",
+      type: 'application/pdf',
       disposition: 'inline'
   rescue => e
     Rails.logger.error "PDF ERROR: #{e.message}"
     head :internal_server_error
+  end
+
+  private
+
+  def set_batch
+    @batch = Batch.find(params[:id])
   end
 end
