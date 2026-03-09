@@ -123,7 +123,7 @@ GEM
       prism (>= 1.3.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    json (2.18.1)
+    json (2.19.1)
     logger (1.7.0)
     loofah (2.25.0)
       crass (~> 1.0.2)
@@ -252,7 +252,7 @@ GEM
       logger
     securerandom (0.4.1)
     stringio (3.2.0)
-    stripe (18.4.0)
+    stripe (18.4.1)
     stripe-rails (2.6.0)
       rails (>= 5.1)
       responders
@@ -295,7 +295,6 @@ PLATFORMS
   arm-linux-musl
   arm64-darwin
   x86_64-darwin
-  x86_64-linux
   x86_64-linux-gnu
   x86_64-linux-musl
 
@@ -313,7 +312,6 @@ DEPENDENCIES
   rack-cache
   rails (~> 8.1.1)
   rqrcode
-  stripe
   stripe-rails (~> 2.6)
   tailwindcss-rails
   wicked_pdf
@@ -361,7 +359,7 @@ CHECKSUMS
   importmap-rails (2.2.3) sha256=7101be2a4dc97cf1558fb8f573a718404c5f6bcfe94f304bf1f39e444feeb16a
   io-console (0.8.2) sha256=d6e3ae7a7cc7574f4b8893b4fca2162e57a825b223a177b7afa236c5ef9814cc
   irb (1.17.0) sha256=168c4ddb93d8a361a045c41d92b2952c7a118fa73f23fe14e55609eb7a863aae
-  json (2.18.1) sha256=fe112755501b8d0466b5ada6cf50c8c3f41e897fa128ac5d263ec09eedc9f986
+  json (2.19.1) sha256=dd94fdc59e48bff85913829a32350b3148156bc4fd2a95a2568a78b11344082d
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   loofah (2.25.0) sha256=df5ed7ac3bac6a4ec802df3877ee5cc86d027299f8952e6243b3dac446b060e6
   mail (2.9.0) sha256=6fa6673ecd71c60c2d996260f9ee3dd387d4673b8169b502134659ece6d34941
@@ -415,7 +413,7 @@ CHECKSUMS
   ruby-vips (2.3.0) sha256=e685ec02c13969912debbd98019e50492e12989282da5f37d05f5471442f5374
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
   stringio (3.2.0) sha256=c37cb2e58b4ffbd33fe5cd948c05934af997b36e0b6ca6fdf43afa234cf222e1
-  stripe (18.4.0) sha256=33b2094cde24e28437dfccba4c57c1728ca8617dfb31c9eaab2fbf1694fdf865
+  stripe (18.4.1) sha256=f4fe9bbd90b501928a1052d277977385f036964384097479d84bc20d68188c5c
   stripe-rails (2.6.0) sha256=a6ef8e494cf9488e91786377c91a43f769c240717a486a647aa4f2680de1b0d2
   tailwindcss-rails (4.4.0) sha256=efa2961351a52acebe616e645a81a30bb4f27fde46cc06ce7688d1cd1131e916
   tailwindcss-ruby (4.2.0) sha256=9bf5fbae0ce571208446a837046505c7ff0d18d7b4ddfd5d0f02f4d73cb4403d
