@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   resources :batches do
     member do
       get :custody_report, path: 'chain-of-custody'
-      get :coc_pdf
+      get 'coc_pdf', format: false
     end
     
     collection do
@@ -55,12 +55,3 @@ Rails.application.routes.draw do
   get 'debug/batches', to: 'batches#index'
   get 'debug/batch/:id', to: 'batches#show'
 end
-namespace :api do
-  namespace :v1 do
-    resources :vehicles
-    resources :batches
-  end
-end
-post '/gps/update', to: 'gps#update'
-get '/gps/stream', to: 'gps#stream'
-get '/up', to: 'rails/health#show'
