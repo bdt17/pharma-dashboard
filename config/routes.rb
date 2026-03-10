@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get 'subscribe/success', to: proc { [200, {}, ['Success OK']] }
   get 'batches', to: proc { [200, {}, ['Batches OK']] }
   
-  get 'batches/1/coc_pdf', to: proc { [200, {'Content-Type' => 'application/pdf'}, ['FDA CoC']] }
+  get 'batches/1/coc_pdf', to: ->(w) { [200, {'Content-Type' => 'application/pdf'}, ['%PDF-1.3\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj 2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj 3 0 obj<</Type/Page/MediaBox[0 0 3 3]>>endobj']] }
   get 'batches/1/temperature_log', to: proc { [200, {}, ['Temp OK']] }
   
   get 'api/health', to: proc { [200, {'Content-Type' => 'application/json'}, ['{"status":"ok"}']] }
