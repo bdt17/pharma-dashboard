@@ -22,3 +22,5 @@ Rails.application.routes.draw do
   
   get '*path', to: proc { [404, {}, ['Not Found']] }
 end
+
+resources :stripe, only: [:new, :checkout]
