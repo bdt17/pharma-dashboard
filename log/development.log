@@ -23732,3 +23732,385 @@ puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
 puma (7.2.0) lib/puma/server.rb:503:in `process_client'
 puma (7.2.0) lib/puma/server.rb:262:in `block in run'
 puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2026-03-09 19:28:48 -0700
+Processing by BatchesController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-09 19:28:48 -0700
+Processing by HealthController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-09 19:28:49 -0700
+Processing by DashboardController#index as */*
+  [1m[36mBatch Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:5:in `index'
+  [1m[36mVehicle Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" WHERE "vehicles"."status" = 'online' /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:6:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mBatch Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "batches" LIMIT 1 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:21
+  [1m[36mBatch Load (0.2ms)[0m  [1m[34mSELECT "batches".* FROM "batches" /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:23
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 17.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.3ms | GC: 0.0ms)
+Completed 200 OK in 35ms (Views: 17.4ms | ActiveRecord: 5.9ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-09 19:28:49 -0700
+Processing by VehiclesController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-09 19:28:49 -0700
+Processing by BatchesController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-09 19:28:49 -0700
+Processing by StripeController#new as */*
+  Rendering stripe/new.html.erb
+  Rendered stripe/new.html.erb (Duration: 0.5ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-09 19:28:50 -0700
+Processing by BillingController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-03-09 19:28:50 -0700
+Processing by ComplianceController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/health" for 127.0.0.1 at 2026-03-09 19:28:50 -0700
+Started GET "/debug/batches" for 127.0.0.1 at 2026-03-09 19:28:50 -0700
+Processing by BatchesController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-09 19:28:50 -0700
+Processing by BatchesController#custody_report as PDF
+  Parameters: {"id"=>"1"}
+Completed 401 Unauthorized in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/coc_pdf" for 127.0.0.1 at 2026-03-09 19:28:51 -0700
+Processing by BatchesController#coc_pdf as PDF
+  Parameters: {"id"=>"1"}
+Completed 401 Unauthorized in 2ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-09 19:28:51 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 1.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 6.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 7.8ms | GC: 0.0ms)
+Completed 200 OK in 30ms (Views: 10.9ms | ActiveRecord: 4.6ms (0 queries, 0 cached) | GC: 1.5ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-09 19:28:51 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.5ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.7ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 4.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.9ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 6.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/gps" for 127.0.0.1 at 2026-03-09 19:28:51 -0700
+Processing by Api::V1::GpsController#index as */*
+  [1m[36mVehicle Load (0.3ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" /*action='index',application='PharmaDashboard',controller='gps'*/[0m
+  ↳ app/controllers/api/v1/gps_controller.rb:29:in `map'
+Completed 200 OK in 8ms (Views: 0.3ms | ActiveRecord: 0.8ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/batches" for 127.0.0.1 at 2026-03-09 19:28:52 -0700
+Processing by Api::BatchesController#index as JSON
+Completed 200 OK in 1ms (Views: 0.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/vehicles" for 127.0.0.1 at 2026-03-09 19:28:52 -0700
+Processing by Api::VehiclesController#index as JSON
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/subscribe/success" for 127.0.0.1 at 2026-03-09 19:28:52 -0700
+Processing by StripeController#success as */*
+  Rendering layout layouts/application.html.erb
+  Rendering stripe/success.html.erb within layouts/application
+  Rendered stripe/success.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.6ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-09 19:28:52 -0700
+  
+AbstractController::ActionNotFound (The action 'temperature_log' could not be found for BatchesController):
+  
+actionpack (8.1.2) lib/abstract_controller/base.rb:149:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.5) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.5) lib/rack/etag.rb:29:in `call'
+rack (3.2.5) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.5) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.5) lib/rack/method_override.rb:28:in `call'
+rack (3.2.5) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.5) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2026-03-09 19:43:21 -0700
+Processing by BatchesController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-09 19:43:21 -0700
+Processing by HealthController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-09 19:43:21 -0700
+Processing by DashboardController#index as */*
+  [1m[36mBatch Count (12.8ms)[0m  [1m[34mSELECT COUNT(*) FROM "batches" /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:5:in `index'
+  [1m[36mVehicle Count (0.7ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" WHERE "vehicles"."status" = 'online' /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/controllers/dashboard_controller.rb:6:in `index'
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  [1m[36mBatch Exists? (3.2ms)[0m  [1m[34mSELECT 1 AS one FROM "batches" LIMIT 1 /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:21
+  [1m[36mBatch Load (0.9ms)[0m  [1m[34mSELECT "batches".* FROM "batches" /*action='index',application='PharmaDashboard',controller='dashboard'*/[0m
+  ↳ app/views/dashboard/index.html.erb:23
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 12.0ms | GC: 0.6ms)
+  Rendered layout layouts/application.html.erb (Duration: 13.0ms | GC: 0.6ms)
+Completed 200 OK in 30ms (Views: 9.3ms | ActiveRecord: 22.7ms (4 queries, 0 cached) | GC: 0.6ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-09 19:43:22 -0700
+Processing by VehiclesController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-09 19:43:22 -0700
+Processing by BatchesController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-09 19:43:22 -0700
+Processing by StripeController#new as */*
+  Rendering stripe/new.html.erb
+  Rendered stripe/new.html.erb (Duration: 0.1ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 5.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-09 19:43:23 -0700
+Processing by BillingController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/compliance" for 127.0.0.1 at 2026-03-09 19:43:23 -0700
+Processing by ComplianceController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/health" for 127.0.0.1 at 2026-03-09 19:43:23 -0700
+Started GET "/debug/batches" for 127.0.0.1 at 2026-03-09 19:43:23 -0700
+Processing by BatchesController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-09 19:43:23 -0700
+Processing by BatchesController#custody_report as PDF
+  Parameters: {"id"=>"1"}
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/coc_pdf" for 127.0.0.1 at 2026-03-09 19:43:24 -0700
+Processing by BatchesController#coc_pdf as PDF
+  Parameters: {"id"=>"1"}
+Completed 401 Unauthorized in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-09 19:43:24 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 1.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.4ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 2.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-09 19:43:24 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 1.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.3ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 2.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/api/v1/gps" for 127.0.0.1 at 2026-03-09 19:43:24 -0700
+Processing by Api::V1::GpsController#index as */*
+  [1m[36mVehicle Load (0.6ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" /*action='index',application='PharmaDashboard',controller='gps'*/[0m
+  ↳ app/controllers/api/v1/gps_controller.rb:29:in `map'
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/batches" for 127.0.0.1 at 2026-03-09 19:43:25 -0700
+Processing by Api::BatchesController#index as JSON
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/vehicles" for 127.0.0.1 at 2026-03-09 19:43:25 -0700
+Processing by Api::VehiclesController#index as JSON
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/subscribe/success" for 127.0.0.1 at 2026-03-09 19:43:25 -0700
+Processing by StripeController#success as */*
+  Rendering layout layouts/application.html.erb
+  Rendering stripe/success.html.erb within layouts/application
+  Rendered stripe/success.html.erb within layouts/application (Duration: 0.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-09 19:43:25 -0700
+  
+AbstractController::ActionNotFound (The action 'temperature_log' could not be found for BatchesController):
+  
+actionpack (8.1.2) lib/abstract_controller/base.rb:149:in `process'
+actionview (8.1.2) lib/action_view/rendering.rb:40:in `process'
+actionpack (8.1.2) lib/action_controller/metal.rb:252:in `dispatch'
+actionpack (8.1.2) lib/action_controller/metal.rb:335:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:65:in `dispatch'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:50:in `serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:35:in `block in serve'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:86:in `block in recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `each'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:66:in `recognize'
+actionpack (8.1.2) lib/action_dispatch/journey/router.rb:31:in `serve'
+actionpack (8.1.2) lib/action_dispatch/routing/route_set.rb:906:in `call'
+railties (8.1.2) lib/rails/engine/lazy_route_set.rb:60:in `call'
+warden (1.2.9) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.9) lib/warden/manager.rb:34:in `catch'
+warden (1.2.9) lib/warden/manager.rb:34:in `call'
+rack (3.2.5) lib/rack/tempfile_reaper.rb:20:in `call'
+rack (3.2.5) lib/rack/etag.rb:29:in `call'
+rack (3.2.5) lib/rack/conditional_get.rb:31:in `call'
+rack (3.2.5) lib/rack/head.rb:15:in `call'
+actionpack (8.1.2) lib/action_dispatch/http/content_security_policy.rb:38:in `call'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:274:in `context'
+rack-session (2.1.1) lib/rack/session/abstract/id.rb:268:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/cookies.rb:708:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:31:in `block in call'
+activesupport (8.1.2) lib/active_support/callbacks.rb:101:in `run_callbacks'
+actionpack (8.1.2) lib/action_dispatch/middleware/callbacks.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/debug_exceptions.rb:31:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/show_exceptions.rb:32:in `call'
+railties (8.1.2) lib/rails/rack/logger.rb:41:in `call_app'
+railties (8.1.2) lib/rails/rack/logger.rb:29:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/remote_ip.rb:98:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/request_id.rb:34:in `call'
+rack (3.2.5) lib/rack/method_override.rb:28:in `call'
+rack (3.2.5) lib/rack/runtime.rb:24:in `call'
+activesupport (8.1.2) lib/active_support/cache/strategy/local_cache_middleware.rb:30:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (8.1.2) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/executor.rb:20:in `call'
+propshaft (1.3.1) lib/propshaft/server.rb:37:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/static.rb:27:in `call'
+rack (3.2.5) lib/rack/sendfile.rb:131:in `call'
+actionpack (8.1.2) lib/action_dispatch/middleware/host_authorization.rb:143:in `call'
+railties (8.1.2) lib/rails/engine.rb:534:in `call'
+puma (7.2.0) lib/puma/configuration.rb:296:in `call'
+puma (7.2.0) lib/puma/request.rb:103:in `block in handle_request'
+puma (7.2.0) lib/puma/thread_pool.rb:355:in `with_force_shutdown'
+puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
+puma (7.2.0) lib/puma/server.rb:503:in `process_client'
+puma (7.2.0) lib/puma/server.rb:262:in `block in run'
+puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'

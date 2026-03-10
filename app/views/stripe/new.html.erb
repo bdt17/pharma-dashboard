@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gradient-to-br from-indigo-50 to-emerald-50 min-h-screen py-12">
-  <div class="max-w-4xl mx-auto px-4">
-    <h1 class="text-6xl font-bold text-center bg-gradient-to-r from-gray-900 to-emerald-800 bg-clip-text text-transparent mb-16">
-      Pharma Transport Pro
-    </h1>
+<head><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-gradient-to-br from-blue-50 to-emerald-50 min-h-screen py-12 px-4">
+<div class="max-w-4xl mx-auto">
+  <h1 class="text-6xl font-bold text-center bg-gradient-to-r from-gray-900 to-emerald-800 bg-clip-text text-transparent mb-16">
+    🚀 Pharma Transport Pro
+  </h1>
+  
+  <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-12 shadow-2xl border">
+    <div class="text-5xl text-center mb-8">🏥</div>
+    <h2 class="text-5xl font-bold text-gray-900 text-center mb-4">$99<span class="text-3xl">/mo</span></h2>
+    <h3 class="text-3xl font-semibold text-blue-600 text-center mb-12">Pharmacy Pro</h3>
     
-    <div class="grid lg:grid-cols-2 gap-12">
-      <div class="bg-white/90 backdrop-blur-xl rounded-3xl p-12 shadow-2xl border border-white/50">
-        <div class="text-5xl mb-8 text-center">🏥</div>
-        <h2 class="text-5xl font-bold text-gray-900 text-center mb-4">$99</h2>
-        <p class="text-2xl text-gray-500 text-center mb-8">/ month</p>
-        <h3 class="text-3xl font-semibold text-blue-600 text-center mb-12">Pharmacy Pro</h3>
-        
-        <ul class="space-y-4 mb-12 text-xl">
-          <li class="flex items-center"><span class="w-6 h-6 bg-emerald-500 rounded-full mr-4 flex-shrink-0"></span>GPS Tracking (25 vehicles)</li>
-          <li class="flex items-center"><span class="w-6 h-6 bg-emerald-500 rounded-full mr-4 flex-shrink-0"></span>FDA 21 CFR Part 11 PDFs</li>
-          <li class="flex items-center"><span class="w-6 h-6 bg-emerald-500 rounded-full mr-4 flex-shrink-0"></span>2-8°C Cold Chain Alerts</li>
-          <li class="flex items-center"><span class="w-6 h-6 bg-emerald-500 rounded-full mr-4 flex-shrink-0"></span>Unlimited Batches</li>
-        </ul>
-        
-        <form action="/stripe/checkout" method="POST" class="text-center">
-          <input type="hidden" name="plan" value="pharmacy_pro_99">
-          <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white py-8 px-12 rounded-3xl font-bold text-2xl shadow-2xl hover:shadow-3xl hover:from-emerald-600 hover:to-blue-700 transition-all">
-            🚀 Start 14-Day Free Trial
-          </button>
-        </form>
-      </div>
-    </div>
+    <form action="/stripe/checkout" method="POST" class="text-center mb-12">
+      <input type="hidden" name="plan" value="pharmacy_pro_99">
+      <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white py-8 px-12 rounded-3xl font-bold text-2xl shadow-2xl hover:shadow-3xl">
+        🎉 Start 14-Day Free Trial
+      </button>
+    </form>
     
-    <p class="text-center mt-20 text-lg text-gray-500">
-      No credit card required • Cancel anytime • Enterprise ready
-    </p>
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xl max-w-2xl mx-auto">
+      <li class="flex items-center"><span class="w-6 h-6 bg-emerald-500 rounded-full mr-4"></span>GPS Tracking (25 vehicles)</li>
+      <li class="flex items-center"><span class="w-6 h-6 bg-emerald-500 rounded-full mr-4"></span>FDA 21 CFR Part 11 PDFs</li>
+      <li class="flex items-center"><span class="w-6 h-6 bg-emerald-500 rounded-full mr-4"></span>2-8°C Cold Chain Alerts</li>
+      <li class="flex items-center"><span class="w-6 h-6 bg-emerald-500 rounded-full mr-4"></span>Unlimited Batches</li>
+    </ul>
   </div>
+  
+  <p class="text-center mt-12 text-xl text-gray-500">
+    No credit card required • Cancel anytime • Enterprise ready
+  </p>
+</div>
 </body>
 </html>

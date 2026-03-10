@@ -4,6 +4,6 @@ class StripeController < ApplicationController
   end
   
   def checkout
-    render plain: "STRIPE LIVE! Plan: #{params[:plan]} - Add your Stripe Price ID"
+    render plain: "STRIPE LIVE! Plan: #{params[:plan]} - Add Stripe Price ID to go live"
   end
 end
