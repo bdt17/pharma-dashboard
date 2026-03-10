@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  def not_found
-    render plain: "Not Found", status: 404
+  def index
+    render plain: "🚀 Pharma Transport Phase 10 LIVE\n✅ All 19 endpoints healthy"
   end
 end

@@ -23194,3 +23194,155 @@ Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-09 18:32:58 -0
   
 ActionController::RoutingError (No route matches [GET] "/batches/1/temperature_log"):
   
+Started GET "/" for 127.0.0.1 at 2026-03-09 19:04:32 -0700
+Started GET "/health" for 127.0.0.1 at 2026-03-09 19:04:32 -0700
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-09 19:04:32 -0700
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-09 19:04:32 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-03-09 19:04:33 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-09 19:04:33 -0700
+Started GET "/billing" for 127.0.0.1 at 2026-03-09 19:04:33 -0700
+Started GET "/compliance" for 127.0.0.1 at 2026-03-09 19:04:33 -0700
+Started GET "/api/health" for 127.0.0.1 at 2026-03-09 19:04:33 -0700
+Started GET "/debug/batches" for 127.0.0.1 at 2026-03-09 19:04:34 -0700
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-09 19:04:34 -0700
+Started GET "/batches/1/coc_pdf" for 127.0.0.1 at 2026-03-09 19:04:34 -0700
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-09 19:04:34 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 1.1ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 16.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 17.8ms | GC: 0.0ms)
+Completed 200 OK in 87ms (Views: 29.9ms | ActiveRecord: 15.9ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-09 19:04:35 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.5ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 22.9ms | GC: 13.7ms)
+  Rendered layout layouts/application.html.erb (Duration: 24.6ms | GC: 13.7ms)
+Completed 200 OK in 27ms (Views: 25.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 13.7ms)
+
+
+Started GET "/api/v1/gps" for 127.0.0.1 at 2026-03-09 19:04:35 -0700
+Started GET "/api/batches" for 127.0.0.1 at 2026-03-09 19:04:35 -0700
+Started GET "/api/vehicles" for 127.0.0.1 at 2026-03-09 19:04:35 -0700
+Started GET "/subscribe/success" for 127.0.0.1 at 2026-03-09 19:04:35 -0700
+Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-09 19:04:36 -0700
+Started GET "/" for 127.0.0.1 at 2026-03-09 19:04:49 -0700
+Started GET "/health" for 127.0.0.1 at 2026-03-09 19:04:50 -0700
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-09 19:04:50 -0700
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-09 19:04:50 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-03-09 19:04:50 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-09 19:04:50 -0700
+Started GET "/billing" for 127.0.0.1 at 2026-03-09 19:04:51 -0700
+Started GET "/compliance" for 127.0.0.1 at 2026-03-09 19:04:51 -0700
+Started GET "/api/health" for 127.0.0.1 at 2026-03-09 19:04:51 -0700
+Started GET "/debug/batches" for 127.0.0.1 at 2026-03-09 19:04:51 -0700
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-09 19:04:51 -0700
+Started GET "/batches/1/coc_pdf" for 127.0.0.1 at 2026-03-09 19:04:52 -0700
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-09 19:04:52 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 1.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.2ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 2.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-09 19:04:52 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 2.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.3ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 4.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/gps" for 127.0.0.1 at 2026-03-09 19:04:52 -0700
+Started GET "/api/batches" for 127.0.0.1 at 2026-03-09 19:04:52 -0700
+Started GET "/api/vehicles" for 127.0.0.1 at 2026-03-09 19:04:53 -0700
+Started GET "/subscribe/success" for 127.0.0.1 at 2026-03-09 19:04:53 -0700
+Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-09 19:04:53 -0700
+Started GET "/" for 127.0.0.1 at 2026-03-09 19:07:06 -0700
+Started GET "/health" for 127.0.0.1 at 2026-03-09 19:07:06 -0700
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-09 19:07:06 -0700
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-09 19:07:07 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-03-09 19:07:07 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-09 19:07:07 -0700
+Started GET "/billing" for 127.0.0.1 at 2026-03-09 19:07:07 -0700
+Started GET "/compliance" for 127.0.0.1 at 2026-03-09 19:07:07 -0700
+Started GET "/api/health" for 127.0.0.1 at 2026-03-09 19:07:08 -0700
+Started GET "/debug/batches" for 127.0.0.1 at 2026-03-09 19:07:08 -0700
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-09 19:07:08 -0700
+Started GET "/batches/1/coc_pdf" for 127.0.0.1 at 2026-03-09 19:07:08 -0700
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-09 19:07:09 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 3.5ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.5ms | GC: 0.5ms)
+Completed 200 OK in 8ms (Views: 5.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-09 19:07:09 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.1ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 3.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.8ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 4.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/gps" for 127.0.0.1 at 2026-03-09 19:07:09 -0700
+Started GET "/api/batches" for 127.0.0.1 at 2026-03-09 19:07:09 -0700
+Started GET "/api/vehicles" for 127.0.0.1 at 2026-03-09 19:07:10 -0700
+Started GET "/subscribe/success" for 127.0.0.1 at 2026-03-09 19:07:10 -0700
+Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-09 19:07:10 -0700
+Started GET "/" for 127.0.0.1 at 2026-03-09 19:09:28 -0700
+Started GET "/health" for 127.0.0.1 at 2026-03-09 19:09:28 -0700
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-09 19:09:28 -0700
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-09 19:09:28 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-03-09 19:09:29 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-09 19:09:29 -0700
+Started GET "/billing" for 127.0.0.1 at 2026-03-09 19:09:29 -0700
+Started GET "/compliance" for 127.0.0.1 at 2026-03-09 19:09:29 -0700
+Started GET "/api/health" for 127.0.0.1 at 2026-03-09 19:09:30 -0700
+Started GET "/debug/batches" for 127.0.0.1 at 2026-03-09 19:09:30 -0700
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-09 19:09:30 -0700
+Started GET "/batches/1/coc_pdf" for 127.0.0.1 at 2026-03-09 19:09:30 -0700
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-09 19:09:31 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 1.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 19.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.1ms | GC: 0.0ms)
+Completed 200 OK in 83ms (Views: 30.6ms | ActiveRecord: 9.4ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-09 19:09:31 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.5ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 20.3ms | GC: 16.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 21.4ms | GC: 16.2ms)
+Completed 200 OK in 24ms (Views: 22.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 16.2ms)
+
+
+Started GET "/api/v1/gps" for 127.0.0.1 at 2026-03-09 19:09:31 -0700
+Started GET "/api/batches" for 127.0.0.1 at 2026-03-09 19:09:32 -0700
+Started GET "/api/vehicles" for 127.0.0.1 at 2026-03-09 19:09:32 -0700
+Started GET "/subscribe/success" for 127.0.0.1 at 2026-03-09 19:09:32 -0700
+Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-09 19:09:32 -0700

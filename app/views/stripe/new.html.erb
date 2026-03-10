@@ -1,1 +1,30 @@
-<h1>Subscribe - Pharma Transport</h1><p>Choose your plan above!</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    .plan { border: 2px solid #3B82F6; border-radius: 16px; padding: 2rem; margin: 1rem; }
+    .buy-button { background: linear-gradient(45deg, #3B82F6, #1D4ED8); color: white; padding: 1rem 2rem; border: none; border-radius: 12px; font-weight: bold; }
+  </style>
+</head>
+<body style="font-family: system-ui; max-width: 800px; margin: 2rem auto;">
+  <h1 style="text-align: center; font-size: 3rem;">🚀 Pharma Transport</h1>
+  <p style="text-align: center; font-size: 1.2rem; color: #666;">FDA Compliance • GPS Tracking • Cold Chain</p>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+    <div class="plan">
+      <h2 style="text-align: center; font-size: 2.5rem;">$99<span style="font-size: 1.2rem;">/mo</span></h2>
+      <p style="text-align: center; font-size: 1.5rem; color: #3B82F6;">Pharmacy Pro</p>
+      <ul style="list-style: none; padding: 0;">
+        <li>✅ GPS (25 vehicles)</li>
+        <li>✅ FDA 21 CFR PDFs</li>
+        <li>✅ 2-8°C Alerts</li>
+      </ul>
+      <form action="/stripe/checkout" method="POST" style="text-align: center; margin-top: 2rem;">
+        <input type="hidden" name="plan" value="pharmacy_pro_99">
+        <button type="submit" class="buy-button" style="width: 100%;">Start 14-Day Free Trial</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
