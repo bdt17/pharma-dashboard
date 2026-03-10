@@ -44,5 +44,5 @@ Rails.application.configure do
   config.x.stripe.secret_key = ENV['STRIPE_SECRET_KEY']
 
   # Render.com optimizations
-  config.cache_store = :memory_store, { size: 64.megabytes }
+  config.cache_store = :memory_store, { size: 64 * 1024 * 1024 }  # 64MB
 end
