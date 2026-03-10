@@ -26,9 +26,12 @@ gem "image_processing", "~> 1.2"
 
 # Asset pipeline
 # gem "bootsnap", require: false
-gem 'bootsnap', '>= 1.16.0', require: false
+gem 'bootsnap', '>= 1.16.0', require: false.
 
 # Production only
+group :production do
+  gem "rack-cache"
+end
 
 group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
@@ -36,4 +39,3 @@ end
 
 gem 'tailwindcss-rails'
 # DELETE THIS LINE: gem 'stripe'  <<<<--- DUPLICATE
-gem 'stripe', '~> 10.0'

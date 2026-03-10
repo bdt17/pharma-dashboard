@@ -3,3 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 end
 
+
+  def create_stripe_customer
+    Stripe::Customer.create(email: email)
+  end

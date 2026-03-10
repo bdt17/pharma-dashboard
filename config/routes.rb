@@ -1,21 +1,26 @@
 Rails.application.routes.draw do
   # Healthcheck endpoints (Rails 8.1 + custom)
-  get "up", to: "rails/health#show"
-  get "health", to: "health#index"
+  get "up", to: "rails/health#show", as: :up
+  get "health", to: "health#index", as: :health
 
   # Authentication
   devise_for :users
 
   # Stripe endpoints
-  post '/stripe/create_intent', to: 'stripe#create_intent'
-  post '/stripe/webhook_test', to: 'stripe#webhook_test'
+  post '/stripe/create_intent', to: 'stripe#create_intent', as: :create_stripe_intent
+  post '/stripe/webhook_test', to: 'stripe#webhook_test', as: :stripe_webhook_test
+  post '/stripe/checkout', to: 'stripe#checkout', as: :stripe_checkout
+  get '/stripe/success', to: 'stripe#success', as: :stripe_success
+  get '/stripe/cancel', to: 'stripe#cancel', as: :stripe_cancel
+  post '/stripe/webhook', to: 'stripe#webhook', as: :stripe_webhook
 
   # Dashboard & Pages
   root 'batches#index'
-  get 'dashboard', to: 'dashboard#index'
-  get 'vehicles', to: 'vehicles#index'
-  get 'billing', to: 'billing#index'
-  get 'compliance', to: 'compliance#index'
+  get 'dashboard', to: 'dashboard#index', as: :dashboard
+  get 'vehicles', to: 'vehicles#index', as: :vehicles
+  get 'billing', to: 'billing#index', as: :billing
+  get 'compliance', to: 'compliance#index', as: :compliance
+  get 'subscribe', to: 'stripe#new', as: :subscribe
 
   # GPS IoT API (Phase 10 - Queclink GV55)
   namespace :api do
@@ -30,11 +35,13 @@ Rails.application.routes.draw do
 
   # API Namespace (JSON only)  
   namespace :api, defaults: { format: :json } do
-    get :health, to: ->(w) { { status: 'ok', uptime: 99.9, timestamp: Time.now.utc.iso8601 }.to_json }
+    get :health, to: ->(w) { [200, { 'Content-Type' => 'application/json' }, [{ status: 'ok', uptime: 99.9, timestamp: Time.now.utc.iso8601 }.to_json]] }
 
     resources :batches, only: [:index, :show] do
-      get :custody_report, path: 'chain-of-custody'
-      get :coc_pdf, defaults: { format: :pdf }
+      member do
+        get :custody_report, path: 'chain-of-custody'
+        get :coc_pdf, defaults: { format: :pdf }
+      end
     end
 
     resources :vehicles, only: [:index]
@@ -59,6 +66,10 @@ Rails.application.routes.draw do
   resources :custody_logs
 
   # Debug routes (remove after Phase 10)
-  get 'debug/batches', to: 'batches#index'
-  get 'debug/batch/:id', to: 'batches#show'
+  get 'debug/batches', to: 'batches#index', as: :debug_batches
+  get 'debug/vehicles', to: 'vehicles#index', as: :debug_vehicles
+  get 'debug/users', to: 'users#index', as: :debug_users if Rails.env.development?
+
+  # Catch-all for 404
+  get '*path', to: 'application#not_found', constraints: ->(req) { !req.xhr? && req.format.html? }
 end

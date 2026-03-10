@@ -147,3 +147,36 @@ trailer<</Size 6/Root 1 0 R>>%%EOF
     PDF
   end
 end
+
+  def coc_pdf
+    @batch = Batch.find(params[:id])
+    respond_to do |format|
+      format.pdf do
+        html = render_to_string(partial: 'batches/coc_pdf', layout: false)
+        kit = PDFKit.new(html)
+        send_data(kit.to_pdf, filename: "coc_#{@batch.id}.pdf", type: 'application/pdf')
+      end
+    end
+  end
+
+  def coc_pdf
+    @batch = Batch.find(params[:id])
+    respond_to do |format|
+      format.pdf do
+        html = render_to_string(partial: 'batches/coc_pdf', layout: false)
+        kit = PDFKit.new(html)
+        send_data(kit.to_pdf, filename: "coc_#{@batch.id}.pdf", type: 'application/pdf')
+      end
+    end
+  end
+
+  def coc_pdf
+    @batch = Batch.find(params[:id])
+    respond_to do |format|
+      format.pdf do
+        html = render_to_string(partial: 'batches/coc_pdf', layout: false, formats: [:html])
+        kit = PDFKit.new(html)
+        send_data(kit.to_pdf, filename: "coc_#{@batch.id}.pdf", type: 'application/pdf', disposition: 'attachment')
+      end
+    end
+  end
