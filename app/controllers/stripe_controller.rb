@@ -1,14 +1,9 @@
 class StripeController < ApplicationController
   def new
+    render inline: "<h1>Pharma Transport - Choose Plan</h1>"
   end
   
   def success
-    @session = params[:session_id]
+    render inline: "<h1>✅ Subscription Success!</h1>"
   end
 end
-  def success
-    @session_id = params[:session_id]
-  end
-  def success
-    @session_id = params[:session_id]
-  end

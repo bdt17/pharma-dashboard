@@ -1,3 +1,5 @@
 class ApplicationController < ActionController::Base
-  # Your existing code only - NO Pundit, NO warden hacks
+  def not_found
+    render plain: "Not Found", status: 404
+  end
 end
