@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
- # ✅ DEVise FIRST (highest priority)
+  # Landing Page - Phase 10 Enterprise (TOP priority)
+  get '/landing', to: 'landing#index'
+  root to: 'landing#index'
+  
+  # ✅ DEVise FIRST (auth required routes)
   devise_for :users
+  
   # GPS IoT Endpoints (Queclink GV55)
   get '/gps', to: 'gps#index'
   post '/gps/update', to: 'gps#update'
@@ -17,11 +22,8 @@ Rails.application.routes.draw do
 
   # PDF endpoint (WickedPDF)  
   get '/batches.pdf', to: 'batches#index', defaults: {format: 'pdf'}
-
-  # Static landing page
-  get '/index.html', to: proc { [200, {'Content-Type' => 'text/html'}, ['<h1>Pharma Transport Dashboard - Phase 10 LIVE</h1><p>🚀 Multi-Tenant SaaS | Queclink GPS | DSCSA Compliance</p>']] }
-
-  # Root redirect
-  root to: redirect('/index.html')
   get 'batches/:id/chain-of-custody.pdf', to: 'batches#chain_of_custody', defaults: {format: 'pdf'}
+
+  # Legacy static fallback
+  get '/index.html', to: proc { [200, {'Content-Type' => 'text/html'}, ['<h1>Pharma Transport Dashboard - Phase 10 LIVE</h1><p>🚀 Multi-Tenant SaaS | Queclink GPS | DSCSA Compliance</p>']] }
 end

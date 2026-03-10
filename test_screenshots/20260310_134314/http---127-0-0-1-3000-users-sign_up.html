@@ -1,0 +1,69 @@
+<!-- BEGIN app/views/layouts/application.html.erb
+--><!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Enterprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 min-h-screen antialiased">
+  <nav class="bg-white/80 backdrop-blur-xl shadow-xl border-b border-white/50 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="text-3xl">💉</div>
+          <h1 class="text-2xl font-bold text-gray-900">Pharma Transport</h1>
+        </div>
+        <div class="flex space-x-4">
+          <a href="/dashboard" class="px-4 py-2 rounded-xl hover:bg-blue-100 transition-all">Dashboard</a>
+          <a href="/vehicles" class="px-4 py-2 rounded-xl hover:bg-blue-100 transition-all">Vehicles</a>
+          <a href="/batches" class="px-4 py-2 rounded-xl hover:bg-blue-100 transition-all">Batches</a>
+          <a href="/subscribe" class="bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-6 py-2 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all">
+            Pro $99/mo
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="pt-4">
+    <!-- BEGIN /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb
+--><h2>Sign up</h2>
+
+<form class="new_user" id="new_user" action="/users" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="-pzRUqOBAnA_k2G3YuVWYv9ScJMlxYunEuPLgsJlyFnBCMVLE64-Nykf_zO2oCaeRKSERUsdObuooM_1C8HPyA" />
+  <!-- BEGIN /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb
+--><!-- END /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb -->
+
+  <div class="field">
+    <p><label for="user_email">Email</label></p>
+    <p><input autofocus="autofocus" autocomplete="email" type="email" value="" name="user[email]" id="user_email" /></p>
+  </div>
+
+  <div class="field">
+    <p><label for="user_password">Password</label></p>
+      <p><em>(6 characters minimum)</em></p>
+    <p><input autocomplete="new-password" type="password" name="user[password]" id="user_password" /></p>
+  </div>
+
+  <div class="field">
+    <p><label for="user_password_confirmation">Password confirmation</label></p>
+    <p><input autocomplete="new-password" type="password" name="user[password_confirmation]" id="user_password_confirmation" /></p>
+  </div>
+
+  <div class="actions">
+    <input type="submit" name="commit" value="Sign up" data-disable-with="Sign up" />
+  </div>
+</form>
+<!-- BEGIN /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb
+-->  <p><a href="/users/sign_in">Log in</a></p>
+
+
+
+
+
+<!-- END /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb -->
+<!-- END /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb -->
+  </main>
+</body>
+</html>
+<!-- END app/views/layouts/application.html.erb -->
