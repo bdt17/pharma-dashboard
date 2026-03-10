@@ -1,13 +1,9 @@
 class SubscriptionsController < ApplicationController
-  def new
-  end
-  
-  def create
-    customer = Stripe::Customer.create(email: current_user.email)
-    Stripe::Subscription.create(
-      customer: customer.id,
-      items: [{ price: "price_99_monthly_vehicle" }]
-    )
-    redirect_to dashboard_path, notice: "Premium activated!"
+  def index
+    @plans = [
+      {name: 'Starter', price: 99, features: '5 vehicles'},
+      {name: 'Pro', price: 299, features: '50 vehicles'}, 
+      {name: 'Enterprise', price: 499, features: '500 vehicles'}
+    ]
   end
 end

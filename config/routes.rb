@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "gps/update"
+  get "gps/index"
   # Static landing (your index.html)
   get '/index.html', to: ->(env) { [200, {'Content-Type' => 'text/html'}, [File.read('public/index.html')]] }
 
@@ -14,3 +16,6 @@ Rails.application.routes.draw do
   
   root to: redirect('/index.html')
 end
+get '/gps', to: 'gps#index'
+post '/gps/update', to: 'gps#update'
+get '/subscribe', to: 'subscriptions#index'

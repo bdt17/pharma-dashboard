@@ -24151,3 +24151,24 @@ Processing by Devise::SessionsController#new as */*
 Completed 200 OK in 93ms (Views: 26.9ms | ActiveRecord: 9.5ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/health" for 127.0.0.1 at 2026-03-10 12:40:52 -0700
+Started GET "/" for 127.0.0.1 at 2026-03-10 12:43:05 -0700
+Redirected to http://127.0.0.1:3000/index.html
+↳ /home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/config/routes.rb:15:in `block in <top (required)>'
+Completed 301 Moved Permanently in 0ms
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-10 12:43:06 -0700
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-10 12:43:06 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-03-10 12:43:06 -0700
+Started GET "/batches.pdf" for 127.0.0.1 at 2026-03-10 12:43:06 -0700
+Started GET "/gps/update" for 127.0.0.1 at 2026-03-10 12:43:06 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/gps/update"):
+  
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-10 12:43:07 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/subscribe"):
+  
+Started GET "/billing" for 127.0.0.1 at 2026-03-10 12:43:07 -0700
+Started GET "/health" for 127.0.0.1 at 2026-03-10 12:43:08 -0700

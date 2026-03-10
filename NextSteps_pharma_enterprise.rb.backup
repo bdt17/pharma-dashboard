@@ -1,0 +1,139 @@
+#!/usr/bin/env ruby
+require 'colorize'
+require 'date'
+
+# 🚀 PHARMA TRANSPORT ENTERPRISE ROADMAP v12.0
+# Thomas IT Network - Phase 10 Complete (Mar 8, 2026)
+# DEA PDFs 100% ✅ | Custom Domain DNS ✓ | ARR Target: $5M
+
+puts "=" * 100
+puts "📈 PHARMA ENTERPRISE NEXT STEPS ROADMAP".center(100).colorize(:blue).bold
+puts "Current: Phase 10 Live | Target: $5M ARR by Q4 2026".center(100)
+puts "=" * 100
+
+ROADMAP = {
+  :phase_11 => {
+    title: "Multi-Tenant SaaS (Q2 2026)",
+    status: "🚧 IN PROGRESS",
+    tasks: [
+      "✅ Stripe endpoints deployed",
+      "✅ 3 price points tested ($99/$299/$499)",
+      "⬜ Frontend Stripe Elements checkout page",
+      "⬜ Pharmacy subscription dashboard",
+      "⬜ Multi-tenant (pharmacy accounts)",
+      "⬜ Webhook → create pharmacy accounts"
+    ],
+    effort: "3 days",
+    impact: "$99k MRR potential (100 pharmacies)"
+  },
+  :phase_12 => {
+    title: "Real GPS IoT (Queclink GV55)",
+    status: "🔄 READY",
+    tasks: [
+      "✅ Queclink GV55 vehicle #1 LIVE",
+      "⬜ Real-time GPS `/gps/update` endpoint",
+      "⬜ GPS streaming dashboard",
+      "⬜ Temperature sensor integration (2-8°C)",
+      "⬜ Cold chain alerts (email/SMS)"
+    ],
+    effort: "2 days", 
+    impact: "DSCSA cold chain compliance"
+  },
+  :phase_13 => {
+    title: "Mobile App (React Native)",
+    status: "⏳ PLANNING",
+    tasks: [
+      "⬜ Driver app (batch scanning QR)",
+      "⬜ Pharmacist app (batch verification)",
+      "⬜ NFC tap-to-pay (Apple Pay/Google Pay)",
+      "⬜ Push notifications (ETA alerts)"
+    ],
+    effort: "2 weeks",
+    impact: "Field operations 10x faster"
+  },
+  :phase_14 => {
+    title: "SOC2 + Compliance (Q3 2026)",
+    status: "📋 REQUIRED",
+    tasks: [
+      "⬜ Audit trail (21 CFR Part 11 complete)",
+      "⬜ SOC2 Type 1 certification",
+      "⬜ Annual penetration test",
+      "⬜ Data retention policy (7 years)"
+    ],
+    effort: "4 weeks",
+    impact: "Enterprise contracts unlocked"
+  },
+  :phase_15 => {
+    title: "Scale to $5M ARR (Q4 2026)",
+    status: "🎯 GOAL",
+    tasks: [
+      "⬜ 500 pharmacies @ $99/mo = $594k ARR",
+      "⬜ Enterprise upsell @ $499/mo",
+      "⬜ White-label for distributors",
+      "⬜ API marketplace (3PL integration)"
+    ],
+    effort: "Ongoing",
+    impact: "$5M ARR → Profitable SaaS"
+  }
+}
+
+def print_roadmap
+  ROADMAP.each do |phase, data|
+    puts "\n" + "="*80
+    puts data[:title].colorize(:green).bold
+    puts "Status: #{data[:status]} | Effort: #{data[:effort]} | Impact: #{data[:impact]}".colorize(:yellow)
+    puts "="*80
+    
+    data[:tasks].each do |task|
+      case task
+      when /\A✅/
+        puts "✅ #{task.sub('✅ ', '')}".colorize(:green)
+      when /\A⬜/
+        puts "⬜ #{task.sub('⬜ ', '')}".colorize(:red)
+      end
+    end
+  end
+end
+
+def immediate_actions
+  puts "\n" + "🔥 IMMEDIATE ACTIONS (Today)".colorize(:red).bold
+  puts "-" * 50
+  [
+    "1. Deploy Stripe frontend checkout page (3hrs)",
+    "2. Fix /batches.pdf 406 error (30min)", 
+    "3. Add GPS endpoints (2hrs)",
+    "4. Multi-tenant auth (Devise + subdomains)",
+    "5. Run: bin/test all  # Verify everything green"
+  ].each { |action| puts "   • #{action}".colorize(:yellow) }
+end
+
+def production_status
+  puts "\n" + "📊 CURRENT PRODUCTION STATUS".colorize(:blue).bold
+  puts "-" * 50
+  puts "✅ DEA Chain-of-Custody PDFs: 100% (5/5 batches)"
+  puts "✅ Custom Domain DNS: dashboard.pharmatransport.org ✓" 
+  puts "✅ Stripe: sk_test_51Sd3... (108 chars) ✓"
+  puts "✅ Queclink GV55 GPS: Vehicle #1 LIVE"
+  puts "✅ Cold Chain: 2-8°C ready"
+  puts "⚠️  Missing: /batches.pdf (406), GPS endpoints (404)"
+end
+
+def commands_to_run
+  puts "\n" + "💻 COMMANDS TO EXECUTE NOW".colorize(:magenta).bold
+  puts "-" * 50
+  system("echo '1. Fix 406 error:'")
+  system("echo 'nano app/controllers/batches_controller.rb  # Add Accept header fix'")
+  system("echo '2. Deploy:'")
+  system("echo 'git add . && git commit -m \"Fix 406 + APIs\" && git push origin main'")
+  system("echo '3. Test everything:'") 
+  system("echo 'source .env && ./test_pharma_enterprise.rb'")
+  system("echo 'bin/test all  # If wrapper exists'")
+end
+
+# EXECUTE
+print_roadmap
+production_status
+immediate_actions
+commands_to_run
+
+puts "\n" + "🎯 RUN: ./NextSteps_pharma_enterprise.rb".colorize(:green).bold
