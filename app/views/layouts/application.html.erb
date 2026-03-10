@@ -1,71 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport Dashboard</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  
-  <!-- PRODUCTION Tailwind v2.2 (NO CDN WARNING) -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    .glass { 
-      background: rgba(255,255,255,0.9); 
-      backdrop-filter: blur(10px); 
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-  </style>
+  <title>Pharma Transport</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body class="bg-gradient-to-br from-blue-50 via-indigo-50 to-emerald-50 min-h-screen">
-  
-  <!-- CLEAN NAV (no JS errors) -->
-  <nav class="bg-white/90 backdrop-blur-md shadow-xl border-b sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-6 py-4">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <!-- Logo -->
-        <div class="flex items-center space-x-3">
-          <div class="w-12 h-12 bg-gradient-to-r from-blue-600 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
-            <span class="text-2xl font-bold">💉</span>
-          </div>
-          <div>
-            <h1 class="text-2xl font-bold text-gray-900">Pharma Transport</h1>
-            <p class="text-xs text-emerald-600 font-semibold">FDA 21 CFR Part 11</p>
-          </div>
-        </div>
-
-        <!-- Nav Links + LOGIN BUTTON -->
-        <div class="flex flex-wrap items-center space-x-2 text-sm">
-          <%= link_to "Dashboard", dashboard_path, class: "px-4 py-2 text-blue-600 font-semibold hover:bg-blue-50 rounded-xl transition-all" %>
-          <%= link_to "Live Fleet", vehicles_path, class: "px-4 py-2 text-emerald-600 font-semibold hover:bg-emerald-50 rounded-xl transition-all" %>
-          <%= link_to "Health", health_path, class: "px-4 py-2 text-green-600 font-semibold hover:bg-green-50 rounded-xl transition-all" %>
-          
-          <!-- PDF BUTTON -->
-          <%= link_to "PDF Report", "/batches/1/chain-of-custody.pdf", class: "bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-2 rounded-xl font-semibold shadow-lg hover:shadow-xl ml-2", target: "_blank" %>
-          
-          <!-- LOGIN/LOGOUT BUTTON (VISIBLE ALWAYS) -->
-          <% if user_signed_in? %>
-            <%= link_to "👤 #{current_user.email}", edit_user_registration_path, class: "px-4 py-2 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 mr-2" %>
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "px-4 py-2 text-red-600 font-semibold hover:bg-red-50 rounded-xl" %>
-          <% else %>
-            <%= link_to "🔐 Login", new_user_session_path, class: "px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-indigo-700" %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- MAIN CONTENT -->
-  <main class="max-w-6xl mx-auto px-6 py-12">
-    <%= yield %>
-  </main>
-
-  <!-- FOOTER -->
-  <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-8 mt-20 border-t-4 border-emerald-600">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <p class="text-lg font-semibold">&copy; 2026 Thomas IT Network - Phoenix, AZ</p>
-      <p class="text-sm mt-2 text-gray-400">Cold Chain • GPS Tracking • Chain of Custody • Queclink GV55 Ready</p>
-    </div>
-  </footer>
+<body class="antialiased">
+  <%= yield %>
 </body>
 </html>

@@ -1,37 +1,24 @@
-<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-  <h1 class="text-3xl font-bold text-gray-900 mb-8">Pharma Transport Dashboard</h1>
-  
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="text-lg font-medium text-gray-900">Active Batches</h3>
-      <p class="mt-1 text-3xl font-semibold text-green-600"><%= @total_batches %></p>
-    </div>
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="text-lg font-medium text-gray-900">Online Vehicles</h3>
-      <p class="mt-1 text-3xl font-semibold text-blue-600"><%= @online_vehicles %></p>
-    </div>
-  </div>
-
-  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
-    <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
-      <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Batches</h3>
-    </div>
-    <div class="px-4 py-6 sm:px-0">
-      <% if @batches.any? %>
-        <ul>
-          <% @batches.each do |batch| %>
-            <li class="py-4 px-4 border-b last:border-b-0">
-              <div class="flex justify-between items-center">
-                <span>LOT: <%= batch.lot_number %></span>
-                <span><%= batch.temperature_celsius %>°C</span>
-                <span><%= link_to "PDF", batch_path(batch.id, format: :pdf), class: "text-blue-600 hover:text-blue-500" %></span>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p class="text-gray-500 text-center py-8">No batches yet</p>
-      <% end %>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-emerald-50 py-12 px-4">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-6xl font-bold text-center text-gray-900 mb-8">🚀 Pharma Transport</h1>
+    <p class="text-2xl text-center text-gray-600 mb-16">FDA Compliance • GPS Tracking • Cold Chain 2-8°C</p>
+    
+    <div class="grid lg:grid-cols-3 gap-8 mb-16">
+      <div class="bg-white p-10 rounded-3xl shadow-2xl">
+        <div class="text-5xl mb-6">📍</div>
+        <h2 class="text-3xl font-bold mb-4">Queclink GV55 LIVE</h2>
+        <p class="text-2xl text-emerald-600 font-semibold">Vehicle #1<br>Phoenix, AZ</p>
+      </div>
+      <div class="bg-white p-10 rounded-3xl shadow-2xl">
+        <div class="text-5xl mb-6">💉</div>
+        <h2 class="text-3xl font-bold mb-4">Active Batches</h2>
+        <p class="text-2xl text-blue-600 font-semibold">5 DELIVERED</p>
+      </div>
+      <div class="bg-white p-10 rounded-3xl shadow-2xl">
+        <div class="text-5xl mb-6">🌡️</div>
+        <h2 class="text-3xl font-bold mb-4">$99/mo Pro</h2>
+        <a href="/subscribe" class="bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-8 py-4 rounded-2xl inline-block font-bold text-xl">Upgrade Now</a>
+      </div>
     </div>
   </div>
 </div>
