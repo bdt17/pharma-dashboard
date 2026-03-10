@@ -1,55 +1,24 @@
 class Batch < ApplicationRecord
-  belongs_to :vehicle
-  include Auditable
+  belongs_to :vehicle, optional: true
+  belongs_to :driver, class_name: 'User', optional: true
   
-  # DEA Compliance Fields
-  attribute :ndc_code, :string
-  attribute :lot_number, :string  
-  attribute :expiry_date, :date
-  attribute :signed_at, :datetime
-  attribute :signed_by, :string
-  attribute :dea_compliant, :boolean, default: false
-  
-  # Validations for DEA compliance
-  validates :ndc_code, presence: true, if: :dea_controlled?
   validates :lot_number, presence: true
-  validates :expiry_date, presence: true, if: :dea_controlled?
+  validates :temperature_celsius, numericality: { greater_than_or_equal_to: 2, less_than_or_equal_to: 8 }
   
-  # Chain of custody scope
-  scope :audit_trail, -> { includes(audit_logs: :user).order(:created_at) }
+  scope :compliant, -> { where(temperature_celsius: 2..8) }
+  scope :active, -> { where(status: 'active') }
   
-  def dea_controlled?
-    # Schedule II-V controlled substances
-    %w[oxycodone fentanyl hydrocodone methadone].any? { |drug| name&.downcase&.include?(drug) }
+  def compliance_status
+    temperature_celsius.between?(2, 8) ? 'compliant' : 'non-compliant'
   end
   
-  def dea_compliant?
-    dea_controlled? ? (signed_at.present? && audit_logs.pharmacist_sign.count >= 1) : true
-  end
-  
-  def chain_of_custody_complete?
-    audit_logs.count >= 3 && dea_compliant? # manufacture→ship→dispense
-  end
-  
-  # Pharmacist digital signature
-  def sign_custody!(pharmacist_name, pin)
-    return false unless valid_pin?(pin)
-    
-    update!(
-      signed_at: Time.current,
-      signed_by: pharmacist_name,
-      dea_compliant: true
-    )
-    
-    audit_logs.create!(
-      action: "pharmacist_sign",
-      details: { pharmacist: pharmacist_name, pin_verified: true }
-    )
-  end
-  
-  private
-  
-  def valid_pin?(pin)
-    pin == ENV['PHARMACIST_PIN'] # Set in Render dashboard
+  def self.to_csv
+    require 'csv'
+    attributes = %w{id lot_number vehicle_id temperature_celsius status created_at}
+    CSV.generate(headers: true) do |csv|
+      all.each do |batch|
+        csv << batch.attributes.values_at(*attributes)
+      end
+    end
   end
 end
