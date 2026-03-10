@@ -24,4 +24,5 @@ Rails.application.routes.draw do
 
   # Root redirect
   root to: redirect('/index.html')
+  get 'batches/:id/chain-of-custody.pdf', to: 'batches#chain_of_custody', defaults: {format: 'pdf'}
 end

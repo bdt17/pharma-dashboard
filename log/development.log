@@ -24172,3 +24172,24 @@ ActionController::RoutingError (No route matches [GET] "/subscribe"):
   
 Started GET "/billing" for 127.0.0.1 at 2026-03-10 12:43:07 -0700
 Started GET "/health" for 127.0.0.1 at 2026-03-10 12:43:08 -0700
+Started GET "/" for 127.0.0.1 at 2026-03-10 12:46:43 -0700
+  
+NoMethodError (undefined method `get' for main):
+  
+config/routes.rb:19:in `<top (required)>'
+Started GET "/health" for 127.0.0.1 at 2026-03-10 12:46:43 -0700
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-10 12:46:43 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-03-10 12:46:44 -0700
+Started GET "/batches.pdf" for 127.0.0.1 at 2026-03-10 12:46:44 -0700
+Started GET "/gps/update" for 127.0.0.1 at 2026-03-10 12:46:44 -0700
+Processing by GpsController#update as */*
+GPS UPDATE: Vehicle=GV55-1 Lat= Lng=
+Completed 200 OK in 13ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-10 12:46:45 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/subscribe"):
+  
+Started GET "/billing" for 127.0.0.1 at 2026-03-10 12:46:45 -0700
+Started GET "/health" for 127.0.0.1 at 2026-03-10 12:46:45 -0700
