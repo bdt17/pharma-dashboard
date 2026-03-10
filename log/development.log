@@ -24114,3 +24114,40 @@ puma (7.2.0) lib/puma/request.rb:102:in `handle_request'
 puma (7.2.0) lib/puma/server.rb:503:in `process_client'
 puma (7.2.0) lib/puma/server.rb:262:in `block in run'
 puma (7.2.0) lib/puma/thread_pool.rb:182:in `block in spawn_thread'
+Started GET "/" for 127.0.0.1 at 2026-03-10 12:10:22 -0700
+Redirected to http://127.0.0.1:3000/index.html
+↳ /home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/config/routes.rb:15:in `block in <top (required)>'
+Completed 301 Moved Permanently in 0ms
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-10 12:10:22 -0700
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-10 12:10:22 -0700
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-10 12:10:23 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-03-10 12:10:23 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-10 12:10:23 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/subscribe"):
+  
+Started GET "/billing" for 127.0.0.1 at 2026-03-10 12:10:23 -0700
+Started GET "/compliance" for 127.0.0.1 at 2026-03-10 12:10:24 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/compliance"):
+  
+Started GET "/api/health" for 127.0.0.1 at 2026-03-10 12:10:24 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/health"):
+  
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-10 12:10:24 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/chain-of-custody.pdf"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-10 12:10:24 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 1.0ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 15.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.2ms | GC: 0.0ms)
+Completed 200 OK in 93ms (Views: 26.9ms | ActiveRecord: 9.5ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
