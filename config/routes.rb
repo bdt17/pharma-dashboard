@@ -55,5 +55,3 @@ Rails.application.routes.draw do
   # Catch-all 404
   get '*path', to: 'application#not_found', constraints: ->(req) { !req.xhr? && req.format.html? }
 end
-get 'subscribe', to: 'stripe#new'
-post '/stripe/checkout', to: 'stripe#checkout'
