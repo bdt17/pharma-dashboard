@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+ # ✅ DEVise FIRST (highest priority)
+  devise_for :users
   # GPS IoT Endpoints (Queclink GV55)
   get '/gps', to: 'gps#index'
   post '/gps/update', to: 'gps#update'
@@ -18,9 +20,6 @@ Rails.application.routes.draw do
 
   # Static landing page
   get '/index.html', to: proc { [200, {'Content-Type' => 'text/html'}, ['<h1>Pharma Transport Dashboard - Phase 10 LIVE</h1><p>🚀 Multi-Tenant SaaS | Queclink GPS | DSCSA Compliance</p>']] }
-
-  # Devise (already passing ✅)
-  devise_for :users
 
   # Root redirect
   root to: redirect('/index.html')
