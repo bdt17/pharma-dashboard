@@ -6,3 +6,6 @@ class StripeController < ApplicationController
     @session = params[:session_id]
   end
 end
+  def success
+    @session_id = params[:session_id]
+  end

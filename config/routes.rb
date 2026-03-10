@@ -34,14 +34,6 @@ Rails.application.routes.draw do
   end
 
   # API Namespace (JSON only)  
-  namespace :api, defaults: { format: :json } do
-    get :health, to: ->(w) { [200, { 'Content-Type' => 'application/json' }, [{ status: 'ok', uptime: 99.9, timestamp: Time.now.utc.iso8601 }.to_json]] }
-
-    resources :batches, only: [:index, :show] do
-      member do
-        get :custody_report, path: 'chain-of-custody'
-        get :coc_pdf, defaults: { format: :pdf }
-      end
     end
 
     resources :vehicles, only: [:index]
@@ -73,3 +65,12 @@ Rails.application.routes.draw do
   # Catch-all for 404
   get '*path', to: 'application#not_found', constraints: ->(req) { !req.xhr? && req.format.html? }
 end
+
+  get '/subscribe/success', to: 'stripe#success', as: :stripe_success
+
+  namespace :api, defaults: { format: :json } do
+    get :health, to: ->(w) { [200, {'Content-Type' => 'application/json'}, [{status: 'ok', uptime: 99.9}.to_json]] }
+    resources :batches, only: [:index]
+    resources :vehicles, only: [:index]
+  end
+
