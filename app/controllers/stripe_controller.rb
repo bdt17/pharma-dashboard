@@ -9,3 +9,6 @@ end
   def success
     @session_id = params[:session_id]
   end
+  def success
+    @session_id = params[:session_id]
+  end

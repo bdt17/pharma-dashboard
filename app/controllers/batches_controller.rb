@@ -21,3 +21,12 @@ end
       end
     end
   end
+
+  def coc_pdf
+    respond_to do |format|
+      format.pdf do
+        pdf_content = "FDA 21 CFR Part 11\nChain of Custody\nBatch #1\nStatus: DELIVERED"
+        send_data pdf_content, filename: "coc_1.pdf", type: 'application/pdf'
+      end
+    end
+  end

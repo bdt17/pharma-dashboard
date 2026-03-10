@@ -68,6 +68,8 @@ end
 
   get '/subscribe/success', to: 'stripe#success', as: :stripe_success
 
+
+
   namespace :api, defaults: { format: :json } do
     get :health, to: ->(w) { [200, {'Content-Type' => 'application/json'}, [{status: 'ok', uptime: 99.9}.to_json]] }
     resources :batches, only: [:index]
