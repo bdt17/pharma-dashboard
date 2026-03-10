@@ -37,3 +37,4 @@ end
 gem 'tailwindcss-rails'
 # DELETE THIS LINE: gem 'stripe'  <<<<--- DUPLICATE
 gem 'stripe', '~> 10.0'
+gem 'stripe', '~> 10.0'
