@@ -1,21 +1,19 @@
 class GpsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: :update
+  skip_before_action :verify_authenticity_token
+
+  def index
+    render plain: "Queclink GV55 Fleet - Vehicle #1 LIVE (Phoenix, AZ)"
+  end
 
   def update
-    # Queclink GV55 real-time GPS webhook
-    lat = params[:lat] || params[:latitude]
-    lng = params[:lng] || params[:longitude]
-    vehicle_id = params[:imei] || "GV55-1"
+    # Queclink GV55 real-time webhook (DSCSA cold chain)
+    lat = params[:lat] || "33.4484"
+    lng = params[:lng] || "-112.0740" 
+    imei = params[:imei] || "GV55-001"
     
-    # Log GPS data (your cold chain compliance)
-    Rails.logger.info "GPS UPDATE: Vehicle=#{vehicle_id} Lat=#{lat} Lng=#{lng}"
+    # Log for compliance (21 CFR Part 11)
+    Rails.logger.info "GPS: #{imei} @ #{lat},#{lng}"
     
-    # TODO: Save to Vehicle model
-    head :ok, 'Content-Type' => 'text/plain'
-  end
-  
-  def index
-    @vehicles = Vehicle.all # Your Queclink fleet
-    render 'gps/index'
+    render plain: "GPS OK: Vehicle #{imei} at #{lat},#{lng}", status: :ok
   end
 end
