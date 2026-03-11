@@ -22,3 +22,6 @@ Rails.application.routes.draw do
   get '/batches.pdf', to: proc { [200, {'Content-Type' => 'application/pdf'}, ['PDF stub']] }
   get '/batches/:id/chain-of-custody.pdf', to: proc { [200, {'Content-Type' => 'application/pdf'}, ['CoC PDF']] }
 end
+
+# Phase 11: Landing ALWAYS standalone (no blue bar EVER)
+get '/', to: 'landing#index', as: :root, defaults: { format: :html }
