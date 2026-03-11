@@ -1,0 +1,90 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 py-20">
+  <div class="max-w-4xl mx-auto px-6">
+    <!-- Header matching landing -->
+    <div class="text-center mb-20">
+      <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-emerald-100 via-blue-100 to-emerald-100 text-emerald-800 rounded-2xl text-sm font-bold mb-8 shadow-lg">
+        💰 Choose Your Plan
+      </div>
+      <h1 class="text-4xl md:text-6xl font-black bg-gradient-to-r from-gray-900 via-blue-900 to-emerald-800 bg-clip-text text-transparent mb-6">
+        Enterprise Cold Chain SaaS
+      </h1>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-16">
+        Unlimited CoC PDFs | Live Queclink GPS | DSCSA 21 CFR Part 11 Compliance
+      </p>
+    </div>
+
+    <!-- Pro/Enterprise Cards -->
+    <div class="grid lg:grid-cols-2 gap-8 mb-24">
+      <!-- Pro Plan -->
+      <div class="group bg-white/80 backdrop-blur-xl rounded-3xl p-12 border-4 border-emerald-100 shadow-2xl hover:shadow-3xl hover:border-emerald-200 hover:-translate-y-2 transition-all duration-500">
+        <div class="text-center mb-8">
+          <div class="text-5xl mb-4">💉</div>
+          <h2 class="text-4xl font-black text-gray-900 mb-4">Pro Plan</h2>
+          <div class="text-6xl font-black bg-gradient-to-r from-emerald-500 to-blue-600 bg-clip-text text-transparent mb-2">$99</div>
+          <div class="text-2xl text-emerald-600 font-bold">per month</div>
+        </div>
+        
+        <ul class="space-y-4 mb-12 text-lg">
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>Unlimited Chain of Custody PDFs</li>
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>Live GPS fleet tracking (47 vehicles)</li>
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>DSCSA 2-8°C compliance reports</li>
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>21 CFR Part 11 audit trail</li>
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>Email PDF delivery</li>
+        </ul>
+        
+        <%= link_to "Get Pro Plan", new_user_registration_path, 
+            class: "w-full bg-gradient-to-r from-emerald-500 to-blue-600 text-white py-6 px-8 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-3xl block text-center transition-all group-hover:scale-105" %>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="group bg-gradient-to-br from-emerald-500/10 to-blue-500/10 backdrop-blur-xl rounded-3xl p-12 border-4 border-transparent shadow-2xl hover:shadow-3xl hover:border-emerald-200 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
+        <div class="absolute top-6 right-6 bg-emerald-500 text-white px-4 py-2 rounded-xl text-sm font-bold">MOST POPULAR</div>
+        
+        <div class="text-center mb-8">
+          <div class="text-5xl mb-4">🏢</div>
+          <h2 class="text-4xl font-black text-gray-900 mb-4">Enterprise</h2>
+          <div class="text-6xl font-black bg-gradient-to-r from-emerald-600 to-blue-700 bg-clip-text text-transparent mb-2">$499</div>
+          <div class="text-2xl text-emerald-600 font-bold">per month</div>
+        </div>
+        
+        <ul class="space-y-4 mb-12 text-lg">
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>Everything in Pro</li>
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>Multi-tenant organizations</li>
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>Custom API integrations</li>
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>Custom SLAs + support</li>
+          <li class="flex items-center"><span class="text-2xl mr-4">✅</span>White-label branding</li>
+        </ul>
+        
+        <%= link_to "Contact Sales", "mailto:sales@pharmatransport.org", 
+            class: "w-full bg-gradient-to-r from-emerald-600 to-blue-700 text-white py-6 px-8 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-3xl block text-center transition-all group-hover:scale-105" %>
+      </div>
+    </div>
+
+    <!-- Features grid -->
+    <div class="grid md:grid-cols-3 gap-8 mb-20">
+      <div class="text-center p-8">
+        <div class="text-5xl mb-6">📄</div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">21 CFR Part 11 PDFs</h3>
+        <p class="text-gray-600">FDA compliant Chain of Custody documents</p>
+      </div>
+      <div class="text-center p-8">
+        <div class="text-5xl mb-6">🚚</div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">Queclink GV55 GPS</h3>
+        <p class="text-gray-600">Real-time 47 vehicle fleet tracking</p>
+      </div>
+      <div class="text-center p-8">
+        <div class="text-5xl mb-6">🩺</div>
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">DSCSA Compliance</h3>
+        <p class="text-gray-600">2-8°C cold chain monitoring</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center py-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">Ready to protect your pharma supply chain?</h2>
+      <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Join 47 vehicles already protected by Pharma Transport Enterprise</p>
+      <%= link_to "Start Free Trial", new_user_registration_path, 
+          class: "inline-flex items-center bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-12 py-6 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-3xl transition-all mx-auto" %>
+    </div>
+  </div>
+</div>
