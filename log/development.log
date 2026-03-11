@@ -24940,3 +24940,355 @@ Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-10 15:58:08 -0
   
 ActionController::RoutingError (No route matches [GET] "/batches/1/temperature_log"):
   
+Started GET "/" for 127.0.0.1 at 2026-03-10 16:22:36 -0700
+Processing by LandingController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering landing/index.html.erb within layouts/application
+  Rendered landing/index.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.7ms | GC: 0.0ms)
+Completed 200 OK in 20ms (Views: 6.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-10 16:22:37 -0700
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-10 16:22:37 -0700
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-10 16:22:37 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-03-10 16:22:37 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-10 16:22:38 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering application/index.html.erb within layouts/application
+  Rendered application/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-10 16:22:38 -0700
+Started GET "/compliance" for 127.0.0.1 at 2026-03-10 16:22:38 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/compliance"):
+  
+Started GET "/api/health" for 127.0.0.1 at 2026-03-10 16:22:38 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/health"):
+  
+Started GET "/debug/batches" for 127.0.0.1 at 2026-03-10 16:22:38 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/debug/batches"):
+  
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-10 16:22:39 -0700
+Processing by BatchesController#chain_of_custody as PDF
+  Parameters: {"id"=>"1"}
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::MissingTemplate (Missing template batches/chain_of_custody with {:locale=>[:en], :formats=>[:pdf], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/stripe-rails-2.6.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/controllers/batches_controller.rb:30:in `block (2 levels) in chain_of_custody'
+app/controllers/batches_controller.rb:28:in `chain_of_custody'
+Started GET "/batches/1/coc_pdf" for 127.0.0.1 at 2026-03-10 16:22:39 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/coc_pdf"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-10 16:22:39 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 1.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 26.4ms | GC: 0.8ms)
+  Rendered layout layouts/application.html.erb (Duration: 26.7ms | GC: 0.8ms)
+Completed 200 OK in 124ms (Views: 30.1ms | ActiveRecord: 12.7ms (0 queries, 0 cached) | GC: 17.7ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-10 16:22:40 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.4ms | GC: 0.2ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 3.5ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 3.7ms | GC: 0.2ms)
+Completed 200 OK in 6ms (Views: 4.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/api/v1/gps" for 127.0.0.1 at 2026-03-10 16:22:40 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/gps"):
+  
+Started GET "/api/batches" for 127.0.0.1 at 2026-03-10 16:22:40 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/batches"):
+  
+Started GET "/api/vehicles" for 127.0.0.1 at 2026-03-10 16:22:40 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/vehicles"):
+  
+Started GET "/subscribe/success" for 127.0.0.1 at 2026-03-10 16:22:40 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/subscribe/success"):
+  
+Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-10 16:22:41 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/temperature_log"):
+  
+Started HEAD "/health" for ::1 at 2026-03-10 16:26:47 -0700
+Started HEAD "/compliance" for ::1 at 2026-03-10 16:26:48 -0700
+Started HEAD "/batches/1/chain-of-custody.pdf" for ::1 at 2026-03-10 16:26:48 -0700
+Processing by BatchesController#chain_of_custody as PDF
+  Parameters: {"id"=>"1"}
+  Rendering batches/chain_of_custody.pdf.erb
+  Rendered batches/chain_of_custody.pdf.erb (Duration: 0.6ms | GC: 0.0ms)
+[wicked_pdf]: ["/usr/bin/wkhtmltopdf", "--encoding", "UTF-8", "--enable-local-file-access", "--disable-smart-shrinking", "--page-size", "Letter", "--margin-top", "2.0", "--margin-bottom", "2.0", "--margin-left", "1.0", "--margin-right", "1.0", "file:////tmp/wicked_pdf20260310-55822-wkqifv.html", "/tmp/wicked_pdf_generated_file20260310-55822-ydsjp2.pdf"]
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Sent data chain_of_custody_batch_1.pdf (7.4ms)
+Completed 200 OK in 3569ms (Views: 1.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-10 20:07:07 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-10 20:07:07 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering application/index.html.erb within layouts/application
+  Rendered application/index.html.erb within layouts/application (Duration: 0.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.9ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 2.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-10 20:07:07 -0700
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-10 20:07:07 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 1.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 2.0ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 16.3ms | GC: 1.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 16.6ms | GC: 1.3ms)
+Completed 200 OK in 76ms (Views: 28.7ms | ActiveRecord: 10.5ms (0 queries, 0 cached) | GC: 11.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-03-10 20:07:07 -0700
+Processing by LandingController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering landing/index.html.erb within layouts/application
+  Rendered landing/index.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/gps" for 127.0.0.1 at 2026-03-10 20:07:07 -0700
+Processing by GpsController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-10 20:07:07 -0700
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-10 20:07:07 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 5.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 6.1ms | GC: 0.0ms)
+Completed 200 OK in 9ms (Views: 7.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-10 20:07:07 -0700
+Started GET "/index.html" for 127.0.0.1 at 2026-03-10 20:07:08 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/index.html"):
+  
+Started GET "/health" for 127.0.0.1 at 2026-03-10 20:07:08 -0700
+Started GET "/billing" for 127.0.0.1 at 2026-03-10 20:08:50 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-10 20:08:50 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering application/index.html.erb within layouts/application
+  Rendered application/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.3ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-10 20:08:50 -0700
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-10 20:08:50 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.0ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 2.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.8ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 3.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-03-10 20:08:51 -0700
+Processing by LandingController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering landing/index.html.erb within layouts/application
+  Rendered landing/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.3ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 0.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/gps" for 127.0.0.1 at 2026-03-10 20:08:51 -0700
+Processing by GpsController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 0.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-10 20:08:51 -0700
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-10 20:08:52 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 2.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.9ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 3.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-10 20:08:52 -0700
+Started GET "/index.html" for 127.0.0.1 at 2026-03-10 20:08:52 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/index.html"):
+  
+Started GET "/health" for 127.0.0.1 at 2026-03-10 20:08:52 -0700
+Started GET "/" for ::1 at 2026-03-10 20:12:21 -0700
+Processing by LandingController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering landing/index.html.erb within layouts/application
+  Rendered landing/index.html.erb within layouts/application (Duration: 1.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.6ms | GC: 0.0ms)
+Completed 200 OK in 19ms (Views: 6.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for ::1 at 2026-03-10 20:12:21 -0700
+Started GET "/landing" for ::1 at 2026-03-10 20:12:21 -0700
+Processing by LandingController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering landing/index.html.erb within layouts/application
+  Rendered landing/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.3ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-10 20:12:30 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-10 20:12:30 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering application/index.html.erb within layouts/application
+  Rendered application/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 1.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-10 20:12:31 -0700
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-10 20:12:31 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 1.1ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.8ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 19.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.3ms | GC: 0.0ms)
+Completed 200 OK in 74ms (Views: 21.3ms | ActiveRecord: 9.4ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-03-10 20:12:31 -0700
+Processing by LandingController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering landing/index.html.erb within layouts/application
+  Rendered landing/index.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.3ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/gps" for 127.0.0.1 at 2026-03-10 20:12:31 -0700
+Processing by GpsController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 1.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-10 20:12:32 -0700
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-10 20:12:32 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 3.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.2ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 5.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-10 20:12:32 -0700
+Started GET "/index.html" for 127.0.0.1 at 2026-03-10 20:12:32 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/index.html"):
+  
+Started GET "/health" for 127.0.0.1 at 2026-03-10 20:12:32 -0700
+Started GET "/billing" for 127.0.0.1 at 2026-03-10 20:15:29 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-10 20:15:30 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering application/index.html.erb within layouts/application
+  Rendered application/index.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.2ms | GC: 0.0ms)
+Completed 200 OK in 20ms (Views: 7.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-10 20:15:30 -0700
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-10 20:15:30 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.9ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.9ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 18.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 18.3ms | GC: 0.0ms)
+Completed 200 OK in 68ms (Views: 20.0ms | ActiveRecord: 10.7ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-03-10 20:15:30 -0700
+Processing by LandingController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering landing/index.html.erb within layouts/application
+  Rendered landing/index.html.erb within layouts/application (Duration: 1.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.6ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 2.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/gps" for 127.0.0.1 at 2026-03-10 20:15:31 -0700
+Processing by GpsController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-10 20:15:31 -0700
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-10 20:15:31 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 5.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.5ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 6.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-10 20:15:31 -0700
+Started GET "/index.html" for 127.0.0.1 at 2026-03-10 20:15:32 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/index.html"):
+  
+Started GET "/health" for 127.0.0.1 at 2026-03-10 20:15:32 -0700
