@@ -25292,3 +25292,106 @@ Started GET "/index.html" for 127.0.0.1 at 2026-03-10 20:15:32 -0700
 ActionController::RoutingError (No route matches [GET] "/index.html"):
   
 Started GET "/health" for 127.0.0.1 at 2026-03-10 20:15:32 -0700
+Started GET "/" for 127.0.0.1 at 2026-03-11 14:27:07 -0700
+Processing by LandingController#index as */*
+  Rendering landing/index.html.erb
+  Rendered landing/index.html.erb (Duration: 1.4ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 3.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-11 14:27:08 -0700
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-11 14:27:08 -0700
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-11 14:27:08 -0700
+Started GET "/batches" for 127.0.0.1 at 2026-03-11 14:27:08 -0700
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-11 14:27:09 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering application/index.html.erb within layouts/application
+  Rendered application/index.html.erb within layouts/application (Duration: 0.6ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.3ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 2.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-11 14:27:09 -0700
+Started GET "/compliance" for 127.0.0.1 at 2026-03-11 14:27:09 -0700
+Started GET "/api/health" for 127.0.0.1 at 2026-03-11 14:27:10 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/health"):
+  
+Started GET "/debug/batches" for 127.0.0.1 at 2026-03-11 14:27:10 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/debug/batches"):
+  
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-11 14:27:10 -0700
+Started GET "/batches/1/coc_pdf" for 127.0.0.1 at 2026-03-11 14:27:10 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/coc_pdf"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-11 14:27:10 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 1.3ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 5.3ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.5ms | GC: 0.5ms)
+Completed 200 OK in 25ms (Views: 7.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 10.4ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-11 14:27:11 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.7ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 4.9ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 5.2ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 7.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/gps" for 127.0.0.1 at 2026-03-11 14:27:11 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/gps"):
+  
+Started GET "/api/batches" for 127.0.0.1 at 2026-03-11 14:27:11 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/batches"):
+  
+Started GET "/api/vehicles" for 127.0.0.1 at 2026-03-11 14:27:12 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/vehicles"):
+  
+Started GET "/subscribe/success" for 127.0.0.1 at 2026-03-11 14:27:12 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/subscribe/success"):
+  
+Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-11 14:27:12 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/temperature_log"):
+  
+Started GET "/subscribe" for ::1 at 2026-03-11 14:29:27 -0700
+Processing by SubscriptionsController#index as */*
+Completed 500 Internal Server Error in 271ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+Stripe::AuthenticationError (Invalid API Key provided: sk_test_xxx):
+  
+app/controllers/subscriptions_controller.rb:4:in `index'
+Started GET "/subscribe" for ::1 at 2026-03-11 14:35:41 -0700
+Processing by SubscriptionsController#index as */*
+Completed 500 Internal Server Error in 209ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+Stripe::AuthenticationError (Invalid API Key provided: sk_test_xxx):
+  
+app/controllers/subscriptions_controller.rb:4:in `index'
+Started GET "/subscribe" for ::1 at 2026-03-11 14:37:53 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering subscriptions/index.html.erb within layouts/application
+  Rendered subscriptions/index.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.5ms | GC: 0.0ms)
+Completed 200 OK in 22ms (Views: 6.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
