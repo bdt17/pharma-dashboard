@@ -1,6 +1,7 @@
 class LandingController < ApplicationController
   def index
-    @vehicles_count = 47
-    render layout: 'landing', formats: [:html]  # Force landing layout only
+    render plain: File.read(Rails.root.join('public', 'landing.html')), 
+           layout: false, 
+           content_type: 'text/html'
   end
 end
