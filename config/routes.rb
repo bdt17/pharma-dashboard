@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get "health", to: "health#index"
   get "dashboard", to: "dashboard#index"
+  get "billing", to: "stripe#new"
 
   resources :batches do
     member do
@@ -10,16 +11,12 @@ Rails.application.routes.draw do
     end
   end
 
-  # GPS endpoints
+  # GPS endpoints (Queclink GV55)
   get "gps", to: "gps#index"
   get "gps/update", to: "gps#update"
   post "gps/receive", to: "gps#receive"
   
-  # Billing endpoints
+  # Billing
   get "subscribe", to: "subscriptions#new"
   get "stripe/new", to: "stripe#new"
-
-  # Status pages
-  get "status", to: "health#index"
 end
-get "billing", to: "stripe#new"
