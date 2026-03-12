@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Root
   root "home#index"
-
+  
   # Authentication (Devise)
   devise_for :users
 
@@ -18,7 +18,8 @@ Rails.application.routes.draw do
   # Health / status (HTML)
   get "/health", to: "application_health#index"
 
-  # PDF / CoC routes
+  # PDF / CoC routes  
+  get "/batches.pdf", to: "batches#index"  # Fixed: explicit path
   get "/coc_pdf",  to: "coc_pdf#index"
   get "/coc_api",  to: "coc_api#index"
 

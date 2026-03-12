@@ -4,6 +4,8 @@
   <title>Pharma Transport</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 </head>
 <body class="bg-white min-h-screen text-gray-900 p-0 m-0">
   <!-- EXACT NAVBAR FROM YOUR SCREENSHOT -->
@@ -14,15 +16,15 @@
         <h1 class="text-lg font-bold text-[#0984C0]">Pharma Transport</h1>
       </div>
       <div class="flex space-x-6">
-        <a href="#" class="text-gray-700 hover:text-gray-900">Dashboard</a>
-        <a href="#" class="text-gray-700 hover:text-gray-900">Shipments</a>
-        <a href="#" class="text-gray-700 hover:text-gray-900">Fleet</a>
-        <a href="#" class="text-gray-700 hover:text-gray-900">Reports</a>
+        <%= link_to "Dashboard", dashboard_path, class: "text-gray-700 hover:text-gray-900" %>
+        <%= link_to "Shipments", batches_path, class: "text-gray-700 hover:text-gray-900" %>
+        <%= link_to "Fleet", vehicles_path, class: "text-gray-700 hover:text-gray-900" %>
+        <%= link_to "Reports", compliance_path, class: "text-gray-700 hover:text-gray-900" %>
       </div>
       <div>
-        <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          Sign in
-        </button>
+        <%= form_tag user_session_path, method: :post do %>
+          <%= submit_tag "Sign in", class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        <% end %>
       </div>
     </div>
   </nav>

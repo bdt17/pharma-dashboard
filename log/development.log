@@ -1683,3 +1683,20 @@ Processing by ApplicationHealthController#index as */*
 Completed 200 OK in 2ms (Views: 0.9ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/" for 127.0.0.1 at 2026-03-12 10:23:24 -0700
+Processing by HomeController#index as */*
+  Rendering home/index.html.erb
+  Rendered home/index.html.erb (Duration: 5.8ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 7.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-12 10:23:24 -0700
+Processing by BatchesController#index as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/batches.pdf" for 127.0.0.1 at 2026-03-12 10:23:24 -0700
+Processing by BatchesController#index as PDF
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
