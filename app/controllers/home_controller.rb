@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    render 'home/index'  # Render your full Tailwind UI
+    render 'home/index', layout: false  # ← DISABLES DOUBLE NAVBAR
   end
 end
