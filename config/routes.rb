@@ -22,3 +22,4 @@ Rails.application.routes.draw do
   # Status pages
   get "status", to: "health#index"
 end
+get "billing", to: "stripe#new"
