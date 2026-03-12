@@ -1,5 +1,5 @@
 Rails.application.configure do
-  # URL options (Line 2-4 fixed)
+  # URL options
   config.action_controller.default_url_options = {
     host: ENV['APP_HOST'] || 'dashboard.pharmatransport.org',
     protocol: :https
@@ -10,10 +10,11 @@ Rails.application.configure do
   config.eager_load = true
   config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = true
+  config.assets.compile = true
 
   # Mailer (Render.com SMTP)
-  config.action_mailer.default_url_options = { 
+  config.action_mailer.default_url_options = {
     host: ENV['APP_HOST'] || 'dashboard.pharmatransport.org',
     protocol: :https
   }
@@ -28,26 +29,20 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  # Security
-  config.force_ssl = true
+  # SECURITY - DISABLED FOR RENDER FREE TIER
+  config.force_ssl = false
   config.log_level = :info
 
-  # Assets (Rails 8 + Propshaft)
-  config.assets.compile = false
+  # Assets (CRITICAL for blank page fix)
   config.assets.digest = true
 
-  # Database (Render PostgreSQL)
+  # Database
   config.active_record.async_query_executor = :global_thread_pool
 
-  # Stripe + GPS config
+  # Stripe + GPS
   config.x.stripe.public_key = ENV['STRIPE_PUBLIC_KEY']
   config.x.stripe.secret_key = ENV['STRIPE_SECRET_KEY']
 
-  # Render.com optimizations
-  config.cache_store = :memory_store, { size: 64 * 1024 * 1024 }  # 64MB
-config.public_file_server.enabled = true
-config.assets.compile = true
-config.force_ssl = false  # temp for debugging
-
+  # Render optimizations
+  config.cache_store = :memory_store, { size: 64 * 1024 * 1024 }
 end
-Rails.application.config.secret_key_base = ENV["SECRET_KEY_BASE"] || "dummy-for-precompile"
