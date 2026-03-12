@@ -1,9 +1,5 @@
 class HomeController < ApplicationController
-  rescue_from StandardError do |e|
-    head :ok
-  end
-  
   def index
-    head :ok
+    render 'home/index'  # Render your full Tailwind UI
   end
 end
