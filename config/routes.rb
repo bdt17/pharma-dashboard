@@ -1,22 +1,34 @@
 Rails.application.routes.draw do
+  # Root
   root "home#index"
 
-  get "health", to: "health#index"
-  get "dashboard", to: "dashboard#index"
-  get "billing", to: "stripe#new"
+  # Authentication (Devise)
+  devise_for :users
 
-  resources :batches do
-    member do
-      get :chain_of_custody, defaults: {format: 'pdf'}
-    end
+  # Pages (non‑API)
+  get "/dashboard", to: "dashboard#index"
+  get "/vehicles", to: "vehicles#index"
+  get "/batches",  to: "batches#index"
+  get "/subscribe", to: "subscribe#index"
+  get "/billing",   to: "billing#index"
+  get "/compliance", to: "compliance#index"
+  get "/temperature_log", to: "temperature_log#index"
+  get "/stripe_success", to: "stripe_success#index"
+
+  # Health / status (HTML)
+  get "/health", to: "application_health#index"
+
+  # PDF / CoC routes
+  get "/coc_pdf",  to: "coc_pdf#index"
+  get "/coc_api",  to: "coc_api#index"
+
+  # Debug / admin helpers
+  get "/debug/batches", to: "debug_batches#index"
+
+  # API namespace (JSON only)
+  namespace :api, defaults: { format: :json } do
+    resources :batches, only: %i[index show]
+    resources :vehicles, only: %i[index show]
+    get "/health", to: "health#index"
   end
-
-  # GPS endpoints (Queclink GV55)
-  get "gps", to: "gps#index"
-  get "gps/update", to: "gps#update"
-  post "gps/receive", to: "gps#receive"
-  
-  # Billing
-  get "subscribe", to: "subscriptions#new"
-  get "stripe/new", to: "stripe#new"
 end

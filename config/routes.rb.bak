@@ -1,31 +1,22 @@
 Rails.application.routes.draw do
-  resources :custody_logs
-  # Authentication
-  devise_for :users
-  
-  # Dashboard & Pages
-  root 'batches#index'
-  get 'dashboard', to: 'dashboard#index'
-  get 'vehicles', to: 'vehicles#index'
-  get 'health', to: 'health#index'
-  get 'billing', to: 'billing#index'
-  get 'compliance', to: 'compliance#index'
-  
-  # API
-  get 'api/health', to: 'api/health#index'
-  
-  # GPS IoT
-  post 'gps/update', to: 'gps#update'
-  get 'gps/update/stream', to: 'gps#stream'
-  
-  # PDF
-  get 'test-pdf', to: 'batches#custody_report', defaults: { id: 1 }
-  
-  # Core resources
+  root "home#index"
+
+  get "health", to: "health#index"
+  get "dashboard", to: "dashboard#index"
+  get "billing", to: "stripe#new"
+
   resources :batches do
     member do
-      get 'chain-of-custody', to: 'batches#custody_report'
+      get :chain_of_custody, defaults: {format: 'pdf'}
     end
   end
-get '/batches/:id/coc_pdf', to: 'batches#coc_pdf', as: :coc_pdf
+
+  # GPS endpoints (Queclink GV55)
+  get "gps", to: "gps#index"
+  get "gps/update", to: "gps#update"
+  post "gps/receive", to: "gps#receive"
+  
+  # Billing
+  get "subscribe", to: "subscriptions#new"
+  get "stripe/new", to: "stripe#new"
 end
