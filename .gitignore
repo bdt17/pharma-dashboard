@@ -26,3 +26,4 @@ script/audit/*.pdf
 script/audit/*.pdf
 .env
 .env
+coc.pdf
