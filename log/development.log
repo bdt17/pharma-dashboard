@@ -493,3 +493,56 @@ Started POST "/gps/receive" for ::1 at 2026-03-11 19:13:46 -0700
 NoMethodError (undefined method `get' for main):
   
 config/routes.rb:16:in `<top (required)>'
+Started GET "/" for 127.0.0.1 at 2026-03-11 19:45:19 -0700
+Processing by HomeController#index as */*
+Completed 200 OK in 5ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-11 19:45:19 -0700
+Processing by HealthController#index as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-11 19:45:19 -0700
+Processing by DashboardController#index as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-11 19:45:20 -0700
+Processing by BatchesController#index as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches.pdf" for 127.0.0.1 at 2026-03-11 19:45:20 -0700
+Processing by BatchesController#index as PDF
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/gps/update" for 127.0.0.1 at 2026-03-11 19:45:20 -0700
+Processing by GpsController#update as */*
+  Rendering layout layouts/application.html.erb
+  Rendering gps/update.html.erb within layouts/application
+  Rendered gps/update.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.4ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 4.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-11 19:45:20 -0700
+Processing by SubscriptionsController#new as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-11 19:45:21 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/billing"):
+  
+Started GET "/health" for 127.0.0.1 at 2026-03-11 19:45:21 -0700
+Processing by HealthController#index as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/stripe/new" for ::1 at 2026-03-11 19:46:18 -0700
+Processing by StripeController#new as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
