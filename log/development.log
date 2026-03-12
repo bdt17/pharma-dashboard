@@ -1700,3 +1700,58 @@ Processing by BatchesController#index as PDF
 Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/batches" for 127.0.0.1 at 2026-03-12 10:31:01 -0700
+Processing by BatchesController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering batches/index.html.erb within layouts/application
+  [1m[36mVehicle Count (0.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" WHERE "vehicles"."status" = 'online' /*action='index',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/views/batches/index.html.erb:19
+  Rendered batches/index.html.erb within layouts/application (Duration: 22.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 127.6ms | GC: 6.5ms)
+Completed 200 OK in 134ms (Views: 121.3ms | ActiveRecord: 8.1ms (1 query, 0 cached) | GC: 6.5ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-12 10:32:09 -0700
+Processing by BatchesController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering batches/index.html.erb within layouts/application
+  [1m[36mVehicle Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" WHERE "vehicles"."status" = 'online' /*action='index',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/views/batches/index.html.erb:19
+  Rendered batches/index.html.erb within layouts/application (Duration: 8.3ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.1ms | GC: 0.2ms)
+Completed 200 OK in 16ms (Views: 8.8ms | ActiveRecord: 2.7ms (1 query, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-12 10:32:51 -0700
+Processing by BatchesController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering batches/index.html.erb within layouts/application
+  [1m[36mVehicle Count (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" WHERE "vehicles"."status" = 'online' /*action='index',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/views/batches/index.html.erb:19
+  Rendered batches/index.html.erb within layouts/application (Duration: 6.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.5ms | GC: 0.0ms)
+Completed 200 OK in 17ms (Views: 9.6ms | ActiveRecord: 1.6ms (1 query, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-12 10:33:31 -0700
+Processing by BatchesController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering batches/index.html.erb within layouts/application
+  [1m[36mVehicle Count (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" WHERE "vehicles"."status" = 'online' /*action='index',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/views/batches/index.html.erb:19
+  Rendered batches/index.html.erb within layouts/application (Duration: 7.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.6ms | GC: 0.0ms)
+Completed 200 OK in 15ms (Views: 8.3ms | ActiveRecord: 2.6ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-12 10:34:04 -0700
+Processing by BatchesController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering batches/index.html.erb within layouts/application
+  [1m[36mVehicle Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "vehicles" WHERE "vehicles"."status" = 'online' /*action='index',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/views/batches/index.html.erb:18
+  Rendered batches/index.html.erb within layouts/application (Duration: 8.3ms | GC: 0.2ms)
+  Rendered layout layouts/application.html.erb (Duration: 10.3ms | GC: 0.2ms)
+Completed 200 OK in 19ms (Views: 9.2ms | ActiveRecord: 2.7ms (1 query, 0 cached) | GC: 0.5ms)
+
+

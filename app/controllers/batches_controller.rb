@@ -1,14 +1,14 @@
 class BatchesController < ApplicationController
   def index
-    head :ok
-  end
-  def new
-    head :ok
-  end
-  def update
-    head :ok
+    @batches = Batch.all
+
+    respond_to do |format|
+      format.html # Uses standard application.html.erb layout
+      format.pdf do
+        render pdf: "batches_report", 
+               layout: "pdf.html.erb",
+               page_size: 'A4'
+      end
+    end
   end
 end
-  def chain_of_custody
-    head :ok
-  end
