@@ -4,12 +4,82 @@
   <meta charset="UTF-8">
   <title>Pharma Chain of Custody</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    .header { text-align: center; margin-bottom: 40px; }
-    .footer { position: fixed; bottom: 0; width: 100%; text-align: center; font-size: 12px; }
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 40px 30px; 
+      font-size: 12pt;
+      line-height: 1.4;
+      color: #333;
+    }
+    
+    .header { 
+      text-align: center; 
+      margin-bottom: 40px; 
+      border-bottom: 3px solid #0984C0;
+      padding-bottom: 20px;
+    }
+    
+    .header h1 { 
+      color: #0984C0; 
+      font-size: 24pt; 
+      margin: 0;
+      font-weight: bold;
+    }
+    
+    .footer { 
+      position: fixed; 
+      bottom: 0; 
+      width: 100%; 
+      text-align: center; 
+      font-size: 10pt; 
+      color: #666;
+      padding: 10px 0;
+      border-top: 1px solid #ddd;
+      left: 30px;
+      right: 30px;
+    }
+    
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin: 20px 0;
+    }
+    
+    th, td { 
+      padding: 12px 15px; 
+      border: 1px solid #ddd; 
+      text-align: left;
+    }
+    
+    th { 
+      background: #f8f9fa; 
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .status-active { color: #28a745; font-weight: bold; }
+    .status-inactive { color: #6c757d; }
+    
+    hr { 
+      border: none; 
+      height: 3px; 
+      background: linear-gradient(to right, #0984C0, #28a745); 
+      margin: 30px 0;
+    }
+    
+    .compliance { 
+      background: #e8f5e8; 
+      padding: 15px; 
+      border-left: 4px solid #28a745; 
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
   <%= yield %>
+  
+  <div class="footer">
+    FDA 21 CFR Part 11 Compliant • Pharma Transport Enterprise • Phoenix, AZ • Page <span class="pageNumber"></span>
+  </div>
 </body>
 </html>

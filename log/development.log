@@ -1755,3 +1755,83 @@ Processing by BatchesController#index as */*
 Completed 200 OK in 19ms (Views: 9.2ms | ActiveRecord: 2.7ms (1 query, 0 cached) | GC: 0.5ms)
 
 
+  [1m[36mBatch Load (0.9ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."name" = 'LOT-PHARMA-20260217' LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-12 10:41:32 -0700
+Processing by BatchesController#coc_pdf as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.7ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:16:in `coc_pdf'
+Completed 500 Internal Server Error in 35ms (ActiveRecord: 16.6ms (1 query, 0 cached) | GC: 4.4ms)
+
+
+  
+ActionView::MissingTemplate (Missing template layouts/pdf.html.erb with {:locale=>[:en], :formats=>[:pdf], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/stripe-rails-2.6.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/controllers/batches_controller.rb:19:in `block (2 levels) in coc_pdf'
+app/controllers/batches_controller.rb:17:in `coc_pdf'
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-12 10:42:54 -0700
+Processing by BatchesController#coc_pdf as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.4ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:16:in `coc_pdf'
+Completed 500 Internal Server Error in 18ms (ActiveRecord: 4.0ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::MissingTemplate (Missing template layouts/pdf.html.erb with {:locale=>[:en], :formats=>[:pdf], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/stripe-rails-2.6.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/controllers/batches_controller.rb:19:in `block (2 levels) in coc_pdf'
+app/controllers/batches_controller.rb:17:in `coc_pdf'
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-12 10:46:02 -0700
+Processing by BatchesController#coc_pdf as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.6ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:16:in `coc_pdf'
+Completed 500 Internal Server Error in 97ms (ActiveRecord: 39.8ms (1 query, 0 cached) | GC: 17.7ms)
+
+
+  
+ActionView::MissingTemplate (Missing template layouts/pdf.html.erb with {:locale=>[:en], :formats=>[:pdf], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/stripe-rails-2.6.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/controllers/batches_controller.rb:19:in `block (2 levels) in coc_pdf'
+app/controllers/batches_controller.rb:17:in `coc_pdf'
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-12 10:49:04 -0700
+Processing by BatchesController#coc_pdf as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mBatch Load (0.7ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*action='coc_pdf',application='PharmaDashboard',controller='batches'*/[0m
+  ↳ app/controllers/batches_controller.rb:74:in `set_batch'
+  Rendering batches/coc_pdf.pdf.erb
+  Rendered batches/coc_pdf.pdf.erb (Duration: 0.8ms | GC: 0.0ms)
+[wicked_pdf]: ["/usr/bin/wkhtmltopdf", "--encoding", "UTF-8", "--enable-local-file-access", "--disable-smart-shrinking", "--page-size", "A4", "--margin-top", "2.0", "--margin-bottom", "2.0", "--margin-left", "1.0", "--margin-right", "1.0", "file:////tmp/wicked_pdf20260312-397485-95o537.html", "/tmp/wicked_pdf_generated_file20260312-397485-gy07qe.pdf"]
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Sent data coc_1.pdf (7.1ms)
+Completed 200 OK in 908ms (Views: 0.8ms | ActiveRecord: 22.6ms (1 query, 0 cached) | GC: 1.7ms)
+
+

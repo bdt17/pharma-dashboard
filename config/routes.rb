@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   # PDF / CoC routes  
   get "/batches.pdf", to: "batches#index"  # Fixed: explicit path
   get "/coc_pdf",  to: "coc_pdf#index"
+  get "/batches/:id/chain-of-custody.pdf", to: "batches#coc_pdf", as: :batch_coc_pdf
   get "/coc_api",  to: "coc_api#index"
 
   # Debug / admin helpers
