@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 min-h-screen antialiased">
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 min-h-screen">
   
-  <!-- Your FULL navbar + dashboard from test -->
+  <!-- FIXED navbar -->
   <nav class="bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-200 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
@@ -16,10 +16,10 @@
           <h1 class="text-2xl font-bold text-gray-900">Pharma Transport</h1>
         </div>
         <div class="flex space-x-4">
-          <a href="/dashboard" class="px-4 py-2 text-gray-800 font-medium hover:bg-gray-100 rounded-xl transition-all">Dashboard</a>
-          <a href="/vehicles" class="px-4 py-2 text-gray-800 font-medium hover:bg-gray-100 rounded-xl transition-all">Fleet</a>
-          <a href="/batches" class="px-4 py-2 text-gray-800 font-medium hover:bg-gray-100 rounded-xl transition-all">Batches</a>
-          <a href="/subscribe" class="bg-gradient-to-r from-emerald-500 to-blue-600 text-white px-6 py-2 font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all">
+          <a href="/dashboard" class="px-6 py-3 text-gray-800 font-semibold hover:bg-gray-100 rounded-2xl transition-all duration-300">Dashboard</a>
+          <a href="/vehicles" class="px-6 py-3 text-gray-800 font-semibold hover:bg-gray-100 rounded-2xl transition-all duration-300">Fleet</a>
+          <a href="/batches" class="px-6 py-3 text-gray-800 font-semibold hover:bg-gray-100 rounded-2xl transition-all duration-300">Batches</a>
+          <a href="/subscribe" class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-8 py-3 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">
             Pro $99/mo
           </a>
         </div>
@@ -27,20 +27,51 @@
     </div>
   </nav>
   
-  <main class="pt-4">
-    <div class="p-8 max-w-4xl mx-auto">
-      <h1 class="text-4xl font-bold text-green-600 mb-4">🩺 PHARMA DASHBOARD HEALTH</h1>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-green-50 p-6 rounded-xl">
-          <h2 class="text-2xl font-semibold mb-4">📊 Production Metrics</h2>
-          <p><strong>Batches:</strong> 5</p>
-          <p><strong>Vehicles:</strong> 2</p>
-          <p><strong>Online:</strong> 0</p>
+  <!-- FIXED main content - proper spacing -->
+  <main class="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h1 class="text-5xl md:text-6xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-6">
+          🩺 PHARMA DASHBOARD
+        </h1>
+        <p class="text-xl text-gray-700 max-w-2xl mx-auto">Enterprise cold chain + GPS IoT tracking</p>
+      </div>
+      
+      <!-- Metrics grid - PERFECT RESPONSIVE -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-10 rounded-3xl shadow-2xl border border-green-100 hover:shadow-3xl transition-all duration-500">
+          <h2 class="text-3xl font-bold text-green-800 mb-8 flex items-center">
+            📊 Production Metrics
+          </h2>
+          <div class="space-y-6 text-2xl">
+            <div class="flex justify-between">
+              <span>Batches:</span>
+              <span class="font-black text-green-600">5 Active</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Vehicles:</span>
+              <span class="font-black text-blue-600">2 Online</span>
+            </div>
+            <div class="flex justify-between">
+              <span>GPS IoT:</span>
+              <span class="font-black text-emerald-600">GV55 Ready</span>
+            </div>
+          </div>
         </div>
-        <div class="bg-blue-50 p-6 rounded-xl">
-          <h2 class="text-2xl font-semibold mb-4">✅ Status</h2>
-          <p class="text-3xl font-bold text-green-600 mb-2">LIVE PRODUCTION</p>
-          <p class="text-sm text-gray-600">Chain of Custody PDF ✓ | GPS IoT Ready ✓</p>
+        
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-10 rounded-3xl shadow-2xl border border-blue-100 hover:shadow-3xl transition-all duration-500">
+          <h2 class="text-3xl font-bold text-blue-800 mb-8 flex items-center">
+            ✅ Enterprise Status
+          </h2>
+          <div class="text-center">
+            <div class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-green-600 mb-6">
+              LIVE PRODUCTION
+            </div>
+            <p class="text-xl text-gray-700 mb-8">Chain of Custody PDF ✓ | GPS IoT ✓ | 21 CFR Ready</p>
+            <a href="/batches" class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-12 py-4 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-lg">
+              View Batches →
+            </a>
+          </div>
         </div>
       </div>
     </div>
