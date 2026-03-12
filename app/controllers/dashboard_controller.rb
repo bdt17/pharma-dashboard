@@ -1,5 +1,11 @@
 class DashboardController < ApplicationController
   def index
-    render layout: 'application'
+    head :ok
+  end
+  def new
+    head :ok
+  end
+  def update
+    head :ok
   end
 end

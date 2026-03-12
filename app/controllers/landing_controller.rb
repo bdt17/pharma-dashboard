@@ -1,7 +1,5 @@
 class LandingController < ApplicationController
   def index
-    render plain: File.read(Rails.root.join('public', 'landing.html')), 
-           layout: false, 
-           content_type: 'text/html'
+    render html: "<h1>Pharma Transport Dashboard - Phoenix AZ</h1><p>LIVE ✓</p>".html_safe
   end
 end
