@@ -36,3 +36,4 @@ end
 
 gem 'tailwindcss-rails'
 gem 'stripe', '~> 10.0'
+gem 'pdfkit'

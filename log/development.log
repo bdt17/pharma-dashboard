@@ -25687,3 +25687,45 @@ Processing by HealthController#index as */*
 Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+  [1m[35m (42.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (71.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (25.0ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT pg_advisory_unlock(1810556529913168695) /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Create (59.8ms)[0m  [1m[32mINSERT INTO "batches" ("id", "lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number", "organization_id", "tenant_id") VALUES (1, NULL, NULL, 'active', 2.5, '2026-03-11 23:39:48.670049', '2026-03-12 00:39:48.690594', NULL, TRUE, 'Test Vaccine Shipment', 'LOT-UNASSIGNED', NULL, NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Create (60.2ms)[0m  [1m[32mINSERT INTO "vehicles" ("id", "name", "latitude", "longitude", "status", "created_at", "updated_at", "plate", "identifier", "lat", "lng", "organization_id") VALUES (1, 'GV55-Truck-001', NULL, NULL, 'active', '2026-03-12 00:40:25.647109', '2026-03-12 00:40:25.647109', NULL, NULL, NULL, NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mROLLBACK /*application='PharmaDashboard'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='PharmaDashboard'*/[0m
+  [1m[36mVehicle Load (0.7ms)[0m  [1m[34mSELECT "vehicles".* FROM "vehicles" WHERE "vehicles"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+  [1m[36mBatch Load (60.3ms)[0m  [1m[34mSELECT "batches".* FROM "batches" WHERE "batches"."id" = 1 LIMIT 1 /*application='PharmaDashboard'*/[0m
+Started GET "/batches/1/chain-of-custody.pdf" for ::1 at 2026-03-11 17:41:19 -0700
+  
+NoMethodError (undefined method `get' for main):
+  
+config/routes.rb:51:in `<top (required)>'
+Started GET "/batches/1/chain-of-custody.pdf" for ::1 at 2026-03-11 17:42:21 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/chain-of-custody.pdf"):
+  
+Started GET "/batches/1/chain_of_custody.pdf" for ::1 at 2026-03-11 17:43:21 -0700
+Processing by BatchesController#chain_of_custody as PDF
+  Parameters: {"id"=>"1"}
+  Rendering batches/chain_of_custody.pdf.erb
+  Rendered batches/chain_of_custody.pdf.erb (Duration: 0.8ms | GC: 0.0ms)
+[wicked_pdf]: ["/usr/bin/wkhtmltopdf", "--encoding", "UTF-8", "--enable-local-file-access", "--disable-smart-shrinking", "--page-size", "Letter", "--margin-top", "2.0", "--margin-bottom", "2.0", "--margin-left", "1.0", "--margin-right", "1.0", "file:////tmp/wicked_pdf20260311-235451-hswtnk.html", "/tmp/wicked_pdf_generated_file20260311-235451-nzqymc.pdf"]
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Sent data chain_of_custody_batch_1.pdf (8.1ms)
+Completed 200 OK in 694ms (Views: 1.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 17.0ms)
+
+

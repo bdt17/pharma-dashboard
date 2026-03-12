@@ -172,6 +172,7 @@ GEM
     orm_adapter (0.5.0)
     ostruct (0.6.3)
     pdf-core (0.10.0)
+    pdfkit (0.8.7.3)
     pg (1.5.9)
     pp (0.6.3)
       prettyprint
@@ -303,6 +304,7 @@ DEPENDENCIES
   devise
   image_processing (~> 1.2)
   importmap-rails
+  pdfkit
   pg (~> 1.5.5)
   prawn
   prawn-table
@@ -384,6 +386,7 @@ CHECKSUMS
   orm_adapter (0.5.0) sha256=aa5d0be5d540cbb46d3a93e88061f4ece6a25f6e97d6a47122beb84fe595e9b9
   ostruct (0.6.3) sha256=95a2ed4a4bd1d190784e666b47b2d3f078e4a9efda2fccf18f84ddc6538ed912
   pdf-core (0.10.0) sha256=0a5d101e2063c01e3f941e1ee47cbb97f1adfc1395b58372f4f65f1300f3ce91
+  pdfkit (0.8.7.3) sha256=cd99e9eef3fcfd3ba7932acdb31c05e41141904c025f1363e829c1b93503b7da
   pg (1.5.9) sha256=761efbdf73b66516f0c26fcbe6515dc7500c3f0aa1a1b853feae245433c64fdc
   pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
   prawn (2.5.0) sha256=f4e20e3b4f30bf5b9ae37dad15eb421831594553aa930b2391b0fa0a99c43cb6
