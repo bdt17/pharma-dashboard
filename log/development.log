@@ -488,3 +488,8 @@ Migrating to CreateGpsLocations (20260312021323)
   [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
   [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='PharmaDashboard'*/[0m
   [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO "$user", public /*application='PharmaDashboard'*/[0m
+Started POST "/gps/receive" for ::1 at 2026-03-11 19:13:46 -0700
+  
+NoMethodError (undefined method `get' for main):
+  
+config/routes.rb:16:in `<top (required)>'
