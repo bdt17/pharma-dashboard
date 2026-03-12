@@ -45,4 +45,9 @@ Rails.application.configure do
 
   # Render.com optimizations
   config.cache_store = :memory_store, { size: 64 * 1024 * 1024 }  # 64MB
+config.public_file_server.enabled = true
+config.assets.compile = true
+config.force_ssl = false  # temp for debugging
+
 end
+Rails.application.config.secret_key_base = ENV["SECRET_KEY_BASE"] || "dummy-for-precompile"

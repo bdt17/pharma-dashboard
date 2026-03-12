@@ -4131,3 +4131,5 @@ Migrating to AddOrganizationIdToBatches (20260226232555)
 Migrating to AddOrganizationIdToBatches (20260226232555)
 Migrating to AddOrganizationIdToVehicles (20260226232605)
 Migrating to AddOrganizationIdToVehicles (20260226232605)
+No stripe.com API key configured - STATIC HTML MODE
+No stripe.com API key configured - STATIC HTML MODE
