@@ -9,96 +9,86 @@
     .sea-serpent { color: #60BDD1; }
     .silver-sand { color: #C0BEC6; }
     .metallic-silver { color: #AAA7B0; }
-    .davy-grey { color: #565759; }
   </style>
 </head>
-<body class="bg-white min-h-screen antialiased text-black">
-  
-  <!-- THOMAS IT NAVBAR - PURE WHITE BG -->
-  <nav class="bg-white border-b border-silver-sand sticky top-0 z-50 shadow-sm">
+<body class="bg-white min-h-screen text-black antialiased">
+
+  <!-- SINGLE NAVBAR -->
+  <nav class="bg-white border-b border-metallic-silver sticky top-0 z-50 shadow-sm">
     <div class="max-w-6xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-3">
           <div class="w-12 h-12 bg-ocean-blue rounded-xl flex items-center justify-center shadow-md">
             <span class="text-2xl">💉</span>
           </div>
-          <h1 class="text-2xl font-bold ocean-blue tracking-tight">Pharma Transport</h1>
+          <h1 class="text-2xl font-bold ocean-blue">Pharma Transport</h1>
         </div>
         <div class="flex space-x-2">
-          <a href="/dashboard" class="px-5 py-2.5 text-davy-grey font-semibold border border-silver-sand rounded-lg hover:bg-sea-serpent hover:text-white hover:border-sea-serpent transition-all duration-200">
-            Dashboard
-          </a>
-          <a href="/vehicles" class="px-5 py-2.5 text-davy-grey font-semibold border border-silver-sand rounded-lg hover:bg-sea-serpent hover:text-white hover:border-sea-serpent transition-all duration-200">
-            Fleet
-          </a>
-          <a href="/batches" class="px-5 py-2.5 ocean-blue font-bold border-2 border-ocean-blue rounded-lg shadow-md hover:shadow-lg hover:bg-ocean-blue hover:text-white transition-all duration-200 bg-ocean-blue/5">
-            Batches
-          </a>
-          <a href="/subscribe" class="bg-ocean-blue text-white px-6 py-2.5 font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#0984C0]/90 transition-all duration-200 ml-2">
-            Pro $99/mo
-          </a>
+          <a href="/dashboard" class="px-5 py-2.5 text-gray-800 font-semibold border border-silver-sand rounded-lg hover:bg-sea-serpent hover:text-white transition-all">Dashboard</a>
+          <a href="/vehicles" class="px-5 py-2.5 text-gray-800 font-semibold border border-silver-sand rounded-lg hover:bg-sea-serpent hover:text-white transition-all">Fleet</a>
+          <a href="/batches" class="px-5 py-2.5 ocean-blue font-bold border-2 border-ocean-blue rounded-lg shadow-md hover:shadow-lg hover:bg-ocean-blue hover:text-white bg-ocean-blue/5">Batches</a>
+          <a href="/subscribe" class="bg-ocean-blue text-white px-6 py-2.5 font-bold rounded-xl shadow-lg hover:shadow-xl hover:bg-[#0984C0]/90 ml-2">Pro $99/mo</a>
         </div>
       </div>
     </div>
   </nav>
-  
-  <!-- ENTERPRISE CONTENT - WHITE BG -->
-  <main class="pt-12 pb-20 px-6 max-w-6xl mx-auto">
-    
-    <!-- HEADER - OCEAN BLUE -->
+
+  <!-- MAIN CONTENT -->
+  <main class="pt-16 pb-20 px-6 max-w-6xl mx-auto">
     <div class="text-center mb-16">
-      <h1 class="text-4xl md:text-5xl font-black ocean-blue mb-4 tracking-tight">
-        🩺 PHARMA DASHBOARD
-      </h1>
-      <p class="text-xl silver-sand max-w-xl mx-auto leading-relaxed">
-        Enterprise cold chain + GPS IoT tracking
-      </p>
+      <h1 class="text-4xl md:text-5xl font-black ocean-blue mb-4">🩺 PHARMA DASHBOARD</h1>
+      <p class="text-xl silver-sand max-w-xl mx-auto">Enterprise cold chain + GPS IoT tracking</p>
     </div>
-    
-    <!-- METRICS CARDS - PDF BUTTON POPS -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      
-      <!-- METRICS CARD -->
-      <div class="bg-white p-8 rounded-2xl border-2 border-silver-sand shadow-lg hover:shadow-xl transition-all duration-300">
-        <h2 class="text-2xl font-bold ocean-blue mb-8 flex items-center">
-          📊
-          <span class="ml-3 silver-sand font-normal text-lg">Production Metrics</span>
-        </h2>
-        <div class="space-y-6">
-          <div class="flex justify-between items-center py-3 border-b border-silver-sand">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+      <!-- METRICS -->
+      <div class="bg-white p-8 rounded-2xl border-2 border-metallic-silver shadow-lg">
+        <h2 class="text-2xl font-bold ocean-blue mb-8">📊 Production Metrics</h2>
+        <div class="space-y-6 text-lg">
+          <div class="flex justify-between py-3">
             <span class="silver-sand font-medium">Batches:</span>
             <span class="text-3xl font-black ocean-blue">5 Active</span>
           </div>
-          <div class="flex justify-between items-center py-3 border-b border-silver-sand">
+          <div class="flex justify-between py-3">
             <span class="silver-sand font-medium">Vehicles:</span>
             <span class="text-3xl font-black sea-serpent">2 Online</span>
           </div>
-          <div class="flex justify-between items-center py-3">
+          <div class="flex justify-between py-3">
             <span class="silver-sand font-medium">GPS IoT:</span>
-            <span class="text-2xl font-bold sea-serpent">GV55 Ready</span>
+            <span class="text-xl font-bold sea-serpent">GV55 Ready</span>
           </div>
         </div>
       </div>
-      
-      <!-- PDF BUTTON CARD - MONEY MAKER -->
-      <div class="bg-gradient-to-br from-ocean-blue/5 to-sea-serpent/5 p-8 rounded-2xl border-2 border-ocean-blue shadow-2xl hover:shadow-3xl transition-all duration-300 group">
-        <h2 class="text-2xl font-bold ocean-blue mb-8 flex items-center">
-          ✅ Enterprise Status
-        </h2>
+
+      <!-- PDF ACTION -->
+      <div class="bg-gradient-to-br from-ocean-blue/5 p-8 rounded-2xl border-2 border-ocean-blue shadow-xl">
+        <h2 class="text-2xl font-bold ocean-blue mb-8">✅ Enterprise Status</h2>
         <div class="text-center">
-          <div class="text-4xl md:text-5xl font-black ocean-blue mb-6 bg-gradient-to-r from-ocean-blue to-sea-serpent bg-clip-text text-transparent">
-            LIVE PRODUCTION
-          </div>
-          <p class="text-lg silver-sand mb-10 leading-relaxed">
-            Chain of Custody PDF ✓ | GPS IoT ✓ | 21 CFR Ready
-          </p>
-          <a href="/batches" class="inline-block bg-ocean-blue hover:bg-sea-serpent text-white font-bold px-10 py-5 rounded-2xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 text-lg border-4 border-ocean-blue/20 group-hover:border-sea-serpent/30">
+          <div class="text-4xl font-black ocean-blue mb-6">LIVE PRODUCTION</div>
+          <p class="text-lg silver-sand mb-10">Chain of Custody PDF ✓ | GPS IoT ✓ | 21 CFR Ready</p>
+          <a href="/batches" class="inline-block bg-ocean-blue text-white font-bold px-12 py-4 rounded-2xl shadow-2xl hover:shadow-3xl hover:scale-105 transition-all text-lg border-2 border-ocean-blue">
             📄 GENERATE PDF BATCHES →
           </a>
         </div>
       </div>
-      
     </div>
   </main>
+
+  <!-- PRO FOOTER -->
+  <footer class="bg-ocean-blue text-white py-12 mt-20">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <div class="text-3xl mb-6">💉</div>
+      <h3 class="text-2xl font-bold mb-4">Pharma Transport Enterprise</h3>
+      <p class="silver-sand mb-8 max-w-2xl mx-auto">21 CFR Part 11 | SOC2 | GPS IoT Cold Chain | Chain of Custody</p>
+      <div class="flex flex-wrap justify-center gap-4 text-sm silver-sand">
+        <a href="/batches" class="hover:text-white transition">Batches</a>
+        <a href="/subscribe" class="hover:text-white transition">Pro Plan</a>
+        <a href="/health" class="hover:text-white transition">Status</a>
+        <a href="/gps/receive" class="hover:text-white transition">GPS IoT</a>
+      </div>
+      <p class="mt-8 text-xs silver-sand opacity-75">© 2026 Thomas IT Network. All rights reserved.</p>
+    </div>
+  </footer>
+
 </body>
 </html>
