@@ -696,3 +696,50 @@ Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
   [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='PharmaDashboard'*/[0m
   [1m[36mBatch Create (1.5ms)[0m  [1m[32mINSERT INTO "batches" ("lot", "expiry", "status", "temperature_celsius", "created_at", "updated_at", "vehicle_id", "active", "name", "lot_number", "batch_number", "organization_id", "tenant_id") VALUES (NULL, NULL, 'Active', 2.5, '2026-03-12 04:46:01.728960', '2026-03-12 04:46:01.728960', 1, TRUE, NULL, 'LOT-UNASSIGNED', 'PT-001', NULL, NULL) RETURNING "id" /*application='PharmaDashboard'*/[0m
   [1m[36mTRANSACTION (136.8ms)[0m  [1m[35mCOMMIT /*application='PharmaDashboard'*/[0m
+Started GET "/" for 127.0.0.1 at 2026-03-11 21:55:30 -0700
+Processing by HomeController#index as */*
+  Rendering home/index.html.erb
+  Rendered home/index.html.erb (Duration: 0.9ms | GC: 0.0ms)
+Completed 200 OK in 8ms (Views: 4.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.4ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-11 21:55:31 -0700
+Processing by HealthController#index as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-11 21:55:31 -0700
+Processing by DashboardController#index as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-11 21:55:31 -0700
+Processing by BatchesController#index as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.1ms)
+
+
+Started GET "/batches.pdf" for 127.0.0.1 at 2026-03-11 21:55:32 -0700
+Processing by BatchesController#index as PDF
+Completed 200 OK in 0ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/gps/update" for 127.0.0.1 at 2026-03-11 21:55:32 -0700
+Processing by GpsController#update as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-11 21:55:32 -0700
+Processing by SubscriptionsController#new as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-11 21:55:32 -0700
+Processing by StripeController#new as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-11 21:55:33 -0700
+Processing by HealthController#index as */*
+Completed 200 OK in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+

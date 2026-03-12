@@ -7,64 +7,90 @@
 </head>
 <body class="bg-white min-h-screen text-gray-900 antialiased">
 
-  <!-- SIMPLIFIED NAVBAR -->
-  <nav class="bg-white border-b shadow-sm">
-    <div class="max-w-4xl mx-auto px-6 py-4">
+  <!-- PROPER NAVBAR SIZING -->
+  <nav class="bg-white border-b shadow-sm py-4">
+    <div class="max-w-5xl mx-auto px-6">
       <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-3">
+        <div class="flex items-center space-x-4">
           <span class="text-3xl">💉</span>
-          <h1 class="text-xl font-bold text-blue-600">Pharma Transport</h1>
+          <h1 class="text-2xl font-bold text-[#0984C0]">Pharma Transport</h1>
         </div>
-        <div class="flex space-x-3 text-sm">
-          <a href="/dashboard" class="text-gray-600 hover:text-blue-600 font-medium">Dashboard</a>
-          <a href="/batches" class="text-blue-600 font-bold border-b-2 border-blue-600 pb-1">Batches</a>
-          <a href="/subscribe" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-xs font-bold">Pro $99/mo</a>
+        <div class="flex space-x-4">
+          <a href="/dashboard" class="px-4 py-2 text-gray-700 font-medium hover:text-[#0984C0] rounded-lg">Dashboard</a>
+          <a href="/vehicles" class="px-4 py-2 text-gray-700 font-medium hover:text-[#0984C0] rounded-lg">Fleet</a>
+          <a href="/batches" class="px-4 py-2 text-[#0984C0] font-bold border-b-2 border-[#0984C0] pb-1">Batches</a>
+          <a href="/subscribe" class="bg-[#0984C0] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#0984C0]/90">Pro $99/mo</a>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- TIGHT LAYOUT - OG SPACING -->
-  <div class="max-w-4xl mx-auto px-6 py-12">
+  <!-- PROPER MAIN CONTENT SIZING -->
+  <main class="max-w-5xl mx-auto px-6 py-16">
     
-    <div class="text-center mb-12">
-      <h1 class="text-4xl font-bold text-blue-600 mb-4">🩺 PHARMA DASHBOARD</h1>
-      <p class="text-lg text-gray-600">Cold chain + GPS tracking</p>
+    <!-- HERO HEADER -->
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-black text-[#0984C0] mb-6">🩺 PHARMA DASHBOARD</h1>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+        Enterprise cold chain + GPS IoT tracking
+      </p>
     </div>
 
-    <!-- COMPACT 2-COL -->
-    <div class="grid md:grid-cols-2 gap-6">
+    <!-- PROPER 2-COLUMN GRID -->
+    <div class="grid lg:grid-cols-2 gap-8 mb-16">
       
-      <!-- METRICS -->
-      <div class="bg-gray-50 p-6 rounded-xl border">
-        <h3 class="text-xl font-bold text-blue-600 mb-4">📊 Metrics</h3>
-        <div class="space-y-3 text-sm">
-          <div class="flex justify-between"><span>Batches:</span><span class="font-bold text-xl text-blue-600">5</span></div>
-          <div class="flex justify-between"><span>Vehicles:</span><span class="font-bold text-lg text-blue-400">2</span></div>
-          <div class="flex justify-between"><span>GPS:</span><span class="font-bold text-blue-400">GV55</span></div>
+      <!-- METRICS CARD - FULL SIZE -->
+      <div class="bg-gray-50 p-10 rounded-2xl border border-gray-200 shadow-lg">
+        <h2 class="text-3xl font-bold text-[#0984C0] mb-10 flex items-center">
+          📊 Production Metrics
+        </h2>
+        <div class="space-y-6">
+          <div class="flex justify-between items-end py-3">
+            <span class="text-lg text-gray-600 font-medium">Batches:</span>
+            <span class="text-4xl font-black text-[#0984C0]">5</span>
+          </div>
+          <div class="flex justify-between items-end py-3">
+            <span class="text-lg text-gray-600 font-medium">Vehicles:</span>
+            <span class="text-3xl font-bold text-[#60BDD1]">2</span>
+          </div>
+          <div class="flex justify-between items-end py-3">
+            <span class="text-lg text-gray-600 font-medium">GPS IoT:</span>
+            <span class="text-xl font-bold text-[#60BDD1]">GV55 Ready</span>
+          </div>
         </div>
       </div>
 
-      <!-- PDF BUTTON DOMINATES -->
-      <div class="bg-blue-600 text-white p-6 rounded-xl shadow-lg">
+      <!-- PDF MONEY MAKER - FULL SIZE -->
+      <div class="bg-gradient-to-r from-[#0984C0] to-[#60BDD1] p-10 rounded-2xl text-white shadow-2xl">
         <div class="text-center">
-          <div class="text-2xl font-bold mb-4">✅ LIVE</div>
-          <p class="text-sm mb-6 opacity-90">PDF Chain of Custody ✓ GPS ✓ 21 CFR</p>
-          <a href="/batches" class="block w-full bg-white text-blue-600 font-bold py-3 px-4 rounded-lg text-center shadow-lg hover:shadow-xl transition">
-            📄 GENERATE PDF
+          <div class="text-3xl font-bold mb-8">✅ LIVE PRODUCTION</div>
+          <p class="text-lg mb-10 leading-relaxed opacity-95">
+            Chain of Custody PDF ✓<br>
+            GPS IoT ✓ | 21 CFR Ready
+          </p>
+          <a href="/batches" class="inline-block bg-white text-[#0984C0] font-bold py-5 px-12 rounded-xl shadow-2xl hover:shadow-3xl hover:scale-105 transition-all text-lg mx-auto">
+            📄 GENERATE PDF BATCHES
           </a>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
-  <!-- CLEAN FOOTER -->
-  <footer class="bg-blue-600 text-white py-8 mt-16">
-    <div class="max-w-4xl mx-auto px-6 text-center text-xs">
-      <div class="text-2xl mb-2">💉</div>
-      <div class="mb-2">Pharma Transport Enterprise</div>
-      <div class="opacity-75 mb-4">21 CFR Part 11 | SOC2 Compliant</div>
-      <div>Batches • Pro Plan • Status • GPS</div>
+  <!-- PROPER FOOTER -->
+  <footer class="bg-[#0984C0] text-white py-12">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="text-4xl mb-6">💉</div>
+      <h3 class="text-2xl font-bold mb-6">Pharma Transport Enterprise</h3>
+      <p class="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
+        21 CFR Part 11 | SOC2 | GPS IoT Cold Chain | Chain of Custody
+      </p>
+      <div class="flex flex-wrap justify-center gap-8 text-sm mb-8">
+        <a href="/batches" class="hover:opacity-80 transition">Batches</a>
+        <a href="/subscribe" class="hover:opacity-80 transition">Pro Plan</a>
+        <a href="/health" class="hover:opacity-80 transition">Status</a>
+        <a href="/gps" class="hover:opacity-80 transition">GPS IoT</a>
+      </div>
+      <p class="text-sm opacity-75">© 2026 Thomas IT Network. All rights reserved.</p>
     </div>
   </footer>
 
