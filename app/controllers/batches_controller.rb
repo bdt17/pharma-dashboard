@@ -30,3 +30,11 @@ end
       end
     end
   end
+
+  def test_pdf
+    respond_to do |format|
+      format.pdf do
+        render pdf: "test", layout: "pdf"
+      end
+    end
+  end

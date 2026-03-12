@@ -25395,3 +25395,295 @@ Processing by SubscriptionsController#index as */*
 Completed 200 OK in 22ms (Views: 6.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/" for 127.0.0.1 at 2026-03-11 16:09:18 -0700
+Redirected to http://127.0.0.1:3000/index.html
+↳ /home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/config/routes.rb:3:in `block in <top (required)>'
+Completed 301 Moved Permanently in 0ms
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-11 16:09:18 -0700
+Processing by HealthController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 5ms (Views: 1.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-11 16:09:19 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 1.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.4ms | GC: 0.0ms)
+Completed 200 OK in 17ms (Views: 16.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-11 16:09:19 -0700
+Processing by BatchesController#index as */*
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::MissingTemplate (Missing template layouts/pdf.html with {:locale=>[:en], :formats=>[:pdf], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/stripe-rails-2.6.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/controllers/batches_controller.rb:6:in `block (2 levels) in index'
+app/controllers/batches_controller.rb:4:in `index'
+Started GET "/batches.pdf" for 127.0.0.1 at 2026-03-11 16:09:22 -0700
+Processing by BatchesController#index as PDF
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::MissingTemplate (Missing template layouts/pdf.html with {:locale=>[:en], :formats=>[:pdf], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/stripe-rails-2.6.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/controllers/batches_controller.rb:6:in `block (2 levels) in index'
+app/controllers/batches_controller.rb:4:in `index'
+Started GET "/gps/update" for 127.0.0.1 at 2026-03-11 16:09:23 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/gps/update"):
+  
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-11 16:09:24 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering subscriptions/index.html.erb within layouts/application
+  Rendered subscriptions/index.html.erb within layouts/application (Duration: 1.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.8ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 2.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-11 16:09:24 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/billing"):
+  
+Started GET "/health" for 127.0.0.1 at 2026-03-11 16:09:26 -0700
+Processing by HealthController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2026-03-11 16:11:55 -0700
+  
+NoMethodError (undefined method `root' for main):
+  
+config/routes.rb:19:in `<top (required)>'
+Started GET "/health" for 127.0.0.1 at 2026-03-11 16:11:55 -0700
+Processing by HealthController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 10ms (Views: 1.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-11 16:11:56 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/vehicles" for 127.0.0.1 at 2026-03-11 16:11:56 -0700
+Processing by VehiclesController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-11 16:11:56 -0700
+Processing by BatchesController#index as */*
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::MissingTemplate (Missing template layouts/pdf.html with {:locale=>[:en], :formats=>[:pdf], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/stripe-rails-2.6.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/controllers/batches_controller.rb:6:in `block (2 levels) in index'
+app/controllers/batches_controller.rb:4:in `index'
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-11 16:11:58 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering subscriptions/index.html.erb within layouts/application
+  Rendered subscriptions/index.html.erb within layouts/application (Duration: 2.4ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.7ms | GC: 0.0ms)
+Completed 200 OK in 4ms (Views: 3.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-11 16:11:58 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/billing"):
+  
+Started GET "/compliance" for 127.0.0.1 at 2026-03-11 16:11:58 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/compliance"):
+  
+Started GET "/api/health" for 127.0.0.1 at 2026-03-11 16:11:58 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/health"):
+  
+Started GET "/debug/batches" for 127.0.0.1 at 2026-03-11 16:11:59 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/debug/batches"):
+  
+Started GET "/batches/1/chain-of-custody.pdf" for 127.0.0.1 at 2026-03-11 16:11:59 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/chain-of-custody.pdf"):
+  
+Started GET "/batches/1/coc_pdf" for 127.0.0.1 at 2026-03-11 16:11:59 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/coc_pdf"):
+  
+Started GET "/users/sign_in" for 127.0.0.1 at 2026-03-11 16:11:59 -0700
+Processing by Devise::SessionsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 1.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/sessions/new.html.erb within layouts/application (Duration: 17.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 17.5ms | GC: 0.0ms)
+Completed 200 OK in 70ms (Views: 19.3ms | ActiveRecord: 10.0ms (0 queries, 0 cached) | GC: 1.1ms)
+
+
+Started GET "/users/sign_up" for 127.0.0.1 at 2026-03-11 16:12:00 -0700
+Processing by Devise::RegistrationsController#new as */*
+  Rendering layout layouts/application.html.erb
+  Rendering /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_error_messages.html.erb (Duration: 0.4ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/shared/_links.html.erb (Duration: 0.2ms | GC: 0.0ms)
+  Rendered /home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views/devise/registrations/new.html.erb within layouts/application (Duration: 3.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 4.1ms | GC: 0.0ms)
+Completed 200 OK in 6ms (Views: 5.2ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/gps" for 127.0.0.1 at 2026-03-11 16:12:00 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/v1/gps"):
+  
+Started GET "/api/batches" for 127.0.0.1 at 2026-03-11 16:12:00 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/batches"):
+  
+Started GET "/api/vehicles" for 127.0.0.1 at 2026-03-11 16:12:00 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/api/vehicles"):
+  
+Started GET "/subscribe/success" for 127.0.0.1 at 2026-03-11 16:12:00 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/subscribe/success"):
+  
+Started GET "/batches/1/temperature_log" for 127.0.0.1 at 2026-03-11 16:12:01 -0700
+  
+ActionController::RoutingError (No route matches [GET] "/batches/1/temperature_log"):
+  
+Started GET "/" for 127.0.0.1 at 2026-03-11 17:12:44 -0700
+Processing by LandingController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 7ms (Views: 1.7ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-11 17:12:45 -0700
+Processing by HealthController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/dashboard" for 127.0.0.1 at 2026-03-11 17:12:45 -0700
+Processing by DashboardController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering dashboard/index.html.erb within layouts/application
+  Rendered dashboard/index.html.erb within layouts/application (Duration: 0.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.1ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/batches" for 127.0.0.1 at 2026-03-11 17:12:45 -0700
+Processing by BatchesController#index as */*
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::MissingTemplate (Missing template layouts/pdf.html with {:locale=>[:en], :formats=>[:pdf], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/stripe-rails-2.6.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/controllers/batches_controller.rb:6:in `block (2 levels) in index'
+app/controllers/batches_controller.rb:4:in `index'
+Started GET "/batches.pdf" for 127.0.0.1 at 2026-03-11 17:12:47 -0700
+Processing by BatchesController#index as PDF
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  
+ActionView::MissingTemplate (Missing template layouts/pdf.html with {:locale=>[:en], :formats=>[:pdf], :variants=>[], :handlers=>[:raw, :erb, :html, :builder, :ruby]}.
+
+Searched in:
+  * "/home/zero/Pharma_Transport_2026-03-05_pharma-dashboard/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/stripe-rails-2.6.0/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/devise-5.0.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actiontext-8.1.2/app/views"
+  * "/home/zero/.rbenv/versions/3.3.5/lib/ruby/gems/3.3.0/gems/actionmailbox-8.1.2/app/views"
+):
+  
+app/controllers/batches_controller.rb:6:in `block (2 levels) in index'
+app/controllers/batches_controller.rb:4:in `index'
+Started GET "/gps/update" for 127.0.0.1 at 2026-03-11 17:12:49 -0700
+Processing by GpsController#update as */*
+GPS: GV55-001 @ 33.4484,-112.0740
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/subscribe" for 127.0.0.1 at 2026-03-11 17:12:49 -0700
+Processing by SubscriptionsController#index as */*
+  Rendering layout layouts/application.html.erb
+  Rendering subscriptions/index.html.erb within layouts/application
+  Rendered subscriptions/index.html.erb within layouts/application (Duration: 0.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 1.0ms | GC: 0.0ms)
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/billing" for 127.0.0.1 at 2026-03-11 17:12:49 -0700
+Processing by BillingController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/health" for 127.0.0.1 at 2026-03-11 17:12:51 -0700
+Processing by HealthController#index as */*
+  Rendering text template
+  Rendered text template (Duration: 0.0ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+

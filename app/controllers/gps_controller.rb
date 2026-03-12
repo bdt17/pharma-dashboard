@@ -17,3 +17,17 @@ class GpsController < ApplicationController
     render plain: "GPS OK: Vehicle #{imei} at #{lat},#{lng}", status: :ok
   end
 end
+  def update
+    # Queclink GV55 GPS POST/GET
+    render json: { 
+      status: 'OK', 
+      imei: params[:imei], 
+      lat: params[:lat], 
+      lng: params[:lng],
+      timestamp: Time.now.utc.iso8601 
+    }
+  end
+
+  def stream
+    render plain: "Queclink GV55 LIVE stream - Phoenix AZ fleet"
+  end
