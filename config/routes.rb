@@ -7,3 +7,5 @@ Rails.application.routes.draw do
   get "subscribe", to: "subscribe#index"
   get "billing", to: "billing#index"
 end
+get "subscribe", to: "subscribe#index"
+get "stripe", to: "stripe#index"
