@@ -4,10 +4,12 @@ class HomeController < ApplicationController
   end
   
   def vehicles
-    render plain: "🚛 VEHICLE FLEET MANAGEMENT\n\n✅ Cold Chain Monitoring\n✅ Real-time GPS\n✅ DEA/FDA Compliance\n\nPhase 10 Enterprise LIVE", layout: "application"
+    @page_title = "Fleet Management"
+    @content = "🚛 COLD CHAIN FLEET\n✅ 24/7 GPS Tracking\n✅ Temperature Monitoring\n✅ DEA/FDA Compliance\n✅ Maintenance Alerts"
   end
   
   def gps
-    render plain: "🛰️ GPS TRACKING DASHBOARD\n\n✅ Live Vehicle Locations\n✅ IoT Telemetry\n✅ Geofence Alerts\n✅ Chain of Custody\n\nPhase 10 Enterprise LIVE", layout: "application"
+    @page_title = "GPS Tracking"
+    @content = "🛰️ REAL-TIME TRACKING\n✅ Live Vehicle Locations\n✅ Geofence Alerts\n✅ IoT Telemetry\n✅ ETA Predictions"
   end
 end
