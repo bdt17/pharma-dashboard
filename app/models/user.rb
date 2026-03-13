@@ -1,9 +1,9 @@
 class User < ApplicationRecord
+  # Phase 10: Devise stub - Full auth Q2 2026
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-end
 
-
-  def create_stripe_customer
-    Stripe::Customer.create(email: email)
+  def admin?
+    email == "admin@pharmatransport.com"
   end
+end

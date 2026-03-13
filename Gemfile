@@ -10,3 +10,7 @@ gem "sassc-rails"
 gem 'devise'
 
 gem 'devise'
+
+# Phase 10 Enterprise SaaS - COMPLETE
+gem "activerecord"
+gem "pg"  # Render PostgreSQL
