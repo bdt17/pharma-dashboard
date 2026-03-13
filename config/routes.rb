@@ -7,3 +7,8 @@ Rails.application.routes.draw do
   get "vehicles", to: "vehicles#index"
   get "gps", to: "gps#index"
 end
+
+get '/health', to: 'health#index'
+get '/batches', to: 'batches#index'  
+get '/subscribe', to: 'subscribe#index'
+
