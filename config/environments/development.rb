@@ -5,5 +5,4 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
   config.active_support.deprecation = :log
   config.hosts.clear
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
