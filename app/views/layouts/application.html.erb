@@ -1,35 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Pharma Transport</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <meta name="csrf-param" content="authenticity_token" />
-  <meta name="csrf-token" content="<%= form_authenticity_token %>" />
-</head>
-<body class="bg-white min-h-screen text-gray-900">
-  <!-- NAVBAR -->
-  <nav class="bg-white border-b shadow-sm py-3 px-4">
-    <div class="max-w-5xl mx-auto flex items-center justify-between">
-      <div class="flex items-center">
-        <span class="text-2xl mr-3">💉</span>
-        <h1 class="text-lg font-bold text-[#0984C0]">Pharma Transport</h1>
-      </div>
-      <div class="flex space-x-6">
-        <% if user_signed_in? %>
-          <%= link_to "Dashboard", "/dashboard", class: "text-sm text-gray-700 hover:text-blue-600" %>
-          <%= link_to "Batches", "/batches", class: "text-sm text-gray-700 hover:text-blue-600" %>
-          <%= link_to "Vehicles", "/vehicles", class: "text-sm text-gray-700 hover:text-blue-600" %>
-          <%= button_to "Logout", "/users/sign_out", method: :delete, class: "text-sm text-red-600 hover:text-red-700" %>
-        <% else %>
-          <%= link_to "Login", new_user_session_path, class: "px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700" %>
-        <% end %>
-      </div>
-    </div>
-  </nav>
-
-  <main class="max-w-5xl mx-auto px-6 py-12">
-    <%= yield %>
-  </main>
-</body>
+<head><title>Pharma Transport</title></head>
+<body><%= yield %></body>
 </html>
