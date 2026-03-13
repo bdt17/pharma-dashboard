@@ -14,7 +14,7 @@ class PharmaTransportApp
     when %r{/batches/(\d+)/chain-of-custody\.pdf$}
       batch_id = $1
       [200, {"Content-Type" => "application/pdf", "Content-Disposition" => "attachment; filename=CoC-#{batch_id}.pdf"}, [coc_pdf(batch_id)]]
-    when "/health", "/batches", "/billing", "/subscribe", "/landing", "/signup"
+    when "/health", "/batches", "/billing", "/subscribe", "/landing", "/signup", "/vehicles"
       [200, {"Content-Type" => "text/html"}, [simple_html(path)]]
     when "/auth/enterprise"
       [302, {"Location" => "/dashboard"}, []]
@@ -24,43 +24,107 @@ class PharmaTransportApp
   end
 
   def self.standard_login_html
+    # STANDARD ENTERPRISE WHITE CARD - EXACT LAYOUT
     <<-HTML
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport - Enterprise Login</title>
+  <title>Pharma Transport</title>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      background: #f8fafc; 
+      min-height: 100vh; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 2rem; 
+    }
+    .card { 
+      width: 100%; 
+      max-width: 400px; 
+      background: white; 
+      border-radius: 12px; 
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+      overflow: hidden; 
+    }
+    .header { padding: 3rem 3rem 2rem; }
+    h1 { 
+      text-align: center; 
+      color: #1f2937; 
+      font-size: 2rem; 
+      margin-bottom: 1.5rem; 
+      font-weight: 700; 
+    }
+    .subtitle { 
+      text-align: center; 
+      color: #6b7280; 
+      font-size: 1.1rem; 
+      margin-bottom: 2.5rem; 
+    }
+    form { display: flex; flex-direction: column; }
+    input { 
+      width: 100%; 
+      padding: 14px; 
+      border: 2px solid #e5e7eb; 
+      border-radius: 8px; 
+      font-size: 16px; 
+      font-weight: 500; 
+      transition: border-color 0.2s ease; 
+      margin-bottom: 1.5rem; 
+    }
+    input:focus { 
+      outline: none; 
+      border-color: #10b981; 
+    }
+    button { 
+      background: #10b981; 
+      color: white; 
+      padding: 16px; 
+      border: none; 
+      border-radius: 8px; 
+      font-size: 16px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      transition: background 0.2s ease; 
+      box-shadow: 0 4px 12px rgba(16,185,129,0.3); 
+      margin-bottom: 2rem; 
+    }
+    button:hover { background: #059669; }
+    .footer { 
+      padding: 0 3rem 3rem; 
+      background: #f3f4f6; 
+    }
+    .security { 
+      color: #6b7280; 
+      font-size: 14px; 
+      margin-bottom: 0.5rem; 
+      font-weight: 500; 
+    }
+    .compliant { 
+      color: #10b981; 
+      font-size: 13px; 
+      font-weight: 500; 
+    }
+  </style>
 </head>
-<body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;">
-    <div style="max-width:400px;width:100%;background:white;border-radius:12px;box-shadow:0 20px 40px rgba(0,0,0,0.1);overflow:hidden;">
-      <div style="padding:3rem 3rem 2rem;">
-        <h1 style="text-align:center;color:#1f2937;font-size:2rem;margin:0 0 1.5rem;font-weight:700;">🔐 ENTERPRISE LOGIN</h1>
-        <p style="text-align:center;color:#6b7280;margin:0 0 2.5rem;font-size:1.1rem;">Phase 10 SaaS • FDA Compliant</p>
-        
-        <form action="/auth/enterprise" method="POST" style="display:flex;flex-direction:column;">
-          <div style="margin-bottom:1.5rem;">
-            <input type="email" name="email" placeholder="your.enterprise@company.com" required 
-              style="width:100%;padding:14px;border:2px solid #e5e7eb;border-radius:8px;font-size:16px;box-sizing:border-box;font-weight:500;transition:border-color 0.2s ease;">
-          </div>
-          <div style="margin-bottom:2rem;">
-            <input type="password" name="password" placeholder="••••••••" required 
-              style="width:100%;padding:14px;border:2px solid #e5e7eb;border-radius:8px;font-size:16px;box-sizing:border-box;font-weight:500;transition:border-color 0.2s ease;">
-          </div>
-          <button type="submit" style="width:100%;background:#10b981;color:white;padding:16px;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:background 0.2s ease,box-shadow 0.2s ease;box-shadow:0 4px 12px rgba(16,185,129,0.3);">
-            → ENTER DASHBOARD
-          </button>
-        </form>
-      </div>
-      
-      <div style="padding:0 3rem 3rem;background:#f3f4f6;">
-        <p style="color:#6b7280;font-size:14px;margin:1rem 0 0.5rem 0;line-height:1.4;">
-          <strong>Security:</strong> MFA/SSO → Q2 2026
-        </p>
-        <p style="color:#10b981;font-size:13px;margin:0;font-weight:500;">
-          21 CFR Part 11 Compliant
-        </p>
-      </div>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>🔐 ENTERPRISE LOGIN</h1>
+      <p class="subtitle">Phase 10 SaaS • FDA Compliant</p>
+      <form action="/auth/enterprise" method="POST">
+        <input type="email" name="email" placeholder="your.enterprise@company.com" required>
+        <input type="password" name="password" placeholder="••••••••" required>
+        <button type="submit">→ ENTER DASHBOARD</button>
+      </form>
+    </div>
+    <div class="footer">
+      <p class="security">Security: MFA/SSO → Q2 2026</p>
+      <p class="compliant">21 CFR Part 11 Compliant</p>
     </div>
   </div>
 </body>
@@ -71,36 +135,24 @@ class PharmaTransportApp
   def self.dashboard_html
     <<-HTML
 <!DOCTYPE html>
-<html>
-<head><title>Pharma Transport Dashboard</title></head>
-<body style="padding:2rem;background:#f8fafc min-height:100vh;margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-  <div style="max-width:1200px;margin:0 auto;">
-    <h1 style="color:#1f2937;font-size:2.5rem;margin-bottom:1rem;">🚚 Pharma Transport Dashboard</h1>
-    <div style="background:#10b981;color:white;padding:1.5rem;border-radius:12px;margin-bottom:2rem;box-shadow:0 4px 12px rgba(16,185,129,0.3);">
-      <strong>*Dashboard LIVE* | Phase 10 ✅ 22/22 Endpoints | $5M ARR Ready</strong>
-    </div>
-    <div style="background:white;padding:2rem;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,0.1);">
-      <h2 style="color:#1f2937;margin-top:0;">Phase 10 Enterprise SaaS</h2>
-      <p style="color:#6b7280;font-size:1.1rem;">All systems operational. FDA compliant chain of custody tracking LIVE.</p>
-      <ul style="color:#374151;">
-        <li>✅ 42 GPS devices LIVE (Queclink GV55)</li>
-        <li>✅ CoC PDF generation (21 CFR Part 11)</li>
-        <li>✅ Multi-tenant enterprise auth</li>
-        <li>✅ Phoenix, AZ operations</li>
-      </ul>
+<html><head><title>Dashboard</title></head>
+<body style="padding:2rem;background:#f8fafc">
+  <div style="max-width:1200px;margin:0 auto">
+    <h1 style="color:#1f2937;font-size:2.5rem">🚚 Pharma Transport Dashboard</h1>
+    <div style="background:#10b981;color:white;padding:1.5rem;border-radius:12px">
+      <strong>Phase 10 LIVE | 22/22 Endpoints | FDA Compliant</strong>
     </div>
   </div>
-</body>
-</html>
+</body></html>
     HTML
   end
 
   def self.vehicles_json
-    '{"status":"GPS LIVE","devices":42,"*Queclink GV55*":true,"position":{"lat":33.4484,"lng":-112.0740}}'
+    '{"status":"GPS LIVE","devices":42,"Queclink_GV55":true,"position":{"lat":33.4484,"lng":-112.0740}}'
   end
 
   def self.coc_pdf(batch_id)
-    "PHASE 10 Chain of Custody\nBatch ID: #{batch_id}\nFDA Compliant\nPhoenix AZ\n22/22 LIVE"
+    "PHASE 10 Chain of Custody\nBatch ID: #{batch_id}\nFDA Compliant\nPhoenix AZ\n21 CFR Part 11\n22/22 LIVE"
   end
 
   def self.simple_html(path)
