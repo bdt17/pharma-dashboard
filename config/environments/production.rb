@@ -1,11 +1,9 @@
 Rails.application.configure do
-  config.cache_classes = true
-  config.eager_load = true
-  config.consider_all_requests_local = false
-  config.force_ssl = true
+  config.cache_classes = false
+  config.eager_load = false
+  config.consider_all_requests_local = true
   
-  # Skip asset compilation for speed
+  # Skip assets
   config.assets.compile = false
-  config.assets.debug = false
   config.public_file_server.enabled = true
 end
