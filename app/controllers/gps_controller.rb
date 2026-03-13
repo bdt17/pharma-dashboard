@@ -1,15 +1,14 @@
 class GpsController < ApplicationController
-  def index
-    render plain: "GPS IoT Status: Queclink GV55 LIVE - /gps/receive TCP ready", status: :ok
-  end
+  skip_before_action :verify_authenticity_token, only: [:update]
 
   def update
-    head :ok
+    imei = params[:imei]
+    lat = params[:lat]
+    lng = params[:lng]
+    render plain: "GPS Updated: #{imei} @ (#{lat},#{lng})", status: :ok
   end
 
-  def receive
-    # Queclink GV55 TCP endpoint
-    req_body = request.body.read
-    head :ok
+  def stream
+    render plain: "GPS Stream Active", status: :ok
   end
 end

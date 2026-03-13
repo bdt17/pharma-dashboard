@@ -1,1 +1,5 @@
-class RoutesController < ApplicationController; def index; render plain: 'Coming soon'; end; end
+class RoutesController < ApplicationController
+  def index
+    render plain: "Active Routes: Phoenix → Tucson", status: :ok
+  end
+end
