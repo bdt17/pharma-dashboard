@@ -7,3 +7,6 @@ gem "jbuilder"
 gem "bootsnap", require: false
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "sassc-rails"
+gem 'devise'
+
+gem 'devise'
