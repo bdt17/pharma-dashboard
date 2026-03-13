@@ -1,202 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport - Thomas IT Network</title>
+  <title>Thomas IT Network - Pharma Transport</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
     :root {
-      --primary-blue: #0984C0;      /* Deep Ocean Blue - Headers, buttons */
-      --accent-silver: #AAA7B0;     /* Metallic Silver - Icons, borders */
-      --mid-grey: #565759;          /* Davy's Grey - Text */
-      --light-variant: #C0BEC6;     /* Silver Sand - Labels */
-      --lighter-blue: #60BDD1;      /* Sea Serpent - Links, highlights */
-      --white: #FFFFFF;             /* Pure White - Cards */
-      --logo-black: #000000;        /* Logo */
+      --primary-blue: #0984C0;
+      --accent-silver: #AAA7B0;
+      --mid-grey: #565759;
+      --light-variant: #C0BEC6;
+      --lighter-blue: #60BDD1;
+      --white: #FFFFFF;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: system-ui, -apple-system, sans-serif; 
-      background: var(--white);     /* Pure White background */
-      color: var(--mid-grey);
-      min-height: 100vh;
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    body { font-family: system-ui, sans-serif; background: var(--white); color: var(--mid-grey); min-height: 100vh; }
     .header { 
-      text-align: center; 
-      background: var(--primary-blue);
-      color: var(--white);
-      padding: 3rem 2rem;
-      border-radius: 16px;
-      margin-bottom: 3rem;
+      background: linear-gradient(135deg, var(--primary-blue), #60BDD1);
+      color: white; 
+      padding: 3rem 2rem; 
+      text-align: center;
       box-shadow: 0 10px 30px rgba(9,132,192,0.3);
     }
-    .header h1 { 
-      font-size: 3rem; 
-      margin-bottom: 0.5rem;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .logo { color: var(--logo-black); font-weight: bold; }
-    .stats-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-      gap: 2rem; 
-      margin-bottom: 3rem; 
-    }
-    .stat-card { 
-      background: var(--white);
-      border: 1px solid var(--accent-silver);
-      padding: 2rem; 
-      border-radius: 16px; 
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-    .stat-card:hover { 
-      border-color: var(--primary-blue);
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(9,132,192,0.2);
-    }
-    .stat-number { 
-      font-size: 3rem; 
+    .logo { 
+      display: block; 
+      font-size: 2.5rem; 
       font-weight: bold; 
-      color: var(--primary-blue);
-      margin-bottom: 0.5rem; 
+      color: #000; 
+      background: white; 
+      padding: 0.5rem 1.5rem; 
+      border-radius: 50px; 
+      display: inline-block;
+      margin-bottom: 1rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
-    .stat-label { 
-      font-size: 1.1rem; 
-      color: var(--light-variant);
-      text-transform: uppercase; 
-      letter-spacing: 1px; 
-    }
-    .status-grid { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-      gap: 1.5rem; 
-    }
-    .status-card { 
-      background: var(--white);
-      border: 1px solid var(--accent-silver);
-      padding: 1.5rem; 
-      border-radius: 12px; 
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-    }
-    .status-ok { border-left: 5px solid var(--lighter-blue); }
-    .status-card h3 { color: var(--mid-grey); margin-bottom: 1rem; }
-    .endpoints { 
-      background: var(--white);
-      border: 1px solid var(--accent-silver);
-      padding: 2rem; 
-      border-radius: 16px; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      margin-top: 2rem;
-    }
-    .endpoints h3 { 
-      color: var(--primary-blue);
-      margin-bottom: 1.5rem; 
-      text-align: center;
-      font-size: 1.5rem;
-    }
-    .endpoint-list { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-      gap: 1rem; 
-    }
-    .endpoint { 
-      padding: 1.5rem; 
-      background: #f8fafc; 
-      border-radius: 12px; 
-      border-left: 4px solid var(--primary-blue);
-      transition: all 0.3s ease;
-    }
-    .endpoint:hover { 
-      background: var(--lighter-blue);
-      color: var(--white);
-      border-left-color: var(--white);
-    }
-    .endpoint strong { color: var(--primary-blue); }
-    a { color: var(--lighter-blue); text-decoration: none; }
-    a:hover { color: var(--primary-blue); }
-    @media (max-width: 768px) {
-      .container { padding: 1rem; }
-      .header h1 { font-size: 2rem; }
-      .stats-grid { grid-template-columns: 1fr; }
-    }
+    .header h1 { font-size: 2.5rem; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+    .stat-card { background: var(--white); border: 1px solid var(--accent-silver); padding: 2rem; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; }
+    .stat-number { font-size: 3rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem; }
+    .stat-label { font-size: 1.1rem; color: var(--light-variant); text-transform: uppercase; letter-spacing: 1px; }
   </style>
 </head>
 <body>
+  <div class="header">
+    <div class="logo">Thomas IT Network</div>
+    <h1>🚀 Pharma Transport Dashboard</h1>
+    <p>Enterprise Cold Chain + GPS Tracking</p>
+  </div>
   <div class="container">
-    <div class="header">
-      <h1><span class="logo">Thomas IT</span> 🚀 Pharma Transport</h1>
-      <p>Enterprise Dashboard & API Health Check</p>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-number">247</div>
-        <div class="stat-label">Active Batches</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">98.7%</div>
-        <div class="stat-label">Delivery Success</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">1,247</div>
-        <div class="stat-label">Total Deliveries</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">24/7</div>
-        <div class="stat-label">Uptime</div>
-      </div>
-    </div>
-
-    <div class="status-grid">
-      <div class="status-card status-ok">
-        <h3>✅ Health Check</h3>
-        <p>All systems operational</p>
-      </div>
-      <div class="status-card status-ok">
-        <h3>📍 GPS Tracking</h3>
-        <p>Real-time location updates active</p>
-      </div>
-      <div class="status-card status-ok">
-        <h3>💳 Payments</h3>
-        <p>Stripe integration ready</p>
-      </div>
-      <div class="status-card status-ok">
-        <h3>📦 Batches</h3>
-        <p>Batch processing nominal</p>
-      </div>
-    </div>
-
-    <div class="endpoints">
-      <h3>🔗 API Endpoints</h3>
-      <div class="endpoint-list">
-        <div class="endpoint">
-          <strong>GET /health</strong><br>
-          Service health check
-        </div>
-        <div class="endpoint">
-          <strong>GET /batches</strong><br>
-          Batch status overview
-        </div>
-        <div class="endpoint">
-          <strong>GET /batches.pdf</strong><br>
-          Chain of Custody PDF
-        </div>
-        <div class="endpoint">
-          <strong>POST /gps/update</strong><br>
-          GPS position updates
-        </div>
-        <div class="endpoint">
-          <strong>GET /subscribe</strong><br>
-          Subscription management
-        </div>
-        <div class="endpoint">
-          <strong>GET /stripe</strong><br>
-          Payment processing
-        </div>
-      </div>
-    </div>
+    <%= yield %>
   </div>
 </body>
 </html>

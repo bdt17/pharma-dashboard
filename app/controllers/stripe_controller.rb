@@ -1,5 +1,5 @@
 class StripeController < ApplicationController
   def index
-    render plain: "Stripe OK", status: 200
+    render plain: "Stripe OK", layout: false
   end
 end
