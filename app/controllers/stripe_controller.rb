@@ -1,5 +1,5 @@
 class StripeController < ApplicationController
-  def new
-    head :ok
+  def index
+    render plain: "Stripe Billing: $99/mo Pharma Pro", layout: false, status: 200
   end
 end

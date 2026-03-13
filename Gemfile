@@ -1,39 +1,13 @@
 source "https://rubygems.org"
-ruby "3.3.5"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-# Core Rails
-gem "rails", "~> 8.1.1"
-gem "pg", "~> 1.5.5"
-gem "puma", ">= 5.0"
-gem "importmap-rails"
-gem "propshaft"
+ruby "3.1.0"
 
-# Authentication
-gem "devise"
+gem "rails", "~> 7.0.0"
+gem "pg", "~> 1.1"
+gem "puma", "~> 5.0"
+gem "jbuilder"
+gem "tzinfo-data"
+gem "bootsnap", require: false
 
-# PDF Generation
-gem "wicked_pdf"
-gem "wkhtmltopdf-binary"
-gem 'prawn'           # Proper PDFs (bye raw PDF strings)
-gem 'prawn-table'     # Tables for batch data
-gem 'rqrcode'         # GS1 QR codes
-
-# Payments & Billing
-gem "stripe-rails", "~> 2.6"
-
-# Image Processing (ActiveStorage)
-gem "image_processing", "~> 1.2"
-
-# Asset pipeline
-# gem "bootsnap", require: false
-gem 'bootsnap', '>= 1.16.0', require: false
-
-# Production only
-
-group :development, :test do
-  gem "debug", platforms: %i[mri mingw x64_mingw]
-end
-
-gem 'tailwindcss-rails'
-gem 'stripe', '~> 10.0'
-gem 'pdfkit'
+# NO TURBO/STIMULUS - Plain Rails
