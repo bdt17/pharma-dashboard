@@ -1,5 +1,5 @@
 class ShipmentsController < ApplicationController
   def index
-    render plain: "Shipments Dashboard - All Active", status: :ok
+    render plain: 'Shipments OK', layout: false
   end
 end

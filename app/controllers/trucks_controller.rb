@@ -1,5 +1,5 @@
 class TrucksController < ApplicationController
   def index
-    render plain: "Fleet Active: 12 trucks online", status: :ok
+    render plain: 'Trucks OK', layout: false
   end
 end

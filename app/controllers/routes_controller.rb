@@ -1,5 +1,5 @@
 class RoutesController < ApplicationController
   def index
-    render plain: "Active Routes: Phoenix → Tucson", status: :ok
+    render plain: 'Routes OK', layout: false
   end
 end

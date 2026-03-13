@@ -1,6 +1,5 @@
 class GpsController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  def update
-    render plain: "GPS OK", layout: false
+  def index
+    render plain: 'Gps OK', layout: false
   end
 end
