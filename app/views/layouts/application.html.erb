@@ -1,31 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport Dashboard</title>
+  <title>Pharma Transport - Thomas IT Network</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
+    :root {
+      --primary-blue: #0984C0;      /* Deep Ocean Blue - Headers, buttons */
+      --accent-silver: #AAA7B0;     /* Metallic Silver - Icons, borders */
+      --mid-grey: #565759;          /* Davy's Grey - Text */
+      --light-variant: #C0BEC6;     /* Silver Sand - Labels */
+      --lighter-blue: #60BDD1;      /* Sea Serpent - Links, highlights */
+      --white: #FFFFFF;             /* Pure White - Cards */
+      --logo-black: #000000;        /* Logo */
+    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
       font-family: system-ui, -apple-system, sans-serif; 
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: var(--white);     /* Pure White background */
+      color: var(--mid-grey);
       min-height: 100vh;
-      color: #333;
     }
-    .container { 
-      max-width: 1200px; 
-      margin: 0 auto; 
-      padding: 2rem; 
-    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
     .header { 
       text-align: center; 
-      color: white; 
-      margin-bottom: 3rem; 
+      background: var(--primary-blue);
+      color: var(--white);
+      padding: 3rem 2rem;
+      border-radius: 16px;
+      margin-bottom: 3rem;
+      box-shadow: 0 10px 30px rgba(9,132,192,0.3);
     }
     .header h1 { 
       font-size: 3rem; 
-      margin-bottom: 0.5rem; 
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
+    .logo { color: var(--logo-black); font-weight: bold; }
     .stats-grid { 
       display: grid; 
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
@@ -33,23 +43,28 @@
       margin-bottom: 3rem; 
     }
     .stat-card { 
-      background: rgba(255,255,255,0.95); 
+      background: var(--white);
+      border: 1px solid var(--accent-silver);
       padding: 2rem; 
       border-radius: 16px; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
-      text-align: center; 
-      transition: transform 0.3s ease; 
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: all 0.3s ease;
     }
-    .stat-card:hover { transform: translateY(-5px); }
+    .stat-card:hover { 
+      border-color: var(--primary-blue);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(9,132,192,0.2);
+    }
     .stat-number { 
       font-size: 3rem; 
       font-weight: bold; 
-      color: #667eea; 
+      color: var(--primary-blue);
       margin-bottom: 0.5rem; 
     }
     .stat-label { 
       font-size: 1.1rem; 
-      color: #666; 
+      color: var(--light-variant);
       text-transform: uppercase; 
       letter-spacing: 1px; 
     }
@@ -59,27 +74,27 @@
       gap: 1.5rem; 
     }
     .status-card { 
-      background: rgba(255,255,255,0.95); 
+      background: var(--white);
+      border: 1px solid var(--accent-silver);
       padding: 1.5rem; 
       border-radius: 12px; 
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1); 
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
     }
-    .status-ok { border-left: 5px solid #10b981; }
-    .status-card h3 { 
-      margin-bottom: 1rem; 
-      color: #333; 
-    }
+    .status-ok { border-left: 5px solid var(--lighter-blue); }
+    .status-card h3 { color: var(--mid-grey); margin-bottom: 1rem; }
     .endpoints { 
-      background: rgba(255,255,255,0.95); 
+      background: var(--white);
+      border: 1px solid var(--accent-silver);
       padding: 2rem; 
       border-radius: 16px; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
-      margin-top: 2rem; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-top: 2rem;
     }
     .endpoints h3 { 
+      color: var(--primary-blue);
       margin-bottom: 1.5rem; 
-      color: #333; 
-      text-align: center; 
+      text-align: center;
+      font-size: 1.5rem;
     }
     .endpoint-list { 
       display: grid; 
@@ -87,11 +102,20 @@
       gap: 1rem; 
     }
     .endpoint { 
-      padding: 1rem; 
+      padding: 1.5rem; 
       background: #f8fafc; 
-      border-radius: 8px; 
-      border-left: 4px solid #667eea; 
+      border-radius: 12px; 
+      border-left: 4px solid var(--primary-blue);
+      transition: all 0.3s ease;
     }
+    .endpoint:hover { 
+      background: var(--lighter-blue);
+      color: var(--white);
+      border-left-color: var(--white);
+    }
+    .endpoint strong { color: var(--primary-blue); }
+    a { color: var(--lighter-blue); text-decoration: none; }
+    a:hover { color: var(--primary-blue); }
     @media (max-width: 768px) {
       .container { padding: 1rem; }
       .header h1 { font-size: 2rem; }
@@ -102,8 +126,8 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>🚀 Pharma Transport</h1>
-      <p>Dashboard & API Health Check</p>
+      <h1><span class="logo">Thomas IT</span> 🚀 Pharma Transport</h1>
+      <p>Enterprise Dashboard & API Health Check</p>
     </div>
 
     <div class="stats-grid">
@@ -156,12 +180,12 @@
           Batch status overview
         </div>
         <div class="endpoint">
-          <strong>POST /gps/update</strong><br>
-          GPS position updates
+          <strong>GET /batches.pdf</strong><br>
+          Chain of Custody PDF
         </div>
         <div class="endpoint">
-          <strong>GET /gps/update/stream</strong><br>
-          GPS real-time stream
+          <strong>POST /gps/update</strong><br>
+          GPS position updates
         </div>
         <div class="endpoint">
           <strong>GET /subscribe</strong><br>
