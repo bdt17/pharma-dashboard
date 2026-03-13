@@ -1,54 +1,116 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Thomas IT Network - Pharma Transport</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thomas IT - Pharma Transport</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Thomas IT Network - Pharma Transport Dashboard">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  
   <style>
     :root {
-      --primary-blue: #0984C0;
-      --accent-silver: #AAA7B0;
-      --mid-grey: #565759;
-      --light-variant: #C0BEC6;
-      --lighter-blue: #60BDD1;
-      --white: #FFFFFF;
+      --thomas-blue: #0984C0;
+      --silver: #AAA7B0;
+      --grey: #565759;
+      --light-blue: #60BDD1;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: system-ui, sans-serif; background: var(--white); color: var(--mid-grey); min-height: 100vh; }
-    .header { 
-      background: linear-gradient(135deg, var(--primary-blue), #60BDD1);
-      color: white; 
-      padding: 3rem 2rem; 
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f8fafc;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+    .header {
+      background: white;
+      border-bottom: 1px solid var(--silver);
+      padding: 1.5rem 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--thomas-blue);
+      text-decoration: none;
+    }
+    .main-content {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+    .dashboard-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border: 1px solid var(--silver);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .stat-item {
       text-align: center;
-      box-shadow: 0 10px 30px rgba(9,132,192,0.3);
+      padding: 1.5rem;
     }
-    .logo { 
-      display: block; 
-      font-size: 2.5rem; 
-      font-weight: bold; 
-      color: #000; 
-      background: white; 
-      padding: 0.5rem 1.5rem; 
-      border-radius: 50px; 
-      display: inline-block;
-      margin-bottom: 1rem;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--thomas-blue);
+      margin-bottom: 0.25rem;
     }
-    .header h1 { font-size: 2.5rem; margin: 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
-    .stat-card { background: var(--white); border: 1px solid var(--accent-silver); padding: 2rem; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center; }
-    .stat-number { font-size: 3rem; font-weight: bold; color: var(--primary-blue); margin-bottom: 0.5rem; }
-    .stat-label { font-size: 1.1rem; color: var(--light-variant); text-transform: uppercase; letter-spacing: 1px; }
+    .stat-label {
+      color: var(--silver);
+      text-transform: uppercase;
+      font-size: 0.875rem;
+      letter-spacing: 0.05em;
+    }
+    h1, h2, h3 { color: var(--grey); margin-bottom: 1rem; }
+    .status-indicators {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 2rem 0;
+    }
+    .status-item {
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--light-blue);
+      flex: 1;
+      min-width: 200px;
+    }
+    @media (max-width: 768px) {
+      .header-content, .main-content { padding: 0 1rem; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="logo">Thomas IT Network</div>
-    <h1>🚀 Pharma Transport Dashboard</h1>
-    <p>Enterprise Cold Chain + GPS Tracking</p>
-  </div>
-  <div class="container">
-    <%= yield %>
-  </div>
+  <header class="header">
+    <div class="header-content">
+      <a href="/" class="logo">Thomas IT Network</a>
+      <nav>
+        <a href="/dashboard" style="color: var(--grey); text-decoration: none; margin-right: 1rem;">Dashboard</a>
+        <a href="/batches" style="color: var(--grey); text-decoration: none;">Batches</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="dashboard-card">
+      <%= yield %>
+    </div>
+  </main>
 </body>
 </html>
