@@ -38,3 +38,11 @@ Rails.application.routes.draw do
   # Debug / admin helpers
   get "/debug/batches", to: "debug_batches#index"
 end
+
+get '/health', to: 'health#index'
+get '/subscribe', to: 'subscribe#index'
+namespace :api do
+  namespace :v1 do
+    get '/health', to: 'api/health#index'
+  end
+end
