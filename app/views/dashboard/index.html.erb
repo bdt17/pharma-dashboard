@@ -2,32 +2,22 @@
   <h1 class="text-4xl font-bold text-gray-900 mb-12 text-center">Pharma Transport</h1>
   
   <div class="grid md:grid-cols-3 gap-8">
-    <div class="p-8 bg-white border rounded-xl shadow-sm hover:shadow-md transition-all">
+    <div class="p-8 bg-white border rounded-xl shadow-sm hover:shadow-md">
       <div class="text-4xl mb-4 text-center">📄</div>
       <h3 class="text-xl font-bold text-center mb-4">Chain of Custody</h3>
-      <%= link_to "Download PDF", "/batches/1/chain_of_custody", class: "block w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-center hover:bg-blue-700 font-medium", target: "_blank" %>
+      <a href="/batches/1/chain-of-custody.pdf" class="block w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-center hover:bg-blue-700" target="_blank">Download PDF</a>
     </div>
     
-    <div class="p-8 bg-white border rounded-xl shadow-sm hover:shadow-md transition-all">
+    <div class="p-8 bg-white border rounded-xl shadow-sm hover:shadow-md">
       <div class="text-4xl mb-4 text-center">🚛</div>
       <h3 class="text-xl font-bold text-center mb-4">Fleet</h3>
-      <%= link_to "View Fleet", vehicles_path, class: "block w-full bg-emerald-600 text-white py-3 px-6 rounded-lg text-center hover:bg-emerald-700 font-medium" %>
+      <a href="/vehicles" class="block w-full bg-emerald-600 text-white py-3 px-6 rounded-lg text-center hover:bg-emerald-700">View Fleet</a>
     </div>
     
-    <div class="p-8 bg-white border rounded-xl shadow-sm hover:shadow-md transition-all">
+    <div class="p-8 bg-white border rounded-xl shadow-sm hover:shadow-md">
       <div class="text-4xl mb-4 text-center">🩺</div>
       <h3 class="text-xl font-bold text-center mb-4">Health Check</h3>
-      <%= link_to "Check Status", health_path, class: "block w-full bg-purple-600 text-white py-3 px-6 rounded-lg text-center hover:bg-purple-700 font-medium" %>
-    </div>
-  </div>
-  
-  <div class="mt-12 p-8 bg-gradient-to-r from-blue-50 to-emerald-50 border rounded-2xl">
-    <h3 class="text-2xl font-bold mb-4">🚀 Production Ready Links</h3>
-    <div class="grid md:grid-cols-4 gap-4">
-      <%= link_to "GPS Test", gps_update_path(imei: "GV55-001"), class: "p-4 bg-white rounded-xl hover:shadow-md text-center font-medium", method: :post %>
-      <%= link_to "API Health", "/api/health", class: "p-4 bg-white rounded-xl hover:shadow-md text-center font-medium" %>
-      <%= link_to "Subscribe", "/subscribe", class: "p-4 bg-white rounded-xl hover:shadow-md text-center font-medium" %>
-      <%= link_to "PDF Test", test_pdf_path, class: "p-4 bg-white rounded-xl hover:shadow-md text-center font-medium", target: "_blank" %>
+      <a href="/health" class="block w-full bg-purple-600 text-white py-3 px-6 rounded-lg text-center hover:bg-purple-700">Check Status</a>
     </div>
   </div>
 </div>

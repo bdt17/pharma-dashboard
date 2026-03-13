@@ -33,3 +33,14 @@
   </main>
 </body>
 </html>
+<%= turbo_drive_start_script_tag %>
+<script>
+  // FIX BLANK LINKS - Disable Turbo for external/problem links
+  document.addEventListener('turbo:click', function(event) {
+    const link = event.target.closest('a');
+    if (link && (link.target === '_blank' || link.href.includes('/api/') || link.href.includes('pdf'))) {
+      event.preventDefault();
+      window.open(link.href, '_blank');
+    }
+  });
+</script>

@@ -1,31 +1,20 @@
 Rails.application.routes.draw do
   root 'dashboard#index'
-  
   devise_for :users
   
-  resources :dashboard, only: [:index]
-  resources :batches do
-    member do
-      get :chain_of_custody
-    end
-  end
-  resources :vehicles, only: [:index]
-  
-  # Health checks
+  get '/dashboard', to: 'dashboard#index'
   get '/health', to: 'health#index'
+  get '/vehicles', to: 'vehicles#index'
+  get '/batches', to: 'batches#index'
   
-  # GPS endpoints
+  # GPS (plain paths)
   post '/gps/update', to: 'gps#update'
   get '/gps/update/stream', to: 'gps#stream'
   
-  # Test endpoints
+  # Quick fixes
   get '/test-pdf', to: 'test_pdf#index'
+  get '/subscribe', to: 'subscribe#index'
   get '/shipments', to: 'shipments#index'
   get '/trucks', to: 'trucks#index'
   get '/routes', to: 'routes#index'
-  
-  # API
-  namespace :api do
-    get '/health', to: 'health#index'
-  end
 end
