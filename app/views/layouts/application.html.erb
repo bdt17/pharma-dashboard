@@ -7,44 +7,44 @@
   <%= csrf_meta_tags %>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-      background: #ffffff; 
-      color: #1f2937; 
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #ffffff;
+      color: #1f2937;
       line-height: 1.6;
     }
-    header { 
-      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); 
-      color: white; 
-      padding: 1rem 0; 
+    header {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: white;
+      padding: 1rem 0;
       box-shadow: 0 4px 6px -1px rgba(0, 0,0,0.1);
     }
-    nav { 
-      max-width: 1200px; margin: 0 auto; padding: 0 2rem; 
-      display: flex; justify-content: space-between; align-items: center; 
+    nav {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; justify-content: space-between; align-items: center;
     }
     .logo { font-size: 1.5rem; font-weight: 700; }
     nav ul { list-style: none; display: flex; gap: 2rem; margin: 0; padding: 0; }
-    nav a { 
-      color: white; text-decoration: none; padding: 0.5rem 1rem; 
-      border-radius: 0.5rem; transition: all 0.2s; 
+    nav a {
+      color: white; text-decoration: none; padding: 0.5rem 1rem;
+      border-radius: 0.5rem; transition: all 0.2s;
     }
     nav a:hover { background: rgba(255,255,255,0.2); }
-    main { 
-      max-width: 1200px; margin: 4rem auto; padding: 0 2rem; 
+    main {
+      max-width: 1200px; margin: 4rem auto; padding: 0 2rem;
     }
-    .content-card { 
-      background: white; padding: 3rem; border-radius: 1rem; 
+    .content-card {
+      background: white; padding: 3rem; border-radius: 1rem;
       box-shadow: 0 10px 25px -5px rgba(0, 0,0,0.1), 0 4px 6px -2px rgba(0, 0,0,0.05);
       border-top: 4px solid #3b82f6;
     }
     h1 { color: #1e40af; font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
-    footer { 
-      background: #f8fafc; color: #64748b; text-align: center; 
+    footer {
+      background: #f8fafc; color: #64748b; text-align: center;
       padding: 2rem; margin-top: 4rem; border-top: 1px solid #e2e8f0;
     }
-    @media (max-width: 768px) { 
-      nav { flex-direction: column; gap: 1rem; } 
+    @media (max-width: 768px) {
+      nav { flex-direction: column; gap: 1rem; }
       nav ul { flex-wrap: wrap; justify-content: center; }
       .content-card { padding: 2rem 1rem; margin: 2rem 1rem; }
     }
@@ -55,22 +55,22 @@
     <nav>
       <div class="logo">🚛 PHARMA TRANSPORT ENTERPRISE</div>
       <ul>
-        <li><a href="/">🩺 Dashboard</a></li>
-        <li><a href="/vehicles">🚛 Vehicles</a></li>
-        <li><a href="/batches">💉 Batches</a></li>
-        <li><a href="/gps">🛰️ GPS</a></li>
-        <li><a href="/subscribe">💰 Billing</a></li>
+        <li><%= link_to "🩺 Dashboard", enterprise_dashboard_path %></li>
+        <li><%= link_to "🚛 Vehicles", enterprise_vehicles_path %></li>
+        <li><%= link_to "💉 Batches", enterprise_batches_path %></li>
+        <li><%= link_to "🛰️ GPS", enterprise_gps_path %></li>
+        <li><%= link_to "💰 Billing", enterprise_billing_path %></li>
         <li><a href="/health">🔬 Health</a></li>
       </ul>
     </nav>
   </header>
-  
+
   <main>
     <div class="content-card">
       <%= yield %>
     </div>
   </main>
-  
+
   <footer>
     🔬 DEA/FDA 21 CFR Part 11 Compliant | 🌡️ Cold Chain IoT Ready | 📊 Phase 10 Enterprise SaaS LIVE
   </footer>

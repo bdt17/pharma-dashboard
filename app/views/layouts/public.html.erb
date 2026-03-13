@@ -4,32 +4,65 @@
   <title>Pharma Transport Enterprise</title>
   <%= stylesheet_link_tag "application" %>
   <style>
-    body { font-family: -apple-system, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; }
-    .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; border-radius: 20px; text-align: center; }
-    .btn { background: #10b981; color: white; padding: 12px 24px; border-radius: 12px; text-decoration: none; font-weight: 600; }
-    nav { display: flex; gap: 20px; margin: 20px 0; }
-    nav a { color: #374151; text-decoration: none; font-weight: 500; }
-    nav a:hover { color: #1e40af; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      max-width: 1200px; margin: 40px auto; padding: 20px; 
+    }
+    .hero { 
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); 
+      color: white; padding: 60px 40px; border-radius: 20px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0,0,0.1);
+      text-align: center;
+    }
+    .btn { 
+      background: #10b981; color: white; padding: 16px 32px; 
+      border-radius: 12px; text-decoration: none; font-weight: 600; 
+      font-size: 1.1rem; display: inline-block; margin-top: 1rem;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #059669; transform: translateY(-2px); }
+    nav { 
+      display: flex; gap: 2rem; margin: 20px 0; 
+      background: #f8fafc; padding: 1rem 2rem; border-radius: 12px;
+    }
+    nav a { 
+      color: #1e40af; text-decoration: none; font-weight: 600; 
+      padding: 0.5rem 1rem; border-radius: 8px;
+    }
+    nav a:hover { background: #3b82f6; color: white; }
+    footer { 
+      margin-top: 4rem; text-align: center; color: #64748b; 
+      padding: 2rem; border-top: 1px solid #e2e8f0;
+    }
+    @media (max-width: 768px) { 
+      nav { flex-direction: column; align-items: center; }
+      .hero { padding: 40px 20px; }
+    }
   </style>
 </head>
 <body>
   <nav>
-    <%= link_to "🚛 Vehicles", vehicles_path %>
-    <%= link_to "📦 Batches", batches_path %>
     <%= link_to "📋 Compliance", compliance_path %>
-    <%= link_to "💰 Billing", billing_path %>
+    <%= link_to "🩺 Dashboard", enterprise_dashboard_path %>
+    <%= link_to "🚛 Vehicles", enterprise_vehicles_path %>
+    <%= link_to "💉 Batches", enterprise_batches_path %>
+    <%= link_to "🛰️ GPS", enterprise_gps_path %>
+    <%= link_to "💰 Billing", enterprise_billing_path %>
   </nav>
-  
+
   <div class="hero">
-    <h1>Pharma Transport Enterprise</h1>
-    <p>FDA 21 CFR Part 11 Compliant • Real-time GPS Tracking</p>
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;">🚛 Pharma Transport Enterprise</h1>
+    <p style="font-size: 1.3rem; margin-bottom: 2rem;">
+      🔬 DEA/FDA 21 CFR Part 11 Compliant • 🌡️ Cold Chain IoT Ready • 📱 Multi-Tenant SaaS
+    </p>
     <%= yield %>
     <br><br>
-    <%= link_to "💳 Start $99/mo Trial", billing_path, class: "btn" %>
+    <%= link_to "💳 Start 14-Day Enterprise Trial", enterprise_billing_path, class: "btn" %>
   </div>
-  
-  <footer style="margin-top: 40px; text-align: center; color: #6b7280;">
-    Thomas Information Technology • Phoenix, AZ • sales@thomasinformationtechnology.com
+
+  <footer>
+    Thomas Information Technology • Phoenix, AZ • <a href="mailto:sales@thomasinformationtechnology.com">sales@thomasinformationtechnology.com</a><br>
+    Phase 10 Enterprise SaaS | Render.com Production | 2026
   </footer>
 </body>
 </html>
