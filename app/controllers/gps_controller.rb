@@ -1,14 +1,9 @@
 class GpsController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:update]
-
+  skip_before_action :verify_authenticity_token
   def update
-    imei = params[:imei]
-    lat = params[:lat]
-    lng = params[:lng]
-    render plain: "GPS Updated: #{imei} @ (#{lat},#{lng})", status: :ok
+    render plain: "GPS OK: #{params[:imei]}", status: :ok
   end
-
   def stream
-    render plain: "GPS Stream Active", status: :ok
+    render plain: "GPS STREAM LIVE", status: :ok
   end
 end
