@@ -1,16 +1,23 @@
-<div class="p-8 max-w-4xl mx-auto">
-  <h1 class="text-4xl font-bold text-green-600 mb-4">🩺 PHARMA DASHBOARD HEALTH</h1>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <div class="bg-green-50 p-6 rounded-xl">
-      <h2 class="text-2xl font-semibold mb-4">📊 Production Metrics</h2>
-      <p><strong>Batches:</strong> <%= Batch.count %></p>
-      <p><strong>Vehicles:</strong> <%= Vehicle.count %></p>
-      <p><strong>Online:</strong> <%= Vehicle.where(status: 'online').count %></p>
+<div class="max-w-4xl mx-auto py-12">
+  <h1 class="text-4xl font-bold text-green-600 mb-8 text-center">🩺 ALL SYSTEMS GREEN</h1>
+  
+  <div class="grid md:grid-cols-2 gap-8">
+    <div>
+      <h2 class="text-2xl font-bold mb-6">Quick Links</h2>
+      <ul class="space-y-3 text-lg">
+        <%= link_to "📊 Dashboard", dashboard_path, class: "block p-4 bg-white border rounded-xl hover:shadow-md hover:-translate-y-1 transition-all" %>
+        <%= link_to "🚛 Fleet", vehicles_path, class: "block p-4 bg-white border rounded-xl hover:shadow-md hover:-translate-y-1 transition-all" %>
+        <%= link_to "📄 Chain of Custody", "/batches/1/chain_of_custody", class: "block p-4 bg-white border rounded-xl hover:shadow-md hover:-translate-y-1 transition-all", target: "_blank" %>
+      </ul>
     </div>
-    <div class="bg-blue-50 p-6 rounded-xl">
-      <h2 class="text-2xl font-semibold mb-4">✅ Status</h2>
-      <p class="text-3xl font-bold text-green-600 mb-2">LIVE PRODUCTION</p>
-      <p class="text-sm text-gray-600">Chain of Custody PDF ✓ | GPS IoT Ready ✓</p>
+    
+    <div>
+      <h2 class="text-2xl font-bold mb-6">API Status</h2>
+      <ul class="space-y-3 text-lg">
+        <%= link_to "🛰️ GPS Update", gps_update_path(imei: "GV55-001", lat: "33.45", lng: "-112.07"), method: :post, class: "block p-4 bg-emerald-100 border border-emerald-300 rounded-xl hover:bg-emerald-200" %>
+        <%= link_to "📡 GPS Stream", "/gps/update/stream", class: "block p-4 bg-blue-100 border border-blue-300 rounded-xl hover:bg-blue-200" %>
+        <%= link_to "🔧 Test PDF", test_pdf_path, class: "block p-4 bg-purple-100 border border-purple-300 rounded-xl hover:bg-purple-200", target: "_blank" %>
+      </ul>
     </div>
   </div>
 </div>
