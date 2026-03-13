@@ -7,9 +7,6 @@ Rails.application.routes.draw do
   get '/subscribe', to: 'subscribe#index'
   get '/billing', to: 'subscribe#billing'
   
-  # Devise (if installed)
-  devise_for :users
-  
-  # API/Chain of Custody
+  # Future: batches/:id/chain-of-custody (add later)
   get '/batches/:id/chain-of-custody', to: 'batches#chain_of_custody'
 end
