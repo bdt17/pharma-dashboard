@@ -1,38 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Pharma Transport</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-</head>
-<body class="bg-white min-h-screen text-gray-900 p-0 m-0">
-  <!-- GLOBAL NAVBAR -->
-  <nav class="bg-white border-b shadow-sm py-3 px-4">
-    <div class="max-w-5xl mx-auto flex items-center justify-between">
-      <div class="flex items-center">
-        <span class="text-2xl mr-3">💉</span>
-        <h1 class="text-lg font-bold text-[#0984C0]">Pharma Transport</h1>
-      </div>
-      <div class="flex space-x-6">
-        <%= link_to "Dashboard", dashboard_path, class: "text-gray-700 hover:text-gray-900" %>
-        <%= link_to "Shipments", batches_path, class: "text-gray-700 hover:text-gray-900" %>
-        <%= link_to "Fleet", vehicles_path, class: "text-gray-700 hover:text-gray-900" %>
-        <%= link_to "Reports", compliance_path, class: "text-gray-700 hover:text-gray-900" %>
-      </div>
-      <div>
-        <%= form_tag "/users/sign_in", method: :post do %>
-          <%= submit_tag "Sign in", class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
-        <% end %>
-      </div>
-    </div>
-  </nav>
+  <head>
+    <title>Pharma Transport</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="csrf-param" content="authenticity_token" />
+    <meta name="csrf-token" content="<%= form_authenticity_token() %>" />
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
 
-  <main class="max-w-5xl mx-auto px-4 py-8">
-    <!-- ALL PAGE CONTENT GOES HERE -->
-    <%= yield %>
-  </main>
-</body>
+  <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- GLOBAL NAVBAR -->
+    <nav class="bg-white/80 backdrop-blur-md border-b shadow-lg sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <span class="text-2xl">💉</span>
+            </div>
+            <div>
+              <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                Pharma Transport
+              </h1>
+              <p class="text-xs text-gray-500 font-medium tracking-wide">FDA 21 CFR Part 11</p>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <% if user_signed_in? %>
+              <%= link_to "Dashboard", dashboard_path, class: "px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-xl transition-all duration-200" %>
+              <%= link_to "Batches", batches_path, class: "px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-xl transition-all duration-200" %>
+              <%= link_to "Vehicles", vehicles_path, class: "px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-xl transition-all duration-200" %>
+              <div class="w-px h-6 bg-gray-200"></div>
+              <%= button_to destroy_user_session_path, method: :delete, class: "text-sm text-gray-500 hover:text-gray-700 font-medium" do %>
+                <span>Logout</span>
+              <% end %>
+            <% else %>
+              <%= link_to "Login", new_user_session_path, class: "px-6 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 shadow-lg transition-all duration-200" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+      <div class="min-h-[60vh]">
+        <%= yield %>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-8 mt-24">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <p class="text-sm opacity-90">
+          © 2026 Thomas IT Network • Phoenix, AZ • 
+          <a href="/compliance" class="hover:text-blue-400 transition-colors">21 CFR Part 11 Compliant</a>
+        </p>
+      </div>
+    </footer>
+  </body>
 </html>
