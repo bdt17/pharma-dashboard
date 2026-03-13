@@ -3,86 +3,114 @@
 <head>
   <title>Pharma Transport</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Pharma Transport Dashboard">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f8fafc;
-      color: #565759;
+      background: #f5f7fa;
+      color: #333;
       line-height: 1.6;
     }
-    .main-content {
+    .header {
+      background: linear-gradient(135deg, #0984C0 0%, #60BDD1 100%);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      font-weight: 700;
+    }
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin: 0.5rem 0 0;
+    }
+    .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 2rem;
     }
-    .dashboard-card {
-      background: white;
-      border-radius: 12px;
-      padding: 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      border: 1px solid #AAA7B0;
-    }
-    .stats-grid {
+    .cards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
     }
-    .stat-item { text-align: center; padding: 1.5rem; }
-    .stat-number { 
-      font-size: 2.5rem; 
-      font-weight: 700; 
-      color: #0984C0; 
-      margin-bottom: 0.25rem; 
-    }
-    .stat-label { 
-      color: #C0BEC6; 
-      text-transform: uppercase; 
-      font-size: 0.875rem; 
-      letter-spacing: 0.05em; 
-    }
-    .status-indicators {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin: 2rem 0;
-    }
-    .status-item {
+    .card {
       background: white;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      border-left: 4px solid #60BDD1;
-      flex: 1;
-      min-width: 200px;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      border: 1px solid rgba(9,132,192,0.1);
+      transition: all 0.3s ease;
     }
-    footer {
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      border-color: #0984C0;
+    }
+    .card h3 {
+      color: #0984C0;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card p {
+      color: #666;
+      margin: 0;
+    }
+    .btn {
       background: #0984C0;
       color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: #60BDD1;
+      transform: translateY(-2px);
+    }
+    .footer {
+      background: #1a1a1a;
+      color: #aaa;
       text-align: center;
       padding: 2rem;
       margin-top: 4rem;
+      font-size: 0.9rem;
     }
     @media (max-width: 768px) {
-      .main-content { padding: 1rem; }
-      .stats-grid { grid-template-columns: 1fr; }
+      .container { padding: 1rem; }
+      .header h1 { font-size: 2rem; }
+      .cards-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <main class="main-content">
-    <div class="dashboard-card">
-      <%= yield %>
+  <header class="header">
+    <div class="container">
+      <h1>Pharma Transport</h1>
+      <p>Enterprise Cold Chain + GPS Tracking</p>
     </div>
+  </header>
+
+  <main class="container">
+    <%= yield %>
   </main>
-  
-  <footer>
-    <p>&copy; 2026 Thomas IT Network. All rights reserved.</p>
-    <p>Pharma Transport Dashboard | Enterprise Cold Chain Solutions</p>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Thomas IT Network, Phoenix, AZ</p>
+      <p>Pharma Transport Dashboard | Enterprise Cold Chain Solutions</p>
+    </div>
   </footer>
 </body>
 </html>
