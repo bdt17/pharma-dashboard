@@ -1,57 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Thomas IT - Pharma Transport</title>
+  <title>Pharma Transport</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Thomas IT Network - Pharma Transport Dashboard">
+  <meta name="description" content="Pharma Transport Dashboard">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   
   <style>
-    :root {
-      --thomas-blue: #0984C0;
-      --silver: #AAA7B0;
-      --grey: #565759;
-      --light-blue: #60BDD1;
-    }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #f8fafc;
-      color: var(--grey);
+      color: #565759;
       line-height: 1.6;
-    }
-    .header {
-      background: white;
-      border-bottom: 1px solid var(--silver);
-      padding: 1.5rem 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .header-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--thomas-blue);
-      text-decoration: none;
     }
     .main-content {
       max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 2rem;
+      margin: 0 auto;
+      padding: 2rem;
     }
     .dashboard-card {
       background: white;
       border-radius: 12px;
       padding: 2rem;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      border: 1px solid var(--silver);
+      border: 1px solid #AAA7B0;
     }
     .stats-grid {
       display: grid;
@@ -59,23 +33,19 @@
       gap: 1.5rem;
       margin: 2rem 0;
     }
-    .stat-item {
-      text-align: center;
-      padding: 1.5rem;
+    .stat-item { text-align: center; padding: 1.5rem; }
+    .stat-number { 
+      font-size: 2.5rem; 
+      font-weight: 700; 
+      color: #0984C0; 
+      margin-bottom: 0.25rem; 
     }
-    .stat-number {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--thomas-blue);
-      margin-bottom: 0.25rem;
+    .stat-label { 
+      color: #C0BEC6; 
+      text-transform: uppercase; 
+      font-size: 0.875rem; 
+      letter-spacing: 0.05em; 
     }
-    .stat-label {
-      color: var(--silver);
-      text-transform: uppercase;
-      font-size: 0.875rem;
-      letter-spacing: 0.05em;
-    }
-    h1, h2, h3 { color: var(--grey); margin-bottom: 1rem; }
     .status-indicators {
       display: flex;
       gap: 1rem;
@@ -86,31 +56,33 @@
       background: white;
       padding: 1rem 1.5rem;
       border-radius: 8px;
-      border-left: 4px solid var(--light-blue);
+      border-left: 4px solid #60BDD1;
       flex: 1;
       min-width: 200px;
     }
+    footer {
+      background: #0984C0;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
     @media (max-width: 768px) {
-      .header-content, .main-content { padding: 0 1rem; }
+      .main-content { padding: 1rem; }
       .stats-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <header class="header">
-    <div class="header-content">
-      <a href="/" class="logo">Thomas IT Network</a>
-      <nav>
-        <a href="/dashboard" style="color: var(--grey); text-decoration: none; margin-right: 1rem;">Dashboard</a>
-        <a href="/batches" style="color: var(--grey); text-decoration: none;">Batches</a>
-      </nav>
-    </div>
-  </header>
-
   <main class="main-content">
     <div class="dashboard-card">
       <%= yield %>
     </div>
   </main>
+  
+  <footer>
+    <p>&copy; 2026 Thomas IT Network. All rights reserved.</p>
+    <p>Pharma Transport Dashboard | Enterprise Cold Chain Solutions</p>
+  </footer>
 </body>
 </html>
