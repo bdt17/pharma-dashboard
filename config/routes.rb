@@ -4,8 +4,7 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
   get "batches", to: "batches#index"
   get "batches.pdf", to: "batches#index"
+  post "gps/update", to: "gps#update"
   get "subscribe", to: "subscribe#index"
-  get "billing", to: "billing#index"
+  get "stripe", to: "stripe#index"
 end
-get "subscribe", to: "subscribe#index"
-get "stripe", to: "stripe#index"
