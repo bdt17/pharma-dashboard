@@ -1,16 +1,21 @@
 source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
 ruby "3.3.5"
-gem "rails", "~> 7.0.0"
-gem "pg", "~> 1.1"
-gem "puma", "~> 5.0"
-gem "jbuilder"
+
+# Phase 10 Enterprise SaaS - NO DATABASE REQUIRED
+gem "rails", "~> 7.0.10"
+gem "puma", "~> 5.6"
+gem "devise", "~> 5.0"  # SINGLE devise entry
 gem "bootsnap", require: false
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-gem "sassc-rails"
-gem 'devise'
+gem "importmap-rails"
+gem "turbo-rails"
+gem "stimulus-rails"
+gem "jbuilder"
+gem "redis", "~> 5.0"
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
+gem "image_processing", "~> 1.2"
 
-gem 'devise'
-
-# Phase 10 Enterprise SaaS - COMPLETE
-gem "activerecord"
-gem "pg"  # Render PostgreSQL
+# Phase 10 LIVE - Stubs only (no DB gems needed)
+# gem "pg", "~> 1.1"  # DISABLED - no database
+# gem "activerecord"  # DISABLED - HomeController only
