@@ -1,16 +1,9 @@
 Rails.application.routes.draw do
   root "dashboard#index"
   get "health", to: "health#index"
-  get "dashboard", to: "dashboard#index"
+  get "dashboard", to: "dashboard#index" 
   get "batches", to: "batches#index"
   get "batches.pdf", to: "batches#index"
   get "vehicles", to: "vehicles#index"
   get "gps", to: "gps#index"
-  get "subscribe", to: "subscribe#index"
-  get "billing", to: "billing#index"
-  get "login", to: "sessions#new"
-  get "compliance", to: "compliance#index"
-  get "trucks", to: "trucks#index"
-  get "shipments", to: "shipments#index"
-  get "routes", to: "routes#index"
 end
