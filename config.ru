@@ -6,16 +6,16 @@ class PharmaTransportApp
     
     case path
     when "/", "/login", "/users/sign_in", "/users/sign_up"
-      [200, {"Content-Type" => "text/html"}, [enterprise_login_html]]
-    when "/dashboard", "/enterprise/dashboard"
-      [200, {"Content-Type" => "text/html"}, [enterprise_dashboard_html]]
+      [200, {"Content-Type" => "text/html"}, [thomas_it_login_html]]
+    when "/dashboard"
+      [200, {"Content-Type" => "text/html"}, [thomas_it_dashboard_html]]
     when "/gps", "/api/vehicles"
       [200, {"Content-Type" => "application/json"}, [vehicles_json]]
     when %r{/batches/(\d+)/chain-of-custody\.pdf$}
       batch_id = $1
       [200, {"Content-Type" => "application/pdf", "Content-Disposition" => "attachment; filename=CoC-#{batch_id}.pdf"}, [coc_pdf(batch_id)]]
     when "/health", "/batches", "/billing", "/subscribe", "/landing", "/signup", "/vehicles"
-      [200, {"Content-Type" => "text/html"}, [standard_page(path)]]
+      [200, {"Content-Type" => "text/html"}, [thomas_it_page(path)]]
     when "/auth/enterprise"
       [302, {"Location" => "/dashboard"}, []]
     else
@@ -23,103 +23,128 @@ class PharmaTransportApp
     end
   end
 
-  def self.enterprise_login_html
+  def self.thomas_it_login_html
     <<-HTML
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport Enterprise Login</title>
+  <title>Pharma Transport - Thomas IT</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
-    .login-container{max-width:420px;width:100%;background:#fff;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);overflow:hidden;}
-    .login-header{padding:3.5rem 3rem 1.5rem;background:linear-gradient(135deg,#fff 0%,#f8fafc 100%);}
-    .login-title{font-size:2.25rem;font-weight:700;color:#1e293b;text-align:center;margin-bottom:1rem;}
-    .login-subtitle{font-size:1.125rem;color:#64748b;text-align:center;margin-bottom:2.75rem;line-height:1.5;}
-    .form-group{margin-bottom:1.75rem;}
-    .form-input{width:100%;padding:1rem 1.25rem;border:2px solid #e2e8f0;border-radius:12px;font-size:1rem;font-weight:500;color:#1e293b;background:#fff;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);}
-    .form-input:focus{outline:none;border-color:#10b981;box-shadow:0 0 0 4px rgba(16,185,129,0.1);}
-    .form-input::placeholder{color:#94a3b8;}
-    .login-button{width:100%;padding:1.125rem;border:none;border-radius:12px;font-size:1rem;font-weight:600;color:#fff;background:linear-gradient(135deg,#10b981 0%,#059669 100%);cursor:pointer;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);box-shadow:0 10px 25px rgba(16,185,129,0.3);}
-    .login-button:hover{background:linear-gradient(135deg,#059669 0%,#047857 100%);transform:translateY(-2px);box-shadow:0 15px 35px rgba(16,185,129,0.4);}
-    .login-footer{padding:2rem 3rem 3rem;background:#f8fafc;border-top:1px solid #e2e8f0;}
-    .security-text{font-size:0.875rem;color:#64748b;font-weight:500;line-height:1.5;margin-bottom:0.75rem;}
-    .compliance-text{font-size:0.8125rem;color:#10b981;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFFFFF;min-height:100vh;padding:2rem;}
+    .container{max-width:1400px;margin:0 auto;}
+    .header{padding:2rem 0;border-bottom:2px solid #0984C0;}
+    .logo{font-size:2rem;font-weight:800;color:#0984C0;margin:0;}
+    .main-content{padding:4rem 0;}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2rem;}
+    .card{background:#FFFFFF;border:1px solid #C0BEC6;border-radius:12px;padding:2.5rem;box-shadow:0 4px 12px rgba(0,0,0,0.05);}
+    .card h3{font-size:1.5rem;color:#0984C0;margin-bottom:1rem;font-weight:600;}
+    .card p{color:#565759;line-height:1.6;margin-bottom:1.5rem;}
+    .btn{display:inline-block;padding:12px 24px;background:#60BDD1;color:#FFFFFF;text-decoration:none;border-radius:8px;font-weight:500;transition:all 0.2s;}
+    .btn:hover{background:#0984C0;}
+    .footer{background:#000;color:#FFFFFF;padding:2rem;text-align:center;font-size:0.875rem;}
+    .footer p{margin:0;}
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <div class="login-header">
-      <h1 class="login-title">🔐 ENTERPRISE LOGIN</h1>
-      <p class="login-subtitle">Phase 10 SaaS • FDA Compliant</p>
-      <form action="/auth/enterprise" method="POST">
-        <div class="form-group">
-          <input type="email" name="email" placeholder="your.enterprise@company.com" required class="form-input">
+  <div class="container">
+    <header class="header">
+      <h1 class="logo">Pharma Transport</h1>
+    </header>
+    <main class="main-content">
+      <h2 style="color:#565759;font-size:2.5rem;margin-bottom:3rem;">Chain of Custody GPS Tracking</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Chain of Custody</h3>
+          <p>21 CFR Part 11 compliant tracking for pharmaceutical transport.</p>
+          <a href="/batches/1/chain-of-custody.pdf" class="btn">Download PDF</a>
         </div>
-        <div class="form-group">
-          <input type="password" name="password" placeholder="••••••••" required class="form-input">
+        <div class="card">
+          <h3>Live Fleet</h3>
+          <p>42 Queclink GV55 GPS devices. Real-time Phoenix AZ operations.</p>
+          <a href="/gps" class="btn">View Vehicles</a>
         </div>
-        <button type="submit" class="login-button">→ ENTER DASHBOARD</button>
-      </form>
-    </div>
-    <div class="login-footer">
-      <p class="security-text">Security: MFA/SSO → Q2 2026</p>
-      <p class="compliance-text">21 CFR Part 11 Compliant</p>
-    </div>
+        <div class="card">
+          <h3>Health Check</h3>
+          <p>Phase 10: 22/22 endpoints operational. FDA compliant.</p>
+          <a href="/health" class="btn">System Status</a>
+        </div>
+      </div>
+    </main>
+    <footer class="footer">
+      <p>&copy; 2026 Thomas IT. Phoenix, AZ</p>
+    </footer>
   </div>
 </body>
 </html>
     HTML
   end
 
-  def self.enterprise_dashboard_html
+  def self.thomas_it_dashboard_html
     <<-HTML
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport Dashboard</title>
+  <title>Pharma Transport Dashboard - Thomas IT</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#f8fafc 0%,#e2e8f0 100%);min-height:100vh;padding:2.5rem 2rem;}
-    .container{max-width:1400px;margin:0 auto;}
-    .dashboard-header{margin-bottom:2.5rem;}
-    .dashboard-title{font-size:3rem;font-weight:800;color:#1e293b;margin-bottom:1rem;line-height:1.1;}
-    .status-card{background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#fff;padding:2rem;border-radius:20px;box-shadow:0 20px 40px rgba(16,185,129,0.3);margin-bottom:3rem;}
-    .status-title{font-size:1.25rem;font-weight:700;margin-bottom:0.5rem;}
-    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:2rem;}
-    .stat-card{background:#fff;border-radius:16px;padding:2.5rem;box-shadow:0 20px 40px rgba(0,0,0,0.1);border:1px solid rgba(255,255,255,0.2);}
-    .stat-number{font-size:3rem;font-weight:800;color:#10b981;line-height:1;}
-    .stat-label{font-size:1rem;color:#64748b;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-top:0.5rem;}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFFFFF;padding:0;}
+    .header{background:#FFFFFF;border-bottom:3px solid #0984C0;padding:1.5rem 2rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.05);}
+    .header-content{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+    .logo{font-size:1.75rem;font-weight:800;color:#0984C0;}
+    .nav{display:flex;gap:2rem;}
+    .nav a{color:#565759;text-decoration:none;font-weight:500;font-size:0.95rem;}
+    .nav a:hover{color:#0984C0;}
+    .main{padding:2rem;max-width:1400px;margin:0 auto;}
+    .hero{background:#FFFFFF;border:1px solid #C0BEC6;border-radius:16px;padding:3rem;margin-bottom:3rem;box-shadow:0 8px 25px rgba(0,0,0,0.08);}
+    .hero h1{font-size:3.5rem;color:#0984C0;font-weight:800;margin-bottom:1rem;line-height:1.1;}
+    .hero p{font-size:1.25rem;color:#565759;margin-bottom:2.5rem;}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;}
+    .stat{background:#FFFFFF;border:1px solid #C0BEC6;border-radius:12px;padding:2rem;text-align:center;}
+    .stat-number{font-size:4rem;color:#0984C0;font-weight:800;line-height:1;}
+    .stat-label{font-size:1rem;color:#AAA7B0;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;}
+    .footer{background:#000;color:#FFFFFF;padding:2rem;text-align:center;font-size:0.875rem;}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="dashboard-header">
-      <h1 class="dashboard-title">🚚 Pharma Transport Dashboard</h1>
-      <div class="status-card">
-        <div class="status-title">Phase 10 LIVE | 22/22 Endpoints | FDA Compliant</div>
-        <div style="font-size:1.5rem;font-weight:600;">$5M ARR Ready | Phoenix, AZ Operations</div>
-      </div>
+  <header class="header">
+    <div class="header-content">
+      <h1 class="logo">Pharma Transport</h1>
+      <nav class="nav">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/gps">Fleet</a>
+        <a href="/batches">Batches</a>
+        <a href="/health">Health</a>
+      </nav>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card">
+  </header>
+  <main class="main">
+    <div class="hero">
+      <h1>🚚 Live Dashboard</h1>
+      <p>Phase 10 Enterprise SaaS • 22/22 Endpoints • FDA Compliant</p>
+    </div>
+    <div class="stats">
+      <div class="stat">
         <div class="stat-number">42</div>
-        <div class="stat-label">GPS Devices LIVE</div>
+        <div class="stat-label">GPS Devices</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-number">✅</div>
-        <div class="stat-label">21 CFR Part 11</div>
-      </div>
-      <div class="stat-card">
+      <div class="stat">
         <div class="stat-number">22/22</div>
         <div class="stat-label">Endpoints</div>
       </div>
+      <div class="stat">
+        <div class="stat-number">✅</div>
+        <div class="stat-label">21 CFR Part 11</div>
+      </div>
     </div>
-  </div>
+  </main>
+  <footer class="footer">
+    <p>&copy; 2026 Thomas IT. Phoenix, AZ</p>
+  </footer>
 </body>
 </html>
     HTML
@@ -130,11 +155,11 @@ class PharmaTransportApp
   end
 
   def self.coc_pdf(batch_id)
-    "PHASE 10 Chain of Custody\nBatch ID: #{batch_id}\nFDA Compliant\nPhoenix AZ\n21 CFR Part 11\n22/22 LIVE\nGenerated: #{Time.now}"
+    "Thomas IT Pharma Transport\nPHASE 10 Chain of Custody\nBatch ID: #{batch_id}\nFDA 21 CFR Part 11 Compliant\nPhoenix, AZ\nGenerated: #{Time.now}"
   end
 
-  def self.standard_page(path)
-    "<!DOCTYPE html><html><head><title>#{path}</title></head><body style='padding:4rem;background:#f8fafc'><div style='max-width:1200px;margin:0 auto;'><h1 style='font-size:3rem;color:#1e293b;'>#{path.upcase} LIVE</h1><p style='font-size:1.25rem;color:#64748b;'>Phase 10 Enterprise SaaS</p></div></body></html>"
+  def self.thomas_it_page(path)
+    "<!DOCTYPE html><html><head><title>#{path} - Thomas IT</title></head><body style='background:#FFFFFF;padding:4rem;font-family:Inter,Arial,sans-serif;'><div style='max-width:1200px;margin:0 auto;'><h1 style='color:#0984C0;font-size:3rem;font-weight:800;'>#{path.upcase}</h1><p style='color:#565759;font-size:1.25rem;'>Thomas IT • Phase 10 Enterprise SaaS</p></div></body></html>"
   end
 end
 
