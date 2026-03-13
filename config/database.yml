@@ -1,16 +1,3 @@
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
-development:
-  <<: *default
-  database: pharma_gps_development
-
-test:
-  <<: *default
-  database: pharma_gps_test
-
 production:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  adapter: sqlite3
+  database: db/production.sqlite3
