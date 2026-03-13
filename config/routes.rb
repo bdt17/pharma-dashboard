@@ -10,3 +10,5 @@ Rails.application.routes.draw do
   # Future: batches/:id/chain-of-custody (add later)
   get '/batches/:id/chain-of-custody', to: 'batches#chain_of_custody'
 end
+
+get '/dashboard', to: 'home#index'
