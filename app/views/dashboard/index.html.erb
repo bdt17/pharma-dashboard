@@ -1,29 +1,26 @@
-<div class="text-center">
-  <h1 class="text-4xl font-bold text-gray-900 mb-8">Pharma Transport</h1>
+<div class="text-center py-16">
+  <h1 class="text-4xl font-bold text-gray-900 mb-8">Pharma Transport Dashboard</h1>
   
-  <div class="grid md:grid-cols-3 gap-8 mb-12">
-    <!-- Chain of Custody Card -->
-    <div class="p-8 bg-white border rounded-xl shadow-sm hover:shadow-md transition-all">
-      <div class="text-4xl mb-4">📄</div>
-      <h3 class="text-xl font-bold text-gray-900 mb-2">Chain of Custody</h3>
-      <p class="text-sm text-gray-600 mb-4">FDA 21 CFR Part 11</p>
-      <%= link_to "Download PDF", batch_coc_pdf_path(1), class: "w-full block bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700", target: "_blank" %>
+  <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+    <div class="p-8 bg-white border-2 border-blue-100 rounded-xl hover:shadow-lg">
+      <span class="text-5xl block mb-4">📄</span>
+      <h3 class="text-2xl font-bold mb-2">Chain of Custody</h3>
+      <p class="text-gray-600 mb-6">FDA 21 CFR Part 11</p>
+      <a href="/batches/1/chain-of-custody.pdf" class="block w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 text-center" target="_blank">Download PDF</a>
     </div>
-
-    <!-- Fleet Card -->
-    <div class="p-8 bg-white border rounded-xl shadow-sm hover:shadow-md transition-all">
-      <div class="text-4xl mb-4">🚛</div>
-      <h3 class="text-xl font-bold text-gray-900 mb-2">Fleet</h3>
-      <p class="text-sm text-gray-600 mb-4">4 Vehicles</p>
-      <%= link_to "View Fleet", vehicles_path, class: "w-full block bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700" %>
+    
+    <div class="p-8 bg-white border-2 border-emerald-100 rounded-xl hover:shadow-lg">
+      <span class="text-5xl block mb-4">🚛</span>
+      <h3 class="text-2xl font-bold mb-2">Fleet</h3>
+      <p class="text-gray-600 mb-6">Queclink GV55 Ready</p>
+      <a href="/vehicles" class="block w-full bg-emerald-600 text-white py-3 px-6 rounded-lg hover:bg-emerald-700 text-center">View 4 Vehicles</a>
     </div>
-
-    <!-- Health Card -->
-    <div class="p-8 bg-white border rounded-xl shadow-sm hover:shadow-md transition-all">
-      <div class="text-4xl mb-4">🩺</div>
-      <h3 class="text-xl font-bold text-gray-900 mb-2">Health Check</h3>
-      <p class="text-sm text-gray-600 mb-4">Production Status</p>
-      <%= link_to "Status", health_path, class: "w-full block bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700", target: "_blank" %>
+    
+    <div class="p-8 bg-white border-2 border-purple-100 rounded-xl hover:shadow-lg">
+      <span class="text-5xl block mb-4">🩺</span>
+      <h3 class="text-2xl font-bold mb-2">Health Check</h3>
+      <p class="text-gray-600 mb-6">Production Status</p>
+      <a href="/health" class="block w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 text-center" target="_blank">View Status</a>
     </div>
   </div>
 </div>
