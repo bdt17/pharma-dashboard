@@ -24,3 +24,4 @@ Rails.application.routes.draw do
   get "/landing", to: "home#landing"
   get "/signup", to: "home#signup"
 end
+
