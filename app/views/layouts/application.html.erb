@@ -76,3 +76,14 @@
   </footer>
 </body>
 </html>
+<nav style="position:fixed;top:0;left:0;right:0;background:rgba(15,23,42,0.95);backdrop-filter:blur(20px);z-index:9999;padding:1rem 2rem;box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+  <div style="max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
+    <a href="/" style="color:#10b981;font-size:1.5rem;font-weight:800;text-decoration:none;">Pharma Transport</a>
+    <div style="display:flex;gap:1rem;">
+      <a href="/gps" style="color:white;padding:0.5rem 1rem;text-decoration:none;border-radius:6px;transition:all 0.3s;">Live GPS</a>
+      <a href="/batches" style="color:white;padding:0.5rem 1rem;text-decoration:none;border-radius:6px;transition:all 0.3s;">Batches</a>
+      <a href="/health" style="color:#10b981;padding:0.5rem 1rem;text-decoration:none;border-radius:6px;font-weight:600;border:2px solid #10b981;transition:all 0.3s;">Health</a>
+      <a href="<%= new_user_session_path %>" style="background:#0984C0;color:white!important;padding:0.75rem 2rem;text-decoration:none!important;border-radius:8px;font-weight:700;box-shadow:0 4px 15px rgba(9,132,192,0.4);transition:all 0.3s;">🔐 Enterprise Login</a>
+    </div>
+  </div>
+</nav>
