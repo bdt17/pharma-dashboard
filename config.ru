@@ -5,6 +5,8 @@ class PharmaTransportApp
     path = env["PATH_INFO"]
     
     case path
+    when "/favicon.ico"
+      [204, {}, []]  # No content - kills favicon request
     when "/"
       [200, {"Content-Type" => "text/html"}, [thomas_it_landing_html]]
     when "/login", "/users/sign_in", "/users/sign_up"
@@ -25,6 +27,7 @@ class PharmaTransportApp
     end
   end
 
+  # Landing page (/) - NO LOGIN REQUIRED
   def self.thomas_it_landing_html
     <<-HTML
 <!DOCTYPE html>
@@ -33,6 +36,7 @@ class PharmaTransportApp
   <title>Pharma Transport - Thomas IT</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚚</text></svg>">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFFFFF;min-height:100vh;color:#565759;}
@@ -49,7 +53,6 @@ class PharmaTransportApp
     .btn{display:inline-block;padding:14px 28px;background:#60BDD1;color:#FFFFFF;text-decoration:none;border-radius:10px;font-weight:600;font-size:1rem;transition:all 0.3s ease;}
     .btn:hover{background:#0984C0;transform:translateY(-2px);}
     .footer{background:#000000;color:#FFFFFF;padding:2.5rem 0;text-align:center;font-size:0.95rem;}
-    @media (max-width:768px){.cards{grid-template-columns:1fr;gap:2rem;}.hero-title{font-size:2.25rem;}}
   </style>
 </head>
 <body>
@@ -91,6 +94,7 @@ class PharmaTransportApp
     HTML
   end
 
+  # Login page (separate)
   def self.thomas_it_login_html
     <<-HTML
 <!DOCTYPE html>
@@ -99,6 +103,7 @@ class PharmaTransportApp
   <title>Pharma Transport Login - Thomas IT</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFFFFF;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;color:#565759;}
@@ -139,6 +144,7 @@ class PharmaTransportApp
     HTML
   end
 
+  # ... rest of methods unchanged (dashboard_html, vehicles_json, coc_pdf, thomas_it_page)
   def self.thomas_it_dashboard_html
     <<-HTML
 <!DOCTYPE html>
@@ -147,25 +153,8 @@ class PharmaTransportApp
   <title>Pharma Transport Dashboard - Thomas IT</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFFFFF;color:#565759;}
-    .header{background:#FFFFFF;border-bottom:4px solid #0984C0;padding:1.5rem 0;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(9,132,192,0.1);}
-    .header-content{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;}
-    .logo{font-size:1.875rem;font-weight:800;color:#0984C0;}
-    .nav{display:flex;gap:2.5rem;}
-    .nav a{color:#565759;text-decoration:none;font-weight:600;font-size:1rem;padding:0.75rem 1.5rem;border-radius:8px;transition:all 0.2s;}
-    .nav a:hover{color:#0984C0;background:#F0F8FF;}
-    .main{padding:3rem 0;max-width:1400px;margin:0 auto;}
-    .hero{background:#FFFFFF;border:2px solid #C0BEC6;border-radius:20px;padding:4rem 3rem;margin:0 2rem 4rem;box-shadow:0 12px 40px rgba(0,0,0,0.1);}
-    .hero h1{font-size:4rem;color:#0984C0;font-weight:800;margin-bottom:1.5rem;line-height:1.1;}
-    .hero p{font-size:1.375rem;color:#565759;margin-bottom:0;}
-    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.5rem;padding:0 2rem;}
-    .stat{background:#FFFFFF;border:2px solid #C0BEC6;border-radius:16px;padding:3rem 2rem;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,0.08);}
-    .stat-number{font-size:4.5rem;color:#0984C0;font-weight:800;line-height:1;margin-bottom:1rem;}
-    .stat-label{font-size:1.125rem;color:#AAA7B0;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;}
-    .footer{background:#000000;color:#FFFFFF;padding:3rem 2rem;text-align:center;font-size:1rem;}
-  </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚚</text></svg>">
+  <style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFFFFF;color:#565759;}.header{background:#FFFFFF;border-bottom:4px solid #0984C0;padding:1.5rem 0;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(9,132,192,0.1);}.header-content{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center;}.logo{font-size:1.875rem;font-weight:800;color:#0984C0;}.nav{display:flex;gap:2.5rem;}.nav a{color:#565759;text-decoration:none;font-weight:600;font-size:1rem;padding:0.75rem 1.5rem;border-radius:8px;transition:all 0.2s;}.nav a:hover{color:#0984C0;background:#F0F8FF;}.main{padding:3rem 0;max-width:1400px;margin:0 auto;}.hero{background:#FFFFFF;border:2px solid #C0BEC6;border-radius:20px;padding:4rem 3rem;margin:0 2rem 4rem;box-shadow:0 12px 40px rgba(0,0,0,0.1);}.hero h1{font-size:4rem;color:#0984C0;font-weight:800;margin-bottom:1.5rem;line-height:1.1;}.hero p{font-size:1.375rem;color:#565759;margin-bottom:0;}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.5rem;padding:0 2rem;}.stat{background:#FFFFFF;border:2px solid #C0BEC6;border-radius:16px;padding:3rem 2rem;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,0.08);}.stat-number{font-size:4.5rem;color:#0984C0;font-weight:800;line-height:1;margin-bottom:1rem;}.stat-label{font-size:1.125rem;color:#AAA7B0;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;}.footer{background:#000000;color:#FFFFFF;padding:3rem 2rem;text-align:center;font-size:1rem;}</style>
 </head>
 <body>
   <header class="header">
@@ -219,7 +208,7 @@ class PharmaTransportApp
   end
 
   def self.thomas_it_page(path)
-    "<!DOCTYPE html><html><head><title>#{path} - Thomas IT</title><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'></head><body style='background:#FFFFFF;padding:6rem 2rem;font-family:Inter,Arial,sans-serif;color:#565759;'><div style='max-width:1200px;margin:0 auto;text-align:center;'><h1 style='color:#0984C0;font-size:4rem;font-weight:800;margin-bottom:2rem;'>#{path.upcase}</h1><p style='color:#565759;font-size:1.5rem;font-weight:500;'>Thomas IT • Phase 10 Enterprise SaaS • FDA Compliant</p></div></body></html>"
+    "<!DOCTYPE html><html><head><title>#{path} - Thomas IT</title><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><link rel='icon' href='data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>#{path.include?('health') ? '✅' : '🚚'}</text></svg>'></head><body style='background:#FFFFFF;padding:6rem 2rem;font-family:Inter,Arial,sans-serif;color:#565759;'><div style='max-width:1200px;margin:0 auto;text-align:center;'><h1 style='color:#0984C0;font-size:4rem;font-weight:800;margin-bottom:2rem;'>#{path.upcase}</h1><p style='color:#565759;font-size:1.5rem;font-weight:500;'>Thomas IT • Phase 10 Enterprise SaaS • FDA Compliant</p></div></body></html>"
   end
 end
 
