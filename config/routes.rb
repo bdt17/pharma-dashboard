@@ -31,3 +31,4 @@ get "/batches/1/chain-of-custody.pdf", to: "batches#show"
 namespace :api, defaults: { format: :json } do
   resources :vehicles, only: %i[index show]
 end
+[0;32mget '/subscribe', to: 'subscribe#index'[0m
