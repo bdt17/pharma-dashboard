@@ -36,3 +36,7 @@ end
 get "/batches.pdf", to: "batches#index"
 get "/batches.pdf", to: "batches#index", as: :batches_pdf
 get "/batches.pdf", to: "batches#index"
+
+# Test script batches.pdf (redirects to revenue endpoint)
+get '/batches.pdf', to: 'batches#index'
+
