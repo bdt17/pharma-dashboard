@@ -214,3 +214,36 @@ end
 
 run PharmaTransportApp
 when "/gps.html" { [200, {"Content-Type" => "text/html"}, [File.read("public/gps.html")]] }
+
+    when "/gps-map"
+      [200, {"Content-Type" => "text/html"}, [gps_map_html]]
+
+  def self.gps_map_html
+    <<-HTML
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GPS Live Fleet - Thomas IT</title>
+  <meta charset="utf-8">
+  <style>body{margin:0;font-family:Inter,sans-serif;background:#FFFFFF;color:#565759;}#map{height:100vh;width:100%;}.header{position:fixed;top:0;left:0;right:0;background:#FFFFFF;border-bottom:4px solid #0984C0;padding:1rem 2rem;z-index:1000;box-shadow:0 4px 20px rgba(9,132,192,0.1);}.logo{font-size:1.75rem;font-weight:800;color:#0984C0;margin:0;}.status{color:#0984C0;font-weight:600;}</style>
+</head>
+<body>
+  <div class="header">
+    <h1 class="logo">Pharma Transport <span class="status" id="status">Loading...</span></h1>
+  </div>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script>
+    const map = L.map('map').setView([33.4484, -112.0740], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    fetch('/gps').then(r=>r.json()).then(data => {
+      document.getElementById('status').textContent = `${data.devices} Queclink GV55 LIVE`;
+      L.marker([data.position.lat, data.position.lng]).addTo(map).bindPopup(`Queclink GV55<br>Phoenix, AZ<br>${data.specs}`);
+      map.setView([data.position.lat, data.position.lng], 15);
+    });
+  </script>
+</body>
+</html>
+    HTML
+  end
