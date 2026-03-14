@@ -35,3 +35,4 @@ end
 [0;32mget '/subscribe', to: 'subscribe#index'[0m
 get "/batches.pdf", to: "batches#index"
 get "/batches.pdf", to: "batches#index", as: :batches_pdf
+get "/batches.pdf", to: "batches#index"
