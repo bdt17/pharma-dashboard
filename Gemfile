@@ -5,7 +5,7 @@ ruby "3.3.5"
 
 # Phase 10 Enterprise SaaS - NO DATABASE REQUIRED
 gem "rails", "~> 7.0.10"
-gem "puma", "~> 5.6"
+gem "puma", "~> 7.2"
 gem "devise", "~> 5.0"  # SINGLE devise entry
 gem "bootsnap", require: false
 gem "importmap-rails"

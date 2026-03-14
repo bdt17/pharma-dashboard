@@ -163,7 +163,7 @@ GEM
       racc (~> 1.4)
     orm_adapter (0.5.0)
     prism (1.9.0)
-    puma (5.6.9)
+    puma (7.2.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (2.2.22)
@@ -243,7 +243,7 @@ DEPENDENCIES
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
-  puma (~> 5.6)
+  puma (~> 7.2)
   rails (~> 7.0.10)
   redis (~> 5.0)
   stimulus-rails
@@ -313,7 +313,7 @@ CHECKSUMS
   nokogiri (1.19.1-x86_64-linux-musl) sha256=4267f38ad4fc7e52a2e7ee28ed494e8f9d8eb4f4b3320901d55981c7b995fc23
   orm_adapter (0.5.0) sha256=aa5d0be5d540cbb46d3a93e88061f4ece6a25f6e97d6a47122beb84fe595e9b9
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
-  puma (5.6.9) sha256=20701b2451080ec8d6d78d2e4b5a2913e6d0b865a51d704a4d60db8fd39a4228
+  puma (7.2.0) sha256=bf8ef4ab514a4e6d4554cb4326b2004eba5036ae05cf765cfe51aba9706a72a8
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
   rack (2.2.22) sha256=c5cf0b7f872559966d974abe3101a57d51caf12504ee76290b98720004f64542
   rack-test (2.2.0) sha256=005a36692c306ac0b4a9350355ee080fd09ddef1148a5f8b2ac636c720f5c463
