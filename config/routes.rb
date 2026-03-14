@@ -40,3 +40,4 @@ get "/batches.pdf", to: "batches#index"
 # Test script batches.pdf (redirects to revenue endpoint)
 get '/batches.pdf', to: 'batches#index'
 
+[0;32mget '/subscribe', to: 'subscribe#index'[0m
