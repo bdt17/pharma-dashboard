@@ -33,3 +33,5 @@ namespace :api, defaults: { format: :json } do
 end
 [0;32mget '/subscribe', to: 'subscribe#index'[0m
 [0;32mget '/subscribe', to: 'subscribe#index'[0m
+get "/batches.pdf", to: "batches#index"
+get "/batches.pdf", to: "batches#index", as: :batches_pdf
