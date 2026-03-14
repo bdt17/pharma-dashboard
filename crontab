@@ -1,0 +1,1 @@
+*/30 * * * * cd ~/Pharma_Transport_2026-03-05_pharma-dashboard && ./test_production_suite.sh >> production.log 2>&1 -l

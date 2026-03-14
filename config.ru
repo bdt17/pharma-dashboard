@@ -213,3 +213,4 @@ class PharmaTransportApp
 end
 
 run PharmaTransportApp
+when "/gps.html" { [200, {"Content-Type" => "text/html"}, [File.read("public/gps.html")]] }
