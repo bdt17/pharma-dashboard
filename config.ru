@@ -5,8 +5,10 @@ class PharmaTransportApp
     path = env["PATH_INFO"]
     
     case path
-    when "/", "/landing", "/login", "/users/sign_in", "/users/sign_up"
+    when "/"
       [200, {"Content-Type" => "text/html"}, [thomas_it_landing_html]]
+    when "/login", "/users/sign_in", "/users/sign_up"
+      [200, {"Content-Type" => "text/html"}, [thomas_it_login_html]]
     when "/dashboard", "/enterprise/dashboard"
       [200, {"Content-Type" => "text/html"}, [thomas_it_dashboard_html]]
     when "/gps", "/api/vehicles"
@@ -14,7 +16,7 @@ class PharmaTransportApp
     when %r{/batches/(\d+)/chain-of-custody\.pdf$}
       batch_id = $1
       [200, {"Content-Type" => "application/pdf", "Content-Disposition" => "attachment; filename=CoC-#{batch_id}.pdf"}, [coc_pdf(batch_id)]]
-    when "/health", "/batches", "/billing", "/subscribe", "/vehicles"
+    when "/health", "/batches", "/billing", "/subscribe", "/landing", "/signup", "/vehicles"
       [200, {"Content-Type" => "text/html"}, [thomas_it_page(path)]]
     when "/auth/enterprise"
       [302, {"Location" => "/dashboard"}, []]
@@ -83,6 +85,54 @@ class PharmaTransportApp
     <footer class="footer">
       <p>&copy; 2026 Thomas IT. Phoenix, AZ</p>
     </footer>
+  </div>
+</body>
+</html>
+    HTML
+  end
+
+  def self.thomas_it_login_html
+    <<-HTML
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pharma Transport Login - Thomas IT</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FFFFFF;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;color:#565759;}
+    .login-card{max-width:420px;width:100%;background:#FFFFFF;border:2px solid #C0BEC6;border-radius:16px;padding:3.5rem 3rem;box-shadow:0 20px 40px rgba(0,0,0,0.1);text-align:center;}
+    .login-title{font-size:2.25rem;color:#0984C0;font-weight:800;margin-bottom:1rem;}
+    .login-subtitle{font-size:1.125rem;color:#565759;margin-bottom:2.75rem;}
+    .form-group{margin-bottom:1.75rem;}
+    .form-input{width:100%;padding:1.125rem 1.25rem;border:2px solid #C0BEC6;border-radius:12px;font-size:1rem;font-weight:500;color:#565759;transition:all 0.3s ease;}
+    .form-input:focus{outline:none;border-color:#0984C0;box-shadow:0 0 0 3px rgba(9,132,192,0.1);}
+    .form-input::placeholder{color:#AAA7B0;}
+    .login-btn{width:100%;padding:1.125rem;border:none;border-radius:12px;font-size:1rem;font-weight:600;color:#FFFFFF;background:#0984C0;cursor:pointer;transition:all 0.3s ease;box-shadow:0 8px 20px rgba(9,132,192,0.3);}
+    .login-btn:hover{background:#60BDD1;transform:translateY(-2px);box-shadow:0 12px 25px rgba(96,189,209,0.4);}
+    .login-footer{margin-top:2.5rem;padding-top:2rem;border-top:1px solid #C0BEC6;}
+    .security-text{font-size:0.875rem;color:#565759;margin-bottom:0.5rem;}
+    .compliance-text{font-size:0.8125rem;color:#0984C0;font-weight:600;text-transform:uppercase;}
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <h1 class="login-title">🔐 ENTERPRISE LOGIN</h1>
+    <p class="login-subtitle">Phase 10 SaaS • FDA Compliant</p>
+    <form action="/auth/enterprise" method="POST">
+      <div class="form-group">
+        <input type="email" name="email" placeholder="your.enterprise@company.com" required class="form-input">
+      </div>
+      <div class="form-group">
+        <input type="password" name="password" placeholder="••••••••" required class="form-input">
+      </div>
+      <button type="submit" class="login-btn">→ ENTER DASHBOARD</button>
+    </form>
+    <div class="login-footer">
+      <p class="security-text">Security: MFA/SSO → Q2 2026</p>
+      <p class="compliance-text">21 CFR Part 11 Compliant</p>
+    </div>
   </div>
 </body>
 </html>
