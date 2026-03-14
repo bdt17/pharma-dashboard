@@ -32,3 +32,4 @@ namespace :api, defaults: { format: :json } do
   resources :vehicles, only: %i[index show]
 end
 [0;32mget '/subscribe', to: 'subscribe#index'[0m
+[0;32mget '/subscribe', to: 'subscribe#index'[0m
