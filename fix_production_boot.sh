@@ -1,3 +1,12 @@
+#!/bin/bash
+echo "🔧 FIXING RAILS PRODUCTION BOOT + LANDING PAGE"
+
+# 1. Fix production.rb (comment broken action_controller)
+sed -i 's/config.action_controller/# config.action_controller/' config/environments/production.rb
+sed -i 's/config.action_controller/# config.action_controller/' config/environments/development.rb
+
+# 2. Deploy landing page config.ru
+cat > config.ru << 'HEREDOC'
 ENV['RACK_ENV'] ||= 'production'
 require_relative 'config/environment'
 
@@ -35,3 +44,12 @@ HTML
 end
 
 run app
+HEREDOC
+
+# 3. Clean git + force deploy
+git add -A
+git commit --no-edit -m "fix: production.rb boot + landing page z9999"
+git push origin main
+
+echo "✅ Deploy started - wait 3min then test:"
+echo "curl -s https://pharma-dashboard-beq2.onrender.com/ | grep LOGIN"
