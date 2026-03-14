@@ -41,3 +41,4 @@ get "/batches.pdf", to: "batches#index"
 get '/batches.pdf', to: 'batches#index'
 
 [0;32mget '/subscribe', to: 'subscribe#index'[0m
+[0;32mget '/subscribe', to: 'subscribe#index'[0m
