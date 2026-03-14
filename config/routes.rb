@@ -26,3 +26,8 @@ Rails.application.routes.draw do
 end
 
 get "/subscribe", to: "subscribe#index"
+get "/subscribe", to: "subscribe#index"
+get "/batches/1/chain-of-custody.pdf", to: "batches#show"
+namespace :api, defaults: { format: :json } do
+  resources :vehicles, only: %i[index show]
+end

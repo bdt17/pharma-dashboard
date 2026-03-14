@@ -1,12 +1,1 @@
-<h1>Queclink GV55 Fleet</h1>
-<table class="table-auto w-full">
-  <tr><th>Vehicle</th><th>Last GPS</th><th>Status</th></tr>
-  <% @vehicles.each do |v| %>
-    <tr>
-      <td><%= v.imei %></td>
-      <td><%= v.last_lat %>, <%= v.last_lng %></td>
-      <td><%= v.online ? '🟢 LIVE' : '🔴 OFFLINE' %></td>
-    </tr>
-  <% end %>
-</table>
-<h1>GPS Live Fleet Tracking</h1><p>Queclink GV55 devices - Phoenix AZ operations</p>
+<h1>GPS Live - Queclink GV55</h1>
