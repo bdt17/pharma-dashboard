@@ -25,3 +25,4 @@ Rails.application.routes.draw do
   get "/signup", to: "home#signup"
 end
 
+get "/subscribe", to: "subscribe#index"
