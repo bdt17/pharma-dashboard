@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.5"
 
 # Phase 10 Enterprise SaaS - NO DATABASE REQUIRED
-gem "rails", "~> 7.0.10"
+gem "rails", "~> 8.1.3"
 gem "puma", "~> 5.6"
 gem "devise", "~> 5.0"  # SINGLE devise entry
 gem "bootsnap", require: false
