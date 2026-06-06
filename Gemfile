@@ -14,7 +14,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "redis", "~> 5.0"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
-gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 2.0"
 
 # Phase 10 LIVE - Stubs only (no DB gems needed)
 # gem "pg", "~> 1.1"  # DISABLED - no database
