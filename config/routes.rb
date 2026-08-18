@@ -1,46 +1,26 @@
 Rails.application.routes.draw do
-  # Devise
   devise_for :users
-  
-  # Enterprise Routes (Phase 10)
+
+  # Public pages
   root "home#index"
-  get  "/login",          to: "home#login", as: :login
-  get  "/users/sign_in",  to: "home#login"
-  get  "/users/sign_up",  to: "home#login"
-  get  "/dashboard",      to: "home#enterprise_dashboard"
-  get  "/enterprise/dashboard", to: "home#enterprise_dashboard"
-  get  "/gps",            to: "home#gps"
-  
-  # API Endpoints (Phase 10 LIVE)
-  get  "/api/vehicles",   to: "home#vehicles"
-  get  "/batches/:id/chain-of-custody.pdf", to: "home#chain_of_custody"
-  
-  # Health + Legacy
-  get "/health", to: "home#health"
-  get "/billing", to: "home#billing"
-  get "/subscribe", to: "home#subscribe"
-  
-  # Frontend stubs
+  get "/login", to: "home#login", as: :login
   get "/landing", to: "home#landing"
   get "/signup", to: "home#signup"
+  get "/health", to: "home#health"
+
+  # Authenticated application pages
+  get "/dashboard", to: "home#enterprise_dashboard", as: :dashboard
+  get "/enterprise/dashboard", to: "home#enterprise_dashboard"
+  get "/gps", to: "home#gps"
+  get "/billing", to: "home#billing"
+
+  # Application endpoints
+  get "/api/vehicles", to: "home#vehicles"
+  get "/batches/:id/chain-of-custody.pdf", to: "home#chain_of_custody"
+  get "/batches.pdf", to: "batches#index", as: :batches_pdf
+  get "/subscribe", to: "home#subscribe"
+
+  namespace :api, defaults: { format: :json } do
+    resources :vehicles, only: %i[index show]
+  end
 end
-
-get "/subscribe", to: "subscribe#index"
-get "/subscribe", to: "subscribe#index"
-get "/batches/1/chain-of-custody.pdf", to: "batches#show"
-namespace :api, defaults: { format: :json } do
-  resources :vehicles, only: %i[index show]
-end
-[0;32mget '/subscribe', to: 'subscribe#index'[0m
-[0;32mget '/subscribe', to: 'subscribe#index'[0m
-get "/batches.pdf", to: "batches#index"
-get "/batches.pdf", to: "batches#index", as: :batches_pdf
-get "/batches.pdf", to: "batches#index"
-
-# Test script batches.pdf (redirects to revenue endpoint)
-get '/batches.pdf', to: 'batches#index'
-
-[0;32mget '/subscribe', to: 'subscribe#index'[0m
-[0;32mget '/subscribe', to: 'subscribe#index'[0m
-[0;32mget '/subscribe', to: 'subscribe#index'[0m
-[0;32mget '/subscribe', to: 'subscribe#index'[0m
