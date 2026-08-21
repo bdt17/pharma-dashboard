@@ -37,5 +37,4 @@ Rails.application.configure do
 
   # Do not expose secrets in logs:
   # Never add DATABASE_URL here.
-  # Never use: puts ENV["DATABASE_URL"]
 end
