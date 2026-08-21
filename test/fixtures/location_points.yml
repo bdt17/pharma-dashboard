@@ -1,15 +1,13 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  vehicle: one
-  latitude: 1.5
-  longitude: 1.5
-  speed: 1.5
-  recorded_at: 2025-12-17 17:51:32
+  vehicle_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  latitude: 33.4484
+  longitude: -112.0740
+  speed: 45.0
+  recorded_at: 2026-08-20 18:00:00
 
 two:
-  vehicle: two
-  latitude: 1.5
-  longitude: 1.5
-  speed: 1.5
-  recorded_at: 2025-12-17 17:51:32
+  vehicle_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
+  latitude: 33.4500
+  longitude: -112.0700
+  speed: 38.5
+  recorded_at: 2026-08-20 18:05:00

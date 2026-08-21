@@ -1,19 +1,17 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  batch: one
-  handler_name: MyString
-  signature_data: 
-  location: MyString
-  condition_notes: MyText
-  action_type: MyString
-  timestamp: 2026-03-05 15:55:51
+  batch_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  handler_name: "Test Handler"
+  signature_data: {}
+  location: "Phoenix, AZ"
+  condition_notes: "Temperature verified"
+  action_type: "received"
+  timestamp: 2026-08-20 18:00:00
 
 two:
-  batch: two
-  handler_name: MyString
-  signature_data: 
-  location: MyString
-  condition_notes: MyText
-  action_type: MyString
-  timestamp: 2026-03-05 15:55:51
+  batch_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
+  handler_name: "Test Handler Two"
+  signature_data: {}
+  location: "Phoenix, AZ"
+  condition_notes: "Seal intact"
+  action_type: "transferred"
+  timestamp: 2026-08-20 18:05:00
