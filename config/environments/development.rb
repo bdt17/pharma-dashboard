@@ -8,11 +8,8 @@ Rails.application.configure do
   config.active_support.deprecation = :log
   config.active_record.migration_error = :plain
   config.active_record.verbose_query_logs = true
-  config.assets.debug = true
 
   # LOGGER FIX (CRITICAL)
-  config.logger = ActiveSupport::Logger.new('log/development.log')
-  config.log_level = :debug
 
   # EMAIL
   config.action_mailer.raise_delivery_errors = true

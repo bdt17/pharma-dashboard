@@ -16,6 +16,6 @@ gem "redis", "~> 5.0"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "image_processing", "~> 1.2"
 
-# Phase 10 LIVE - Stubs only (no DB gems needed)
-# gem "pg", "~> 1.1"  # DISABLED - no database
-# gem "activerecord"  # DISABLED - HomeController only
+# PostgreSQL adapter for production and Devise users.
+gem "pg", "~> 1.5"
+gem "sqlite3", "~> 1.4"

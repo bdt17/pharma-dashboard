@@ -1,6 +1,9 @@
 require_relative "boot"
 
-require "rails"
+require "rails/all"
+require "devise"
+require "devise/orm/active_record"
+
 Bundler.require(*Rails.groups)
 
 module PharmaDashboard
@@ -8,10 +11,6 @@ module PharmaDashboard
     config.load_defaults 7.0
     config.api_only = false
 
-    # DISABLE ZEITWERK EAGER LOADING
-    config.autoloader = :classic
-    
-    # Devise ORM configuration
     config.generators do |g|
       g.orm :active_record
     end

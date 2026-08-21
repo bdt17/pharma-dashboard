@@ -27,3 +27,8 @@ script/audit/*.pdf
 .env
 .env
 coc.pdf
+
+/storage/*.sqlite3
+/storage/*.sqlite3-*
+/log/*.log
+/tmp/*
