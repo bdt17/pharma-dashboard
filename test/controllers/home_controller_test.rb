@@ -1,9 +1,19 @@
 require "test_helper"
 
 class HomeControllerTest < ActionDispatch::IntegrationTest
-  test "home page renders successfully" do
+  test "home page renders successfully for a signed-out visitor" do
     get root_url
     assert_response :success
+  end
+
+  test "home page redirects a signed-in user straight to the dashboard" do
+    organization = Organization.create!(name: "Acme Pharma")
+    user = User.create!(email: "dispatcher@example.com", password: "password123!", organization: organization, role: "dispatcher")
+
+    sign_in user
+    get root_url
+
+    assert_redirected_to dashboard_url
   end
 
   test "health endpoint responds successfully" do
