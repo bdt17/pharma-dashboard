@@ -44,4 +44,9 @@ group :test do
   # just checking "did some bytes come back" -- the whole point of Phase 3
   # is proving real data replaced hardcoded stub content.
   gem "pdf-reader", "~> 2.12"
+
+  # minitest 6 extracted Minitest::Mock / Object#stub into this separate
+  # gem. Needed to stub Stripe API calls in tests without a real Stripe
+  # account or network access (see StripeBillingTest).
+  gem "minitest-mock", "~> 5.27", require: "minitest/mock"
 end

@@ -1,16 +1,11 @@
 <div class="max-w-2xl mx-auto p-8">
   <h1 class="text-2xl font-bold mb-6">Billing</h1>
 
-  <% if @subscription.nil? %>
-    <div class="border rounded-lg p-6 bg-gray-50">
-      <p class="text-gray-700">No subscription on file for <%= current_organization&.name %>.</p>
-      <p class="text-sm text-gray-500 mt-2">Contact us to set up billing.</p>
-    </div>
-  <% else %>
+  <% if @subscription&.active_or_trialing? %>
     <dl class="grid grid-cols-3 gap-y-3 border rounded-lg p-6">
       <dt class="text-gray-500">Status</dt>
       <dd class="col-span-2">
-        <span class="<%= @subscription.active_or_trialing? ? "text-green-700" : "text-red-600" %> font-semibold">
+        <span class="text-green-700 font-semibold">
           <%= @subscription.status.humanize %>
         </span>
       </dd>
@@ -21,5 +16,42 @@
       <dt class="text-gray-500">Current period ends</dt>
       <dd class="col-span-2"><%= @subscription.current_period_end&.strftime("%Y-%m-%d") || "—" %></dd>
     </dl>
+  <% else %>
+    <% if @subscription %>
+      <div class="border rounded-lg p-6 bg-red-50 mb-6">
+        <p class="text-gray-700">
+          Subscription for <%= current_organization&.name %> is
+          <span class="text-red-600 font-semibold"><%= @subscription.status.humanize %></span>.
+        </p>
+      </div>
+    <% else %>
+      <div class="border rounded-lg p-6 bg-gray-50 mb-6">
+        <p class="text-gray-700">No subscription on file for <%= current_organization&.name %>.</p>
+      </div>
+    <% end %>
+
+    <% if @plans.present? %>
+      <h2 class="text-lg font-bold mb-3">Available plans</h2>
+      <div class="space-y-3">
+        <% @plans.each do |plan| %>
+          <div class="border rounded-lg p-4 flex items-center justify-between">
+            <div>
+              <div class="font-semibold"><%= plan[:product_name] %></div>
+              <div class="text-sm text-gray-500">
+                <%= number_to_currency(plan[:amount]) %><% if plan[:interval] %> / <%= plan[:interval] %><% end %>
+              </div>
+            </div>
+            <% if current_user.admin? %>
+              <%= button_to "Subscribe", billing_checkout_path(price_id: plan[:id]), method: :post, class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <% unless current_user.admin? %>
+        <p class="text-sm text-gray-500 mt-4">Only an organization admin can start a subscription.</p>
+      <% end %>
+    <% else %>
+      <p class="text-sm text-gray-500">Billing isn't configured yet. Contact us to set up billing.</p>
+    <% end %>
   <% end %>
 </div>
