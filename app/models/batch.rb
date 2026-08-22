@@ -15,6 +15,7 @@ class Batch < ApplicationRecord
   validates :temperature_celsius, numericality: true, allow_nil: true
 
   scope :compliant, -> { where(temperature_celsius: COMPLIANT_RANGE) }
+  scope :non_compliant, -> { where.not(temperature_celsius: nil).where.not(temperature_celsius: COMPLIANT_RANGE) }
   scope :active, -> { where(status: "active") }
 
   def compliance_status

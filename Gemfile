@@ -26,6 +26,12 @@ gem "pg", "~> 1.5"
 gem "prawn", "~> 2.5"
 gem "prawn-table", "~> 0.2"
 
+# Billing. Used for webhook signature verification (Stripe::Webhook.construct_event)
+# so the webhook endpoint is real and safe to point Stripe at whenever real API
+# keys are configured -- no live checkout/charge code ships in this phase, since
+# that needs a real Stripe account this repo doesn't have (see the Phase 5 PR).
+gem "stripe", "~> 13.0"
+
 group :development, :test do
   # Static analysis, linting, and dependency-vulnerability scanning used by CI
   # (.github/workflows/ci.yml). These match what that workflow actually invokes.

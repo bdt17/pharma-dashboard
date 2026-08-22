@@ -1,1 +1,87 @@
-<h1>Live Dashboard - 22/22 Endpoints</h1>
+<div class="max-w-6xl mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-1">Dashboard</h1>
+  <p class="text-sm text-gray-500 mb-8"><%= current_organization&.name %></p>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+    <div class="border rounded-lg p-4">
+      <div class="text-sm text-gray-500">Batches</div>
+      <div class="text-2xl font-bold"><%= @batch_count %></div>
+      <div class="text-xs text-gray-400"><%= @active_batch_count %> active</div>
+    </div>
+    <div class="border rounded-lg p-4 <%= "border-red-300 bg-red-50" if @non_compliant_batches.any? %>">
+      <div class="text-sm text-gray-500">Non-compliant batches</div>
+      <div class="text-2xl font-bold <%= "text-red-600" if @non_compliant_batches.any? %>"><%= @non_compliant_batches.size %></div>
+      <div class="text-xs text-gray-400">outside 2-8°C</div>
+    </div>
+    <div class="border rounded-lg p-4">
+      <div class="text-sm text-gray-500">Vehicles</div>
+      <div class="text-2xl font-bold"><%= @vehicle_count %></div>
+      <div class="text-xs text-gray-400"><%= @vehicles_online_count %> pinged in last 15 min</div>
+    </div>
+    <div class="border rounded-lg p-4">
+      <div class="text-sm text-gray-500">Fleet view</div>
+      <div class="text-sm mt-2"><%= link_to "Live positions →", gps_path, class: "text-blue-600 underline" %></div>
+    </div>
+  </div>
+
+  <% if @non_compliant_batches.any? %>
+    <div class="mb-10">
+      <h2 class="text-lg font-bold mb-3 text-red-700">Temperature excursions</h2>
+      <table class="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border border-gray-300 p-2 text-left">Lot</th>
+            <th class="border border-gray-300 p-2 text-left">Temperature</th>
+            <th class="border border-gray-300 p-2 text-left">Status</th>
+            <th class="border border-gray-300 p-2 text-left"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @non_compliant_batches.each do |batch| %>
+            <tr class="bg-red-50">
+              <td class="border border-gray-300 p-2"><%= batch.lot_number %></td>
+              <td class="border border-gray-300 p-2 text-red-600 font-bold"><%= batch.temperature_celsius %>°C</td>
+              <td class="border border-gray-300 p-2"><%= batch.status.presence || "unknown" %></td>
+              <td class="border border-gray-300 p-2"><%= link_to "Chain of custody", batch_chain_of_custody_pdf_path(batch) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <div class="grid md:grid-cols-2 gap-8">
+    <div>
+      <h2 class="text-lg font-bold mb-3">Recent custody events</h2>
+      <% if @recent_custody_logs.empty? %>
+        <p class="text-gray-500 text-sm">None recorded yet.</p>
+      <% else %>
+        <ul class="text-sm space-y-2">
+          <% @recent_custody_logs.each do |log| %>
+            <li class="border-b pb-2">
+              <span class="font-medium"><%= log.action_type %></span> —
+              <%= log.batch.lot_number %> at <%= log.location %>
+              <span class="text-gray-400"><%= log.timestamp.strftime("%Y-%m-%d %H:%M") %></span>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-bold mb-3">Recent activity</h2>
+      <% if @recent_audit_logs.empty? %>
+        <p class="text-gray-500 text-sm">None recorded yet.</p>
+      <% else %>
+        <ul class="text-sm space-y-2">
+          <% @recent_audit_logs.each do |log| %>
+            <li class="border-b pb-2">
+              <span class="font-medium"><%= log.event %></span> by <%= log.user.email %>
+              <span class="text-gray-400"><%= log.created_at.strftime("%Y-%m-%d %H:%M") %></span>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
