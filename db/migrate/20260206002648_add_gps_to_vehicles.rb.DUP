@@ -1,9 +1,0 @@
-class AddGpsToVehicles < ActiveRecord::Migration[8.1]
-  def change
-    add_column :vehicles, :imei, :string, null: false
-    add_column :vehicles, :latitude, :float
-    add_column :vehicles, :longitude, :float
-    add_column :vehicles, :name, :string
-    add_index :vehicles, :imei, unique: true
-  end
-end

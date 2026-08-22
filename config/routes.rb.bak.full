@@ -1,5 +1,0 @@
-Rails.application.routes.draw do
-  root 'dashboard#index'
-  post '/gps/update', to: 'gps#update'
-  get '/gps/stream', to: 'gps#stream'
-end
