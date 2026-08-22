@@ -34,4 +34,63 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_match "Active", response.body
     assert_match "$99.00", response.body
   end
+
+  test "lists available plans from Stripe when there's no active subscription" do
+    plans = [ { id: "price_123", product_name: "Starter", amount: 99.0, currency: "usd", interval: "month" } ]
+
+    sign_in @user
+    StripeBilling.stub :available_plans, plans do
+      get billing_url
+    end
+
+    assert_response :success
+    assert_match "Starter", response.body
+    assert_match "$99.00", response.body
+  end
+
+  test "does not fetch plans once there's an active subscription" do
+    Subscription.sync_from_stripe!(organization: @organization, stripe_subscription_id: "sub_123", status: "active")
+
+    sign_in @user
+    StripeBilling.stub :available_plans, ->(*) { raise "should not be called" } do
+      get billing_url
+    end
+
+    assert_response :success
+  end
+
+  test "checkout redirects to the real Stripe URL for an admin" do
+    sign_in @user
+
+    StripeBilling.stub :start_checkout!, "https://checkout.stripe.com/fake-session" do
+      post billing_checkout_url, params: { price_id: "price_123" }
+    end
+
+    assert_redirected_to "https://checkout.stripe.com/fake-session"
+  end
+
+  test "checkout is forbidden for a non-admin" do
+    driver = User.create!(email: "driver@example.com", password: "password123!", organization: @organization, role: "driver")
+    sign_in driver
+
+    StripeBilling.stub :start_checkout!, ->(*) { raise "should not be called" } do
+      post billing_checkout_url, params: { price_id: "price_123" }
+    end
+
+    assert_redirected_to billing_url
+    follow_redirect!
+    assert_match "Only an organization admin", response.body
+  end
+
+  test "checkout handles Stripe not being configured without crashing" do
+    sign_in @user
+
+    StripeBilling.stub :start_checkout!, ->(*) { raise StripeBilling::NotConfigured } do
+      post billing_checkout_url, params: { price_id: "price_123" }
+    end
+
+    assert_redirected_to billing_url
+    follow_redirect!
+    assert_match "isn't configured yet", response.body
+  end
 end
