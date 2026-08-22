@@ -1,9 +1,37 @@
-<% content_for :title, "New custody log" %>
+<div class="max-w-lg mx-auto p-8">
+  <h1 class="text-2xl font-bold mb-4">Record a custody event — <%= @batch.lot_number %></h1>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New custody log</h1>
+  <%= form_with model: @custody_log, url: batch_custody_logs_path(@batch), local: true do |f| %>
+    <% if @custody_log.errors.any? %>
+      <div class="text-red-600 mb-4">
+        <ul>
+          <% @custody_log.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <%= render "form", custody_log: @custody_log %>
+    <div class="mb-4">
+      <%= f.label :action_type, class: "block font-medium mb-1" %>
+      <%= f.select :action_type, CustodyLog::ACTION_TYPES, {}, class: "border rounded p-2 w-full" %>
+    </div>
 
-  <%= link_to "Back to custody logs", custody_logs_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+    <div class="mb-4">
+      <%= f.label :handler_name, "Handler name", class: "block font-medium mb-1" %>
+      <%= f.text_field :handler_name, class: "border rounded p-2 w-full" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :location, class: "block font-medium mb-1" %>
+      <%= f.text_field :location, class: "border rounded p-2 w-full" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :condition_notes, "Notes (optional)", class: "block font-medium mb-1" %>
+      <%= f.text_area :condition_notes, class: "border rounded p-2 w-full" %>
+    </div>
+
+    <%= f.submit "Record event", class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+  <% end %>
 </div>
