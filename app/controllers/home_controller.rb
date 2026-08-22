@@ -2,7 +2,6 @@ class HomeController < ApplicationController
   before_action :authenticate_user!, only: [
     :enterprise_dashboard,
     :gps,
-    :vehicles,
     :billing
   ]
 
@@ -31,22 +30,12 @@ class HomeController < ApplicationController
     HTML
   end
 
+  # Real fleet positions for the signed-in user's organization, scoped the
+  # same way the API is (VehiclePolicy::Scope) -- this used to render a
+  # hardcoded JSON stub claiming "vehicles: 0" regardless of what was
+  # actually in the database.
   def gps
-    render json: {
-      status: "GPS STUB - Phase 11",
-      message: "Queclink GV55 IoT → Q2 2026",
-      endpoints: 8,
-      vehicles: 0
-    }
-  end
-
-  def vehicles
-    render json: {
-      vehicles: 42,
-      status: "Phase 10 LIVE",
-      fleet: "Queclink GV55 Ready",
-      endpoints: 8
-    }
+    @vehicles = policy_scope(Vehicle).order(:name)
   end
 
   def health

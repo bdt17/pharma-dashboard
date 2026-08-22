@@ -15,7 +15,6 @@ Rails.application.routes.draw do
   get "/billing", to: "home#billing"
 
   # Application endpoints
-  get "/api/vehicles", to: "home#vehicles"
   get "/batches.pdf", to: "batches#index", as: :batches_pdf
   get "/subscribe", to: "home#subscribe"
 
@@ -27,6 +26,9 @@ Rails.application.routes.draw do
   get "/batches/:batch_id/custody_logs/:id", to: "custody_logs#show", as: :batch_custody_log
 
   namespace :api, defaults: { format: :json } do
-    resources :vehicles, only: %i[index show]
+    namespace :v1 do
+      resources :vehicles, only: %i[index show]
+      post "/gps", to: "gps#create"
+    end
   end
 end

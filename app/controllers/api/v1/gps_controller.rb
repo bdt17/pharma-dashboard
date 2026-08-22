@@ -1,36 +1,42 @@
+# The GPS/telemetry ingestion endpoint real tracking devices post to.
+# Device-authenticated (per-vehicle token), not user-authenticated -- a
+# device has no Devise session. See Vehicle#api_token / #api_token_matches?.
 class Api::V1::GpsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  def update
-    vehicle = Vehicle.find_by(plates: params[:plate]) || Vehicle.first # Fallback
-    return head :not_found unless vehicle
+  def create
+    vehicle = authenticate_device!
+    return unless vehicle
 
-    vehicle.update!(
-      latitude: params[:lat].to_f,
-      longitude: params[:lng].to_f,
-      speed: params[:speed]&.to_f || 0,
-      heading: params[:heading]&.to_i || 0,
-      last_ping: Time.current
-    )
+    telemetry = vehicle.telemetries.new(telemetry_params)
 
-    # Real-time broadcast (ActionCable ready)
-    ActionCable.server.broadcast("gps_all", {
-      vehicle_id: vehicle.id,
-      lat: vehicle.latitude,
-      lng: vehicle.longitude,
-      speed: vehicle.speed,
-      timestamp: vehicle.last_ping
-    })
-
-    head :ok, location: api_v1_gps_path(vehicle.id)
+    if telemetry.save
+      head :created
+    else
+      render json: { errors: telemetry.errors.full_messages }, status: :unprocessable_content
+    end
   end
 
-  def index
-    render json: Vehicle.all.map { |v| { id: v.id, lat: v.latitude, lng: v.longitude } }
+  private
+
+  # Deliberately the same response for "no such IMEI" and "wrong token" --
+  # a real device (or an attacker) shouldn't be able to tell which one is
+  # true by probing.
+  def authenticate_device!
+    vehicle = Vehicle.find_by(imei: params[:imei])
+    token = request.headers["X-Device-Token"]
+
+    if vehicle&.api_token_matches?(token)
+      vehicle
+    else
+      head :unauthorized
+      nil
+    end
   end
 
-  def show
-    vehicle = Vehicle.find(params[:id])
-    render json: vehicle.as_json(only: [ :latitude, :longitude, :speed, :last_ping ])
+  def telemetry_params
+    # ActiveRecord type-casts these string params to the underlying float
+    # columns on assignment -- no manual conversion needed.
+    params.permit(:lat, :lng, :speed, :temp, :battery, :signal_strength)
   end
 end

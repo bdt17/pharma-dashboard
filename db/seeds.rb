@@ -42,6 +42,11 @@ end
 vehicle = Vehicle.find_or_create_by!(name: "Demo Truck 1", organization: organization) do |v|
   v.identifier = "PHX-001"
   v.status = "active"
+  v.imei = "860000000000001"
+end
+
+if vehicle.telemetries.none?
+  vehicle.telemetries.create!(lat: 33.4484, lng: -112.0740, speed: 42.0, temp: 5.0, battery: 98.0)
 end
 
 batch = Batch.find_or_create_by!(lot_number: "LOT-DEMO-001") do |b|
@@ -55,3 +60,8 @@ end
 if batch.custody_logs.none?
   batch.custody_logs.create!(action_type: "pickup", handler_name: "Demo Handler", location: "Phoenix, AZ warehouse")
 end
+
+puts "Seeded vehicle ##{vehicle.id} (imei=#{vehicle.imei}). " \
+     "To POST a GPS ping locally: curl -X POST http://localhost:3000/api/v1/gps " \
+     "-H 'X-Device-Token: #{vehicle.api_token}' " \
+     "-d 'imei=#{vehicle.imei}&lat=33.45&lng=-112.08'"
