@@ -16,7 +16,7 @@ def test_endpoint(path)
   response = Net::HTTP.get_response(uri)
   puts "  #{path.ljust(12)} → #{response.code} (#{response.body.bytesize} bytes)"
   success = (response.code == "200" && response.body.bytesize > 20)
-  [success, response.body.force_encoding('UTF-8').encode('UTF-8')]
+  [ success, response.body.force_encoding('UTF-8').encode('UTF-8') ]
 end
 
 puts "🚀 PHARMA ENTERPRISE v9.0 - PRODUCTION CERTIFIED"

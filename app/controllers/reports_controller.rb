@@ -6,7 +6,7 @@ class ReportsController < ApplicationController
       format.pdf do
         render pdf: "batch_#{@batch.id}_custody",
                template: "reports/pdf",
-               layout: 'pdf'
+               layout: "pdf"
       end
     end
   end

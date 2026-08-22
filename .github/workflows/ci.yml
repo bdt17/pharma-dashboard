@@ -56,9 +56,13 @@ jobs:
     services:
       postgres:
         image: postgres
+        # Trust auth: this container is ephemeral, network-isolated to this
+        # job, and destroyed when it ends — no password to manage or leak,
+        # and no "password: postgres"-shaped literal for a secret scanner to
+        # (correctly) trip over.
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
         ports:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -86,7 +90,6 @@ jobs:
           RAILS_ENV: test
           PHARMA_DATABASE_HOST: localhost
           PHARMA_DATABASE_USER: postgres
-          PHARMA_DATABASE_PASSWORD: postgres
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test

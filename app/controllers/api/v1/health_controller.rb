@@ -3,7 +3,7 @@ module Api
     class HealthController < ApplicationController
       skip_before_action :verify_authenticity_token
       def show
-        render json: {status: 'ok', timestamp: Time.now.to_i}
+        render json: { status: "ok", timestamp: Time.now.to_i }
       end
     end
   end

@@ -10,8 +10,8 @@ def test_path(path, expect_code = '200', description = nil)
   code, body_size = resp.code, resp.body&.size || 0
   status = (code == expect_code) ? "✅" : "❌"
   desc = description || path.split('/').last || "UNKNOWN"
-  puts "  %-35s %s %s (%d bytes)" % [desc, code, status, body_size]
-  [code, body_size]
+  puts "  %-35s %s %s (%d bytes)" % [ desc, code, status, body_size ]
+  [ code, body_size ]
 end
 
 def test_post(path, expect_code = '200', description = nil)
@@ -21,8 +21,8 @@ def test_post(path, expect_code = '200', description = nil)
   code, body_size = resp.code, resp.body&.size || 0
   status = (code == expect_code) ? "✅" : "❌"
   desc = description || path.split('/').last || "UNKNOWN"
-  puts "  %-35s %s %s (%d bytes)" % [desc, code, status, body_size]
-  [code, body_size]
+  puts "  %-35s %s %s (%d bytes)" % [ desc, code, status, body_size ]
+  [ code, body_size ]
 end
 
 def test_pdf(path)
@@ -30,7 +30,7 @@ def test_pdf(path)
   resp = Net::HTTP.get_response(uri)
   code = resp.code
   status = (code == '200') ? "✅" : "❌"
-  puts "  %-35s %s %s (PDF)" % ["CHAIN-OF-CUSTODY REPORT", code, status]
+  puts "  %-35s %s %s (PDF)" % [ "CHAIN-OF-CUSTODY REPORT", code, status ]
   code == '200'
 end
 

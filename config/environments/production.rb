@@ -17,7 +17,7 @@ Rails.application.configure do
 
   # Logging
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
-  config.log_tags = [:request_id]
+  config.log_tags = [ :request_id ]
   config.logger = ActiveSupport::TaggedLogging.logger(
     ActiveSupport::Logger.new($stdout)
   )

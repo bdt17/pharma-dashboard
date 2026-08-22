@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 BASE_URL = "https://pharma-dashboard-beq2.onrender.com"
-endpoints = ["/", "/health", "/vehicles", "/batches", "/batches/1/chain_of_custody", "/billing"]
+endpoints = [ "/", "/health", "/vehicles", "/batches", "/batches/1/chain_of_custody", "/billing" ]
 
 puts "PHARMA PRODUCTION CHECK (Text OK = Revenue Ready)\n" + "="*50
 live = 0

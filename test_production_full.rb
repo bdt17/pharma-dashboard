@@ -30,7 +30,7 @@ puts "\n🧪 TESTING 8 ENDPOINTS...".bold
 critical_tests = {
   dashboard: "#{BASE_URL}/",
   health: "#{BASE_URL}/api/health",
-  gps_post: "#{BASE_URL}/gps_post", 
+  gps_post: "#{BASE_URL}/gps_post",
   gps_stream: "#{BASE_URL}/gps_stream",
   test_pdf: "#{BASE_URL}/test_pdf",
   shipments: "#{BASE_URL}/shipments",    # NEW pharma

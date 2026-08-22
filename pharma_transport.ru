@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'securerandom'
 require 'rack'
 require 'json'
@@ -16,29 +17,29 @@ class PharmaTransportApp
 
     case path
     when "/favicon.ico"
-      [204, {}, []]
+      [ 204, {}, [] ]
     when "/"
-      [200, {"Content-Type" => "text/html"}, [landing_html]]
+      [ 200, { "Content-Type" => "text/html" }, [ landing_html ] ]
     when "/login", "/users/sign_in", "/users/sign_up"
-      [200, {"Content-Type" => "text/html"}, [login_html]]
+      [ 200, { "Content-Type" => "text/html" }, [ login_html ] ]
     when "/dashboard", "/enterprise/dashboard"
-      [200, {"Content-Type" => "text/html"}, [dashboard_html]]
+      [ 200, { "Content-Type" => "text/html" }, [ dashboard_html ] ]
     when "/gps", "/api/vehicles"
-      [200, {"Content-Type" => "application/json"}, [vehicles_json]]
+      [ 200, { "Content-Type" => "application/json" }, [ vehicles_json ] ]
     when %r{/batches/(\d+)/chain-of-custody\.pdf$}
       batch_id = $1
       PDF_MUTEX.synchronize {  # Thread-safe PDF [web:11]
-        [200, {
-          "Content-Type" => "application/pdf", 
+        [ 200, {
+          "Content-Type" => "application/pdf",
           "Content-Disposition" => "attachment; filename=CoC-#{batch_id}.pdf"
-        }, [coc_pdf(batch_id)]] 
+        }, [ coc_pdf(batch_id) ] ]
       }
     when "/health", "/batches", "/billing", "/subscribe", "/landing", "/signup", "/vehicles"
-      [200, {"Content-Type" => "text/html"}, [page_html(path)]]
+      [ 200, { "Content-Type" => "text/html" }, [ page_html(path) ] ]
     when "/auth/enterprise"
-      [302, {"Location" => "/dashboard"}, []]
+      [ 302, { "Location" => "/dashboard" }, [] ]
     else
-      [404, {"Content-Type" => "application/json"}, [{"error": "Not Found", "request_id": THREAD_LOCAL[:request_id]}.to_json]]
+      [ 404, { "Content-Type" => "application/json" }, [ { "error": "Not Found", "request_id": THREAD_LOCAL[:request_id] }.to_json ] ]
     end
   ensure
     THREAD_LOCAL[:request_id] = nil  # Clean up [web:13]
@@ -98,7 +99,7 @@ class PharmaTransportApp
       "status" => "GPS LIVE",
       "devices" => 42,
       "Queclink_GV55" => true,
-      "position" => {"lat" => 33.4484, "lng" => -112.0740},
+      "position" => { "lat" => 33.4484, "lng" => -112.0740 },
       "phoenix_az" => true,
       "specs" => "63x50x21.8mm, 250mAh battery, u‑blox GPS",
       "request_id" => THREAD_LOCAL[:request_id]
@@ -107,7 +108,7 @@ class PharmaTransportApp
 
   def self.coc_pdf(batch_id)
     @coc_template ||= freeze_string("Thomas IT Pharma Transport\nPHASE 10 Chain of Custody\nBatch ID: %s\nFDA 21 CFR Part 11 Compliant\nPhoenix, AZ\n42 Queclink GV55 Devices LIVE\nGenerated: %s\nTHOMAS IT LOGISTICS")
-    @coc_template % [batch_id, Time.now.strftime('%Y-%m-%d %H:%M:%S')]
+    @coc_template % [ batch_id, Time.now.strftime('%Y-%m-%d %H:%M:%S') ]
   end
 
   def self.page_html(path)
@@ -123,7 +124,7 @@ class PharmaTransportApp
       </div></body>
       </html>
     HTML
-    @page_template % [path, path, path]
+    @page_template % [ path, path, path ]
   end
 
   def self.freeze_string(str)

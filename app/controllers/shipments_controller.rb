@@ -1,5 +1,5 @@
 class ShipmentsController < ApplicationController
   def index
-    render plain: 'Shipments OK', layout: false
+    render plain: "Shipments OK", layout: false
   end
 end
