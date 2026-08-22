@@ -18,9 +18,14 @@ Rails.application.configure do
   # Logging
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
   config.log_tags = [ :request_id ]
-  config.logger = ActiveSupport::TaggedLogging.logger(
-    ActiveSupport::Logger.new($stdout)
-  )
+  # ActiveSupport::TaggedLogging.logger(*args) forwards its arguments
+  # straight to ActiveSupport::Logger.new(*args) internally -- it wants the
+  # raw args you'd give Logger.new (a filename/IO), not an already-built
+  # Logger. Passing it a Logger here made it try to File.open() a Logger
+  # object, crashing on every boot. This has never actually run before:
+  # nothing pointed a live Render deploy at the real Rails app until now
+  # (see the Start Command fix in Render's dashboard).
+  config.logger = ActiveSupport::TaggedLogging.logger($stdout)
 
   # Render terminates TLS before traffic reaches Puma.
   config.force_ssl = false
