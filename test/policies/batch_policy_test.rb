@@ -34,4 +34,18 @@ class BatchPolicyTest < ActiveSupport::TestCase
     scoped = BatchPolicy::Scope.new(@driver_a, Batch.all).resolve
     assert_equal [ @batch ], scoped.to_a
   end
+
+  test "record_custody? allows the assigned driver even though update? does not" do
+    assert BatchPolicy.new(@driver_a, @batch).record_custody?
+    assert_not BatchPolicy.new(@driver_a, @batch).update?
+  end
+
+  test "record_custody? denies a user from a different organization who isn't the assigned driver" do
+    assert_not BatchPolicy.new(@admin_b, @batch).record_custody?
+  end
+
+  test "record_custody? allows a dispatcher in the same organization" do
+    dispatcher_a = User.create!(email: "dispatcher-a@example.com", password: "password123!", organization: @org_a, role: "dispatcher")
+    assert BatchPolicy.new(dispatcher_a, @batch).record_custody?
+  end
 end

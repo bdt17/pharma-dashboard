@@ -35,3 +35,23 @@ else
   puts "Seeded organization ##{organization.id} (#{organization.name}) and admin@example.com."
   puts "  Generated password (shown once, not stored anywhere): #{admin_password}" if generated && user.previously_new_record?
 end
+
+# A sample vehicle/batch/custody event so a fresh local checkout has
+# something real to look at in the chain-of-custody PDF, instead of an
+# empty "no history" report.
+vehicle = Vehicle.find_or_create_by!(name: "Demo Truck 1", organization: organization) do |v|
+  v.identifier = "PHX-001"
+  v.status = "active"
+end
+
+batch = Batch.find_or_create_by!(lot_number: "LOT-DEMO-001") do |b|
+  b.name = "Demo Insulin Batch"
+  b.organization = organization
+  b.vehicle = vehicle
+  b.temperature_celsius = 5.0
+  b.status = "in_transit"
+end
+
+if batch.custody_logs.none?
+  batch.custody_logs.create!(action_type: "pickup", handler_name: "Demo Handler", location: "Phoenix, AZ warehouse")
+end

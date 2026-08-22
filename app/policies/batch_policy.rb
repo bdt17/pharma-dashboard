@@ -21,6 +21,13 @@ class BatchPolicy < ApplicationPolicy
     user.admin? && same_organization?
   end
 
+  # Recording a custody event isn't the same permission as editing the
+  # batch's own attributes (update?) -- whoever is physically handling the
+  # batch should be able to log a handoff, including the assigned driver.
+  def record_custody?
+    (user.admin? || user.dispatcher? || user.driver?) && (same_organization? || own_delivery?)
+  end
+
   class Scope < Scope
     def resolve
       scope.where(organization_id: user.organization_id)

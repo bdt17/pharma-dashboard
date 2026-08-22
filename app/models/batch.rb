@@ -1,16 +1,26 @@
 class Batch < ApplicationRecord
+  COMPLIANT_RANGE = (2..8)
+
   belongs_to :vehicle, optional: true
   belongs_to :driver, class_name: "User", inverse_of: :driven_batches, optional: true
   belongs_to :organization
+  has_many :audit_logs, dependent: :nullify
+  has_many :custody_logs, -> { order(:timestamp) }, dependent: :destroy
 
   validates :lot_number, presence: true
-  validates :temperature_celsius, numericality: { greater_than_or_equal_to: 2, less_than_or_equal_to: 8 }
+  # Intentionally *not* validated into the compliant range: a temperature
+  # excursion is exactly the event this system exists to detect and record.
+  # Rejecting the save would make it impossible to ever have a record of a
+  # real cold-chain breach. Numericality just guards against garbage input.
+  validates :temperature_celsius, numericality: true, allow_nil: true
 
-  scope :compliant, -> { where(temperature_celsius: 2..8) }
+  scope :compliant, -> { where(temperature_celsius: COMPLIANT_RANGE) }
   scope :active, -> { where(status: "active") }
 
   def compliance_status
-    temperature_celsius.between?(2, 8) ? "compliant" : "non-compliant"
+    return "unknown" if temperature_celsius.nil?
+
+    COMPLIANT_RANGE.cover?(temperature_celsius) ? "compliant" : "non-compliant"
   end
 
   def self.to_csv

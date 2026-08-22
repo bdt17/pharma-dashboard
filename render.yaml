@@ -1,2 +1,1 @@
 build: yarn install && bundle exec rails assets:precompile assets:clean
-wkhtmltopdf: true

@@ -3,7 +3,6 @@ class HomeController < ApplicationController
     :enterprise_dashboard,
     :gps,
     :vehicles,
-    :chain_of_custody,
     :billing
   ]
 
@@ -48,15 +47,6 @@ class HomeController < ApplicationController
       fleet: "Queclink GV55 Ready",
       endpoints: 8
     }
-  end
-
-  def chain_of_custody
-    pdf_content = "PHASE 10 CoC STUB\nBatch ID: #{params[:id]}\nFDA Compliant\n8/8 GREEN"
-
-    send_data pdf_content,
-              filename: "chain-of-custody-#{params[:id]}.pdf",
-              type: "application/pdf",
-              disposition: "attachment"
   end
 
   def health
