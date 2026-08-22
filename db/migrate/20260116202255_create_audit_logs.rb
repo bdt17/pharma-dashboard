@@ -11,7 +11,7 @@ class CreateAuditLogs < ActiveRecord::Migration[8.1]
       t.string :ip_address, limit: 45  # ✅ IPv6 ready (45 chars max)
       t.timestamps
     end
-    
+
     add_index :audit_logs, :event
     add_index :audit_logs, :ip_address
   end

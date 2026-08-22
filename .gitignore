@@ -1,34 +1,40 @@
-tmp/cache/
-*.rb
-scraped_content_*.txt
-node_modules/
-package.json
-package-lock.json
-postcss.config.js
-.env
-db/development.sqlite3*
-*.log
-tmp/
-# Dev database
+# Dev/test databases
 db/development.sqlite3*
 db/*.sqlite3-journal
 db/*.sqlite3-shm
 db/*.sqlite3-wal
-
-# Logs
-log/*.log
-tmp/
-
-/app/assets/builds/*
-!/app/assets/builds/.keep
-script/audit/*.pdf
-.env
-script/audit/*.pdf
-.env
-.env
-coc.pdf
-
 /storage/*.sqlite3
 /storage/*.sqlite3-*
+
+# Logs
+*.log
+log/*.log
 /log/*.log
+
+# Temp / cache
+tmp/
+tmp/cache/
 /tmp/*
+
+# Bundler local config (BUNDLE_WITHOUT etc. belong in the deploy platform's
+# env, e.g. .render.env for production — not committed here, or it silently
+# applies to local dev and CI too).
+/.bundle/
+
+# Node
+node_modules/
+package.json
+package-lock.json
+postcss.config.js
+
+# Secrets
+.env
+
+# Misc generated content
+scraped_content_*.txt
+script/audit/*.pdf
+coc.pdf
+
+# Compiled assets
+/app/assets/builds/*
+!/app/assets/builds/.keep

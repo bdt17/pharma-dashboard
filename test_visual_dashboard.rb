@@ -13,15 +13,15 @@ end
 
 loop do
   system('clear') || system('cls')
-  
+
   box_title("💉 THOMAS IT PHARMA TRANSPORT - LIVE")
-  
+
   begin
     resp = Net::HTTP.get_response(URI(BASE_URL))
     vehicles = resp.body.scan(/Vehicles:\s*(\d+)/).flatten.first || '25'
     batches = resp.body.scan(/Batches:\s*(\d+)/).flatten.first || '128'
     mrr = (vehicles.to_i * 99)
-    
+
     puts "\n📊 PRODUCTION METRICS"
     puts " ┌─────────────────────┬──────────┐"
     puts " │ Vehicles LIVE       │ #{vehicles.rjust(8)} │"
@@ -31,7 +31,7 @@ loop do
   rescue
     puts "\n📊 METRICS: Live dashboard responding ✓"
   end
-  
+
   puts "\n🔗 PRODUCTION ENDPOINTS (7/7 LIVE)"
   puts " ┌──────────────────────┬────────────────────────────────────┐"
   puts " │ Dashboard            │ https://pharma-dashboard-beq2.onrender.com/ │"
@@ -42,13 +42,13 @@ loop do
   puts " │ 💰 Billing ✓         │ /billing                           │"
   puts " │ GPS Stream ✓         │ /gps/stream                        │"
   puts " └──────────────────────┴────────────────────────────────────┘"
-  
+
   puts "\n💰 REVENUE FUNNEL READY"
   puts " 1. LIVE Demo → https://pharma-dashboard-beq2.onrender.com/"
   puts " 2. FDA Proof → /batches/1/chain_of_custody"
   puts " 3. $99/mo CTA → /billing → sales@thomasinformationtechnology.com"
   puts " 4. $5K setup + $990 MRR = CLOSED 🚀"
-  
+
   puts "\n📧 sales@thomasinformationtechnology.com"
   puts "\nPress Ctrl+C to exit... (updates every 5s)"
   sleep 5

@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.3.5"
 
-# Phase 10 Enterprise SaaS - NO DATABASE REQUIRED
 gem "rails", "~> 8.1.3"
 gem "puma", "~> 7.2"
 gem "devise", "~> 5.0"  # SINGLE devise entry
@@ -16,6 +15,13 @@ gem "redis", "~> 5.0"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "image_processing", "~> 1.2"
 
-# PostgreSQL adapter for production and Devise users.
+# PostgreSQL adapter — used in every environment (development, test, production).
 gem "pg", "~> 1.5"
-gem "sqlite3", ">= 2.1", "< 3.0"
+
+group :development, :test do
+  # Static analysis, linting, and dependency-vulnerability scanning used by CI
+  # (.github/workflows/ci.yml). These match what that workflow actually invokes.
+  gem "brakeman", require: false
+  gem "rubocop-rails-omakase", require: false
+  gem "bundler-audit", require: false
+end

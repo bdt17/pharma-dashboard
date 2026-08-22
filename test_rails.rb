@@ -26,12 +26,12 @@ broken_deps = []
 migrations.each do |migration|
   path = "db/migrate/#{migration}.rb"
   next unless File.exist?(path)
-  
+
   content = File.read(path)
   refs = content.scan(/t\.references?[:\s]+:(\w+)/).flatten
   creates = content.match(/create_table[:\s]+["'](\w+)["']/)&.captures&.first
   creates ||= content.match(/create_table\s+\(["'](\w+)["']/i)&.captures&.first
-  
+
   if creates && refs.any?
     puts "  #{migration}: creates=#{creates} → refs=#{refs.join(',')}"
     refs.each do |ref|

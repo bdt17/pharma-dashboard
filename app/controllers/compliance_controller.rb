@@ -1,5 +1,5 @@
 class ComplianceController < ApplicationController
   def index
-    render plain: 'Compliance OK', layout: false
+    render plain: "Compliance OK", layout: false
   end
 end
