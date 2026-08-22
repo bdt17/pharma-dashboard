@@ -14,5 +14,11 @@ module PharmaDashboard
     config.generators do |g|
       g.orm :active_record
     end
+
+    # Nothing in this app uses ActiveStorage attachments/variants (no
+    # has_one_attached / .variant( anywhere) -- the image_processing gem
+    # was dead weight and got removed. Say so explicitly rather than
+    # booting with a recurring "please add image_processing" warning.
+    config.active_storage.variant_processor = :disabled
   end
 end
