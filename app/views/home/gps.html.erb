@@ -1,5 +1,37 @@
-<h1 style="color: #1e40af; text-align: center; font-size: 3rem;">🛰️ GPS TRACKING</h1>
-<div style="text-align: center; font-size: 1.3rem; color: #374151; padding: 2rem;">
-  Live Locations • IoT Telemetry • Geofence Alerts<br>
-  <strong>Phase 10 Enterprise LIVE</strong>
+<div class="max-w-5xl mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-2">Live fleet</h1>
+  <p class="text-sm text-gray-500 mb-6"><%= current_organization&.name %></p>
+
+  <% if @vehicles.empty? %>
+    <p class="text-gray-500">No vehicles yet.</p>
+  <% else %>
+    <table class="w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-300 p-2 text-left">Vehicle</th>
+          <th class="border border-gray-300 p-2 text-left">Status</th>
+          <th class="border border-gray-300 p-2 text-left">Position</th>
+          <th class="border border-gray-300 p-2 text-left">Speed</th>
+          <th class="border border-gray-300 p-2 text-left">Last ping</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @vehicles.each do |vehicle| %>
+          <tr>
+            <td class="border border-gray-300 p-2"><%= vehicle.name.presence || vehicle.identifier %></td>
+            <td class="border border-gray-300 p-2"><%= vehicle.status.presence || "unknown" %></td>
+            <td class="border border-gray-300 p-2">
+              <% if vehicle.latitude && vehicle.longitude %>
+                <%= "%.4f, %.4f" % [ vehicle.latitude, vehicle.longitude ] %>
+              <% else %>
+                <span class="text-gray-400">no signal yet</span>
+              <% end %>
+            </td>
+            <td class="border border-gray-300 p-2"><%= vehicle.speed ? "#{vehicle.speed.round(1)} mph" : "—" %></td>
+            <td class="border border-gray-300 p-2"><%= vehicle.last_ping_at&.strftime("%Y-%m-%d %H:%M") || "never" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
 </div>

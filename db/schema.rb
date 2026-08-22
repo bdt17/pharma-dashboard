@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_22_203439) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_22_205252) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -68,48 +68,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_203439) do
     t.index ["batch_id"], name: "index_custody_logs_on_batch_id"
   end
 
-  create_table "gps_events", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "imei"
-    t.float "latitude"
-    t.float "longitude"
-    t.float "temperature"
-    t.datetime "updated_at", null: false
-    t.integer "vehicle_id"
-  end
-
-  create_table "gps_locations", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "device_imei"
-    t.boolean "ignition_status"
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "received_at"
-    t.float "speed"
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "location_points", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.float "latitude"
-    t.float "longitude"
-    t.datetime "recorded_at"
-    t.float "speed"
-    t.datetime "updated_at", null: false
-    t.bigint "vehicle_id"
-  end
-
-  create_table "locations", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.float "heading"
-    t.float "lat"
-    t.float "lng"
-    t.float "speed"
-    t.datetime "timestamp"
-    t.datetime "updated_at", null: false
-    t.integer "vehicle_id"
-  end
-
   create_table "orders", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "patient_id", null: false
@@ -162,7 +120,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_203439) do
   end
 
   create_table "telemetries", force: :cascade do |t|
-    t.bigint "batch_id", null: false
+    t.bigint "batch_id"
     t.float "battery"
     t.datetime "created_at", null: false
     t.float "lat"
@@ -201,17 +159,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_203439) do
   end
 
   create_table "vehicles", force: :cascade do |t|
+    t.string "api_token"
     t.datetime "created_at", null: false
+    t.integer "heading"
     t.string "identifier"
-    t.float "lat"
+    t.string "imei"
+    t.datetime "last_ping_at"
     t.float "latitude"
-    t.float "lng"
     t.float "longitude"
     t.string "name"
     t.bigint "organization_id"
     t.string "plate"
+    t.float "speed"
     t.string "status"
     t.datetime "updated_at", null: false
+    t.index ["api_token"], name: "index_vehicles_on_api_token", unique: true
+    t.index ["imei"], name: "index_vehicles_on_imei", unique: true
   end
 
   add_foreign_key "audit_logs", "batches"
