@@ -1,4 +1,69 @@
-<div>
-  <h1>FDA Part 11 Compliance</h1>
-  <p>All systems 21 CFR compliant</p>
+<div class="max-w-4xl mx-auto p-8">
+  <h1 class="text-2xl font-bold mb-1">Compliance</h1>
+  <p class="text-sm text-gray-500 mb-6"><%= current_organization&.name %></p>
+
+  <div class="grid grid-cols-3 gap-4 mb-8">
+    <div class="border rounded-lg p-4 <%= "border-red-300 bg-red-50" if @non_compliant_batches.any? %>">
+      <div class="text-sm text-gray-500">Non-compliant</div>
+      <div class="text-2xl font-bold <%= "text-red-600" if @non_compliant_batches.any? %>"><%= @non_compliant_batches.size %></div>
+    </div>
+    <div class="border rounded-lg p-4">
+      <div class="text-sm text-gray-500">Compliant</div>
+      <div class="text-2xl font-bold text-green-700"><%= @compliant_count %></div>
+    </div>
+    <div class="border rounded-lg p-4">
+      <div class="text-sm text-gray-500">No reading yet</div>
+      <div class="text-2xl font-bold text-gray-400"><%= @unknown_count %></div>
+    </div>
+  </div>
+
+  <% if @non_compliant_batches.any? %>
+    <h2 class="text-lg font-bold mb-3 text-red-700">Temperature excursions</h2>
+    <table class="w-full border-collapse border border-gray-300 mb-8">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-300 p-2 text-left">Lot</th>
+          <th class="border border-gray-300 p-2 text-left">Temperature</th>
+          <th class="border border-gray-300 p-2 text-left"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @non_compliant_batches.each do |batch| %>
+          <tr>
+            <td class="border border-gray-300 p-2"><%= batch.lot_number %></td>
+            <td class="border border-gray-300 p-2 text-red-600 font-bold"><%= batch.temperature_celsius %>°C</td>
+            <td class="border border-gray-300 p-2"><%= link_to "Chain of custody", batch_chain_of_custody_pdf_path(batch) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <h2 class="text-lg font-bold mb-3">Audit trail</h2>
+  <% if @audit_logs.empty? %>
+    <p class="text-gray-500 text-sm">No audited events yet.</p>
+  <% else %>
+    <table class="w-full border-collapse border border-gray-300">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-gray-300 p-2 text-left">Time</th>
+          <th class="border border-gray-300 p-2 text-left">User</th>
+          <th class="border border-gray-300 p-2 text-left">Event</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @audit_logs.each do |log| %>
+          <tr>
+            <td class="border border-gray-300 p-2"><%= log.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+            <td class="border border-gray-300 p-2"><%= log.user.email %></td>
+            <td class="border border-gray-300 p-2"><%= log.event %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <p class="text-xs text-gray-400 mt-6">
+    This is a record of the data held at the time of viewing. It is not, on its own, a certification of regulatory compliance.
+  </p>
 </div>

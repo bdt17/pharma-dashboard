@@ -1,4 +1,25 @@
-<div>
-  <h1>Billing Dashboard</h1>
-  <p>$500K ARR projection</p>
+<div class="max-w-2xl mx-auto p-8">
+  <h1 class="text-2xl font-bold mb-6">Billing</h1>
+
+  <% if @subscription.nil? %>
+    <div class="border rounded-lg p-6 bg-gray-50">
+      <p class="text-gray-700">No subscription on file for <%= current_organization&.name %>.</p>
+      <p class="text-sm text-gray-500 mt-2">Contact us to set up billing.</p>
+    </div>
+  <% else %>
+    <dl class="grid grid-cols-3 gap-y-3 border rounded-lg p-6">
+      <dt class="text-gray-500">Status</dt>
+      <dd class="col-span-2">
+        <span class="<%= @subscription.active_or_trialing? ? "text-green-700" : "text-red-600" %> font-semibold">
+          <%= @subscription.status.humanize %>
+        </span>
+      </dd>
+
+      <dt class="text-gray-500">Plan amount</dt>
+      <dd class="col-span-2"><%= number_to_currency(@subscription.plan_amount) if @subscription.plan_amount %></dd>
+
+      <dt class="text-gray-500">Current period ends</dt>
+      <dd class="col-span-2"><%= @subscription.current_period_end&.strftime("%Y-%m-%d") || "—" %></dd>
+    </dl>
+  <% end %>
 </div>

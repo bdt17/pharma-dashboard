@@ -9,14 +9,16 @@ Rails.application.routes.draw do
   get "/health", to: "home#health"
 
   # Authenticated application pages
-  get "/dashboard", to: "home#enterprise_dashboard", as: :dashboard
-  get "/enterprise/dashboard", to: "home#enterprise_dashboard"
+  get "/dashboard", to: "dashboard#index", as: :dashboard
+  get "/enterprise/dashboard", to: "dashboard#index"
   get "/gps", to: "home#gps"
-  get "/billing", to: "home#billing"
+  get "/billing", to: "billing#index", as: :billing
+  get "/compliance", to: "compliance#index", as: :compliance
+  get "/subscribe", to: redirect("/billing")
 
   # Application endpoints
   get "/batches.pdf", to: "batches#index", as: :batches_pdf
-  get "/subscribe", to: "home#subscribe"
+  post "/stripe/webhooks", to: "stripe_webhooks#create"
 
   # Chain of custody
   get "/batches/:id/chain-of-custody.pdf", to: "batches#chain_of_custody", as: :batch_chain_of_custody_pdf
