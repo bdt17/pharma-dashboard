@@ -25,6 +25,11 @@ Rails.application.configure do
   # Render terminates TLS before traffic reaches Puma.
   config.force_ssl = false
 
+  # Required so Action Mailer (used by Devise for password-reset and account
+  # -unlock emails) can build absolute URLs. Set APP_HOST to the real
+  # production domain in the deploy environment.
+  config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "example.com"), protocol: "https" }
+
   # Route health checks to a lightweight endpoint.
   config.silence_healthcheck_path = "/up"
 

@@ -1,6 +1,7 @@
 class Batch < ApplicationRecord
   belongs_to :vehicle, optional: true
-  belongs_to :driver, class_name: "User", optional: true
+  belongs_to :driver, class_name: "User", inverse_of: :driven_batches, optional: true
+  belongs_to :organization
 
   validates :lot_number, presence: true
   validates :temperature_celsius, numericality: { greater_than_or_equal_to: 2, less_than_or_equal_to: 8 }

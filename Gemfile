@@ -6,6 +6,7 @@ ruby "3.3.5"
 gem "rails", "~> 8.1.3"
 gem "puma", "~> 7.2"
 gem "devise", "~> 5.0"  # SINGLE devise entry
+gem "pundit", "~> 2.4"
 gem "bootsnap", require: false
 gem "importmap-rails"
 gem "turbo-rails"

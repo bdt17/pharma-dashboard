@@ -1,3 +1,4 @@
 class Vehicle < ApplicationRecord
-  has_many :batches  # Add this line
+  belongs_to :organization
+  has_many :batches
 end
