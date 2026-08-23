@@ -31,6 +31,18 @@
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "border rounded p-2 w-full" %>
     </div>
 
+    <div class="mb-6 text-sm">
+      <label class="inline-flex items-start gap-2">
+        <%= f.check_box :terms_accepted, class: "mt-1" %>
+        <span>
+          I agree to the
+          <%= link_to "Terms of Service", terms_path, target: "_blank", rel: "noopener", class: "text-blue-600 underline" %>
+          and
+          <%= link_to "Privacy Policy", privacy_path, target: "_blank", rel: "noopener", class: "text-blue-600 underline" %>.
+        </span>
+      </label>
+    </div>
+
     <%= f.submit "Create organization", class: "bg-blue-600 text-white px-4 py-2 rounded w-full" %>
   <% end %>
 

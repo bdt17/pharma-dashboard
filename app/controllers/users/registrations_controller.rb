@@ -52,7 +52,7 @@ module Users
     end
 
     def sign_up_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(:email, :password, :password_confirmation, :terms_accepted)
     end
   end
 end

@@ -7,6 +7,7 @@ gem "rails", "~> 8.1.3"
 gem "puma", "~> 8.0"
 gem "devise", "~> 5.0"  # SINGLE devise entry
 gem "pundit", "~> 2.4"
+gem "rack-attack", "~> 6.7"
 gem "bootsnap", require: false
 # importmap-rails needs an actual asset pipeline gem to serve the JS files
 # it pins -- neither this nor sprockets-rails was ever installed, so every

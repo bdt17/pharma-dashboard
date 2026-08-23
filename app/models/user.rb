@@ -14,6 +14,19 @@ class User < ApplicationRecord
   attr_accessor :requires_email_confirmation
   before_validation :auto_confirm_unless_self_service_signup, on: :create
 
+  # Same reasoning as requires_email_confirmation above: only the actual
+  # public signup form has a Terms/Privacy checkbox for a person to check,
+  # so this only applies there -- gated on the same flag rather than a
+  # second one, since both mean exactly "this is the self-service signup
+  # path." A console-created user, a seed, or a factory in the test suite
+  # never sees or needs this.
+  attr_accessor :terms_accepted
+  # acceptance defaults allow_nil: true (so a checkbox the form never
+  # submitted at all -- or bypassing the form entirely -- would otherwise
+  # silently pass); explicit false here so a missing value is actually
+  # rejected rather than treated as accepted.
+  validates :terms_accepted, acceptance: { message: "must be accepted to create an account", allow_nil: false }, if: :requires_email_confirmation
+
   belongs_to :organization
   # Plain belongs_to only validates that organization isn't nil -- it does
   # NOT check that the associated record is itself valid. Matters here
