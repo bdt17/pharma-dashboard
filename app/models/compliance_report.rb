@@ -1,8 +1,8 @@
 # One immutable row per generated Compliance Packet -- the tamper-evident
-# version ledger for a Batch's chain-of-custody PDF. See the compliance
-# packet assessment for the full design; this is step 1: the model,
-# migration, and versioning/hash-chain logic in isolation, with no
-# generator/controller wired to it yet.
+# version ledger for a Batch's chain-of-custody PDF, including the exact
+# rendered PDF bytes so a past version can be re-downloaded byte-for-byte
+# as it was issued. See ComplianceReportGenerator for how these get
+# created, and ComplianceReportsController for how a user triggers one.
 class ComplianceReport < ApplicationRecord
   belongs_to :batch
   belongs_to :organization
@@ -14,6 +14,7 @@ class ComplianceReport < ApplicationRecord
                        uniqueness: { scope: :batch_id }
   validates :content_hash, presence: true, format: { with: SHA256_HEX, message: "must be a 64-character SHA-256 hex digest" }
   validates :previous_hash, format: { with: SHA256_HEX, message: "must be a 64-character SHA-256 hex digest" }, allow_nil: true
+  validates :pdf_data, presence: true
 
   # Append-only ledger, same rationale as CustodyLog: a compliance packet
   # is a record of what was reported at a point in time. A correction is a
@@ -30,7 +31,7 @@ class ComplianceReport < ApplicationRecord
   # concurrent callers picking the same number. The unique index on
   # [batch_id, version] is the actual race-safety net; this just retries
   # once if it loses that race.
-  def self.create_next_version!(batch:, generated_by:, content_hash:)
+  def self.create_next_version!(batch:, generated_by:, content_hash:, pdf_data:)
     attempts = 0
     begin
       attempts += 1
@@ -41,7 +42,8 @@ class ComplianceReport < ApplicationRecord
         generated_by: generated_by,
         version: (last&.version || 0) + 1,
         content_hash: content_hash,
-        previous_hash: last&.content_hash
+        previous_hash: last&.content_hash,
+        pdf_data: pdf_data
       )
     rescue ActiveRecord::RecordNotUnique
       retry if attempts < 3
