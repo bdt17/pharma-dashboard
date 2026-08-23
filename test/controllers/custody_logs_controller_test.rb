@@ -44,7 +44,7 @@ class CustodyLogsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "index lists custody events for the batch, oldest first" do
-    CustodyLog.create!(batch: @batch, action_type: "delivered", handler_name: "Jane", location: "Tucson, AZ", timestamp: 1.hour.from_now)
+    CustodyLog.create!(batch: @batch, action_type: "handoff", handler_name: "Jane", location: "Tucson, AZ", timestamp: 1.hour.from_now)
     CustodyLog.create!(batch: @batch, action_type: "pickup", handler_name: "Jane", location: "Phoenix, AZ", timestamp: 2.hours.ago)
 
     sign_in @driver
@@ -52,5 +52,49 @@ class CustodyLogsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "td", text: "Phoenix, AZ"
+  end
+
+  def signature_params
+    { image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
+      signer_name: "John Recipient", signer_role: "recipient" }
+  end
+
+  test "a delivered event with a real signature is accepted and stamped with server-side metadata" do
+    sign_in @driver
+
+    post batch_custody_logs_url(@batch), params: {
+      custody_log: { action_type: "delivered", handler_name: "Jane Doe", location: "Phoenix, AZ", signature_data: signature_params }
+    }
+
+    log = CustodyLog.last
+    assert log.signed?
+    assert_equal "John Recipient", log.signature_data["signer_name"]
+    assert log.signature_data["signed_at"].present?, "signed_at should be stamped server-side"
+    assert log.signature_data["ip_address"].present?, "ip_address should be stamped server-side"
+  end
+
+  test "a delivered event with no signature is rejected with a real error, not a 500" do
+    sign_in @driver
+
+    assert_no_difference -> { CustodyLog.count } do
+      post batch_custody_logs_url(@batch), params: {
+        custody_log: { action_type: "delivered", handler_name: "Jane Doe", location: "Phoenix, AZ" }
+      }
+    end
+
+    assert_response :unprocessable_content
+    assert_match "must include a signature", response.body
+  end
+
+  test "a non-delivery event doesn't need a signature" do
+    sign_in @driver
+
+    assert_difference -> { CustodyLog.count }, 1 do
+      post batch_custody_logs_url(@batch), params: {
+        custody_log: { action_type: "pickup", handler_name: "Jane Doe", location: "Phoenix, AZ" }
+      }
+    end
+
+    assert_not CustodyLog.last.signed?
   end
 end

@@ -1,8 +1,12 @@
 # Generates the chain-of-custody compliance PDF for a single Batch: its
 # identity, cold-chain compliance status, the full custody handoff history
-# (CustodyLog), and the system audit trail for the batch (AuditLog). This is
-# the one real, data-backed replacement for the half-dozen hardcoded PDF/HTML
-# stubs that used to exist across the app (see the Phase 1 audit).
+# (CustodyLog), captured signatures, and the system audit trail for the
+# batch (AuditLog). This is the one real, data-backed replacement for the
+# half-dozen hardcoded PDF/HTML stubs that used to exist across the app
+# (see the Phase 1 audit).
+require "base64"
+require "stringio"
+
 class PdfChainOfCustodyGenerator
   def initialize(batch)
     @batch = batch
@@ -15,6 +19,7 @@ class PdfChainOfCustodyGenerator
     batch_details(pdf)
     temperature_monitoring(pdf)
     custody_history(pdf)
+    signatures(pdf)
     audit_trail(pdf)
     footer(pdf)
 
@@ -122,6 +127,46 @@ class PdfChainOfCustodyGenerator
       end
     end
     pdf.move_down 20
+  end
+
+  # Renders each captured signature as an actual embedded image, not just
+  # a note that one exists. A signature is proof tied to a specific custody
+  # event (most importantly "delivered"), so this lives as its own section
+  # rather than trying to cram an image into a custody_history table cell.
+  def signatures(pdf)
+    signed_logs = batch.custody_logs.select(&:signed?)
+    return if signed_logs.empty?
+
+    pdf.text "Signatures", size: 14, style: :bold
+    pdf.move_down 6
+
+    signed_logs.each do |log|
+      data = log.signature_data
+      pdf.text "#{log.action_type.humanize} -- #{data['signer_name']} (#{data['signer_role'].presence || 'signer'})",
+                size: 10, style: :bold
+      # The explicit move_down here matters, not just cosmetic spacing: two
+      # pdf.text calls back-to-back at different font sizes can end up
+      # overlapping in Prawn depending on the exact cursor position (hit
+      # this for real -- the signer name line silently vanished under the
+      # line below it at certain page positions). A move_down between them
+      # forces a clean baseline instead of relying on Prawn's implicit
+      # line-height advance.
+      pdf.move_down 2
+      pdf.text [ data["signed_at"], data["ip_address"] ].compact.join(" from "), size: 8, color: "666666"
+      pdf.move_down 4
+
+      image_bytes = decode_signature_image(data["image"])
+      pdf.image StringIO.new(image_bytes), width: 150 if image_bytes
+      pdf.move_down 14
+    end
+  end
+
+  def decode_signature_image(data_url)
+    return nil if data_url.blank?
+
+    Base64.decode64(data_url.sub(/\Adata:image\/\w+;base64,/, ""))
+  rescue StandardError
+    nil
   end
 
   def audit_trail(pdf)
