@@ -30,10 +30,34 @@ Rails.application.configure do
   # Render terminates TLS before traffic reaches Puma.
   config.force_ssl = false
 
-  # Required so Action Mailer (used by Devise for password-reset and account
-  # -unlock emails) can build absolute URLs. Set APP_HOST to the real
-  # production domain in the deploy environment.
+  # Required so Action Mailer (used by Devise for password-reset, account
+  # -unlock, and signup-confirmation emails) can build absolute URLs. Set
+  # APP_HOST to the real production domain in the deploy environment.
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "example.com"), protocol: "https" }
+
+  # No real delivery method was ever configured here -- Rails' unconfigured
+  # default (:smtp with no smtp_settings) raises on every send attempt, so
+  # password-reset/unlock emails have never actually gone out in production,
+  # and self-service signup's confirmation email (see
+  # Users::RegistrationsController) would fail the same way. Falls back to
+  # a safe no-op until real SMTP credentials are set as Render env vars,
+  # rather than crashing every request that tries to send mail.
+  if ENV["SMTP_ADDRESS"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: ENV.fetch("SMTP_ADDRESS"),
+      port: ENV.fetch("SMTP_PORT", 587).to_i,
+      domain: ENV.fetch("APP_HOST", "example.com"),
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"],
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
+  else
+    config.action_mailer.delivery_method = :test
+  end
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
 
   # Route health checks to a lightweight endpoint.
   config.silence_healthcheck_path = "/up"
