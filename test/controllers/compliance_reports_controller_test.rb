@@ -73,6 +73,38 @@ class ComplianceReportsControllerTest < ActionDispatch::IntegrationTest
     assert_select "a", text: "v2"
   end
 
+  test "generation is blocked once the free monthly limit is reached" do
+    sign_in @admin
+    ComplianceReportQuota::FREE_MONTHLY_LIMIT.times { post batch_compliance_reports_url(@batch) }
+
+    assert_no_difference "ComplianceReport.count" do
+      post batch_compliance_reports_url(@batch)
+    end
+
+    assert_redirected_to batch_compliance_reports_url(@batch)
+    follow_redirect!
+    assert_match "Free plan limit reached", response.body
+  end
+
+  test "an active subscription removes the free monthly limit" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_123")
+    sign_in @admin
+    ComplianceReportQuota::FREE_MONTHLY_LIMIT.times { post batch_compliance_reports_url(@batch) }
+
+    assert_difference "ComplianceReport.count", 1 do
+      post batch_compliance_reports_url(@batch)
+    end
+  end
+
+  test "hitting the quota does not create an audit log entry" do
+    sign_in @admin
+    ComplianceReportQuota::FREE_MONTHLY_LIMIT.times { post batch_compliance_reports_url(@batch) }
+
+    assert_no_difference "AuditLog.count" do
+      post batch_compliance_reports_url(@batch)
+    end
+  end
+
   test "a user from a different organization cannot view or download packets" do
     other_admin = User.create!(email: "other-admin@example.com", password: "password123!", organization: Organization.create!(name: "Other Org"), role: "admin")
     sign_in @admin
