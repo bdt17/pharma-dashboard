@@ -39,4 +39,19 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_match "Phoenix, AZ", response.body
     assert_match "pickup", response.body
   end
+
+  # A compliant batch never appears in the "Temperature excursions" table
+  # (that only lists non-compliant ones), so recent custody events was the
+  # only path from the dashboard to a batch's own page -- and it wasn't a
+  # link at all before this.
+  test "a recent custody event links to its batch's custody history" do
+    batch = Batch.create!(lot_number: "LOT-1", temperature_celsius: 5, vehicle: @vehicle, organization: @organization)
+    batch.custody_logs.create!(action_type: "pickup", handler_name: "Jane Doe", location: "Phoenix, AZ")
+
+    sign_in @user
+    get dashboard_url
+
+    assert_response :success
+    assert_select "a[href=?]", batch_custody_logs_path(batch), text: "LOT-1"
+  end
 end
