@@ -13,6 +13,7 @@ class PdfChainOfCustodyGenerator
 
     header(pdf)
     batch_details(pdf)
+    temperature_monitoring(pdf)
     custody_history(pdf)
     audit_trail(pdf)
     footer(pdf)
@@ -53,6 +54,45 @@ class PdfChainOfCustodyGenerator
     ) do
       row(5).text_color = compliant ? "1a7f37" : "b91c1c"
       row(5).font_style = :bold
+    end
+    pdf.move_down 20
+  end
+
+  # Real time-series sensor data (Telemetry), not just the single snapshot
+  # in the details table above -- this is what "temperature-monitoring
+  # reference" and "temperature excursion" actually mean for a shipment
+  # in transit, not a single point-in-time reading.
+  def temperature_monitoring(pdf)
+    pdf.text "Temperature Monitoring", size: 14, style: :bold
+    pdf.move_down 6
+
+    readings = batch.telemetries.where.not(temp: nil).to_a
+    if readings.empty?
+      pdf.text "No temperature-monitoring data recorded for this shipment.", size: 10, style: :italic, color: "666666"
+    else
+      temps = readings.map(&:temp)
+      excursions = batch.temperature_excursions.to_a
+
+      pdf.text "#{readings.size} reading#{'s' unless readings.size == 1} " \
+                "(#{temps.min}°C to #{temps.max}°C) -- #{excursions.size} outside the 2-8°C range.",
+                size: 10
+      pdf.move_down 6
+
+      if excursions.any?
+        rows = [ [ "Time", "Temperature", "Location" ] ]
+        excursions.each do |reading|
+          rows << [
+            reading.recorded_at&.strftime("%Y-%m-%d %H:%M") || "-",
+            "#{reading.temp}°C",
+            reading.lat && reading.lng ? "#{reading.lat.round(4)}, #{reading.lng.round(4)}" : "-"
+          ]
+        end
+        pdf.table(rows, header: true, cell_style: { size: 9, padding: 5 }, width: pdf.bounds.width) do
+          row(0).background_color = "b91c1c"
+          row(0).text_color = "FFFFFF"
+          row(0).font_style = :bold
+        end
+      end
     end
     pdf.move_down 20
   end

@@ -56,4 +56,28 @@ class PdfChainOfCustodyGeneratorTest < ActiveSupport::TestCase
     assert_includes text, "No custody events recorded"
     assert_includes text, "No audit events recorded"
   end
+
+  test "says so when there is no temperature-monitoring data yet, rather than inventing any" do
+    text = extracted_text(@batch)
+    assert_includes text, "No temperature-monitoring data recorded"
+  end
+
+  test "lists real temperature excursions with their location, not just the count" do
+    @batch.telemetries.create!(vehicle: @vehicle, lat: 33.4484, lng: -112.0740, temp: 5.0, recorded_at: 1.hour.ago)
+    @batch.telemetries.create!(vehicle: @vehicle, lat: 34.0522, lng: -118.2437, temp: 12.5, recorded_at: 30.minutes.ago)
+
+    text = extracted_text(@batch)
+    assert_includes text, "2 readings"
+    assert_includes text, "1 outside"
+    assert_includes text, "12.5"
+    assert_includes text, "34.0522"
+  end
+
+  test "does not list an excursion table when every reading is within range" do
+    @batch.telemetries.create!(vehicle: @vehicle, lat: 33.4484, lng: -112.0740, temp: 5.0)
+
+    text = extracted_text(@batch)
+    assert_includes text, "0 outside"
+    refute_includes text, "Location", "no excursion table should render when there's nothing to list"
+  end
 end
