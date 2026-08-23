@@ -12,6 +12,7 @@ class ComplianceReportsController < ApplicationController
   def index
     authorize @batch, :show?
     @compliance_reports = @batch.compliance_reports
+    @quota = ComplianceReportQuota.new(@batch.organization)
   end
 
   def show
@@ -20,6 +21,8 @@ class ComplianceReportsController < ApplicationController
 
   def create
     authorize @batch, :generate_compliance_report?
+    enforce_quota!
+    return if performed?
 
     result = ComplianceReportGenerator.new(@batch).generate!(generated_by: current_user)
     report = result.compliance_report
@@ -51,5 +54,16 @@ class ComplianceReportsController < ApplicationController
 
   def set_compliance_report
     @compliance_report = @batch.compliance_reports.find(params[:id])
+  end
+
+  # The pricing-metering gate -- see ComplianceReportQuota. Distinct from
+  # authorize above: that's "can this user role generate reports for this
+  # org," this is "has the org's plan run out of free ones this month."
+  def enforce_quota!
+    return unless ComplianceReportQuota.new(@batch.organization).exceeded?
+
+    redirect_to batch_compliance_reports_path(@batch),
+                alert: "Free plan limit reached: #{ComplianceReportQuota::FREE_MONTHLY_LIMIT} compliance packets " \
+                       "per month. Subscribe for unlimited generation."
   end
 end
