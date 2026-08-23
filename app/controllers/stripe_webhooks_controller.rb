@@ -43,14 +43,22 @@ class StripeWebhooksController < ApplicationController
       return
     end
 
-    price = stripe_subscription.items.data.first&.price
+    # As of Stripe API version 2025-11-17.clover, current_period_end lives
+    # on each subscription item rather than on the Subscription itself --
+    # a subscription can have multiple items, each billed on its own
+    # period. Reproduced live: every real checkout crashed this handler
+    # with NoMethodError, since Stripe::Subscription no longer responds to
+    # current_period_end at all. This app only ever creates single-item
+    # subscriptions, so the first item is authoritative for both the price
+    # and the period end.
+    item = stripe_subscription.items.data.first
 
     Subscription.sync_from_stripe!(
       organization: organization,
       stripe_subscription_id: stripe_subscription.id,
       status: stripe_subscription.status,
-      plan_amount: price ? price.unit_amount / 100.0 : nil,
-      current_period_end: Time.at(stripe_subscription.current_period_end)
+      plan_amount: item&.price ? item.price.unit_amount / 100.0 : nil,
+      current_period_end: item&.current_period_end ? Time.at(item.current_period_end) : nil
     )
   end
 

@@ -19,6 +19,9 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     { "Stripe-Signature" => Stripe::Webhook::Signature.generate_header(timestamp, signature) }
   end
 
+  # Matches the real shape Stripe sends as of API version 2025-11-17.clover:
+  # current_period_end lives on the subscription item, not the subscription
+  # itself.
   def subscription_event_payload(status: "active")
     {
       type: "customer.subscription.updated",
@@ -27,8 +30,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
           id: "sub_123",
           customer: "cus_123",
           status: status,
-          current_period_end: 1.month.from_now.to_i,
-          items: { data: [ { price: { unit_amount: 9900 } } ] }
+          items: { data: [ { price: { unit_amount: 9900 }, current_period_end: 1.month.from_now.to_i } ] }
         }
       }
     }.to_json
@@ -62,6 +64,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_equal @organization, subscription.organization
     assert_equal "active", subscription.status
     assert_equal 99.0, subscription.plan_amount
+    assert_not_nil subscription.current_period_end
   end
 
   test "accepts a correctly signed subscription.deleted event and cancels the subscription" do
@@ -83,7 +86,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
   test "ignores an event for a customer with no matching organization instead of raising" do
     payload = {
       type: "customer.subscription.updated",
-      data: { object: { id: "sub_999", customer: "cus_unknown", status: "active", current_period_end: 1.month.from_now.to_i, items: { data: [] } } }
+      data: { object: { id: "sub_999", customer: "cus_unknown", status: "active", items: { data: [] } } }
     }.to_json
 
     post stripe_webhooks_url,
