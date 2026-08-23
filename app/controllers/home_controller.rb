@@ -9,16 +9,15 @@ class HomeController < ApplicationController
   # get bounced right back here -- looking exactly like a broken login loop,
   # even though the session was valid the whole time. Send them straight to
   # the dashboard instead.
+  #
+  # This used to `render html: "...".html_safe` inline, which skips
+  # layouts/application.html.erb entirely -- so the homepage (the one page
+  # every anonymous visitor and prospect actually lands on) shipped with no
+  # Tailwind, no importmap/Stimulus, no nav, and critically no "Sign up"
+  # link, only "Sign in". Rendering the real template instead fixes all of
+  # that for free.
   def index
-    return redirect_to dashboard_path if user_signed_in?
-
-    render html: <<~HTML.html_safe
-      <div style="text-align:center;padding:4rem;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border-radius:20px;margin:2rem">
-        <h1 style="font-size:3rem;margin-bottom:1rem">Pharma Transport</h1>
-        <p style="font-size:1.3rem;margin-bottom:2rem">Enterprise logistics platform</p>
-        <a href="/login" style="background:#10b981;color:white;padding:1.2rem 3rem;border-radius:12px;text-decoration:none;font-weight:600;font-size:1.1rem">Sign in</a>
-      </div>
-    HTML
+    redirect_to dashboard_path if user_signed_in?
   end
 
   def login
