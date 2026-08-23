@@ -60,7 +60,8 @@
           <% @recent_custody_logs.each do |log| %>
             <li class="border-b pb-2">
               <span class="font-medium"><%= log.action_type %></span> —
-              <%= log.batch.lot_number %> at <%= log.location %>
+              <%= link_to log.batch.lot_number, batch_custody_logs_path(log.batch), class: "text-blue-600 underline" %>
+              at <%= log.location %>
               <span class="text-gray-400"><%= log.timestamp.strftime("%Y-%m-%d %H:%M") %></span>
             </li>
           <% end %>
