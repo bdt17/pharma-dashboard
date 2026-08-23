@@ -78,4 +78,40 @@ class StripeBillingTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "start_checkout! recreates the customer and retries when the stored customer id is stale" do
+    Stripe.api_key = "sk_test_fake"
+    @organization.update!(stripe_customer_id: "cus_stale")
+    fake_new_customer = Stripe::Customer.construct_from(id: "cus_fresh")
+    fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
+    stale_customer_error = Stripe::InvalidRequestError.new("No such customer: 'cus_stale'", "customer", code: "resource_missing")
+
+    attempts = []
+    Stripe::Customer.stub :create, fake_new_customer do
+      Stripe::Checkout::Session.stub :create, ->(params) {
+        attempts << params[:customer]
+        raise stale_customer_error if params[:customer] == "cus_stale"
+
+        fake_session
+      } do
+        url = StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+        assert_equal "https://checkout.stripe.com/cs_123", url
+      end
+    end
+
+    assert_equal [ "cus_stale", "cus_fresh" ], attempts
+    assert_equal "cus_fresh", @organization.reload.stripe_customer_id
+  end
+
+  test "start_checkout! re-raises a Stripe error that isn't a stale customer" do
+    Stripe.api_key = "sk_test_fake"
+    @organization.update!(stripe_customer_id: "cus_existing")
+    other_error = Stripe::InvalidRequestError.new("No such price: 'price_123'", "price", code: "resource_missing")
+
+    Stripe::Checkout::Session.stub :create, ->(*) { raise other_error } do
+      assert_raises(Stripe::InvalidRequestError) do
+        StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+      end
+    end
+  end
 end
