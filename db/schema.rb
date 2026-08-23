@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_22_205252) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_23_002126) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,6 +53,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_205252) do
     t.index ["lot"], name: "index_batches_on_lot", unique: true
     t.index ["lot_number"], name: "index_batches_on_lot_number", unique: true
     t.index ["vehicle_id"], name: "index_batches_on_vehicle_id"
+  end
+
+  create_table "compliance_reports", force: :cascade do |t|
+    t.bigint "batch_id", null: false
+    t.string "content_hash", null: false
+    t.datetime "created_at", null: false
+    t.bigint "generated_by_id", null: false
+    t.bigint "organization_id", null: false
+    t.string "previous_hash"
+    t.datetime "updated_at", null: false
+    t.integer "version", null: false
+    t.index ["batch_id", "version"], name: "index_compliance_reports_on_batch_id_and_version", unique: true
+    t.index ["batch_id"], name: "index_compliance_reports_on_batch_id"
+    t.index ["generated_by_id"], name: "index_compliance_reports_on_generated_by_id"
+    t.index ["organization_id"], name: "index_compliance_reports_on_organization_id"
   end
 
   create_table "custody_logs", force: :cascade do |t|
@@ -182,6 +197,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_205252) do
   add_foreign_key "batches", "organizations"
   add_foreign_key "batches", "users", column: "driver_id"
   add_foreign_key "batches", "vehicles"
+  add_foreign_key "compliance_reports", "batches"
+  add_foreign_key "compliance_reports", "organizations"
+  add_foreign_key "compliance_reports", "users", column: "generated_by_id"
   add_foreign_key "custody_logs", "batches"
   add_foreign_key "orders", "patients"
   add_foreign_key "subscriptions", "organizations"

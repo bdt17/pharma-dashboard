@@ -6,6 +6,7 @@ class Batch < ApplicationRecord
   belongs_to :organization
   has_many :audit_logs, dependent: :nullify
   has_many :custody_logs, -> { order(:timestamp) }, dependent: :destroy
+  has_many :compliance_reports, -> { order(:version) }, dependent: :restrict_with_error
 
   validates :lot_number, presence: true
   # Intentionally *not* validated into the compliant range: a temperature
