@@ -7,6 +7,13 @@ class Batch < ApplicationRecord
   has_many :audit_logs, dependent: :nullify
   has_many :custody_logs, -> { order(:timestamp) }, dependent: :destroy
   has_many :compliance_reports, -> { order(:version) }, dependent: :restrict_with_error
+  # Only readings explicitly linked to this batch (Telemetry#batch_id) --
+  # not "everything this vehicle ever recorded," which would mix in other
+  # deliveries. Nothing currently sets batch_id when ingesting GPS/sensor
+  # data (see Api::V1::GpsController#create), so this is empty until that
+  # gap is closed; the compliance packet says so honestly rather than
+  # falling back to a broader, misleading query.
+  has_many :telemetries, -> { order(:recorded_at) }, dependent: :nullify
 
   validates :lot_number, presence: true
   # Intentionally *not* validated into the compliant range: a temperature
@@ -23,6 +30,14 @@ class Batch < ApplicationRecord
     return "unknown" if temperature_celsius.nil?
 
     COMPLIANT_RANGE.cover?(temperature_celsius) ? "compliant" : "non-compliant"
+  end
+
+  # Telemetry readings for this batch that fall outside the compliant
+  # range -- the real, time-series basis for "temperature excursion,"
+  # distinct from compliance_status above (which only ever reflects the
+  # single most recent snapshot on the batch itself).
+  def temperature_excursions
+    telemetries.where.not(temp: nil).where.not(temp: COMPLIANT_RANGE)
   end
 
   def self.to_csv
