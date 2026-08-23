@@ -12,7 +12,16 @@ Rails.application.configure do
   # LOGGER FIX (CRITICAL)
 
   # EMAIL
-  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  # No local mail catcher (letter_opener, mailcatcher, etc.) is set up in
+  # this app -- an unconfigured delivery_method defaults to :smtp with no
+  # smtp_settings, which raises ECONNREFUSED trying to reach localhost:25
+  # the instant anything sends mail (password reset, account unlock, and
+  # now signup confirmation -- see Users::RegistrationsController). :test
+  # accepts the send without actually delivering anywhere, so those flows
+  # work locally without crashing; there's just nowhere to see the email
+  # body short of `ActionMailer::Base.deliveries` in a console.
+  config.action_mailer.delivery_method = :test
+  config.action_mailer.raise_delivery_errors = false
 end
