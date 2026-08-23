@@ -48,4 +48,17 @@ class BatchPolicyTest < ActiveSupport::TestCase
     dispatcher_a = User.create!(email: "dispatcher-a@example.com", password: "password123!", organization: @org_a, role: "dispatcher")
     assert BatchPolicy.new(dispatcher_a, @batch).record_custody?
   end
+
+  test "generate_compliance_report? allows admin and dispatcher, denies driver -- even the assigned one" do
+    dispatcher_a = User.create!(email: "dispatcher-a@example.com", password: "password123!", organization: @org_a, role: "dispatcher")
+    admin_a = User.create!(email: "admin-a@example.com", password: "password123!", organization: @org_a, role: "admin")
+
+    assert BatchPolicy.new(admin_a, @batch).generate_compliance_report?
+    assert BatchPolicy.new(dispatcher_a, @batch).generate_compliance_report?
+    assert_not BatchPolicy.new(@driver_a, @batch).generate_compliance_report?, "the assigned driver should not be able to issue the billable packet"
+  end
+
+  test "generate_compliance_report? denies a user from a different organization" do
+    assert_not BatchPolicy.new(@admin_b, @batch).generate_compliance_report?
+  end
 end

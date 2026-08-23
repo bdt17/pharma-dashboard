@@ -30,6 +30,12 @@ Rails.application.routes.draw do
   post "/batches/:batch_id/custody_logs", to: "custody_logs#create"
   get "/batches/:batch_id/custody_logs/:id", to: "custody_logs#show", as: :batch_custody_log
 
+  # Compliance packets
+  get "/batches/:batch_id/compliance_reports", to: "compliance_reports#index", as: :batch_compliance_reports
+  post "/batches/:batch_id/compliance_reports", to: "compliance_reports#create"
+  get "/batches/:batch_id/compliance_reports/:id", to: "compliance_reports#show", as: :batch_compliance_report
+  get "/batches/:batch_id/compliance_reports/:id/download.pdf", to: "compliance_reports#download", as: :batch_compliance_report_download
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :vehicles, only: %i[index show]

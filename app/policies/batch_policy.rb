@@ -28,6 +28,16 @@ class BatchPolicy < ApplicationPolicy
     (user.admin? || user.dispatcher? || user.driver?) && (same_organization? || own_delivery?)
   end
 
+  # A formal Compliance Packet is a billable, customer-facing artifact
+  # (each generation counts toward the organization's plan quota -- see
+  # the pricing-metering design) -- deliberately narrower than
+  # record_custody?. A driver can log what happened during a delivery, but
+  # issuing the official versioned report is an organizational/billing
+  # action, not a field one. No own_delivery? carve-out here on purpose.
+  def generate_compliance_report?
+    (user.admin? || user.dispatcher?) && same_organization?
+  end
+
   class Scope < Scope
     def resolve
       scope.where(organization_id: user.organization_id)

@@ -1,8 +1,8 @@
-# Step 2 of the Compliance Packet feature: wraps the existing
-# PdfChainOfCustodyGenerator (unchanged, still just renders a PDF from a
-# Batch) and turns each generation into a real, versioned, hashed
-# ComplianceReport row. Still isolated -- no controller/route/policy calls
-# this yet.
+# Wraps the existing PdfChainOfCustodyGenerator (unchanged, still just
+# renders a PDF from a Batch) and turns each generation into a real,
+# versioned, hashed ComplianceReport row, persisting the exact PDF bytes
+# so a past version can be re-downloaded byte-for-byte later. Called from
+# ComplianceReportsController#create.
 #
 # Note for step 4 (extending the PDF's own content): the hash is computed
 # from the rendered bytes, so the PDF can't embed its own content_hash
@@ -24,7 +24,8 @@ class ComplianceReportGenerator
     compliance_report = ComplianceReport.create_next_version!(
       batch: batch,
       generated_by: generated_by,
-      content_hash: content_hash
+      content_hash: content_hash,
+      pdf_data: pdf_bytes
     )
 
     Result.new(compliance_report: compliance_report, pdf_bytes: pdf_bytes)
