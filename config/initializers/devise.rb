@@ -24,7 +24,14 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = "no-reply@pharma-transport.example"
+  #
+  # The fallback here is a placeholder domain that can't actually send mail
+  # (no real SMTP provider will let you send "from" an unverified address,
+  # and Gmail's relay specifically requires "from" to match the
+  # authenticated account) -- MAILER_SENDER must be set as a real Render
+  # env var, to whatever address was verified with/authenticated against
+  # SMTP_ADDRESS, for confirmation/reset emails to actually deliver.
+  config.mailer_sender = ENV.fetch("MAILER_SENDER", "no-reply@pharma-transport.example")
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
