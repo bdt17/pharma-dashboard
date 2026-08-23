@@ -17,6 +17,13 @@ gem "propshaft"
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
+# Every Tailwind utility class used across app/views (p-2, border, max-w-lg,
+# text-2xl, etc.) has never actually rendered -- no Tailwind CSS was loaded
+# anywhere, in any environment. package.json/Procfile.dev/app/assets/tailwind
+# were leftover scaffolding from a setup that was started and abandoned; this
+# gem was never actually in the Gemfile. Ruby-vendored Tailwind CLI, no Node
+# build step needed, and it hooks into assets:precompile automatically.
+gem "tailwindcss-rails"
 gem "jbuilder"
 gem "redis", "~> 5.0"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
