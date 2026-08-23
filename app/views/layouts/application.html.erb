@@ -67,7 +67,6 @@
         <li><%= link_to "GPS", gps_path %></li>
         <li><%= link_to "Billing", billing_path %></li>
         <li><%= link_to "Compliance", compliance_path %></li>
-        <li><a href="/health">Health</a></li>
         <% if user_signed_in? %>
           <li><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %></li>
         <% else %>
