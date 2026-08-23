@@ -10,6 +10,13 @@
       actually loaded in a browser. Needed now for real: signature capture
       below depends on JS actually running. %>
   <%= javascript_importmap_tags %>
+  <%# Same story as the importmap above: every Tailwind utility class used
+      throughout app/views (p-2, border, max-w-lg, text-2xl, bg-gray-100...)
+      has never actually rendered -- nothing linked a compiled stylesheet
+      here. tailwindcss-rails compiles app/assets/tailwind/application.css
+      to app/assets/builds/tailwind.css automatically as part of
+      assets:precompile. %>
+  <%= stylesheet_link_tag "tailwind" %>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
