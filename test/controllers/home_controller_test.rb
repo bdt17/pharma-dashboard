@@ -6,6 +6,13 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "home page renders inside the real layout with a sign up link" do
+    get root_url
+
+    assert_select "nav"
+    assert_select "a[href=?]", new_user_registration_path, text: "Sign up"
+  end
+
   test "home page redirects a signed-in user straight to the dashboard" do
     organization = Organization.create!(name: "Acme Pharma")
     user = User.create!(email: "dispatcher@example.com", password: "password123!", organization: organization, role: "dispatcher")
