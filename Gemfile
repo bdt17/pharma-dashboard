@@ -8,6 +8,12 @@ gem "puma", "~> 8.0"
 gem "devise", "~> 5.0"  # SINGLE devise entry
 gem "pundit", "~> 2.4"
 gem "bootsnap", require: false
+# importmap-rails needs an actual asset pipeline gem to serve the JS files
+# it pins -- neither this nor sprockets-rails was ever installed, so every
+# pinned/vendored JS asset 404'd and no Stimulus controller in this app has
+# ever actually loaded in a browser. Propshaft is Rails 8's default pairing
+# with importmap-rails (no Node build step needed).
+gem "propshaft"
 gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"

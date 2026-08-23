@@ -80,4 +80,29 @@ class PdfChainOfCustodyGeneratorTest < ActiveSupport::TestCase
     assert_includes text, "0 outside"
     refute_includes text, "Location", "no excursion table should render when there's nothing to list"
   end
+
+  # 1x1 transparent PNG -- just enough of a real image for Prawn to embed
+  # without raising, so this exercises the actual image-decoding path
+  # rather than stubbing it out.
+  MINIMAL_PNG = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+
+  test "renders a signature section with the signer's name and role for a signed delivery" do
+    CustodyLog.create!(batch: @batch, action_type: "delivered", handler_name: "Jane Doe", location: "Phoenix, AZ",
+                        signature_data: { "image" => "data:image/png;base64,#{MINIMAL_PNG}",
+                                           "signer_name" => "John Recipient", "signer_role" => "recipient",
+                                           "signed_at" => "2026-08-22T10:00:00Z", "ip_address" => "203.0.113.5" })
+
+    text = extracted_text(@batch)
+    assert_includes text, "Signatures"
+    assert_includes text, "John Recipient"
+    assert_includes text, "recipient"
+    assert_includes text, "203.0.113.5"
+  end
+
+  test "does not render a signature section when nothing has been signed" do
+    CustodyLog.create!(batch: @batch, action_type: "pickup", handler_name: "Jane Doe", location: "Phoenix, AZ")
+
+    text = extracted_text(@batch)
+    refute_includes text, "Signatures", "no signature section should render when nothing is signed"
+  end
 end

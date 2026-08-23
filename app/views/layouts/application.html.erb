@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <%= csrf_meta_tags %>
+  <%# Never wired up before -- config/importmap.rb didn't even exist, so no
+      Stimulus controller in this app (gps_map_controller.js etc.) has ever
+      actually loaded in a browser. Needed now for real: signature capture
+      below depends on JS actually running. %>
+  <%= javascript_importmap_tags %>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {

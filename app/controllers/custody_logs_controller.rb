@@ -20,6 +20,7 @@ class CustodyLogsController < ApplicationController
   def create
     authorize @batch, :record_custody?
     @custody_log = @batch.custody_logs.build(custody_log_params)
+    stamp_signature_metadata
 
     if @custody_log.save
       AuditLog.record!(
@@ -46,6 +47,20 @@ class CustodyLogsController < ApplicationController
   end
 
   def custody_log_params
-    params.require(:custody_log).permit(:action_type, :handler_name, :location, :condition_notes)
+    params.require(:custody_log).permit(
+      :action_type, :handler_name, :location, :condition_notes,
+      signature_data: [ :image, :signer_name, :signer_role ]
+    )
+  end
+
+  # signed_at/ip_address are recorded server-side, not trusted from the
+  # client -- same principle as AuditLog's ip_address.
+  def stamp_signature_metadata
+    return unless @custody_log.signature_data.present? && @custody_log.signature_data["image"].present?
+
+    @custody_log.signature_data = @custody_log.signature_data.merge(
+      "signed_at" => Time.current.iso8601,
+      "ip_address" => request.remote_ip
+    )
   end
 end
