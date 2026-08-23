@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get "/landing", to: "home#landing"
   get "/signup", to: "home#signup"
   get "/health", to: "home#health"
+  get "/terms", to: "legal#terms", as: :terms
+  get "/privacy", to: "legal#privacy", as: :privacy
 
   # Authenticated application pages
   get "/dashboard", to: "dashboard#index", as: :dashboard
