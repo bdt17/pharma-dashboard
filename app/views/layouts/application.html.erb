@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= content_for?(:title) ? yield(:title) : "Pharma Transport Enterprise" %></title>
+  <% page_title = content_for?(:title) ? yield(:title) : "Pharma Transport Enterprise" %>
+  <title><%= page_title %></title>
   <% if content_for?(:meta_description) %>
     <meta name="description" content="<%= yield(:meta_description) %>">
   <% end %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <%= csrf_meta_tags %>
+  <%# Open Graph / Twitter Card tags -- without these, any link to the site
+      shared in Slack, email, or social media renders as a bare URL with no
+      preview. No og:image is set (no real social-preview asset exists yet)
+      -- omitting it entirely renders better than a wrong or broken image. %>
+  <meta property="og:title" content="<%= page_title %>">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pharma Transport">
+  <meta property="og:url" content="<%= request.original_url %>">
+  <meta name="twitter:card" content="summary">
+  <% if content_for?(:meta_description) %>
+    <meta property="og:description" content="<%= yield(:meta_description) %>">
+  <% end %>
   <%# Never wired up before -- config/importmap.rb didn't even exist, so no
       Stimulus controller in this app (gps_map_controller.js etc.) has ever
       actually loaded in a browser. Needed now for real: signature capture
