@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+/* Design tokens for the whole app. tailwindcss-rails 4.x uses the Tailwind v4
+   Ruby CLI, which is CSS-first -- it does NOT read tailwind.config.js unless
+   the file is pulled in with an explicit @config directive (it isn't here),
+   so a JS config file sitting next to this is silently inert. This @theme
+   block is the real, effective place to define brand colors; see the removed
+   tailwind.config.js for the previous (dead) attempt at the same thing. */
+@theme {
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+
+  --color-accent-50: #ecfdf5;
+  --color-accent-100: #d1fae5;
+  --color-accent-500: #10b981;
+  --color-accent-600: #059669;
+  --color-accent-700: #047857;
+}
