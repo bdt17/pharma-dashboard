@@ -18,19 +18,28 @@ class StripeBilling
     Stripe.api_key.present?
   end
 
-  # [{ id:, product_name:, amount:, currency:, interval: }, ...]
+  # [{ id:, product_name:, amount:, currency:, interval: }, ...] -- recurring
+  # (subscription) Prices only. Predates available_addons below, back when
+  # every active Price in Stripe happened to be a subscription plan, so
+  # nothing filtered on :recurring here -- once a one-time addon Price
+  # actually existed, it started leaking into this list too, offering a
+  # "Subscribe" button for a Price Stripe can't put in subscription-mode
+  # Checkout at all. select(&:recurring) is the fix; reject(&:recurring)
+  # below is available_addons' mirror image of it.
   def self.available_plans
     return [] unless configured?
 
-    Stripe::Price.list(active: true, expand: [ "data.product" ]).data.map do |price|
-      {
-        id: price.id,
-        product_name: price.product.name,
-        amount: price.unit_amount / 100.0,
-        currency: price.currency,
-        interval: price.recurring&.interval
-      }
-    end
+    Stripe::Price.list(active: true, expand: [ "data.product" ]).data
+      .select(&:recurring)
+      .map do |price|
+        {
+          id: price.id,
+          product_name: price.product.name,
+          amount: price.unit_amount / 100.0,
+          currency: price.currency,
+          interval: price.recurring.interval
+        }
+      end
   end
 
   # [{ id:, product_name:, amount:, currency: }, ...] -- the one-time

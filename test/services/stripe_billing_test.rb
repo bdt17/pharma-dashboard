@@ -42,6 +42,22 @@ class StripeBillingTest < ActiveSupport::TestCase
     end
   end
 
+  test "available_plans excludes one-time (non-recurring) prices, e.g. the addons" do
+    Stripe.api_key = "sk_test_fake"
+    recurring = Stripe::Price.construct_from(
+      id: "price_sub", unit_amount: 9900, currency: "usd", recurring: { interval: "month" }, product: { name: "Starter" }
+    )
+    one_time = Stripe::Price.construct_from(
+      id: "price_addon", unit_amount: 14_900, currency: "usd", recurring: nil, product: { name: "Extra Compliance Packet" }
+    )
+    list = Stripe::ListObject.construct_from(data: [ recurring, one_time ])
+
+    Stripe::Price.stub :list, list do
+      plans = StripeBilling.available_plans
+      assert_equal [ "price_sub" ], plans.map { |p| p[:id] }
+    end
+  end
+
   test "start_checkout! raises NotConfigured rather than hitting the API with no key" do
     Stripe.api_key = nil
     assert_raises(StripeBilling::NotConfigured) do
