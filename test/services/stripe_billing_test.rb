@@ -114,4 +114,49 @@ class StripeBillingTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "available_addons lists only non-recurring prices" do
+    Stripe.api_key = "sk_test_fake"
+    recurring = Stripe::Price.construct_from(
+      id: "price_sub", unit_amount: 9900, currency: "usd", recurring: { interval: "month" }, product: { name: "Starter" }
+    )
+    one_time = Stripe::Price.construct_from(
+      id: "price_addon", unit_amount: 14_900, currency: "usd", recurring: nil, product: { name: "Extra Compliance Packet" }
+    )
+    list = Stripe::ListObject.construct_from(data: [ recurring, one_time ])
+
+    Stripe::Price.stub :list, list do
+      addons = StripeBilling.available_addons
+      assert_equal [ { id: "price_addon", product_name: "Extra Compliance Packet", amount: 149.0, currency: "usd" } ], addons
+    end
+  end
+
+  test "available_addons returns [] when Stripe isn't configured" do
+    Stripe.api_key = nil
+    assert_equal [], StripeBilling.available_addons
+  end
+
+  test "start_addon_checkout! creates a one-time payment Checkout Session with report-credit metadata" do
+    Stripe.api_key = "sk_test_fake"
+    fake_customer = Stripe::Customer.construct_from(id: "cus_new")
+    fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
+
+    session_params = nil
+    Stripe::Customer.stub :create, fake_customer do
+      Stripe::Checkout::Session.stub :create, ->(params) { session_params = params; fake_session } do
+        url = StripeBilling.start_addon_checkout!(organization: @organization, price_id: "price_addon", success_url: "https://x/success", cancel_url: "https://x/cancel")
+        assert_equal "https://checkout.stripe.com/cs_123", url
+      end
+    end
+
+    assert_equal "payment", session_params[:mode]
+    assert_equal({ "kind" => "compliance_report_credit" }, session_params[:metadata])
+  end
+
+  test "start_addon_checkout! raises NotConfigured rather than hitting the API with no key" do
+    Stripe.api_key = nil
+    assert_raises(StripeBilling::NotConfigured) do
+      StripeBilling.start_addon_checkout!(organization: @organization, price_id: "price_addon", success_url: "https://x/success", cancel_url: "https://x/cancel")
+    end
+  end
 end

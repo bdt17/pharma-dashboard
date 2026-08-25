@@ -26,29 +26,40 @@ class StripeBilling
     end
   end
 
+  # [{ id:, product_name:, amount:, currency: }, ...] -- the one-time
+  # (non-subscription) counterpart to available_plans, e.g. the $149 extra
+  # Compliance Packet credit. Same rule: never hardcoded here, just
+  # whatever's actually active in Stripe right now.
+  def self.available_addons
+    return [] unless configured?
+
+    Stripe::Price.list(active: true, expand: [ "data.product" ]).data
+      .reject(&:recurring)
+      .map { |price| { id: price.id, product_name: price.product.name, amount: price.unit_amount / 100.0, currency: price.currency } }
+  end
+
   # Ensures the organization has a Stripe Customer, creates a Checkout
   # Session for the given price, and returns the URL to redirect the user
   # to. The organization<->customer link (stripe_customer_id) is what lets
   # StripeWebhooksController match the subsequent customer.subscription.*
   # events back to the right organization.
   def self.start_checkout!(organization:, price_id:, success_url:, cancel_url:)
-    raise NotConfigured unless configured?
+    with_checkout_retry(organization) do |customer_id|
+      checkout_session(customer_id: customer_id, price_id: price_id, success_url: success_url, cancel_url: cancel_url).url
+    end
+  end
 
-    customer_id = organization.stripe_customer_id || create_customer!(organization)
-    checkout_session(customer_id: customer_id, price_id: price_id, success_url: success_url, cancel_url: cancel_url).url
-  rescue Stripe::InvalidRequestError => e
-    # A stored stripe_customer_id can go stale for reasons that have
-    # nothing to do with this particular checkout attempt -- most likely
-    # STRIPE_SECRET_KEY moved between test and live mode (customer IDs
-    # are mode-specific, so a test-mode customer simply doesn't exist
-    # once the key switches to live), or the customer was deleted
-    # directly in the Stripe dashboard. Without this, every organization
-    # that already had a customer_id saved would be permanently unable to
-    # subscribe -- recreate the customer once and retry instead.
-    raise unless stale_customer_error?(e)
-
-    customer_id = create_customer!(organization)
-    checkout_session(customer_id: customer_id, price_id: price_id, success_url: success_url, cancel_url: cancel_url).url
+  # Same idea as start_checkout!, but a one-time payment (mode: "payment")
+  # rather than a subscription -- used for the extra-Compliance-Packet
+  # add-on. The metadata is how StripeWebhooksController tells this kind of
+  # checkout.session.completed event apart from an ordinary purchase.
+  def self.start_addon_checkout!(organization:, price_id:, success_url:, cancel_url:)
+    with_checkout_retry(organization) do |customer_id|
+      checkout_session(
+        customer_id: customer_id, price_id: price_id, success_url: success_url, cancel_url: cancel_url,
+        mode: "payment", metadata: { "kind" => "compliance_report_credit" }
+      ).url
+    end
   end
 
   def self.create_customer!(organization)
@@ -57,13 +68,39 @@ class StripeBilling
     customer.id
   end
 
-  def self.checkout_session(customer_id:, price_id:, success_url:, cancel_url:)
+  # Shared by start_checkout! and start_addon_checkout!: ensures a Stripe
+  # Customer exists, yields its id to build whatever Checkout Session the
+  # caller needs, and retries once if the stored customer id turns out to
+  # be stale.
+  def self.with_checkout_retry(organization)
+    raise NotConfigured unless configured?
+
+    customer_id = organization.stripe_customer_id || create_customer!(organization)
+    yield customer_id
+  rescue Stripe::InvalidRequestError => e
+    # A stored stripe_customer_id can go stale for reasons that have
+    # nothing to do with this particular checkout attempt -- most likely
+    # STRIPE_SECRET_KEY moved between test and live mode (customer IDs
+    # are mode-specific, so a test-mode customer simply doesn't exist
+    # once the key switches to live), or the customer was deleted
+    # directly in the Stripe dashboard. Without this, every organization
+    # that already had a customer_id saved would be permanently unable to
+    # check out -- recreate the customer once and retry instead.
+    raise unless stale_customer_error?(e)
+
+    customer_id = create_customer!(organization)
+    yield customer_id
+  end
+  private_class_method :with_checkout_retry
+
+  def self.checkout_session(customer_id:, price_id:, success_url:, cancel_url:, mode: "subscription", metadata: {})
     Stripe::Checkout::Session.create(
       customer: customer_id,
-      mode: "subscription",
+      mode: mode,
       line_items: [ { price: price_id, quantity: 1 } ],
       success_url: success_url,
-      cancel_url: cancel_url
+      cancel_url: cancel_url,
+      metadata: metadata
     )
   end
   private_class_method :checkout_session

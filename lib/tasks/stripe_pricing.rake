@@ -13,4 +13,15 @@ namespace :stripe do
       result.created.each { |price| puts "Created annual price #{price.id} (#{price.unit_amount / 100.0} #{price.currency}/year)" }
     end
   end
+
+  desc "Ensure the one-time 'Extra Compliance Packet' ($149) Stripe price exists (safe to re-run)"
+  task sync_addon_prices: :environment do
+    unless StripeBilling.configured?
+      puts "STRIPE_SECRET_KEY isn't set -- nothing to do."
+      next
+    end
+
+    price = StripeAddonPriceSync.call
+    puts "Extra Compliance Packet price: #{price.id} (#{price.unit_amount / 100.0} #{price.currency})"
+  end
 end

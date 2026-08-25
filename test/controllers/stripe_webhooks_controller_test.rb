@@ -96,4 +96,70 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_nil Subscription.find_by(stripe_subscription_id: "sub_999")
   end
+
+  def addon_checkout_completed_payload(session_id: "cs_123", customer: "cus_123")
+    {
+      type: "checkout.session.completed",
+      data: {
+        object: {
+          id: session_id,
+          customer: customer,
+          mode: "payment",
+          metadata: { kind: "compliance_report_credit" }
+        }
+      }
+    }.to_json
+  end
+
+  test "grants a report credit for a completed addon checkout" do
+    payload = addon_checkout_completed_payload
+
+    assert_difference "ReportCredit.count", 1 do
+      post stripe_webhooks_url,
+        params: payload,
+        headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
+    end
+
+    assert_response :success
+    credit = ReportCredit.find_by(stripe_checkout_session_id: "cs_123")
+    assert_equal @organization, credit.organization
+  end
+
+  test "replaying the same addon checkout event does not grant a second credit" do
+    payload = addon_checkout_completed_payload
+    headers = signed_headers_for(payload).merge("Content-Type" => "application/json")
+
+    post stripe_webhooks_url, params: payload, headers: headers
+
+    assert_no_difference "ReportCredit.count" do
+      post stripe_webhooks_url, params: payload, headers: headers
+    end
+  end
+
+  test "ignores a checkout.session.completed for a subscription checkout, not just mode" do
+    payload = {
+      type: "checkout.session.completed",
+      data: { object: { id: "cs_sub", customer: "cus_123", mode: "subscription", metadata: {} } }
+    }.to_json
+
+    assert_no_difference "ReportCredit.count" do
+      post stripe_webhooks_url,
+        params: payload,
+        headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
+    end
+
+    assert_response :success
+  end
+
+  test "ignores an addon checkout for a customer with no matching organization" do
+    payload = addon_checkout_completed_payload(customer: "cus_unknown")
+
+    assert_no_difference "ReportCredit.count" do
+      post stripe_webhooks_url,
+        params: payload,
+        headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
+    end
+
+    assert_response :success
+  end
 end

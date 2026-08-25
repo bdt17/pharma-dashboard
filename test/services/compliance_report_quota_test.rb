@@ -73,4 +73,45 @@ class ComplianceReportQuotaTest < ActiveSupport::TestCase
 
     assert ComplianceReportQuota.new(@organization).unlimited?
   end
+
+  test "a purchased credit is not touched while free monthly quota still has room" do
+    ReportCredit.grant!(organization: @organization, stripe_checkout_session_id: "cs_1")
+
+    quota = ComplianceReportQuota.new(@organization)
+    assert_not quota.exceeded?
+    assert_nil quota.credit_to_consume
+  end
+
+  test "a purchased credit covers generation once the free monthly quota is used up" do
+    ComplianceReportQuota::FREE_MONTHLY_LIMIT.times { generate_report! }
+    credit = ReportCredit.grant!(organization: @organization, stripe_checkout_session_id: "cs_1")
+
+    quota = ComplianceReportQuota.new(@organization)
+    assert_not quota.exceeded?
+    assert_equal credit, quota.credit_to_consume
+  end
+
+  test "is still exceeded once the free quota is used up and there's no credit" do
+    ComplianceReportQuota::FREE_MONTHLY_LIMIT.times { generate_report! }
+
+    quota = ComplianceReportQuota.new(@organization)
+    assert quota.exceeded?
+    assert_nil quota.credit_to_consume
+  end
+
+  test "an already-consumed credit does not count as available" do
+    ComplianceReportQuota::FREE_MONTHLY_LIMIT.times { generate_report! }
+    ReportCredit.grant!(organization: @organization, stripe_checkout_session_id: "cs_1").consume!
+
+    quota = ComplianceReportQuota.new(@organization)
+    assert quota.exceeded?
+    assert_nil quota.credit_to_consume
+  end
+
+  test "an unlimited subscription never needs a credit, even if one is available" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_123")
+    ReportCredit.grant!(organization: @organization, stripe_checkout_session_id: "cs_1")
+
+    assert_nil ComplianceReportQuota.new(@organization).credit_to_consume
+  end
 end
