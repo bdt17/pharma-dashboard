@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_25_220000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_25_230001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -98,10 +98,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_220000) do
     t.datetime "created_at", null: false
     t.string "name"
     t.string "plan"
+    t.string "referral_code"
     t.string "status"
     t.string "stripe_customer_id"
     t.string "subdomain"
     t.datetime "updated_at", null: false
+    t.index ["referral_code"], name: "index_organizations_on_referral_code", unique: true
     t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true
   end
 
@@ -115,6 +117,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_220000) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_patients_on_email", unique: true
     t.index ["reset_password_token"], name: "index_patients_on_reset_password_token", unique: true
+  end
+
+  create_table "referrals", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "referred_organization_id", null: false
+    t.bigint "referrer_organization_id", null: false
+    t.datetime "rewarded_at"
+    t.datetime "updated_at", null: false
+    t.index ["referred_organization_id"], name: "index_referrals_on_referred_organization_id", unique: true
+    t.index ["referrer_organization_id"], name: "index_referrals_on_referrer_organization_id"
   end
 
   create_table "report_credits", force: :cascade do |t|
@@ -218,6 +230,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_220000) do
   add_foreign_key "compliance_reports", "users", column: "generated_by_id"
   add_foreign_key "custody_logs", "batches"
   add_foreign_key "orders", "patients"
+  add_foreign_key "referrals", "organizations", column: "referred_organization_id"
+  add_foreign_key "referrals", "organizations", column: "referrer_organization_id"
   add_foreign_key "report_credits", "organizations"
   add_foreign_key "subscriptions", "organizations"
   add_foreign_key "telemetries", "batches"

@@ -62,6 +62,13 @@ class StripeWebhooksController < ApplicationController
       plan_amount: item&.price ? item.price.unit_amount / 100.0 : nil,
       current_period_end: item&.current_period_end ? Time.at(item.current_period_end) : nil
     )
+
+    # "active" specifically, not "trialing" -- a referral reward only pays
+    # out once this organization has actually converted to a real paying
+    # customer, not merely started a (card-required-but-not-yet-charged)
+    # trial. ReferralReward itself is the idempotency guard: it's a no-op
+    # once a referral's already been rewarded.
+    ReferralReward.grant_for!(organization: organization) if stripe_subscription.status == "active"
   end
 
   def cancel_subscription(stripe_subscription)

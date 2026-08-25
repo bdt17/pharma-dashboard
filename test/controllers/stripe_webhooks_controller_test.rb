@@ -83,6 +83,36 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_equal "canceled", Subscription.find_by(stripe_subscription_id: "sub_123").status
   end
 
+  test "an active subscription event triggers the referral reward for a pending referral" do
+    referrer = Organization.create!(name: "Referring Pharmacy")
+    Referral.create!(referrer_organization: referrer, referred_organization: @organization)
+    payload = subscription_event_payload(status: "active")
+
+    Stripe::Subscription.stub :update, ->(*) { } do
+      post stripe_webhooks_url,
+        params: payload,
+        headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
+    end
+
+    assert_response :success
+    assert_not_nil Referral.find_by(referred_organization: @organization).rewarded_at
+  end
+
+  test "a trialing (not yet active) subscription event does not trigger the referral reward" do
+    referrer = Organization.create!(name: "Referring Pharmacy")
+    Referral.create!(referrer_organization: referrer, referred_organization: @organization)
+    payload = subscription_event_payload(status: "trialing")
+
+    Stripe::Subscription.stub :update, ->(*) { raise "should not be called" } do
+      post stripe_webhooks_url,
+        params: payload,
+        headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
+    end
+
+    assert_response :success
+    assert_nil Referral.find_by(referred_organization: @organization).rewarded_at
+  end
+
   test "ignores an event for a customer with no matching organization instead of raising" do
     payload = {
       type: "customer.subscription.updated",

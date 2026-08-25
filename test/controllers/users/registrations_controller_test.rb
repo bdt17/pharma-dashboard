@@ -55,6 +55,44 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
+  test "signing up with a valid referral code records a referral" do
+    referrer = Organization.create!(name: "Referring Pharmacy", referral_code: "REFER123")
+
+    assert_difference "Referral.count", 1 do
+      post user_registration_path, params: {
+        user: { organization_name: "New Pharmacy", email: "founder@example.com", referral_code: "refer123",
+                password: "password123!", password_confirmation: "password123!", terms_accepted: "1" }
+      }
+    end
+
+    referral = Referral.last
+    assert_equal referrer, referral.referrer_organization
+    assert_equal "New Pharmacy", referral.referred_organization.name
+    assert_nil referral.rewarded_at
+  end
+
+  test "signing up with no referral code does not record a referral" do
+    assert_no_difference "Referral.count" do
+      post user_registration_path, params: {
+        user: { organization_name: "New Pharmacy", email: "founder@example.com",
+                password: "password123!", password_confirmation: "password123!", terms_accepted: "1" }
+      }
+    end
+  end
+
+  test "signing up with an unknown referral code does not fail signup or record a referral" do
+    assert_difference "Organization.count", 1 do
+      assert_no_difference "Referral.count" do
+        post user_registration_path, params: {
+          user: { organization_name: "New Pharmacy", email: "founder@example.com", referral_code: "NOPE0000",
+                  password: "password123!", password_confirmation: "password123!", terms_accepted: "1" }
+        }
+      end
+    end
+
+    assert_response :redirect
+  end
+
   test "a duplicate email is rejected" do
     Organization.create!(name: "Existing Org").users.create!(
       email: "taken@example.com", password: "password123!", role: "admin"
