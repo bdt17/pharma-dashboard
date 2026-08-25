@@ -1,14 +1,16 @@
 class BatchesController < ApplicationController
-  before_action :authenticate_user!, only: [ :chain_of_custody ]
+  before_action :authenticate_user!
 
-  def index; render plain: "Batches - Phase 10 Enterprise SaaS" end
-  def show
-    if params[:id] == "1"
-      send_file Rails.root.join("public", "test.pdf"),
-                filename: "chain-of-custody.pdf",
-                type: "application/pdf",
-                disposition: "attachment"
-    end
+  # /batches.pdf never had a real implementation behind it -- the action
+  # just rendered placeholder text ("Batches - Phase 10 Enterprise SaaS")
+  # to anyone who hit the route, unauthenticated. The real, authenticated,
+  # org-scoped batch data (counts, active/non-compliant batches, recent
+  # custody activity) already lives on the dashboard
+  # (DashboardController#index) -- send people there instead of
+  # continuing to serve fake content from a redundant stub. A real
+  # "export batches as PDF" feature, if wanted, is a separate build.
+  def index
+    redirect_to dashboard_path
   end
 
   # The one real chain-of-custody PDF: real batch data, real custody
