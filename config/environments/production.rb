@@ -57,13 +57,14 @@ Rails.application.configure do
     config.action_mailer.delivery_method = :test
   end
   config.action_mailer.perform_deliveries = true
-  # TEMPORARY: flipped to true to diagnose why signup-confirmation emails
-  # aren't arriving despite SMTP creds being configured (see next-steps.md).
-  # With this false, any SMTP failure (e.g. Microsoft 365 rejecting legacy
-  # SMTP AUTH) is silently swallowed and never appears in logs. Revert once
-  # the real cause is found and a permanent fix (proper error logging
-  # without breaking signup) is in place.
-  config.action_mailer.raise_delivery_errors = true
+  # false so a mail-provider outage (SMTP auth rejected, connection refused,
+  # timeout) degrades to "the account was created but the email didn't send"
+  # instead of a 500 page mid-signup. Was briefly flipped to true to
+  # diagnose a real failure (an M365 SMTP timeout -- see git history on this
+  # line); that confirmed Rails does NOT log anything on its own when this
+  # is false, so User#send_devise_notification now explicitly rescues and
+  # logs delivery failures instead of relying on this flag for visibility.
+  config.action_mailer.raise_delivery_errors = false
 
   # Route health checks to a lightweight endpoint.
   config.silence_healthcheck_path = "/up"
