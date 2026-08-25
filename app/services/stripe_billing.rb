@@ -85,6 +85,23 @@ class StripeBilling
     end
   end
 
+  # A link to Stripe's own hosted Billing Portal -- lets an organization's
+  # admin update a failed/expiring card, view past invoices, or cancel,
+  # entirely on Stripe's side. Without this there was no self-serve way to
+  # recover from a failed payment at all: the subscription would just slide
+  # to past_due/unpaid and eventually cancel, with the only fix being an
+  # email to support -- exactly the channel that's been unreliable this
+  # session. Requires an existing Stripe Customer (a real checkout must
+  # have already happened); raises plainly rather than silently creating
+  # one, since a portal session for a customer with no subscription history
+  # wouldn't have anything useful to show anyway.
+  def self.billing_portal_url(organization:, return_url:)
+    raise NotConfigured unless configured?
+    raise ArgumentError, "organization has no Stripe customer yet" if organization.stripe_customer_id.blank?
+
+    Stripe::BillingPortal::Session.create(customer: organization.stripe_customer_id, return_url: return_url).url
+  end
+
   def self.create_customer!(organization)
     customer = Stripe::Customer.create(name: organization.name)
     organization.update!(stripe_customer_id: customer.id)

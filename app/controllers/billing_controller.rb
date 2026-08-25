@@ -43,6 +43,26 @@ class BillingController < ApplicationController
     redirect_to billing_path, alert: "Billing isn't configured yet -- no Stripe API key is set."
   end
 
+  # Hands off to Stripe's own hosted portal for updating a payment method,
+  # viewing invoices, or canceling -- see StripeBilling.billing_portal_url.
+  # Any signed-in org member can open it (not just admin): it's read-mostly
+  # (invoice history) plus self-service actions on their own org's billing,
+  # not a distinct administrative action like starting a new subscription.
+  def portal
+    unless current_organization&.stripe_customer_id.present?
+      redirect_to billing_path, alert: "No billing history yet -- subscribe first."
+      return
+    end
+
+    url = StripeBilling.billing_portal_url(organization: current_organization, return_url: billing_url)
+    redirect_to url, allow_other_host: true
+  rescue StripeBilling::NotConfigured
+    redirect_to billing_path, alert: "Billing isn't configured yet -- no Stripe API key is set."
+  rescue Stripe::InvalidRequestError => e
+    Rails.logger.error("BillingController#portal: #{e.class}: #{e.message}")
+    redirect_to billing_path, alert: "Couldn't open the billing portal right now. Try again shortly."
+  end
+
   def success
   end
 
