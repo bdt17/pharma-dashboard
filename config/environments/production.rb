@@ -57,7 +57,13 @@ Rails.application.configure do
     config.action_mailer.delivery_method = :test
   end
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = false
+  # TEMPORARY: flipped to true to diagnose why signup-confirmation emails
+  # aren't arriving despite SMTP creds being configured (see next-steps.md).
+  # With this false, any SMTP failure (e.g. Microsoft 365 rejecting legacy
+  # SMTP AUTH) is silently swallowed and never appears in logs. Revert once
+  # the real cause is found and a permanent fix (proper error logging
+  # without breaking signup) is in place.
+  config.action_mailer.raise_delivery_errors = true
 
   # Route health checks to a lightweight endpoint.
   config.silence_healthcheck_path = "/up"
