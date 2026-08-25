@@ -33,17 +33,27 @@
     <% if @plans.present? %>
       <h2 class="text-lg font-bold mb-3">Available plans</h2>
       <div class="space-y-3">
-        <% @plans.each do |plan| %>
-          <div class="border rounded-lg p-4 flex items-center justify-between">
-            <div>
-              <div class="font-semibold"><%= plan[:product_name] %></div>
-              <div class="text-sm text-gray-500">
-                <%= number_to_currency(plan[:amount]) %><% if plan[:interval] %> / <%= plan[:interval] %><% end %>
-              </div>
+        <% @plans.group_by { |plan| plan[:product_name] }.each do |product_name, variants| %>
+          <% monthly = variants.find { |p| p[:interval] == "month" }
+             annual = variants.find { |p| p[:interval] == "year" }
+             others = variants - [ monthly, annual ].compact %>
+          <div class="border rounded-lg p-4">
+            <div class="font-semibold mb-2"><%= product_name %></div>
+            <div class="space-y-2">
+              <% [ monthly, annual, *others ].compact.each do |plan| %>
+                <div class="flex items-center justify-between">
+                  <div class="text-sm text-gray-500">
+                    <%= number_to_currency(plan[:amount]) %><% if plan[:interval] %> / <%= plan[:interval] %><% end %>
+                    <% if plan == annual && monthly %>
+                      <span class="text-green-700 font-medium">— save 10% vs. monthly</span>
+                    <% end %>
+                  </div>
+                  <% if current_user.admin? %>
+                    <%= button_to "Subscribe", billing_checkout_path(price_id: plan[:id]), method: :post, class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
-            <% if current_user.admin? %>
-              <%= button_to "Subscribe", billing_checkout_path(price_id: plan[:id]), method: :post, class: "bg-blue-600 text-white px-4 py-2 rounded" %>
-            <% end %>
           </div>
         <% end %>
       </div>
@@ -52,6 +62,29 @@
       <% end %>
     <% else %>
       <p class="text-sm text-gray-500">Billing isn't configured yet. Contact us to set up billing.</p>
+    <% end %>
+
+    <% if @addons.present? %>
+      <h2 class="text-lg font-bold mb-3 mt-8">Need one more this month?</h2>
+      <p class="text-sm text-gray-500 mb-3">
+        Buy a single extra Compliance Packet without subscribing.
+        <% if @available_credits.to_i > 0 %>
+          You currently have <%= pluralize(@available_credits, "unused credit") %>.
+        <% end %>
+      </p>
+      <div class="space-y-3">
+        <% @addons.each do |addon| %>
+          <div class="border rounded-lg p-4 flex items-center justify-between">
+            <div>
+              <div class="font-semibold"><%= addon[:product_name] %></div>
+              <div class="text-sm text-gray-500"><%= number_to_currency(addon[:amount]) %> one-time</div>
+            </div>
+            <% if current_user.admin? %>
+              <%= button_to "Buy", billing_addon_checkout_path(price_id: addon[:id]), method: :post, class: "bg-gray-800 text-white px-4 py-2 rounded" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
   <% end %>
 </div>
