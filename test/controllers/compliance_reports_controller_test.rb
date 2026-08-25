@@ -105,6 +105,38 @@ class ComplianceReportsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "a purchased credit covers generation once the free monthly limit is used up" do
+    sign_in @admin
+    ComplianceReportQuota::FREE_MONTHLY_LIMIT.times { post batch_compliance_reports_url(@batch) }
+    credit = ReportCredit.grant!(organization: @organization, stripe_checkout_session_id: "cs_1")
+
+    assert_difference "ComplianceReport.count", 1 do
+      post batch_compliance_reports_url(@batch)
+    end
+
+    assert_not_nil credit.reload.consumed_at
+  end
+
+  test "a purchased credit is left untouched while free monthly quota still has room" do
+    sign_in @admin
+    credit = ReportCredit.grant!(organization: @organization, stripe_checkout_session_id: "cs_1")
+
+    post batch_compliance_reports_url(@batch)
+
+    assert_nil credit.reload.consumed_at
+  end
+
+  test "generation is still blocked once the free limit and any credit are both used up" do
+    sign_in @admin
+    ComplianceReportQuota::FREE_MONTHLY_LIMIT.times { post batch_compliance_reports_url(@batch) }
+    ReportCredit.grant!(organization: @organization, stripe_checkout_session_id: "cs_1")
+    post batch_compliance_reports_url(@batch) # spends the one credit
+
+    assert_no_difference "ComplianceReport.count" do
+      post batch_compliance_reports_url(@batch)
+    end
+  end
+
   test "a user from a different organization cannot view or download packets" do
     other_admin = User.create!(email: "other-admin@example.com", password: "password123!", organization: Organization.create!(name: "Other Org"), role: "admin")
     sign_in @admin

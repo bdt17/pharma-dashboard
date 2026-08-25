@@ -17,6 +17,8 @@ class StripeWebhooksController < ApplicationController
       sync_subscription(event.data.object)
     when "customer.subscription.deleted"
       cancel_subscription(event.data.object)
+    when "checkout.session.completed"
+      grant_report_credit(event.data.object)
     end
 
     head :ok
@@ -64,5 +66,22 @@ class StripeWebhooksController < ApplicationController
 
   def cancel_subscription(stripe_subscription)
     Subscription.find_by(stripe_subscription_id: stripe_subscription.id)&.update!(status: "canceled")
+  end
+
+  # Only the extra-Compliance-Packet add-on completes checkout this way
+  # (mode: "payment" with this specific metadata -- see
+  # StripeBilling.start_addon_checkout!); an ordinary subscription checkout
+  # also fires checkout.session.completed, so both conditions matter, not
+  # just mode.
+  def grant_report_credit(session)
+    return unless session.mode == "payment" && session.metadata&.[]("kind") == "compliance_report_credit"
+
+    organization = Organization.find_by(stripe_customer_id: session.customer)
+    unless organization
+      Rails.logger.warn("StripeWebhooksController: no organization for customer #{session.customer}")
+      return
+    end
+
+    ReportCredit.grant!(organization: organization, stripe_checkout_session_id: session.id)
   end
 end

@@ -7,7 +7,10 @@ class BillingController < ApplicationController
 
   def index
     @subscription = current_organization&.subscriptions&.order(created_at: :desc)&.first
-    @plans = @subscription&.active_or_trialing? ? [] : StripeBilling.available_plans
+    unlimited = @subscription&.active_or_trialing?
+    @plans = unlimited ? [] : StripeBilling.available_plans
+    @addons = unlimited ? [] : StripeBilling.available_addons
+    @available_credits = current_organization&.report_credits&.available&.count || 0
   end
 
   def checkout
@@ -15,6 +18,21 @@ class BillingController < ApplicationController
     return if performed?
 
     url = StripeBilling.start_checkout!(
+      organization: current_organization,
+      price_id: params.require(:price_id),
+      success_url: billing_success_url,
+      cancel_url: billing_url
+    )
+    redirect_to url, allow_other_host: true
+  rescue StripeBilling::NotConfigured
+    redirect_to billing_path, alert: "Billing isn't configured yet -- no Stripe API key is set."
+  end
+
+  def addon_checkout
+    authorize_billing_admin!
+    return if performed?
+
+    url = StripeBilling.start_addon_checkout!(
       organization: current_organization,
       price_id: params.require(:price_id),
       success_url: billing_success_url,

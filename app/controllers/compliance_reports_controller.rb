@@ -21,10 +21,13 @@ class ComplianceReportsController < ApplicationController
 
   def create
     authorize @batch, :generate_compliance_report?
-    enforce_quota!
+    quota = ComplianceReportQuota.new(@batch.organization)
+    enforce_quota!(quota)
     return if performed?
 
+    credit = quota.credit_to_consume
     result = ComplianceReportGenerator.new(@batch).generate!(generated_by: current_user)
+    credit&.consume!
     report = result.compliance_report
 
     AuditLog.record!(
@@ -58,12 +61,13 @@ class ComplianceReportsController < ApplicationController
 
   # The pricing-metering gate -- see ComplianceReportQuota. Distinct from
   # authorize above: that's "can this user role generate reports for this
-  # org," this is "has the org's plan run out of free ones this month."
-  def enforce_quota!
-    return unless ComplianceReportQuota.new(@batch.organization).exceeded?
+  # org," this is "has the org run out of free ones this month, with no
+  # purchased credit to fall back on."
+  def enforce_quota!(quota)
+    return unless quota.exceeded?
 
     redirect_to batch_compliance_reports_path(@batch),
                 alert: "Free plan limit reached: #{ComplianceReportQuota::FREE_MONTHLY_LIMIT} compliance packets " \
-                       "per month. Subscribe for unlimited generation."
+                       "per month. Subscribe for unlimited generation, or buy a single extra packet from Billing."
   end
 end
