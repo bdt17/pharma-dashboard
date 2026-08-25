@@ -1,8 +1,73 @@
-<div style="text-align:center;padding:4rem;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border-radius:20px;margin:2rem">
-  <h1 style="font-size:3rem;margin-bottom:1rem">Pharma Transport</h1>
-  <p style="font-size:1.3rem;margin-bottom:2rem">Enterprise logistics platform</p>
-  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-    <%= link_to "Sign up", new_user_registration_path, style: "background:#10b981;color:white;padding:1.2rem 3rem;border-radius:12px;text-decoration:none;font-weight:600;font-size:1.1rem" %>
-    <%= link_to "Sign in", new_user_session_path, style: "background:rgba(255,255,255,0.15);color:white;padding:1.2rem 3rem;border-radius:12px;text-decoration:none;font-weight:600;font-size:1.1rem;border:2px solid rgba(255,255,255,0.4)" %>
+<% content_for :meta_description, "Fleet GPS tracking, immutable chain-of-custody logging, and FDA-ready compliance PDFs for pharmaceutical transport." %>
+
+<div class="space-y-16">
+  <!-- Hero -->
+  <div class="text-center space-y-6 py-8">
+    <h1 class="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
+      Chain-of-custody documentation<br class="hidden sm:block"> pharmaceutical transport can't fake.
+    </h1>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+      Track your fleet, log every custody handoff, and generate FDA-ready compliance
+      documentation automatically — instead of reconstructing a shipment's history from memory
+      when someone asks for it.
+    </p>
+    <div class="flex gap-4 justify-center flex-wrap pt-2">
+      <%= link_to "Sign up", new_user_registration_path,
+            class: "bg-accent-600 hover:bg-accent-700 text-white font-semibold px-8 py-3 rounded-lg text-lg transition" %>
+      <%= link_to "See pricing", pricing_path,
+            class: "bg-white hover:bg-gray-50 text-brand-700 font-semibold px-8 py-3 rounded-lg text-lg border-2 border-brand-200 transition" %>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="grid sm:grid-cols-2 gap-6">
+    <div class="border rounded-xl p-6 space-y-2">
+      <div class="text-2xl">📍</div>
+      <h3 class="font-semibold text-gray-900">Live fleet GPS tracking</h3>
+      <p class="text-gray-600 text-sm">Real-time vehicle positions, scoped to your organization — not a demo map with fake trucks on it.</p>
+    </div>
+    <div class="border rounded-xl p-6 space-y-2">
+      <div class="text-2xl">🔗</div>
+      <h3 class="font-semibold text-gray-900">Immutable custody log</h3>
+      <p class="text-gray-600 text-sm">Every handoff — pickup, transfer, delivery — logged as a hash-chained record that can't be quietly edited after the fact.</p>
+    </div>
+    <div class="border rounded-xl p-6 space-y-2">
+      <div class="text-2xl">📄</div>
+      <h3 class="font-semibold text-gray-900">FDA-ready Compliance Packets</h3>
+      <p class="text-gray-600 text-sm">Generated PDFs covering chain-of-custody and temperature monitoring — built for 21 CFR Part 11 documentation needs.</p>
+    </div>
+    <div class="border rounded-xl p-6 space-y-2">
+      <div class="text-2xl">✍️</div>
+      <h3 class="font-semibold text-gray-900">Proof-of-delivery signatures</h3>
+      <p class="text-gray-600 text-sm">Captured at the point of delivery and attached directly to the custody record it belongs to.</p>
+    </div>
+  </div>
+
+  <!-- Why trust this -->
+  <div class="bg-gray-50 rounded-xl p-8 space-y-4">
+    <h2 class="text-xl font-bold text-gray-900">Built to hold up, not just demo well</h2>
+    <div class="grid sm:grid-cols-3 gap-6 text-sm text-gray-700">
+      <div>
+        <div class="font-semibold text-gray-900 mb-1">Live in production</div>
+        Real signup, real email confirmation, real Stripe billing — this is the actual product, not a mockup.
+      </div>
+      <div>
+        <div class="font-semibold text-gray-900 mb-1">Security posture</div>
+        Static analysis (Brakeman) and dependency auditing run clean on every change; rate limiting on auth endpoints.
+      </div>
+      <div>
+        <div class="font-semibold text-gray-900 mb-1">Compliance-first design</div>
+        Custody records are hash-chained rather than freely editable — built around what an audit trail actually needs to prove.
+      </div>
+    </div>
+  </div>
+
+  <!-- Content / DSCSA hook -->
+  <div class="border-t pt-8 text-center space-y-3">
+    <p class="text-gray-600">
+      Running a small pharmacy? The FDA's small-dispenser DSCSA exemption ends
+      <strong>November 27, 2026</strong>.
+    </p>
+    <%= link_to "Read what changes →", blog_dscsa_exemption_2026_path, class: "text-brand-700 font-semibold hover:underline" %>
   </div>
 </div>

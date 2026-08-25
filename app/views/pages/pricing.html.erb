@@ -1,0 +1,47 @@
+<% content_for :title, "Pricing — Pharma Transport" %>
+<% content_for :meta_description, "Pharma Transport pricing for pharmaceutical fleet tracking and FDA chain-of-custody documentation." %>
+
+<div class="max-w-3xl mx-auto space-y-8">
+  <div class="text-center space-y-2">
+    <h1 class="text-3xl font-bold text-gray-900">Simple, transparent pricing</h1>
+    <p class="text-gray-600">One plan. No per-truck upsells, no hidden compliance fees.</p>
+  </div>
+
+  <% if @plans.present? %>
+    <% grid_cols_class = { 1 => "sm:grid-cols-1", 2 => "sm:grid-cols-2" }.fetch([@plans.size, 3].min, "sm:grid-cols-3") %>
+    <div class="grid gap-4 <%= grid_cols_class %>">
+      <% @plans.each do |plan| %>
+        <div class="border-2 border-brand-100 rounded-xl p-6 flex flex-col items-center text-center space-y-3 hover:border-brand-300 transition">
+          <div class="text-lg font-semibold text-gray-900"><%= plan[:product_name] %></div>
+          <div class="text-3xl font-bold text-brand-700">
+            <%= number_to_currency(plan[:amount], precision: 0) %>
+            <% if plan[:interval] %><span class="text-base font-normal text-gray-500">/ <%= plan[:interval] %></span><% end %>
+          </div>
+          <%= link_to "Sign up to subscribe", new_user_registration_path,
+                class: "mt-2 inline-block bg-accent-600 hover:bg-accent-700 text-white font-semibold px-5 py-2.5 rounded-lg" %>
+        </div>
+      <% end %>
+    </div>
+    <p class="text-center text-sm text-gray-500">
+      Create a free account first — an organization admin can start a subscription from the
+      Billing page once signed in.
+    </p>
+  <% else %>
+    <div class="border rounded-xl p-8 text-center text-gray-600">
+      Pricing isn't published yet — <%= link_to "sign up", new_user_registration_path, class: "text-brand-700 underline" %>
+      or contact us directly and we'll get you set up.
+    </div>
+  <% end %>
+
+  <div class="border-t pt-8">
+    <h2 class="text-lg font-semibold text-gray-900 mb-3">What's included</h2>
+    <ul class="grid sm:grid-cols-2 gap-3 text-gray-700">
+      <li class="flex gap-2"><span class="text-accent-600">✓</span> Live GPS fleet tracking</li>
+      <li class="flex gap-2"><span class="text-accent-600">✓</span> Immutable chain-of-custody event log</li>
+      <li class="flex gap-2"><span class="text-accent-600">✓</span> FDA-ready Compliance Packet PDFs</li>
+      <li class="flex gap-2"><span class="text-accent-600">✓</span> Signature capture for proof-of-delivery</li>
+      <li class="flex gap-2"><span class="text-accent-600">✓</span> Unlimited team members per organization</li>
+      <li class="flex gap-2"><span class="text-accent-600">✓</span> Cancel anytime — no long-term contract</li>
+    </ul>
+  </div>
+</div>
