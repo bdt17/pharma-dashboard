@@ -16,7 +16,15 @@ class StripeAddonPriceSync
   def call
     return existing_price if existing_price
 
-    Stripe::Price.create(product: product.id, unit_amount: AMOUNT_CENTS, currency: "usd")
+    # kind/credit_quantity are also StripeBilling's *defaults* when a
+    # one-time Price has no metadata at all (see
+    # StripeBilling.addon_metadata_for), so tagging them here is belt and
+    # suspenders for a fresh environment -- it doesn't retag the price
+    # that's already live without them.
+    Stripe::Price.create(
+      product: product.id, unit_amount: AMOUNT_CENTS, currency: "usd",
+      metadata: { "kind" => "compliance_report_credit", "credit_quantity" => "1" }
+    )
   end
 
   private

@@ -75,11 +75,12 @@ class StripeWebhooksController < ApplicationController
     Subscription.find_by(stripe_subscription_id: stripe_subscription.id)&.update!(status: "canceled")
   end
 
-  # Only the extra-Compliance-Packet add-on completes checkout this way
-  # (mode: "payment" with this specific metadata -- see
-  # StripeBilling.start_addon_checkout!); an ordinary subscription checkout
-  # also fires checkout.session.completed, so both conditions matter, not
-  # just mode.
+  # Only a Compliance-Packet-credit add-on (single or bulk) completes
+  # checkout this way (mode: "payment" with this specific metadata -- see
+  # StripeBilling.start_addon_checkout!/addon_metadata_for); an ordinary
+  # subscription checkout also fires checkout.session.completed, and so
+  # does the White-Glove Setup service, which has nothing to grant here --
+  # a real person fulfills that after seeing the payment in Stripe.
   def grant_report_credit(session)
     return unless session.mode == "payment" && session.metadata&.[]("kind") == "compliance_report_credit"
 
@@ -89,6 +90,13 @@ class StripeWebhooksController < ApplicationController
       return
     end
 
-    ReportCredit.grant!(organization: organization, stripe_checkout_session_id: session.id)
+    quantity = session.metadata["credit_quantity"].to_i
+    quantity = 1 if quantity < 1
+
+    if quantity == 1
+      ReportCredit.grant!(organization: organization, stripe_checkout_session_id: session.id)
+    else
+      ReportCredit.grant_batch!(organization: organization, stripe_checkout_session_id: session.id, quantity: quantity)
+    end
   end
 end

@@ -127,7 +127,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_nil Subscription.find_by(stripe_subscription_id: "sub_999")
   end
 
-  def addon_checkout_completed_payload(session_id: "cs_123", customer: "cus_123")
+  def addon_checkout_completed_payload(session_id: "cs_123", customer: "cus_123", metadata: { kind: "compliance_report_credit" })
     {
       type: "checkout.session.completed",
       data: {
@@ -135,7 +135,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
           id: session_id,
           customer: customer,
           mode: "payment",
-          metadata: { kind: "compliance_report_credit" }
+          metadata: metadata
         }
       }
     }.to_json
@@ -183,6 +183,44 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
 
   test "ignores an addon checkout for a customer with no matching organization" do
     payload = addon_checkout_completed_payload(customer: "cus_unknown")
+
+    assert_no_difference "ReportCredit.count" do
+      post stripe_webhooks_url,
+        params: payload,
+        headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
+    end
+
+    assert_response :success
+  end
+
+  test "grants 10 report credits for a completed bulk-pack addon checkout" do
+    payload = addon_checkout_completed_payload(metadata: { kind: "compliance_report_credit", credit_quantity: "10" })
+
+    assert_difference "ReportCredit.count", 10 do
+      post stripe_webhooks_url,
+        params: payload,
+        headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
+    end
+
+    assert_response :success
+    credits = ReportCredit.where(stripe_checkout_session_id: "cs_123")
+    assert_equal @organization, credits.first.organization
+    assert_equal (1..10).to_a, credits.order(:sequence).pluck(:sequence)
+  end
+
+  test "replaying the same bulk-pack checkout event does not grant a second batch" do
+    payload = addon_checkout_completed_payload(metadata: { kind: "compliance_report_credit", credit_quantity: "10" })
+    headers = signed_headers_for(payload).merge("Content-Type" => "application/json")
+
+    post stripe_webhooks_url, params: payload, headers: headers
+
+    assert_no_difference "ReportCredit.count" do
+      post stripe_webhooks_url, params: payload, headers: headers
+    end
+  end
+
+  test "a White-Glove Setup checkout grants no report credit -- fulfillment is manual" do
+    payload = addon_checkout_completed_payload(metadata: { kind: "white_glove_setup" })
 
     assert_no_difference "ReportCredit.count" do
       post stripe_webhooks_url,

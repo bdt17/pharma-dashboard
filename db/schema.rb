@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_25_230001) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_26_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -133,10 +133,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_25_230001) do
     t.datetime "consumed_at"
     t.datetime "created_at", null: false
     t.bigint "organization_id", null: false
+    t.integer "sequence", default: 1, null: false
     t.string "stripe_checkout_session_id", null: false
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_report_credits_on_organization_id"
-    t.index ["stripe_checkout_session_id"], name: "index_report_credits_on_stripe_checkout_session_id", unique: true
+    t.index ["stripe_checkout_session_id", "sequence"], name: "index_report_credits_on_session_id_and_sequence", unique: true
   end
 
   create_table "revenues", force: :cascade do |t|
