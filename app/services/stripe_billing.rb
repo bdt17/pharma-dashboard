@@ -7,6 +7,13 @@
 class StripeBilling
   class NotConfigured < StandardError; end
 
+  # Every new subscription checkout (not the one-time addon) starts with a
+  # 14-day trial, card required up front -- Stripe still collects payment
+  # info in Checkout during a trial by default, it just doesn't charge
+  # until the trial ends, which is what makes the trial convert to paid
+  # automatically instead of needing anyone to follow up.
+  TRIAL_PERIOD_DAYS = 14
+
   def self.configured?
     Stripe.api_key.present?
   end
@@ -94,14 +101,17 @@ class StripeBilling
   private_class_method :with_checkout_retry
 
   def self.checkout_session(customer_id:, price_id:, success_url:, cancel_url:, mode: "subscription", metadata: {})
-    Stripe::Checkout::Session.create(
+    params = {
       customer: customer_id,
       mode: mode,
       line_items: [ { price: price_id, quantity: 1 } ],
       success_url: success_url,
       cancel_url: cancel_url,
       metadata: metadata
-    )
+    }
+    params[:subscription_data] = { trial_period_days: TRIAL_PERIOD_DAYS } if mode == "subscription"
+
+    Stripe::Checkout::Session.create(params)
   end
   private_class_method :checkout_session
 

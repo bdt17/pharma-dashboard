@@ -32,6 +32,9 @@
 
     <% if @plans.present? %>
       <h2 class="text-lg font-bold mb-3">Available plans</h2>
+      <p class="text-sm text-gray-500 mb-3">
+        Every plan starts with a <%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial — you won't be charged until it ends.
+      </p>
       <div class="space-y-3">
         <% @plans.group_by { |plan| plan[:product_name] }.each do |product_name, variants| %>
           <% monthly = variants.find { |p| p[:interval] == "month" }
