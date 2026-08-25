@@ -8,15 +8,22 @@
   </div>
 
   <% if @plans.present? %>
-    <% grid_cols_class = { 1 => "sm:grid-cols-1", 2 => "sm:grid-cols-2" }.fetch([@plans.size, 3].min, "sm:grid-cols-3") %>
+    <% monthly_plans = @plans.select { |p| p[:interval] == "month" }
+       annual_plans = @plans.select { |p| p[:interval] == "year" }
+       display_plans = monthly_plans.presence || @plans
+       has_annual = annual_plans.any? %>
+    <% grid_cols_class = { 1 => "sm:grid-cols-1", 2 => "sm:grid-cols-2" }.fetch([display_plans.size, 3].min, "sm:grid-cols-3") %>
     <div class="grid gap-4 <%= grid_cols_class %>">
-      <% @plans.each do |plan| %>
+      <% display_plans.each do |plan| %>
         <div class="border-2 border-brand-100 rounded-xl p-6 flex flex-col items-center text-center space-y-3 hover:border-brand-300 transition">
           <div class="text-lg font-semibold text-gray-900"><%= plan[:product_name] %></div>
           <div class="text-3xl font-bold text-brand-700">
             <%= number_to_currency(plan[:amount], precision: 0) %>
             <% if plan[:interval] %><span class="text-base font-normal text-gray-500">/ <%= plan[:interval] %></span><% end %>
           </div>
+          <% if has_annual %>
+            <p class="text-sm text-green-700 font-medium">Pay annually and save 10%</p>
+          <% end %>
           <%= link_to "Sign up to subscribe", new_user_registration_path,
                 class: "mt-2 inline-block bg-accent-600 hover:bg-accent-700 text-white font-semibold px-5 py-2.5 rounded-lg" %>
         </div>
@@ -24,7 +31,7 @@
     </div>
     <p class="text-center text-sm text-gray-500">
       Create a free account first — an organization admin can start a subscription from the
-      Billing page once signed in.
+      Billing page once signed in<% if has_annual %>, including the option to pay annually<% end %>.
     </p>
   <% else %>
     <div class="border rounded-xl p-8 text-center text-gray-600">
