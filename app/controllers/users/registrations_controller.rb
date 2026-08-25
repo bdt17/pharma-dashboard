@@ -22,6 +22,8 @@ module Users
       yield resource if block_given?
 
       if resource.persisted?
+        track_referral!(resource.organization)
+
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
           sign_up(resource_name, resource)
@@ -49,6 +51,19 @@ module Users
 
     def organization_name
       params.dig(:user, :organization_name)
+    end
+
+    # An unrecognized or blank code is silently ignored rather than
+    # blocking signup -- referral tracking is a bonus, not a gate on
+    # creating an account. The actual reward (see ReferralReward) only
+    # ever fires once this brand-new organization's own subscription goes
+    # active, so recording a Referral here is just remembering who gets
+    # credit later, not granting anything yet.
+    def track_referral!(referred_organization)
+      referrer = Organization.find_by_referral_code(params.dig(:user, :referral_code))
+      return unless referrer
+
+      Referral.create(referrer_organization: referrer, referred_organization: referred_organization)
     end
 
     def sign_up_params

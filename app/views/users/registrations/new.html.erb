@@ -31,6 +31,15 @@
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "border rounded p-2 w-full" %>
     </div>
 
+    <div class="mb-4">
+      <%# Same reasoning as organization_name above -- referral_code isn't a
+          real User attribute, it's read directly off params in the
+          controller to look up the referring organization. %>
+      <%= label_tag "user_referral_code", "Referral code (optional)", class: "block font-medium mb-1" %>
+      <%= text_field_tag "user[referral_code]", params.dig(:user, :referral_code), class: "border rounded p-2 w-full" %>
+      <p class="text-xs text-gray-500 mt-1">Referred by another pharmacy? Enter their code and you'll both get a free month.</p>
+    </div>
+
     <div class="mb-6 text-sm">
       <label class="inline-flex items-start gap-2">
         <%= f.check_box :terms_accepted, class: "mt-1" %>

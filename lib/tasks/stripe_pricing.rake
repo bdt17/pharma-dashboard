@@ -24,4 +24,15 @@ namespace :stripe do
     price = StripeAddonPriceSync.call
     puts "Extra Compliance Packet price: #{price.id} (#{price.unit_amount / 100.0} #{price.currency})"
   end
+
+  desc "Ensure the reusable 'referral free month' Stripe coupon exists (safe to re-run)"
+  task sync_referral_coupon: :environment do
+    unless StripeBilling.configured?
+      puts "STRIPE_SECRET_KEY isn't set -- nothing to do."
+      next
+    end
+
+    coupon = StripeReferralCouponSync.call
+    puts "Referral coupon: #{coupon.id} (#{coupon.percent_off}% off, #{coupon.duration})"
+  end
 end
