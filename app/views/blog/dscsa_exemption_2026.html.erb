@@ -1,0 +1,97 @@
+<% content_for :title, "Small Pharmacy DSCSA Exemption Ends November 27, 2026 — What Changes" %>
+<% content_for :meta_description, "The FDA's small dispenser exemption from DSCSA enhanced drug distribution security requirements ends November 27, 2026. Who qualifies, what changes, and how to prepare." %>
+
+<div class="max-w-3xl mx-auto p-8 space-y-6">
+  <h1 class="text-2xl font-bold mb-2">Small Pharmacy DSCSA Exemption Ends November 27, 2026 — What Changes</h1>
+  <p class="text-sm text-gray-500">Last updated: <%= Date.current.strftime("%B %-d, %Y") %></p>
+
+  <p>
+    If your pharmacy has been operating under the FDA's small dispenser exemption from the
+    Drug Supply Chain Security Act (DSCSA), the clock on that exemption runs out on
+    <strong>November 27, 2026</strong>. After that date, the enhanced drug distribution
+    security requirements that larger dispensers have already had to meet apply to small
+    pharmacies too. This is a plain-language summary of what's changing and who it affects —
+    not legal advice (see the disclaimer at the bottom).
+  </p>
+
+  <section>
+    <h2 class="text-lg font-semibold mb-2">What is the small dispenser exemption?</h2>
+    <p>
+      DSCSA's enhanced drug distribution security (EDDS) requirements — electronic,
+      package-level tracing of prescription drugs, and interoperable data exchange between
+      trading partners — took effect for most of the pharmaceutical supply chain on November
+      27, 2023. The FDA recognized that smaller pharmacies needed more time to get systems
+      and processes in place, and issued a letter granting them a temporary exemption from
+      certain section 582 requirements, extending through November 27, 2026.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="text-lg font-semibold mb-2">Who qualifies as a "small dispenser"</h2>
+    <p>
+      Under the FDA's guidance, a small dispenser is a corporate entity that owns a pharmacy
+      and employs <strong>25 or fewer full-time licensed pharmacists or pharmacy
+      technicians</strong> in total, across all of its locations. That count is measured as
+      of November 27, 2024 — a pharmacy that qualified then stays covered by the exemption
+      for the full period even if it grows afterward. The FDA's letter doesn't fully address
+      edge cases like pharmacies opening after that date or changes in ownership, so if your
+      situation isn't clear-cut, it's worth confirming with counsel or your pharmacy
+      association rather than assuming either way.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="text-lg font-semibold mb-2">What changes on November 27, 2026</h2>
+    <p>
+      Once the exemption ends, small dispensers move from exemption into the same ongoing
+      obligations everyone else already has:
+    </p>
+    <ul class="list-disc pl-6 space-y-1">
+      <li>Receiving and maintaining electronic, package-level transaction data (identifier,
+        history, statement) from trading partners for every product received</li>
+      <li>Verifying product identifiers and being able to trace individual packages, not just
+        lot-level records</li>
+      <li>Having an exception-handling process in place for suspect or illegitimate product</li>
+      <li>Notifying trading partners and the FDA within 24 hours of determining a product is
+        illegitimate</li>
+    </ul>
+    <p>
+      For a pharmacy that has been relying on the exemption, this is less a single deadline
+      and more the point where preparation has to already be finished — the systems and
+      processes need to be working in production, not still being set up.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="text-lg font-semibold mb-2">What to do before the deadline</h2>
+    <ul class="list-disc pl-6 space-y-1">
+      <li>Confirm whether your pharmacy actually qualified for the exemption as of November
+        27, 2024, and don't assume — get it in writing from whoever tracks headcount</li>
+      <li>Ask your wholesaler/distributor what systems they use for electronic transaction
+        data, and whether your pharmacy can receive and verify it today</li>
+      <li>Put a written exception-handling process in place for suspect product, if one
+        doesn't already exist</li>
+      <li>Keep documentation of custody and transaction records — if a question ever comes up
+        about a specific shipment, being able to produce it quickly matters</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="text-lg font-semibold mb-2">Where this fits with the transport side</h2>
+    <p>
+      Pharma Transport doesn't replace what your wholesaler's serialization system does — but
+      the custody-event logging and generated compliance packets it produces for each
+      shipment are built to give you an audit-ready record of what happened in transit,
+      which is exactly the kind of documentation that matters once EDDS obligations are no
+      longer optional. If that's useful to see,
+      <%= link_to "you can sign up and try it", new_user_registration_path %>.
+    </p>
+  </section>
+
+  <p class="text-sm text-gray-500 border-t pt-4">
+    This page is general information based on FDA guidance available as of the date above,
+    not legal advice. DSCSA guidance and enforcement dates have shifted before and could
+    again — confirm current requirements against the FDA's own DSCSA exemptions page or with
+    counsel before relying on this for compliance decisions.
+  </p>
+</div>

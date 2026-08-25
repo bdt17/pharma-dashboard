@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pharma Transport Enterprise</title>
+  <title><%= content_for?(:title) ? yield(:title) : "Pharma Transport Enterprise" %></title>
+  <% if content_for?(:meta_description) %>
+    <meta name="description" content="<%= yield(:meta_description) %>">
+  <% end %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <%= csrf_meta_tags %>
@@ -99,7 +102,8 @@
   <footer>
     Pharma Transport &middot;
     <%= link_to "Terms", terms_path %> &middot;
-    <%= link_to "Privacy", privacy_path %>
+    <%= link_to "Privacy", privacy_path %> &middot;
+    <%= link_to "DSCSA 2026 Deadline", blog_dscsa_exemption_2026_path %>
   </footer>
 </body>
 </html>
