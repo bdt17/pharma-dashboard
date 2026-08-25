@@ -10,4 +10,7 @@ class PagesController < ApplicationController
   def pricing
     @plans = StripeBilling.available_plans
   end
+
+  def about
+  end
 end
