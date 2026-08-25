@@ -250,4 +250,37 @@ class StripeBillingTest < ActiveSupport::TestCase
 
     assert_nil session_params[:subscription_data]
   end
+
+  test "billing_portal_url creates a Billing Portal session for the organization's Stripe customer" do
+    Stripe.api_key = "sk_test_fake"
+    @organization.update!(stripe_customer_id: "cus_existing")
+    fake_portal_session = Stripe::BillingPortal::Session.construct_from(id: "bps_123", url: "https://billing.stripe.com/session/bps_123")
+
+    session_params = nil
+    Stripe::BillingPortal::Session.stub :create, ->(params) { session_params = params; fake_portal_session } do
+      url = StripeBilling.billing_portal_url(organization: @organization, return_url: "https://x/billing")
+      assert_equal "https://billing.stripe.com/session/bps_123", url
+    end
+
+    assert_equal "cus_existing", session_params[:customer]
+    assert_equal "https://x/billing", session_params[:return_url]
+  end
+
+  test "billing_portal_url raises NotConfigured rather than hitting the API with no key" do
+    Stripe.api_key = nil
+    @organization.update!(stripe_customer_id: "cus_existing")
+
+    assert_raises(StripeBilling::NotConfigured) do
+      StripeBilling.billing_portal_url(organization: @organization, return_url: "https://x/billing")
+    end
+  end
+
+  test "billing_portal_url raises for an organization with no Stripe customer yet" do
+    Stripe.api_key = "sk_test_fake"
+    assert_nil @organization.stripe_customer_id
+
+    assert_raises(ArgumentError) do
+      StripeBilling.billing_portal_url(organization: @organization, return_url: "https://x/billing")
+    end
+  end
 end

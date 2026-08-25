@@ -153,4 +153,54 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_match "isn't configured yet", response.body
   end
+
+  test "portal redirects to the real Stripe Billing Portal URL, even for a non-admin" do
+    @organization.update!(stripe_customer_id: "cus_123")
+    driver = User.create!(email: "driver@example.com", password: "password123!", organization: @organization, role: "driver")
+    sign_in driver
+
+    StripeBilling.stub :billing_portal_url, "https://billing.stripe.com/session/fake" do
+      post billing_portal_url
+    end
+
+    assert_redirected_to "https://billing.stripe.com/session/fake"
+  end
+
+  test "portal redirects back to billing with a message when there's no Stripe customer yet" do
+    sign_in @user
+
+    StripeBilling.stub :billing_portal_url, ->(*) { raise "should not be called" } do
+      post billing_portal_url
+    end
+
+    assert_redirected_to billing_url
+    follow_redirect!
+    assert_match "subscribe first", response.body
+  end
+
+  test "portal handles Stripe not being configured without crashing" do
+    @organization.update!(stripe_customer_id: "cus_123")
+    sign_in @user
+
+    StripeBilling.stub :billing_portal_url, ->(*) { raise StripeBilling::NotConfigured } do
+      post billing_portal_url
+    end
+
+    assert_redirected_to billing_url
+    follow_redirect!
+    assert_match "isn't configured yet", response.body
+  end
+
+  test "portal handles a Stripe error (e.g. no portal configuration yet) without crashing" do
+    @organization.update!(stripe_customer_id: "cus_123")
+    sign_in @user
+
+    StripeBilling.stub :billing_portal_url, ->(*) { raise Stripe::InvalidRequestError.new("No configuration provided", nil) } do
+      post billing_portal_url
+    end
+
+    assert_redirected_to billing_url
+    follow_redirect!
+    assert_match "open the billing portal", response.body
+  end
 end

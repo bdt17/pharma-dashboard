@@ -57,4 +57,15 @@ namespace :stripe do
     price = StripeWhiteGloveSetupPriceSync.call
     puts "White-Glove Setup price: #{price.id} (#{price.unit_amount / 100.0} #{price.currency})"
   end
+
+  desc "Ensure a default Stripe Billing Portal configuration exists (safe to re-run)"
+  task sync_billing_portal_config: :environment do
+    unless StripeBilling.configured?
+      puts "STRIPE_SECRET_KEY isn't set -- nothing to do."
+      next
+    end
+
+    config = StripeBillingPortalConfigSync.call
+    puts "Billing Portal configuration: #{config.id}"
+  end
 end
