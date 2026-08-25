@@ -49,4 +49,32 @@ class ReportCreditTest < ActiveSupport::TestCase
 
     assert_equal first_consumed_at, credit.reload.consumed_at
   end
+
+  test "grant_batch! creates one credit per unit for a new checkout session" do
+    credits = nil
+    assert_difference "ReportCredit.count", 10 do
+      credits = ReportCredit.grant_batch!(organization: @organization, stripe_checkout_session_id: "cs_bulk", quantity: 10)
+    end
+
+    assert_equal 10, credits.size
+    assert_equal (1..10).to_a, credits.map(&:sequence)
+    assert credits.all? { |c| c.organization == @organization && c.consumed_at.nil? }
+  end
+
+  test "grant_batch! is idempotent for the same checkout session id -- skips the whole batch on replay" do
+    ReportCredit.grant_batch!(organization: @organization, stripe_checkout_session_id: "cs_bulk", quantity: 10)
+
+    assert_no_difference "ReportCredit.count" do
+      result = ReportCredit.grant_batch!(organization: @organization, stripe_checkout_session_id: "cs_bulk", quantity: 10)
+      assert_equal [], result
+    end
+  end
+
+  test "credits from a batch are each independently available and consumable" do
+    ReportCredit.grant_batch!(organization: @organization, stripe_checkout_session_id: "cs_bulk", quantity: 3)
+
+    assert_equal 3, @organization.report_credits.available.count
+    @organization.report_credits.available.first.consume!
+    assert_equal 2, @organization.report_credits.available.count
+  end
 end

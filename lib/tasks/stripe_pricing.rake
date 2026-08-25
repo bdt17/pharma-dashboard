@@ -35,4 +35,26 @@ namespace :stripe do
     coupon = StripeReferralCouponSync.call
     puts "Referral coupon: #{coupon.id} (#{coupon.percent_off}% off, #{coupon.duration})"
   end
+
+  desc "Ensure the one-time '10 Extra Compliance Packets' bulk-pack Stripe price exists (safe to re-run)"
+  task sync_bulk_addon_prices: :environment do
+    unless StripeBilling.configured?
+      puts "STRIPE_SECRET_KEY isn't set -- nothing to do."
+      next
+    end
+
+    price = StripeBulkAddonPriceSync.call
+    puts "10-pack Compliance Packet price: #{price.id} (#{price.unit_amount / 100.0} #{price.currency})"
+  end
+
+  desc "Ensure the one-time 'White-Glove Setup' ($299) Stripe price exists (safe to re-run)"
+  task sync_white_glove_setup_price: :environment do
+    unless StripeBilling.configured?
+      puts "STRIPE_SECRET_KEY isn't set -- nothing to do."
+      next
+    end
+
+    price = StripeWhiteGloveSetupPriceSync.call
+    puts "White-Glove Setup price: #{price.id} (#{price.unit_amount / 100.0} #{price.currency})"
+  end
 end

@@ -34,9 +34,10 @@ class StripeBilling
   end
 
   # [{ id:, product_name:, amount:, currency: }, ...] -- the one-time
-  # (non-subscription) counterpart to available_plans, e.g. the $149 extra
-  # Compliance Packet credit. Same rule: never hardcoded here, just
-  # whatever's actually active in Stripe right now.
+  # (non-subscription) counterpart to available_plans: the $149 / 10-pack
+  # extra Compliance Packet credits, the White-Glove Setup service, and
+  # whatever else gets added as a one-time Price later. Same rule: never
+  # hardcoded here, just whatever's actually active in Stripe right now.
   def self.available_addons
     return [] unless configured?
 
@@ -57,14 +58,20 @@ class StripeBilling
   end
 
   # Same idea as start_checkout!, but a one-time payment (mode: "payment")
-  # rather than a subscription -- used for the extra-Compliance-Packet
-  # add-on. The metadata is how StripeWebhooksController tells this kind of
-  # checkout.session.completed event apart from an ordinary purchase.
+  # rather than a subscription -- covers every kind of one-time add-on
+  # (single/bulk Compliance Packet credits, the White-Glove Setup service).
+  # The metadata is how StripeWebhooksController tells these apart at
+  # checkout.session.completed time; see addon_metadata_for for where it
+  # comes from.
   def self.start_addon_checkout!(organization:, price_id:, success_url:, cancel_url:)
+    raise NotConfigured unless configured?
+
+    metadata = addon_metadata_for(Stripe::Price.retrieve(price_id))
+
     with_checkout_retry(organization) do |customer_id|
       checkout_session(
         customer_id: customer_id, price_id: price_id, success_url: success_url, cancel_url: cancel_url,
-        mode: "payment", metadata: { "kind" => "compliance_report_credit" }
+        mode: "payment", metadata: metadata
       ).url
     end
   end
@@ -119,4 +126,24 @@ class StripeBilling
     error.code == "resource_missing" && error.param == "customer"
   end
   private_class_method :stale_customer_error?
+
+  # Reads how this specific one-time Price should be handled once paid,
+  # straight from the Price's own Stripe metadata rather than the caller
+  # guessing -- a Price is the one thing every checkout for it shares, so
+  # tagging it there (see the Stripe*PriceSync services) is the single
+  # source of truth for what a completed checkout.session should do.
+  # Defaults to "compliance_report_credit"/"1" for a Price created before
+  # this tagging existed (the original $149 addon, live before this).
+  def self.addon_metadata_for(price)
+    # Hash-style access (not price.metadata) deliberately: a live Stripe
+    # object always has a metadata key, but a Price with no metadata at
+    # all raises NoMethodError on the dotted accessor rather than
+    # returning nil -- [] is the safe way to ask "is this key set."
+    price_metadata = price[:metadata] || {}
+    kind = price_metadata["kind"] || "compliance_report_credit"
+    metadata = { "kind" => kind }
+    metadata["credit_quantity"] = price_metadata["credit_quantity"] || "1" if kind == "compliance_report_credit"
+    metadata
+  end
+  private_class_method :addon_metadata_for
 end
