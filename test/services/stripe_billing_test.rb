@@ -159,4 +159,34 @@ class StripeBillingTest < ActiveSupport::TestCase
       StripeBilling.start_addon_checkout!(organization: @organization, price_id: "price_addon", success_url: "https://x/success", cancel_url: "https://x/cancel")
     end
   end
+
+  test "start_checkout! includes a 14-day trial on the subscription" do
+    Stripe.api_key = "sk_test_fake"
+    fake_customer = Stripe::Customer.construct_from(id: "cus_new")
+    fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
+
+    session_params = nil
+    Stripe::Customer.stub :create, fake_customer do
+      Stripe::Checkout::Session.stub :create, ->(params) { session_params = params; fake_session } do
+        StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+      end
+    end
+
+    assert_equal({ trial_period_days: 14 }, session_params[:subscription_data])
+  end
+
+  test "start_addon_checkout! does not include trial subscription_data (it's a one-time payment)" do
+    Stripe.api_key = "sk_test_fake"
+    fake_customer = Stripe::Customer.construct_from(id: "cus_new")
+    fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
+
+    session_params = nil
+    Stripe::Customer.stub :create, fake_customer do
+      Stripe::Checkout::Session.stub :create, ->(params) { session_params = params; fake_session } do
+        StripeBilling.start_addon_checkout!(organization: @organization, price_id: "price_addon", success_url: "https://x/success", cancel_url: "https://x/cancel")
+      end
+    end
+
+    assert_nil session_params[:subscription_data]
+  end
 end

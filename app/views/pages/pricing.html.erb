@@ -5,6 +5,7 @@
   <div class="text-center space-y-2">
     <h1 class="text-3xl font-bold text-gray-900">Simple, transparent pricing</h1>
     <p class="text-gray-600">One plan. No per-truck upsells, no hidden compliance fees.</p>
+    <p class="text-brand-700 font-medium">Every plan starts with a <%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial.</p>
   </div>
 
   <% if @plans.present? %>
