@@ -55,4 +55,20 @@ class User < ApplicationRecord
   def auto_confirm_unless_self_service_signup
     self.confirmed_at ||= Time.current unless requires_email_confirmation
   end
+
+  # Devise's default send_devise_notification lets any delivery failure
+  # (SMTP auth rejected, connection timeout, etc.) either raise -- crashing
+  # signup/password-reset mid-request -- or, with
+  # config.action_mailer.raise_delivery_errors = false, vanish with no log
+  # line at all, which is exactly what made a real M365 SMTP timeout
+  # invisible in production. Rescue explicitly so the failure is always
+  # logged, regardless of that global flag, without ever breaking the
+  # request that triggered it.
+  def send_devise_notification(notification, *args)
+    super
+  rescue StandardError => e
+    Rails.logger.error(
+      "[DeviseMailer] Failed to send '#{notification}' to #{email.inspect}: #{e.class}: #{e.message}"
+    )
+  end
 end
