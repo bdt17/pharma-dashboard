@@ -27,6 +27,10 @@ class StripeFoundingCouponSyncTest < ActiveSupport::TestCase
     assert_equal "repeating", create_params[:duration]
     assert_equal 6, create_params[:duration_in_months]
     assert_equal StripeBilling.founding_offer_cutoff.to_i, create_params[:redeem_by]
+    # Stripe rejects Coupon#name over 40 characters -- caught live the
+    # first time this task actually ran (a 43-character name), so this
+    # guards against that regressing silently again.
+    assert create_params[:name].length <= 40, "name is #{create_params[:name].length} chars, Stripe's limit is 40"
   end
 
   test "reuses the existing coupon instead of creating a duplicate" do

@@ -19,7 +19,8 @@ class StripeFoundingCouponSync
       duration: "repeating",
       duration_in_months: 6,
       redeem_by: StripeBilling.founding_offer_cutoff.to_i,
-      name: "Founding customer -- 25% off first 6 months"
+      # Stripe caps Coupon#name at 40 characters.
+      name: "Founding customer: 25% off 6 months"
     )
   end
 end
