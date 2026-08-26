@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "/blog/small-pharmacy-dscsa-exemption-2026", to: "blog#dscsa_exemption_2026", as: :blog_dscsa_exemption_2026
   get "/pricing", to: "pages#pricing", as: :pricing
   get "/about", to: "pages#about", as: :about
+  get "/verify/:token", to: "verifications#show", as: :verification
 
   # Authenticated application pages
   get "/dashboard", to: "dashboard#index", as: :dashboard

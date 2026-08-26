@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_26_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_26_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -103,8 +103,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_26_000000) do
     t.string "stripe_customer_id"
     t.string "subdomain"
     t.datetime "updated_at", null: false
+    t.string "verification_token"
     t.index ["referral_code"], name: "index_organizations_on_referral_code", unique: true
     t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true
+    t.index ["verification_token"], name: "index_organizations_on_verification_token", unique: true
   end
 
   create_table "patients", force: :cascade do |t|
