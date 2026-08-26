@@ -102,4 +102,25 @@
       </div>
     <% end %>
   <% end %>
+
+  <div class="border rounded-lg p-6 bg-gray-50 mt-8 space-y-4">
+    <h2 class="text-lg font-bold">Share Pharma Transport</h2>
+
+    <div>
+      <div class="text-sm text-gray-500 mb-1">Your referral code — give it to another pharmacy and you both get a free month once they subscribe</div>
+      <code class="bg-white border rounded px-3 py-1.5 inline-block font-mono text-sm"><%= current_organization.referral_code %></code>
+    </div>
+
+    <div>
+      <div class="text-sm text-gray-500 mb-1">
+        Your DSCSA verification badge —
+        <% if current_organization.verified? %>
+          shareable on your own site or with an auditor
+        <% else %>
+          currently shows "not verified" since there's no active subscription; it'll update automatically once you subscribe
+        <% end %>
+      </div>
+      <code class="bg-white border rounded px-3 py-1.5 inline-block font-mono text-sm break-all"><%= verification_url(current_organization.verification_token) %></code>
+    </div>
+  </div>
 </div>

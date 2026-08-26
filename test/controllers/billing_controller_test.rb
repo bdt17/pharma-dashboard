@@ -19,6 +19,15 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_match "No subscription on file", response.body
   end
 
+  test "shows the organization's own referral code and verification link" do
+    sign_in @user
+    get billing_url
+
+    assert_response :success
+    assert_match @organization.referral_code, response.body
+    assert_match verification_url(@organization.verification_token), response.body
+  end
+
   test "shows the organization's real subscription status" do
     Subscription.sync_from_stripe!(
       organization: @organization,

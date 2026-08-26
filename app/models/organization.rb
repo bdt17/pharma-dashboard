@@ -10,8 +10,10 @@ class Organization < ApplicationRecord
 
   validates :name, presence: true
   validates :referral_code, uniqueness: true, allow_nil: true
+  validates :verification_token, uniqueness: true, allow_nil: true
 
   before_validation :assign_referral_code, on: :create
+  before_validation :assign_verification_token, on: :create
 
   # Case-insensitive lookup, since a code shared in an email/postcard will
   # get typed by hand -- rejecting "abc123" for not matching "ABC123"
@@ -20,6 +22,15 @@ class Organization < ApplicationRecord
     return nil if code.blank?
 
     find_by("upper(referral_code) = ?", code.strip.upcase)
+  end
+
+  # Whether this organization is currently a real, in-good-standing
+  # customer -- the one thing VerificationsController shows publicly.
+  # Same standard as ComplianceReportQuota's unlimited? (active or
+  # trialing counts): a 14-day trial still means someone's actually using
+  # the app to track a real shipment, not just browsing a marketing page.
+  def verified?
+    subscriptions.order(created_at: :desc).first&.active_or_trialing? || false
   end
 
   private
@@ -36,5 +47,20 @@ class Organization < ApplicationRecord
       attempts += 1
       self.referral_code = SecureRandom.alphanumeric(8).upcase
     end while Organization.exists?(referral_code: referral_code) && attempts < 5
+  end
+
+  # Much higher entropy than referral_code deliberately: that one's meant
+  # to be read aloud and typed by hand, this one only ever appears as a
+  # URL nobody types -- and unlike a referral code, guessing someone
+  # else's would let a stranger read (a low-stakes, but still not
+  # nobody's-business) fact about their subscription status.
+  def assign_verification_token
+    return if verification_token.present?
+
+    attempts = 0
+    begin
+      attempts += 1
+      self.verification_token = SecureRandom.urlsafe_base64(16)
+    end while Organization.exists?(verification_token: verification_token) && attempts < 5
   end
 end

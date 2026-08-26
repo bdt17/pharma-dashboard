@@ -36,4 +36,31 @@ class OrganizationTest < ActiveSupport::TestCase
     assert_nil Organization.find_by_referral_code("")
     assert_nil Organization.find_by_referral_code("NOPE0000")
   end
+
+  test "is assigned a unique verification_token on creation" do
+    org = Organization.create!(name: "Acme Pharma")
+    assert org.verification_token.present?
+  end
+
+  test "does not overwrite an explicitly set verification_token" do
+    org = Organization.create!(name: "Acme Pharma", verification_token: "my-custom-token")
+    assert_equal "my-custom-token", org.verification_token
+  end
+
+  test "verified? is false with no subscription" do
+    org = Organization.create!(name: "Acme Pharma")
+    assert_not org.verified?
+  end
+
+  test "verified? is true with an active or trialing subscription" do
+    org = Organization.create!(name: "Acme Pharma")
+    Subscription.create!(organization: org, status: "trialing", stripe_subscription_id: "sub_123")
+    assert org.verified?
+  end
+
+  test "verified? is false once the subscription is canceled" do
+    org = Organization.create!(name: "Acme Pharma")
+    Subscription.create!(organization: org, status: "canceled", stripe_subscription_id: "sub_123")
+    assert_not org.verified?
+  end
 end
