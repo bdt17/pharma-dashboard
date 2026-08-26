@@ -48,6 +48,25 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_match "$99.00", response.body
   end
 
+  test "shows the founding-customer offer banner before the cutoff, not after" do
+    plans = [ { id: "price_123", product_name: "Starter", amount: 200.0, currency: "usd", interval: "month" } ]
+    sign_in @user
+
+    StripeBilling.stub :available_plans, plans do
+      travel_to StripeBilling.founding_offer_cutoff - 1.day do
+        get billing_url
+      end
+    end
+    assert_match "Founding customer offer", response.body
+
+    StripeBilling.stub :available_plans, plans do
+      travel_to StripeBilling.founding_offer_cutoff + 1.day do
+        get billing_url
+      end
+    end
+    assert_no_match "Founding customer offer", response.body
+  end
+
   test "does not fetch plans once there's an active subscription" do
     Subscription.sync_from_stripe!(organization: @organization, stripe_subscription_id: "sub_123", status: "active")
 

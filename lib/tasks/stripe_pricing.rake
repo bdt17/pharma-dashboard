@@ -68,4 +68,15 @@ namespace :stripe do
     config = StripeBillingPortalConfigSync.call
     puts "Billing Portal configuration: #{config.id}"
   end
+
+  desc "Ensure the 'founding customer' launch-offer Stripe coupon exists (safe to re-run)"
+  task sync_founding_coupon: :environment do
+    unless StripeBilling.configured?
+      puts "STRIPE_SECRET_KEY isn't set -- nothing to do."
+      next
+    end
+
+    coupon = StripeFoundingCouponSync.call
+    puts "Founding customer coupon: #{coupon.id} (#{coupon.percent_off}% off, #{coupon.duration_in_months} months, redeem by #{Time.at(coupon.redeem_by).utc})"
+  end
 end
