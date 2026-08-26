@@ -10,6 +10,15 @@ class StripeBillingTest < ActiveSupport::TestCase
     Stripe.api_key = @previous_key
   end
 
+  # start_checkout! now looks up the price's interval (to decide whether
+  # the founding-customer offer applies) before ever touching the
+  # customer/session machinery these older tests are actually about --
+  # stub it to a plain monthly price so they don't need to know that.
+  def stub_monthly_price(id: "price_123", &block)
+    fake_price = Stripe::Price.construct_from(id: id, recurring: { interval: "month" })
+    Stripe::Price.stub(:retrieve, fake_price, &block)
+  end
+
   test "configured? is false without an api key, true with one" do
     Stripe.api_key = nil
     assert_not StripeBilling.configured?
@@ -70,10 +79,12 @@ class StripeBillingTest < ActiveSupport::TestCase
     fake_customer = Stripe::Customer.construct_from(id: "cus_new")
     fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
 
-    Stripe::Customer.stub :create, fake_customer do
-      Stripe::Checkout::Session.stub :create, fake_session do
-        url = StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
-        assert_equal "https://checkout.stripe.com/cs_123", url
+    stub_monthly_price do
+      Stripe::Customer.stub :create, fake_customer do
+        Stripe::Checkout::Session.stub :create, fake_session do
+          url = StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+          assert_equal "https://checkout.stripe.com/cs_123", url
+        end
       end
     end
 
@@ -85,12 +96,14 @@ class StripeBillingTest < ActiveSupport::TestCase
     @organization.update!(stripe_customer_id: "cus_existing")
     fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
 
-    Stripe::Customer.stub :create, ->(*) { raise "should not create a new customer" } do
-      Stripe::Checkout::Session.stub :create, ->(params) {
-        assert_equal "cus_existing", params[:customer]
-        fake_session
-      } do
-        StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+    stub_monthly_price do
+      Stripe::Customer.stub :create, ->(*) { raise "should not create a new customer" } do
+        Stripe::Checkout::Session.stub :create, ->(params) {
+          assert_equal "cus_existing", params[:customer]
+          fake_session
+        } do
+          StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+        end
       end
     end
   end
@@ -103,15 +116,17 @@ class StripeBillingTest < ActiveSupport::TestCase
     stale_customer_error = Stripe::InvalidRequestError.new("No such customer: 'cus_stale'", "customer", code: "resource_missing")
 
     attempts = []
-    Stripe::Customer.stub :create, fake_new_customer do
-      Stripe::Checkout::Session.stub :create, ->(params) {
-        attempts << params[:customer]
-        raise stale_customer_error if params[:customer] == "cus_stale"
+    stub_monthly_price do
+      Stripe::Customer.stub :create, fake_new_customer do
+        Stripe::Checkout::Session.stub :create, ->(params) {
+          attempts << params[:customer]
+          raise stale_customer_error if params[:customer] == "cus_stale"
 
-        fake_session
-      } do
-        url = StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
-        assert_equal "https://checkout.stripe.com/cs_123", url
+          fake_session
+        } do
+          url = StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+          assert_equal "https://checkout.stripe.com/cs_123", url
+        end
       end
     end
 
@@ -124,9 +139,11 @@ class StripeBillingTest < ActiveSupport::TestCase
     @organization.update!(stripe_customer_id: "cus_existing")
     other_error = Stripe::InvalidRequestError.new("No such price: 'price_123'", "price", code: "resource_missing")
 
-    Stripe::Checkout::Session.stub :create, ->(*) { raise other_error } do
-      assert_raises(Stripe::InvalidRequestError) do
-        StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+    stub_monthly_price do
+      Stripe::Checkout::Session.stub :create, ->(*) { raise other_error } do
+        assert_raises(Stripe::InvalidRequestError) do
+          StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+        end
       end
     end
   end
@@ -224,13 +241,73 @@ class StripeBillingTest < ActiveSupport::TestCase
     fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
 
     session_params = nil
-    Stripe::Customer.stub :create, fake_customer do
-      Stripe::Checkout::Session.stub :create, ->(params) { session_params = params; fake_session } do
-        StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+    stub_monthly_price do
+      Stripe::Customer.stub :create, fake_customer do
+        Stripe::Checkout::Session.stub :create, ->(params) { session_params = params; fake_session } do
+          StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+        end
       end
     end
 
     assert_equal({ trial_period_days: 14 }, session_params[:subscription_data])
+  end
+
+  test "start_checkout! applies the founding-customer coupon to a monthly plan before the cutoff" do
+    Stripe.api_key = "sk_test_fake"
+    fake_customer = Stripe::Customer.construct_from(id: "cus_new")
+    fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
+
+    session_params = nil
+    travel_to StripeBilling.founding_offer_cutoff - 1.day do
+      stub_monthly_price do
+        Stripe::Customer.stub :create, fake_customer do
+          Stripe::Checkout::Session.stub :create, ->(params) { session_params = params; fake_session } do
+            StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+          end
+        end
+      end
+    end
+
+    assert_equal [ { coupon: StripeBilling::FOUNDING_OFFER_COUPON_ID } ], session_params[:discounts]
+  end
+
+  test "start_checkout! does not apply the founding-customer coupon to an annual plan" do
+    Stripe.api_key = "sk_test_fake"
+    fake_price = Stripe::Price.construct_from(id: "price_annual", recurring: { interval: "year" })
+    fake_customer = Stripe::Customer.construct_from(id: "cus_new")
+    fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
+
+    session_params = nil
+    travel_to StripeBilling.founding_offer_cutoff - 1.day do
+      Stripe::Price.stub :retrieve, fake_price do
+        Stripe::Customer.stub :create, fake_customer do
+          Stripe::Checkout::Session.stub :create, ->(params) { session_params = params; fake_session } do
+            StripeBilling.start_checkout!(organization: @organization, price_id: "price_annual", success_url: "https://x/success", cancel_url: "https://x/cancel")
+          end
+        end
+      end
+    end
+
+    assert_nil session_params[:discounts]
+  end
+
+  test "start_checkout! does not apply the founding-customer coupon after the cutoff, and never even looks up the price" do
+    Stripe.api_key = "sk_test_fake"
+    fake_customer = Stripe::Customer.construct_from(id: "cus_new")
+    fake_session = Stripe::Checkout::Session.construct_from(id: "cs_123", url: "https://checkout.stripe.com/cs_123")
+
+    session_params = nil
+    travel_to StripeBilling.founding_offer_cutoff + 1.day do
+      Stripe::Price.stub :retrieve, ->(*) { raise "should not look up the price once the offer window is closed" } do
+        Stripe::Customer.stub :create, fake_customer do
+          Stripe::Checkout::Session.stub :create, ->(params) { session_params = params; fake_session } do
+            StripeBilling.start_checkout!(organization: @organization, price_id: "price_123", success_url: "https://x/success", cancel_url: "https://x/cancel")
+          end
+        end
+      end
+    end
+
+    assert_nil session_params[:discounts]
   end
 
   test "start_addon_checkout! does not include trial subscription_data (it's a one-time payment)" do

@@ -40,6 +40,13 @@
       <p class="text-sm text-gray-500 mb-3">
         Every plan starts with a <%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial — you won't be charged until it ends.
       </p>
+      <% if Time.current <= StripeBilling.founding_offer_cutoff %>
+        <p class="text-sm font-medium text-accent-800 bg-accent-50 border border-accent-300 rounded-lg p-3 mb-3">
+          Founding customer offer: subscribe to the monthly plan before
+          <%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %>
+          and get 25% off your first 6 months — applied automatically at checkout.
+        </p>
+      <% end %>
       <div class="space-y-3">
         <% @plans.group_by { |plan| plan[:product_name] }.each do |product_name, variants| %>
           <% monthly = variants.find { |p| p[:interval] == "month" }

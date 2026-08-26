@@ -8,6 +8,16 @@
     <p class="text-brand-700 font-medium">Every plan starts with a <%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial.</p>
   </div>
 
+  <% if Time.current <= StripeBilling.founding_offer_cutoff %>
+    <div class="border-2 border-accent-300 bg-accent-50 rounded-xl p-4 text-center">
+      <p class="font-semibold text-accent-800">
+        Founding customer offer: subscribe to the monthly plan before
+        <%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %>
+        and get 25% off your first 6 months — automatically, no code needed.
+      </p>
+    </div>
+  <% end %>
+
   <% if @plans.present? %>
     <% monthly_plans = @plans.select { |p| p[:interval] == "month" }
        annual_plans = @plans.select { |p| p[:interval] == "year" }

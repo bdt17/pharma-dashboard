@@ -14,6 +14,22 @@ class StripeBilling
   # automatically instead of needing anyone to follow up.
   TRIAL_PERIOD_DAYS = 14
 
+  # Founding-customer launch offer, tied to the same Nov 27 2026 DSCSA
+  # deadline the outreach mailer leans on: subscribe to the monthly plan
+  # before the cutoff and get 25% off for the first 6 months after the
+  # trial ends. Auto-applied in start_checkout! -- no promo code to
+  # remember -- and only to the monthly plan (a "6 months" discount
+  # doesn't map cleanly onto a once-a-year annual invoice). See
+  # StripeFoundingCouponSync for where the actual Stripe Coupon comes
+  # from; redeem_by there is set from this same cutoff, so the coupon
+  # itself stops working at Stripe's end after this date even if
+  # something here didn't.
+  FOUNDING_OFFER_COUPON_ID = "founding-customer-25-off-6mo".freeze
+
+  def self.founding_offer_cutoff
+    Time.zone.local(2026, 10, 1).end_of_day
+  end
+
   def self.configured?
     Stripe.api_key.present?
   end
@@ -62,7 +78,15 @@ class StripeBilling
   # events back to the right organization.
   def self.start_checkout!(organization:, price_id:, success_url:, cancel_url:)
     with_checkout_retry(organization) do |customer_id|
-      checkout_session(customer_id: customer_id, price_id: price_id, success_url: success_url, cancel_url: cancel_url).url
+      # founding_offer_discounts_for is computed inside the block, not
+      # before with_checkout_retry is called: that's what makes
+      # with_checkout_retry's own "raise NotConfigured unless configured?"
+      # fire first when Stripe isn't set up, instead of this hitting the
+      # API (the Price lookup) with no key.
+      checkout_session(
+        customer_id: customer_id, price_id: price_id, success_url: success_url, cancel_url: cancel_url,
+        discounts: founding_offer_discounts_for(price_id)
+      ).url
     end
   end
 
@@ -133,7 +157,7 @@ class StripeBilling
   end
   private_class_method :with_checkout_retry
 
-  def self.checkout_session(customer_id:, price_id:, success_url:, cancel_url:, mode: "subscription", metadata: {})
+  def self.checkout_session(customer_id:, price_id:, success_url:, cancel_url:, mode: "subscription", metadata: {}, discounts: [])
     params = {
       customer: customer_id,
       mode: mode,
@@ -143,10 +167,23 @@ class StripeBilling
       metadata: metadata
     }
     params[:subscription_data] = { trial_period_days: TRIAL_PERIOD_DAYS } if mode == "subscription"
+    params[:discounts] = discounts if discounts.present?
 
     Stripe::Checkout::Session.create(params)
   end
   private_class_method :checkout_session
+
+  # [] once the offer window has closed, or for any plan that isn't billed
+  # monthly -- checked with the cheap date comparison first specifically
+  # so this stops making an extra Stripe API call (the Price lookup) for
+  # every checkout forever, not just once the offer no longer applies.
+  def self.founding_offer_discounts_for(price_id)
+    return [] if Time.current > founding_offer_cutoff
+    return [] unless Stripe::Price.retrieve(price_id).recurring&.interval == "month"
+
+    [ { coupon: FOUNDING_OFFER_COUPON_ID } ]
+  end
+  private_class_method :founding_offer_discounts_for
 
   def self.stale_customer_error?(error)
     error.code == "resource_missing" && error.param == "customer"
