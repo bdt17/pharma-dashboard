@@ -32,6 +32,13 @@ class Rack::Attack
     req.ip if req.path == "/users/password" && req.post?
   end
 
+  # The second-factor challenge is the one place a correct password still
+  # isn't enough -- without this, the 6-digit code could be brute-forced at
+  # full request speed. Same shape as the login throttle above.
+  throttle("two_factor/ip", limit: 10, period: 20.seconds) do |req|
+    req.ip if req.path == "/two_factor_challenge" && req.post?
+  end
+
   # General backstop against basic flooding of any endpoint, independent of
   # the specific throttles above.
   throttle("requests/ip", limit: 300, period: 5.minutes, &:ip)

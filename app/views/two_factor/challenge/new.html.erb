@@ -1,0 +1,24 @@
+<% content_for :title, "Two-factor authentication" %>
+
+<h1>Enter your authentication code</h1>
+
+<p>
+  Open your authenticator app and enter the current 6-digit code for
+  Pharma Transport. Lost your device? Enter one of your backup codes instead.
+</p>
+
+<%= form_with url: two_factor_challenge_path, method: :post do |f| %>
+  <div style="margin: 1.5rem 0;">
+    <%= label_tag :otp_code, "Authentication or backup code" %><br>
+    <%= text_field_tag :otp_code, nil,
+          autocomplete: "one-time-code", inputmode: "numeric",
+          autofocus: true, placeholder: "123456",
+          style: "font-size: 1.25rem; letter-spacing: 0.25em; padding: 0.5rem; width: 14rem;" %>
+  </div>
+  <%= f.submit "Verify",
+        style: "background: var(--color-brand-600, #0369a1); color: #fff; padding: 0.75rem 1.5rem; border: 0; border-radius: 0.5rem; font-weight: 600; cursor: pointer;" %>
+<% end %>
+
+<p style="margin-top: 2rem;">
+  <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
+</p>

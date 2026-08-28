@@ -1,0 +1,33 @@
+<% content_for :title, "Backup codes" %>
+
+<h1>Backup codes</h1>
+
+<% if @backup_codes.present? %>
+  <p>
+    Save these <%= @backup_codes.size %> codes somewhere safe (a password
+    manager). Each one works <strong>once</strong> if you lose access to your
+    authenticator app. This is the only time they'll be shown.
+  </p>
+
+  <ul style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 1.15rem; line-height: 2; list-style: none; padding: 1rem 1.5rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 0.5rem; max-width: 20rem;">
+    <% @backup_codes.each do |code| %>
+      <li><%= code %></li>
+    <% end %>
+  </ul>
+
+  <p style="margin-top: 1.5rem;">
+    <%= link_to "I've saved these — continue to dashboard", dashboard_path,
+          style: "display: inline-block; background: var(--color-brand-600, #0369a1); color: #fff; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; text-decoration: none;" %>
+  </p>
+<% else %>
+  <p>
+    Your backup codes were shown once when you set them up. If you've used
+    some or lost them, generate a fresh set below — this immediately
+    invalidates any previous codes.
+  </p>
+
+  <%= button_to "Generate new backup codes", two_factor_backup_codes_path, method: :post,
+        style: "background: var(--color-brand-600, #0369a1); color: #fff; padding: 0.75rem 1.5rem; border: 0; border-radius: 0.5rem; font-weight: 600; cursor: pointer;" %>
+
+  <p style="margin-top: 1.5rem;"><%= link_to "Back to dashboard", dashboard_path %></p>
+<% end %>
