@@ -35,4 +35,36 @@ class RackAttackTest < ActionDispatch::IntegrationTest
 
     assert_response :too_many_requests
   end
+
+  test "throttles repeated two-factor challenge attempts from the same IP" do
+    user = User.create!(
+      email: "challenged@example.com", password: "password123!",
+      organization: Organization.create!(name: "Acme"), role: "dispatcher"
+    )
+    user.generate_otp_secret!
+    user.enable_two_factor!
+    post user_session_path, params: { user: { email: user.email, password: "password123!" } }
+
+    # freeze_time so every attempt lands in the same throttle period regardless
+    # of how slow the suite runs.
+    freeze_time do
+      11.times { post two_factor_challenge_path, params: { otp_code: "000000" } }
+    end
+
+    assert_response :too_many_requests
+  end
+
+  test "throttles repeated two-factor setup attempts from the same IP" do
+    user = User.create!(
+      email: "enrolling@example.com", password: "password123!",
+      organization: Organization.create!(name: "Acme"), role: "dispatcher"
+    )
+    sign_in user
+
+    freeze_time do
+      11.times { post two_factor_setup_path, params: { otp_code: "000000" } }
+    end
+
+    assert_response :too_many_requests
+  end
 end

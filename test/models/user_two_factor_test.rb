@@ -1,6 +1,8 @@
 require "test_helper"
 
 class UserTwoFactorTest < ActiveSupport::TestCase
+  include ActionMailer::TestHelper
+
   setup do
     @user = User.create!(
       email: "totp@example.com", password: "password123!",
@@ -45,6 +47,16 @@ class UserTwoFactorTest < ActiveSupport::TestCase
     assert_equal 10, codes.size
     assert_equal 10, codes.uniq.size
     assert_equal 10, @user.backup_codes_remaining
+  end
+
+  test "enabling and disabling each send the user a security notification" do
+    assert_enqueued_email_with TwoFactorMailer, :enabled, params: { user: @user } do
+      @user.enable_two_factor!
+    end
+
+    assert_enqueued_email_with TwoFactorMailer, :disabled, params: { user: @user } do
+      @user.disable_two_factor!
+    end
   end
 
   test "a backup code works exactly once" do

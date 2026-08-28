@@ -39,6 +39,14 @@ class Rack::Attack
     req.ip if req.path == "/two_factor_challenge" && req.post?
   end
 
+  # The enrollment (POST) and disable (DELETE) forms also verify a 6-digit
+  # code -- throttle them the same way so an attacker with a stolen password
+  # can't brute-force the code to enroll a device they control or to turn
+  # two-factor off.
+  throttle("two_factor_setup/ip", limit: 10, period: 20.seconds) do |req|
+    req.ip if req.path == "/two_factor_setup" && %w[POST DELETE].include?(req.request_method)
+  end
+
   # General backstop against basic flooding of any endpoint, independent of
   # the specific throttles above.
   throttle("requests/ip", limit: 300, period: 5.minutes, &:ip)

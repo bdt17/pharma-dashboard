@@ -67,27 +67,32 @@ module TwoFactorAuthentication
   end
 
   # Flip the user to enrolled and hand back a fresh set of backup codes (the
-  # only time the plaintext codes exist).
+  # only time the plaintext codes exist). Sends a security notification --
+  # deliver_later so a mail-provider hiccup can't fail the enrollment request.
   def enable_two_factor!
     update!(otp_enabled: true, otp_enabled_at: Time.current)
+    TwoFactorMailer.with(user: self).enabled.deliver_later
     generate_backup_codes!
   end
 
   # Turn two-factor off and clear every trace of the old secret / codes, so a
   # later re-enrollment starts clean. Callers must block this for
-  # two_factor_required? users.
+  # two_factor_required? users. Also covers an operator reset (TwoFactorReset),
+  # so the notification always goes out.
   def disable_two_factor!
     update!(
       otp_enabled: false, otp_enabled_at: nil, otp_secret: nil,
       otp_backup_codes: nil, otp_consumed_timestep: nil
     )
+    TwoFactorMailer.with(user: self).disabled.deliver_later
   end
 
   # Replace the backup codes with a fresh batch, returning the plaintext list
   # for one-time display. Digests (never the codes) are what gets stored.
   def generate_backup_codes!
     codes = Array.new(BACKUP_CODE_COUNT) { SecureRandom.hex(4) }
-    update!(otp_backup_codes: codes.map { |c| BCrypt::Password.create(c).to_s }.to_json)
+    digests = codes.map { |c| BCrypt::Password.create(c, cost: backup_code_bcrypt_cost).to_s }
+    update!(otp_backup_codes: digests.to_json)
     codes
   end
 
@@ -120,5 +125,12 @@ module TwoFactorAuthentication
 
   def backup_code_digests
     JSON.parse(otp_backup_codes.presence || "[]")
+  end
+
+  # Backup codes are only ~32 bits of entropy, so they're bcrypt-hashed rather
+  # than fast-digested. The work factor drops to the minimum under test --
+  # otherwise every spec that enrolls a user pays for 10 full-cost hashes.
+  def backup_code_bcrypt_cost
+    Rails.env.test? ? BCrypt::Engine::MIN_COST : BCrypt::Engine::DEFAULT_COST
   end
 end
