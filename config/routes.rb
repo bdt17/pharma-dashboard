@@ -1,18 +1,8 @@
 Rails.application.routes.draw do
-  # `dashboard.<domain>` is a vanity entry point, not the app's canonical
-  # host. Bounce every request on it to the canonical host (APP_HOST): the
-  # bare host lands on /dashboard (which then gates on sign-in via
-  # authenticate_user!), any deeper path keeps its path and query string.
-  # Staying on one host means one session cookie rather than a separate
-  # login per subdomain. Declared first so it wins over every route below.
-  canonical_host = ENV.fetch("APP_HOST", "pharmatransport.org")
-  constraints(->(request) { request.host.start_with?("dashboard.") }) do
-    match "/(*path)", via: %i[get head], to: redirect(status: 301) { |params, request|
-      path = params[:path].present? ? "/#{params[:path]}" : "/dashboard"
-      query = request.query_string.present? ? "?#{request.query_string}" : ""
-      "https://#{canonical_host}#{path}#{query}"
-    }
-  end
+  # The dashboard.<domain> vanity-host redirect lives in Rack middleware
+  # (DashboardSubdomainRedirect), not here -- a catch-all route with an
+  # explicit `via: :head` shadowed the implicit HEAD handling on `root`,
+  # which broke `HEAD /` (Render's health check) for every host.
 
   devise_for :users, controllers: { registrations: "users/registrations" }
 
