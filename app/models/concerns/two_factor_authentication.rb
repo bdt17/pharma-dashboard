@@ -11,6 +11,15 @@
 module TwoFactorAuthentication
   extend ActiveSupport::Concern
 
+  included do
+    # Encrypted at rest (ActiveRecord Encryption; keys configured in
+    # config/application.rb). Non-deterministic -- nothing ever queries by
+    # otp_secret. Existing plaintext rows keep working while
+    # support_unencrypted_data is on; `bin/rails two_factor:encrypt_secrets`
+    # migrates them.
+    encrypts :otp_secret
+  end
+
   # Shown in the authenticator app next to the account. Kept here (not in a
   # locale/config file) because it is also embedded in every provisioning URI
   # and changing it would orphan already-enrolled authenticators.
