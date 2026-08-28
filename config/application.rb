@@ -27,5 +27,26 @@ module PharmaDashboard
 
     # 301 dashboard.<domain> -> the canonical host. See the middleware file.
     config.middleware.use DashboardSubdomainRedirect
+
+    # ActiveRecord Encryption for User#otp_secret (and anything else marked
+    # `encrypts` later). This app keeps no Rails credentials file, so the keys
+    # come from env vars in real environments and from fixed, non-secret
+    # values in development/test -- nothing sensitive is stored locally and CI
+    # must run without secrets. Set here, not in config/initializers/, because
+    # the framework consumes this config before app initializers run.
+    #
+    # `support_unencrypted_data` stays on so rows written before this shipped
+    # still read; `bin/rails two_factor:encrypt_secrets` re-saves them
+    # encrypted. It can be turned off in a later change once that has run.
+    config.active_record.encryption.support_unencrypted_data = true
+    if Rails.env.local?
+      config.active_record.encryption.primary_key = "development-and-test-only-not-a-real-key-primary"
+      config.active_record.encryption.deterministic_key = "development-and-test-only-not-a-real-key-deterministic"
+      config.active_record.encryption.key_derivation_salt = "development-and-test-only-not-a-real-key-derivation-salt"
+    else
+      config.active_record.encryption.primary_key = ENV.fetch("AR_ENCRYPTION_PRIMARY_KEY")
+      config.active_record.encryption.deterministic_key = ENV.fetch("AR_ENCRYPTION_DETERMINISTIC_KEY")
+      config.active_record.encryption.key_derivation_salt = ENV.fetch("AR_ENCRYPTION_KEY_DERIVATION_SALT")
+    end
   end
 end

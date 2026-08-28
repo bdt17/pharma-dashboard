@@ -34,4 +34,18 @@ namespace :two_factor do
       puts "They can set it up again whenever they like from the Security page."
     end
   end
+
+  desc "Re-save every otp_secret so it's stored encrypted at rest (safe to re-run)"
+  task encrypt_secrets: :environment do
+    scope = User.where.not(otp_secret: nil)
+    total = scope.count
+    done = 0
+
+    scope.find_each do |user|
+      user.encrypt # ActiveRecord::Encryption: encrypts encryptable attrs + saves
+      done += 1
+    end
+
+    puts "Re-saved otp_secret for #{done}/#{total} enrolled users -- all encrypted at rest now."
+  end
 end
