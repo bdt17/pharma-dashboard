@@ -45,6 +45,16 @@ gem "prawn-table", "~> 0.2"
 # that needs a real Stripe account this repo doesn't have (see the Phase 5 PR).
 gem "stripe", "~> 13.0"
 
+# Two-factor authentication (TOTP). rotp does the RFC 6238 verify/provision;
+# rqrcode renders the enrollment QR as inline SVG. Both are pure Ruby with no
+# system dependencies (no ImageMagick / libqrencode). Devise itself has no
+# second-factor support, and devise-two-factor's current releases require
+# ActiveRecord encryption, which this app has no credentials/master.key for --
+# so the TOTP layer here is built directly on rotp instead. See
+# app/models/concerns/two_factor_authenticatable.rb.
+gem "rotp", "~> 6.3"
+gem "rqrcode", "~> 2.2"
+
 group :development, :test do
   # Static analysis, linting, and dependency-vulnerability scanning used by CI
   # (.github/workflows/ci.yml). These match what that workflow actually invokes.

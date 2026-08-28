@@ -1,0 +1,30 @@
+<% content_for :title, "Set up two-factor authentication" %>
+
+<h1>Set up two-factor authentication</h1>
+
+<p>
+  Two-factor authentication is required for every account. Scan the QR code
+  below with an authenticator app (Google Authenticator, Authy, 1Password,
+  Microsoft Authenticator), then enter the 6-digit code it shows to finish.
+</p>
+
+<div style="margin: 1.5rem 0; max-width: 220px;">
+  <%= raw current_user.otp_qr_code_svg %>
+</div>
+
+<p style="font-size: 0.9rem; color: #4b5563;">
+  Can't scan? Enter this key manually (type "Time based"):<br>
+  <code style="font-size: 1rem; letter-spacing: 0.1em;"><%= current_user.otp_secret %></code>
+</p>
+
+<%= form_with url: two_factor_setup_path, method: :post do |f| %>
+  <div style="margin: 1.5rem 0;">
+    <%= label_tag :otp_code, "6-digit code" %><br>
+    <%= text_field_tag :otp_code, nil,
+          autocomplete: "one-time-code", inputmode: "numeric", pattern: "[0-9]*",
+          autofocus: true, placeholder: "123456",
+          style: "font-size: 1.25rem; letter-spacing: 0.25em; padding: 0.5rem; width: 12rem;" %>
+  </div>
+  <%= f.submit "Verify and continue",
+        style: "background: var(--color-brand-600, #0369a1); color: #fff; padding: 0.75rem 1.5rem; border: 0; border-radius: 0.5rem; font-weight: 600; cursor: pointer;" %>
+<% end %>

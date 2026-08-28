@@ -3,6 +3,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :lockable, :timeoutable, :confirmable
 
+  # TOTP second factor (rotp-backed). Required for every user -- the gate that
+  # enforces enrollment/challenge lives in ApplicationController#enforce_two_factor.
+  include TwoFactorAuthentication
+
   # :confirmable normally requires every new user to click an emailed link
   # before they can sign in -- exactly the gate self-service signup needs
   # (see Users::RegistrationsController), but it would also block a user

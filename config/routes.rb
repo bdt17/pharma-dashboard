@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations" }
 
+  # Two-factor authentication (TOTP). Required for every user; see
+  # config/initializers/two_factor.rb and ApplicationController#enforce_two_factor.
+  resource :two_factor_setup, only: %i[show create], controller: "two_factor/setup"
+  resource :two_factor_challenge, only: %i[new create], controller: "two_factor/challenge"
+  resource :two_factor_backup_codes, only: %i[show create], controller: "two_factor/backup_codes"
+
   # Public pages
   root "home#index"
   get "/login", to: "home#login", as: :login
