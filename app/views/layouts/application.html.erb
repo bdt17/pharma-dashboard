@@ -104,6 +104,7 @@
           <li><%= link_to "GPS", gps_path %></li>
           <li><%= link_to "Billing", billing_path %></li>
           <li><%= link_to "Compliance", compliance_path %></li>
+          <li><%= link_to "Security", two_factor_setup_path %></li>
           <li><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %></li>
         <% else %>
           <li><%= link_to "About", about_path %></li>

@@ -19,9 +19,12 @@ module TwoFactor
 
     private
 
-    # An un-enrolled user has nothing to be challenged on -- send them to setup.
+    # An un-enrolled user has nothing to be challenged on: nudge a required
+    # role toward setup, send anyone else back to the dashboard.
     def redirect_unless_enrolled
-      redirect_to two_factor_setup_path unless current_user.otp_enabled?
+      return if current_user.otp_enabled?
+
+      redirect_to(current_user.two_factor_required? ? two_factor_setup_path : dashboard_path)
     end
   end
 end

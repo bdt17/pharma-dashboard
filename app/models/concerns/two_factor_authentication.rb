@@ -4,9 +4,10 @@
 # backup codes stored as BCrypt digests, and a replay guard so a code that is
 # still inside its validity window cannot be spent twice.
 #
-# The enforcement that actually makes this required for every user lives in
-# ApplicationController#enforce_two_factor; this concern is just the data and
-# the verification primitives.
+# Two-factor is opt-in for most roles and mandatory for the roles that can
+# reach compliance records and billing (see TWO_FACTOR_REQUIRED_ROLES). The
+# enforcement lives in ApplicationController#enforce_two_factor; this concern
+# is just the data and the verification primitives.
 module TwoFactorAuthentication
   extend ActiveSupport::Concern
 
@@ -14,6 +15,12 @@ module TwoFactorAuthentication
   # locale/config file) because it is also embedded in every provisioning URI
   # and changing it would orphan already-enrolled authenticators.
   TOTP_ISSUER = "Pharma Transport".freeze
+
+  # Roles that must enroll before reaching any authenticated page, and that
+  # cannot turn two-factor back off: admins (billing, org management) and
+  # pharmacists (they sign off on chain-of-custody / compliance records).
+  # dispatchers and drivers are opt-in.
+  TWO_FACTOR_REQUIRED_ROLES = %w[admin pharmacist].freeze
 
   BACKUP_CODE_COUNT = 10
 
@@ -31,6 +38,11 @@ module TwoFactorAuthentication
     RQRCode::QRCode.new(otp_provisioning_uri).as_svg(
       module_size: 4, standalone: true, use_path: true
     )
+  end
+
+  # Whether this user must use two-factor (and may not disable it).
+  def two_factor_required?
+    TWO_FACTOR_REQUIRED_ROLES.include?(role)
   end
 
   # Assign a fresh secret for a not-yet-enrolled user starting setup. A no-op
@@ -59,6 +71,16 @@ module TwoFactorAuthentication
   def enable_two_factor!
     update!(otp_enabled: true, otp_enabled_at: Time.current)
     generate_backup_codes!
+  end
+
+  # Turn two-factor off and clear every trace of the old secret / codes, so a
+  # later re-enrollment starts clean. Callers must block this for
+  # two_factor_required? users.
+  def disable_two_factor!
+    update!(
+      otp_enabled: false, otp_enabled_at: nil, otp_secret: nil,
+      otp_backup_codes: nil, otp_consumed_timestep: nil
+    )
   end
 
   # Replace the backup codes with a fresh batch, returning the plaintext list

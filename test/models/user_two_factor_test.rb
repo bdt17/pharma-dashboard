@@ -62,4 +62,24 @@ class UserTwoFactorTest < ActiveSupport::TestCase
     assert @user.verify_second_factor(codes.last)
     assert_not @user.verify_second_factor("nope")
   end
+
+  test "two_factor_required? is true only for admins and pharmacists" do
+    { "admin" => true, "pharmacist" => true, "dispatcher" => false, "driver" => false }.each do |role, expected|
+      @user.update!(role: role)
+      assert_equal expected, @user.two_factor_required?, role
+    end
+  end
+
+  test "disable_two_factor! clears every stored trace" do
+    @user.enable_two_factor!
+    @user.verify_and_consume_otp!(@totp.now)
+
+    @user.disable_two_factor!
+
+    assert_not @user.reload.otp_enabled?
+    assert_nil @user.otp_secret
+    assert_nil @user.otp_enabled_at
+    assert_nil @user.otp_consumed_timestep
+    assert_equal 0, @user.backup_codes_remaining
+  end
 end

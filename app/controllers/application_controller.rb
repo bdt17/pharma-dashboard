@@ -3,10 +3,11 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  # Two-factor is required for every user. A signed-in user who has not
-  # cleared the second factor this session is pushed to enrollment or the
-  # challenge before any authenticated page renders. The two_factor/*
-  # controllers opt out (see TwoFactor::BaseController).
+  # Two-factor: mandatory for admins and pharmacists (User#two_factor_required?),
+  # opt-in for everyone else. An enrolled user must clear the challenge each
+  # session; a required-role user who hasn't enrolled is pushed to setup. Other
+  # users are unaffected. The two_factor/* controllers opt out (see
+  # TwoFactor::BaseController).
   before_action :enforce_two_factor
 
   helper_method :current_organization
@@ -28,8 +29,9 @@ class ApplicationController < ActionController::Base
 
     if current_user.otp_enabled?
       redirect_to new_two_factor_challenge_path
-    else
-      redirect_to two_factor_setup_path, alert: "Set up two-factor authentication to continue."
+    elsif current_user.two_factor_required?
+      redirect_to two_factor_setup_path,
+        alert: "Two-factor authentication is required for your role. Set it up to continue."
     end
   end
 

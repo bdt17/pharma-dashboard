@@ -1,30 +1,78 @@
-<% content_for :title, "Set up two-factor authentication" %>
+<% content_for :title, "Two-factor authentication" %>
 
-<h1>Set up two-factor authentication</h1>
+<% button_style = "background: var(--color-brand-600, #0369a1); color: #fff; padding: 0.75rem 1.5rem; border: 0; border-radius: 0.5rem; font-weight: 600; cursor: pointer;" %>
 
-<p>
-  Two-factor authentication is required for every account. Scan the QR code
-  below with an authenticator app (Google Authenticator, Authy, 1Password,
-  Microsoft Authenticator), then enter the 6-digit code it shows to finish.
-</p>
+<% if current_user.otp_enabled? %>
+  <h1>Two-factor authentication is on</h1>
 
-<div style="margin: 1.5rem 0; max-width: 220px;">
-  <%= raw current_user.otp_qr_code_svg %>
-</div>
+  <p>
+    Your account is protected by an authenticator app. You'll be asked for a
+    code each time you sign in.
+  </p>
 
-<p style="font-size: 0.9rem; color: #4b5563;">
-  Can't scan? Enter this key manually (type "Time based"):<br>
-  <code style="font-size: 1rem; letter-spacing: 0.1em;"><%= current_user.otp_secret %></code>
-</p>
+  <p style="margin: 1.5rem 0;">
+    <%= link_to "Regenerate backup codes", two_factor_backup_codes_path,
+          style: "font-weight: 600;" %>
+    — replaces any codes you have now.
+  </p>
 
-<%= form_with url: two_factor_setup_path, method: :post do |f| %>
-  <div style="margin: 1.5rem 0;">
-    <%= label_tag :otp_code, "6-digit code" %><br>
-    <%= text_field_tag :otp_code, nil,
-          autocomplete: "one-time-code", inputmode: "numeric", pattern: "[0-9]*",
-          autofocus: true, placeholder: "123456",
-          style: "font-size: 1.25rem; letter-spacing: 0.25em; padding: 0.5rem; width: 12rem;" %>
+  <% if current_user.two_factor_required? %>
+    <p style="color: #4b5563;">
+      Two-factor authentication is required for <%= current_user.role %>
+      accounts and can't be turned off.
+    </p>
+  <% else %>
+    <h2 style="font-size: 1.1rem; margin-top: 2rem;">Turn it off</h2>
+    <p>Enter a current authenticator code (or a backup code) to disable it.</p>
+    <%= form_with url: two_factor_setup_path, method: :delete do %>
+      <div style="margin: 1rem 0;">
+        <%= text_field_tag :otp_code, nil,
+              autocomplete: "one-time-code", inputmode: "numeric", placeholder: "123456",
+              style: "font-size: 1.1rem; letter-spacing: 0.2em; padding: 0.5rem; width: 12rem;" %>
+      </div>
+      <%= submit_tag "Turn off two-factor authentication",
+            style: "background: #b91c1c; color: #fff; padding: 0.75rem 1.5rem; border: 0; border-radius: 0.5rem; font-weight: 600; cursor: pointer;",
+            data: { turbo_confirm: "Turn off two-factor authentication for your account?" } %>
+    <% end %>
+  <% end %>
+<% else %>
+  <h1>Set up two-factor authentication</h1>
+
+  <% if current_user.two_factor_required? %>
+    <p style="color: #991b1b; font-weight: 600;">
+      Two-factor authentication is required for <%= current_user.role %>
+      accounts. Finish setup to continue.
+    </p>
+  <% else %>
+    <p>
+      Two-factor authentication adds a one-time code from your phone when you
+      sign in, so a stolen password isn't enough on its own. Optional, but
+      recommended.
+    </p>
+  <% end %>
+
+  <p>
+    Scan the QR code with an authenticator app (Google Authenticator, Authy,
+    1Password, Microsoft Authenticator), then enter the 6-digit code it shows.
+  </p>
+
+  <div style="margin: 1.5rem 0; max-width: 220px;">
+    <%= raw current_user.otp_qr_code_svg %>
   </div>
-  <%= f.submit "Verify and continue",
-        style: "background: var(--color-brand-600, #0369a1); color: #fff; padding: 0.75rem 1.5rem; border: 0; border-radius: 0.5rem; font-weight: 600; cursor: pointer;" %>
+
+  <p style="font-size: 0.9rem; color: #4b5563;">
+    Can't scan? Enter this key manually (type "Time based"):<br>
+    <code style="font-size: 1rem; letter-spacing: 0.1em;"><%= current_user.otp_secret %></code>
+  </p>
+
+  <%= form_with url: two_factor_setup_path, method: :post do %>
+    <div style="margin: 1.5rem 0;">
+      <%= label_tag :otp_code, "6-digit code" %><br>
+      <%= text_field_tag :otp_code, nil,
+            autocomplete: "one-time-code", inputmode: "numeric", pattern: "[0-9]*",
+            autofocus: true, placeholder: "123456",
+            style: "font-size: 1.25rem; letter-spacing: 0.25em; padding: 0.5rem; width: 12rem;" %>
+    </div>
+    <%= submit_tag "Verify and continue", style: button_style %>
+  <% end %>
 <% end %>
