@@ -1,0 +1,11 @@
+<p>Two-factor authentication is no longer active for <strong><%= @user.email %></strong>.</p>
+
+<p>
+  This happens when you turn it off yourself, or when support resets it
+  because you were locked out. Signing in now only needs your password<%= @user.two_factor_required? ? ", so you'll be asked to set two-factor up again on your next sign-in" : "" %>.
+</p>
+
+<p>
+  If you didn't request this, reset your password immediately and contact
+  support — someone else may be trying to weaken your account's security.
+</p>
