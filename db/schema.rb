@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_27_173750) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_29_211918) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -224,7 +224,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_27_173750) do
     t.float "speed"
     t.string "status"
     t.datetime "updated_at", null: false
-    t.index ["api_token"], name: "index_vehicles_on_api_token", unique: true
     t.index ["imei"], name: "index_vehicles_on_imei", unique: true
   end
 
