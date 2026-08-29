@@ -14,6 +14,11 @@
       <dt class="text-ink-faint">Status</dt>
       <dd class="col-span-2"><span class="text-accent-700 font-semibold"><%= @subscription.status.humanize %></span></dd>
 
+      <% if @subscription.plan %>
+        <dt class="text-ink-faint">Plan</dt>
+        <dd class="col-span-2 font-semibold"><%= @subscription.plan.name %></dd>
+      <% end %>
+
       <dt class="text-ink-faint">Plan amount</dt>
       <dd class="col-span-2 mono"><%= number_to_currency(@subscription.plan_amount) if @subscription.plan_amount %></dd>
 
@@ -47,7 +52,10 @@
         </p>
       <% end %>
       <div class="flex flex-col gap-3">
-        <% @plans.group_by { |plan| plan[:product_name] }.each do |product_name, variants| %>
+        <% tier_order = SubscriptionPlan.tiers %>
+        <% grouped = @plans.group_by { |plan| plan[:product_name] }
+             .sort_by { |_name, variants| tier_order.index(variants.first[:tier]) || 99 } %>
+        <% grouped.each do |product_name, variants| %>
           <% monthly = variants.find { |p| p[:interval] == "month" }
              annual = variants.find { |p| p[:interval] == "year" }
              others = variants - [ monthly, annual ].compact %>

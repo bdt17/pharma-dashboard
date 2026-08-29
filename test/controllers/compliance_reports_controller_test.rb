@@ -83,7 +83,7 @@ class ComplianceReportsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to batch_compliance_reports_url(@batch)
     follow_redirect!
-    assert_match "Free plan limit reached", response.body
+    assert_match "Monthly limit reached", response.body
   end
 
   test "an active subscription removes the free monthly limit" do

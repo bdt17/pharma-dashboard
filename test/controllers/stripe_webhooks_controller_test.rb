@@ -22,7 +22,9 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
   # Matches the real shape Stripe sends as of API version 2025-11-17.clover:
   # current_period_end lives on the subscription item, not the subscription
   # itself.
-  def subscription_event_payload(status: "active")
+  def subscription_event_payload(status: "active", tier: nil)
+    price = { unit_amount: 9900 }
+    price[:metadata] = { tier: tier } if tier
     {
       type: "customer.subscription.updated",
       data: {
@@ -30,7 +32,7 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
           id: "sub_123",
           customer: "cus_123",
           status: status,
-          items: { data: [ { price: { unit_amount: 9900 }, current_period_end: 1.month.from_now.to_i } ] }
+          items: { data: [ { price: price, current_period_end: 1.month.from_now.to_i } ] }
         }
       }
     }.to_json
@@ -65,6 +67,16 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     assert_equal "active", subscription.status
     assert_equal 99.0, subscription.plan_amount
     assert_not_nil subscription.current_period_end
+  end
+
+  test "syncs the tier from the price metadata when present" do
+    payload = subscription_event_payload(tier: "pro")
+
+    post stripe_webhooks_url,
+      params: payload,
+      headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
+
+    assert_equal "pro", Subscription.find_by(stripe_subscription_id: "sub_123").tier
   end
 
   test "accepts a correctly signed subscription.deleted event and cancels the subscription" do

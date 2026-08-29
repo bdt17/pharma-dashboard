@@ -179,25 +179,25 @@
   <div class="mx-auto max-w-6xl px-6 py-[88px] grid gap-14 md:grid-cols-2 items-center">
     <div class="flex flex-col gap-4">
       <span class="eyebrow">Pricing</span>
-      <h2 class="text-[30px]">One plan. No per-truck upsells, no compliance surcharge.</h2>
-      <p class="text-[15px] text-ink-soft">Every plan starts with a 14-day free trial &mdash; you are not charged until it ends. Unlimited team members per organization. Cancel any time.</p>
+      <h2 class="text-[30px]">Three plans, priced on packet volume &mdash; not per truck or per seat.</h2>
+      <p class="text-[15px] text-ink-soft">Every plan is the whole product, with unlimited team members and a 14-day free trial. You are not charged until it ends. Cancel any time.</p>
       <div class="flex gap-3 pt-1">
         <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
-        <%= link_to "Full pricing", pricing_path, class: "btn btn-secondary" %>
+        <%= link_to "Compare plans", pricing_path, class: "btn btn-secondary" %>
       </div>
     </div>
-    <div class="card p-8 flex flex-col gap-4 shadow-[0_1px_3px_rgba(19,26,36,0.08)]">
-      <div class="flex items-center justify-between">
-        <span class="font-sans font-semibold text-[15px]">What&rsquo;s included</span>
-        <span class="badge badge-accent">14-day trial</span>
-      </div>
-      <div class="bg-accent-50 border border-accent-100 rounded-sm px-3 py-2.5 text-[13px] text-accent-700">
-        Founding-customer offer: 25% off your first 6 months, applied automatically for early monthly subscribers.
-      </div>
-      <div class="flex flex-col gap-2.5 text-[14px] text-ink-soft">
-        <% ["Live GPS fleet tracking", "Immutable chain-of-custody event log", "FDA-ready Compliance Packet PDFs", "Signature capture for proof-of-delivery"].each do |item| %>
-          <span class="flex gap-2.5"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> <%= item %></span>
-        <% end %>
+    <div class="card p-8 flex flex-col gap-3 shadow-[0_1px_3px_rgba(19,26,36,0.08)]">
+      <% SubscriptionPlan::ALL.each do |plan| %>
+        <div class="flex items-baseline justify-between border-b border-line-soft last:border-b-0 pb-3 last:pb-0">
+          <div class="flex flex-col">
+            <span class="font-sans font-semibold text-[14px]"><%= plan.name %></span>
+            <span class="text-[12px] text-ink-faint"><%= plan.unlimited_packets? ? "Unlimited" : plan.packet_allowance %> Compliance Packets / month</span>
+          </div>
+          <span class="mono text-[18px] font-medium">$<%= plan.monthly_dollars %><span class="text-[12px] text-ink-faint">/mo</span></span>
+        </div>
+      <% end %>
+      <div class="bg-accent-50 border border-accent-100 rounded-sm px-3 py-2 text-[12.5px] text-accent-700 mt-1">
+        Founding-customer offer: 25% off your first 6 months for early monthly subscribers.
       </div>
     </div>
   </div>

@@ -9,12 +9,12 @@
       <p class="text-sm text-gray-500 mb-2">Unlimited compliance packets on your current plan.</p>
     <% elsif @quota.exceeded? %>
       <p class="text-sm text-red-600 mb-2">
-        Free plan limit reached (<%= ComplianceReportQuota::FREE_MONTHLY_LIMIT %>/month).
-        <%= link_to "Subscribe for unlimited generation", billing_path, class: "underline" %>.
+        Monthly limit reached (<%= @quota.monthly_allowance %>/month on your current plan).
+        <%= link_to "Upgrade for a higher allowance", billing_path, class: "underline" %>.
       </p>
     <% else %>
       <p class="text-sm text-gray-500 mb-2">
-        <%= @quota.remaining %> of <%= ComplianceReportQuota::FREE_MONTHLY_LIMIT %> free compliance packets left this month.
+        <%= @quota.remaining %> of <%= @quota.monthly_allowance %> compliance packets left this month.
       </p>
     <% end %>
     <%= button_to "Generate new compliance packet", batch_compliance_reports_path(@batch), method: :post,

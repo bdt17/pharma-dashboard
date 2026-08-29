@@ -1,4 +1,17 @@
 namespace :stripe do
+  desc "Ensure the Starter / Pro / Compliance subscription Products + monthly Prices exist (safe to re-run)"
+  task sync_subscription_plans: :environment do
+    unless StripeBilling.configured?
+      puts "STRIPE_SECRET_KEY isn't set -- nothing to do."
+      next
+    end
+
+    result = StripeSubscriptionPlansSync.call
+    result.existing.each { |price| puts "Already present: #{price.id}" }
+    result.created.each { |price| puts "Created #{price.id} (#{price.unit_amount / 100.0} #{price.currency}/month)" }
+    puts "Now run stripe:sync_annual_prices to create the 10%-off annual variants." if result.created.any?
+  end
+
   desc "Ensure every active monthly Stripe Price has a matching annual Price at 10% off (safe to re-run)"
   task sync_annual_prices: :environment do
     unless StripeBilling.configured?

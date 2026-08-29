@@ -53,7 +53,8 @@ class StripeBilling
           product_name: price.product.name,
           amount: price.unit_amount / 100.0,
           currency: price.currency,
-          interval: price.recurring.interval
+          interval: price.recurring.interval,
+          tier: (price[:metadata] || {})["tier"]
         }
       end
   end

@@ -60,7 +60,8 @@ class StripeWebhooksController < ApplicationController
       stripe_subscription_id: stripe_subscription.id,
       status: stripe_subscription.status,
       plan_amount: item&.price ? item.price.unit_amount / 100.0 : nil,
-      current_period_end: item&.current_period_end ? Time.at(item.current_period_end) : nil
+      current_period_end: item&.current_period_end ? Time.at(item.current_period_end) : nil,
+      tier: item&.price ? (item.price[:metadata] || {})["tier"] : nil
     )
 
     # "active" specifically, not "trialing" -- a referral reward only pays
