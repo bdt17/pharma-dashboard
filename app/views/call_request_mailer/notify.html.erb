@@ -1,0 +1,19 @@
+<p>New call request — <strong><%= @call_request.topic_label %></strong></p>
+
+<table cellpadding="4" style="border-collapse: collapse; font-size: 14px;">
+  <tr><td><strong>Name</strong></td><td><%= @call_request.name %></td></tr>
+  <tr><td><strong>Email</strong></td><td><%= mail_to @call_request.email %></td></tr>
+  <tr><td><strong>Pharmacy</strong></td><td><%= @call_request.pharmacy_name.presence || "—" %></td></tr>
+  <tr><td><strong>Phone</strong></td><td><%= @call_request.phone.presence || "—" %></td></tr>
+  <tr><td><strong>Submitted</strong></td><td><%= @call_request.created_at.strftime("%Y-%m-%d %H:%M %Z") %></td></tr>
+</table>
+
+<% if @call_request.message.present? %>
+  <p><strong>Message</strong></p>
+  <p style="white-space: pre-wrap;"><%= @call_request.message %></p>
+<% end %>
+
+<% if @call_request.context.present? %>
+  <p><strong>Context</strong></p>
+  <p style="white-space: pre-wrap;"><%= @call_request.context %></p>
+<% end %>

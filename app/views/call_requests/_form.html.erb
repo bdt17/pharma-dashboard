@@ -1,0 +1,42 @@
+<%# Reusable request-a-call form. Pass a CallRequest as `call_request`
+    (with topic and optional context already set) and an optional
+    `heading` / `blurb`. %>
+<%= form_with model: call_request, url: request_a_call_path, method: :post, class: "flex flex-col gap-4" do |f| %>
+  <% if call_request.errors.any? %>
+    <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-[13px]">
+      <ul class="list-disc pl-5">
+        <% call_request.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :topic %>
+  <%= f.hidden_field :context %>
+
+  <div class="grid sm:grid-cols-2 gap-4">
+    <div class="flex flex-col gap-1.5">
+      <%= f.label :name, "Your name", class: "text-[12.5px] font-semibold text-ink-soft" %>
+      <%= f.text_field :name, autocomplete: "name", class: "field-input" %>
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <%= f.label :email, class: "text-[12.5px] font-semibold text-ink-soft" %>
+      <%= f.email_field :email, autocomplete: "email", class: "field-input" %>
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <%= f.label :pharmacy_name, "Pharmacy", class: "text-[12.5px] font-semibold text-ink-soft" %>
+      <%= f.text_field :pharmacy_name, autocomplete: "organization", class: "field-input" %>
+    </div>
+    <div class="flex flex-col gap-1.5">
+      <%= f.label :phone, "Phone (optional)", class: "text-[12.5px] font-semibold text-ink-soft" %>
+      <%= f.telephone_field :phone, autocomplete: "tel", class: "field-input" %>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-1.5">
+    <%= f.label :message, "Anything you want us to know first? (optional)", class: "text-[12.5px] font-semibold text-ink-soft" %>
+    <%= f.text_area :message, rows: 3, class: "field-input" %>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-full sm:w-auto sm:self-start">Request a call</button>
+  <p class="text-[12px] text-ink-faint">We&rsquo;ll reply within one business day. No account needed.</p>
+<% end %>

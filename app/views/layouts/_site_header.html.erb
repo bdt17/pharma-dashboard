@@ -17,9 +17,10 @@
         <%= button_to "Sign out", destroy_user_session_path, method: :delete,
               class: "btn btn-secondary btn-sm" %>
       <% else %>
+        <%= link_to "DSCSA check", dscsa_assessment_path, class: "hidden sm:inline text-ink-soft hover:text-ink px-1" %>
         <%= link_to "Pricing", pricing_path, class: "hidden sm:inline text-ink-soft hover:text-ink px-1" %>
         <%= link_to "Compliance officer", compliance_officer_path, class: "hidden lg:inline text-ink-soft hover:text-ink px-1" %>
-        <%= link_to "Security", security_path, class: "hidden sm:inline text-ink-soft hover:text-ink px-1" %>
+        <%= link_to "Security", security_path, class: "hidden lg:inline text-ink-soft hover:text-ink px-1" %>
         <%= link_to "About", about_path, class: "hidden lg:inline text-ink-soft hover:text-ink px-1" %>
         <%= link_to "Sign in", new_user_session_path, class: "hidden sm:inline-flex btn btn-secondary btn-sm" %>
         <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary btn-sm" %>

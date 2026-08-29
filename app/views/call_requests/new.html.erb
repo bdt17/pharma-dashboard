@@ -1,0 +1,32 @@
+<% content_for :full_bleed, "1" %>
+<% content_for :title, "Request a call — Pharma Transport" %>
+<% content_for :meta_description, "Ask a Pharma Transport compliance professional to call you. No account needed." %>
+
+<section class="mx-auto max-w-2xl px-6 py-16">
+  <div class="flex flex-col gap-3 mb-8">
+    <span class="eyebrow">
+      <%= { "compliance_officer" => "Fractional compliance officer",
+            "dscsa_assessment" => "DSCSA readiness",
+            "general" => "Talk to us" }.fetch(@call_request.topic, "Talk to us") %>
+    </span>
+    <h1 class="text-[28px] sm:text-[32px]">Have someone call you.</h1>
+    <p class="text-[15px] text-ink-soft">
+      <% if @call_request.topic == "compliance_officer" %>
+        Twenty minutes to walk through your pharmacy&rsquo;s compliance obligations and whether
+        the retainer is a fit. No pitch deck.
+      <% elsif @call_request.topic == "dscsa_assessment" %>
+        We&rsquo;ll go through your readiness results and the fastest way to close the gaps that matter.
+      <% else %>
+        Tell us a little about your pharmacy and we&rsquo;ll get back to you.
+      <% end %>
+    </p>
+  </div>
+
+  <div class="card p-6 sm:p-8">
+    <%= render "call_requests/form", call_request: @call_request %>
+  </div>
+
+  <p class="text-[13px] text-ink-faint mt-6">
+    Prefer email? <%= mail_to "brett@pharmatransport.org" %>
+  </p>
+</section>
