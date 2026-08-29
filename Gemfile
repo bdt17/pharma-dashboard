@@ -26,7 +26,7 @@ gem "stimulus-rails"
 # build step needed, and it hooks into assets:precompile automatically.
 gem "tailwindcss-rails"
 gem "jbuilder"
-gem "redis", "~> 5.0"
+gem "redis", "~> 6.0"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 # PostgreSQL adapter — used in every environment (development, test, production).
