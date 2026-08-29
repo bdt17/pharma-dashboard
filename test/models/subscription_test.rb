@@ -33,6 +33,19 @@ class SubscriptionTest < ActiveSupport::TestCase
     assert_equal 99.0, subscription.plan_amount
   end
 
+  test ".sync_from_stripe! stores the tier and exposes it as a plan" do
+    subscription = Subscription.sync_from_stripe!(
+      organization: @organization, stripe_subscription_id: "sub_t", status: "active", tier: "pro"
+    )
+
+    assert_equal "pro", subscription.tier
+    assert_equal SubscriptionPlan::PRO, subscription.plan
+  end
+
+  test "#plan is nil for a subscription with no tier" do
+    assert_nil Subscription.new.plan
+  end
+
   test ".sync_from_stripe! is idempotent -- replaying the same event updates, not duplicates" do
     Subscription.sync_from_stripe!(organization: @organization, stripe_subscription_id: "sub_123", status: "trialing")
 

@@ -41,13 +41,14 @@ class StripeBillingTest < ActiveSupport::TestCase
       unit_amount: 9900,
       currency: "usd",
       recurring: { interval: "month" },
+      metadata: { "tier" => "starter" },
       product: { name: "Starter" }
     )
     list = Stripe::ListObject.construct_from(data: [ price ])
 
     Stripe::Price.stub :list, list do
       plans = StripeBilling.available_plans
-      assert_equal [ { id: "price_123", product_name: "Starter", amount: 99.0, currency: "usd", interval: "month" } ], plans
+      assert_equal [ { id: "price_123", product_name: "Starter", amount: 99.0, currency: "usd", interval: "month", tier: "starter" } ], plans
     end
   end
 

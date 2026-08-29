@@ -114,4 +114,46 @@ class ComplianceReportQuotaTest < ActiveSupport::TestCase
 
     assert_nil ComplianceReportQuota.new(@organization).credit_to_consume
   end
+
+  # --- tiered plans ---
+
+  test "the starter tier caps generation at its monthly packet allowance" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "starter")
+    quota = ComplianceReportQuota.new(@organization)
+
+    assert_not quota.unlimited?
+    assert_equal SubscriptionPlan::STARTER.packet_allowance, quota.monthly_allowance
+    assert_equal SubscriptionPlan::STARTER.packet_allowance, quota.remaining
+
+    SubscriptionPlan::STARTER.packet_allowance.times { generate_report! }
+    assert ComplianceReportQuota.new(@organization).exceeded?
+  end
+
+  test "the pro tier has a higher allowance than starter" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_p", tier: "pro")
+    assert_equal 60, ComplianceReportQuota.new(@organization).monthly_allowance
+  end
+
+  test "the compliance tier is unlimited" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_c", tier: "compliance")
+    quota = ComplianceReportQuota.new(@organization)
+
+    assert quota.unlimited?
+    assert_nil quota.remaining
+  end
+
+  test "a subscription with no tier stays unlimited (pre-tier behaviour)" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_legacy", tier: nil)
+    assert ComplianceReportQuota.new(@organization).unlimited?
+  end
+
+  test "a purchased credit still covers a starter over-limit generation" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "starter")
+    SubscriptionPlan::STARTER.packet_allowance.times { generate_report! }
+    credit = ReportCredit.grant!(organization: @organization, stripe_checkout_session_id: "cs_1")
+
+    quota = ComplianceReportQuota.new(@organization)
+    assert_not quota.exceeded?
+    assert_equal credit, quota.credit_to_consume
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_29_223207) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_29_224924) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -146,6 +146,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_223207) do
     t.decimal "plan_amount"
     t.string "status"
     t.string "stripe_subscription_id"
+    t.string "tier"
     t.datetime "updated_at", null: false
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
   end

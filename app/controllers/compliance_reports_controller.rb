@@ -67,7 +67,7 @@ class ComplianceReportsController < ApplicationController
     return unless quota.exceeded?
 
     redirect_to batch_compliance_reports_path(@batch),
-                alert: "Free plan limit reached: #{ComplianceReportQuota::FREE_MONTHLY_LIMIT} compliance packets " \
-                       "per month. Subscribe for unlimited generation, or buy a single extra packet from Billing."
+                alert: "Monthly limit reached: #{quota.monthly_allowance} compliance packets " \
+                       "per month on your current plan. Upgrade for a higher allowance, or buy a single extra packet from Billing."
   end
 end

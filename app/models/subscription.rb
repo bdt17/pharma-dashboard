@@ -24,13 +24,22 @@ class Subscription < ApplicationRecord
   # copy of subscription state -- see StripeWebhooksController. Idempotent:
   # replaying the same event (Stripe's own delivery guarantee is
   # at-least-once) just re-applies the same attributes.
-  def self.sync_from_stripe!(organization:, stripe_subscription_id:, status:, plan_amount: nil, current_period_end: nil)
+  def self.sync_from_stripe!(organization:, stripe_subscription_id:, status:, plan_amount: nil, current_period_end: nil, tier: nil)
     subscription = find_or_initialize_by(stripe_subscription_id: stripe_subscription_id)
     subscription.organization = organization
     subscription.status = status
     subscription.plan_amount = plan_amount if plan_amount
     subscription.current_period_end = current_period_end if current_period_end
+    subscription.tier = tier if tier
     subscription.save!
     subscription
+  end
+
+  # The SubscriptionPlan for this subscription's tier, or nil for a
+  # subscription created before tiers (or on a Price with no `tier`
+  # metadata) -- ComplianceReportQuota treats that nil as "unlimited",
+  # preserving the pre-tier behaviour.
+  def plan
+    SubscriptionPlan.find(tier)
   end
 end

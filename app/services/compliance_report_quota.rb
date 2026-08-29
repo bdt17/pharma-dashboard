@@ -1,19 +1,15 @@
-# The pricing-metering half of the Compliance Packet feature: an
-# organization without an active (or trialing) subscription can generate a
-# limited number of formal Compliance Packets per calendar month, enough to
-# actually try the feature on a real shipment, not enough to run real
-# cold-chain operations on for free. Subscribing removes the cap entirely --
-# this is the thing being sold, not a separate "plan tier" system layered on
-# top of it. Deliberately doesn't try to map Stripe plan names/amounts to
-# different quota tiers: pricing is never hardcoded in this app (see
-# StripeBilling), and "subscribed or not" is the one distinction that
-# doesn't require guessing at plan-naming conventions that live in Stripe's
-# own dashboard, not here.
+# The pricing-metering half of the Compliance Packet feature.
 #
-# An organization can also buy a single extra Compliance Packet outside a
-# subscription (see ReportCredit) -- a purchased credit only ever covers a
-# generation once the free monthly allowance is already used up, so it
-# never gets silently burned by a month that still had free room left.
+# - No active subscription: a small free allowance per calendar month
+#   (FREE_MONTHLY_LIMIT), enough to try the feature on a real shipment.
+# - Starter / Pro: the per-month allowance for that tier
+#   (SubscriptionPlan#packet_allowance).
+# - Compliance tier, or a legacy subscription with no tier: unlimited.
+#
+# Beyond whichever cap applies, an organization can spend a purchased
+# ReportCredit (single or bulk) -- a credit only ever covers a generation
+# once the monthly allowance is already used up, so it never gets silently
+# burned by a month that still had room left.
 class ComplianceReportQuota
   FREE_MONTHLY_LIMIT = 3
 
@@ -21,42 +17,59 @@ class ComplianceReportQuota
     @organization = organization
   end
 
-  # nil means "no cap" (an active/trialing subscription) -- distinct from 0,
-  # which means "capped, and the cap is used up."
+  # nil means "no cap" -- distinct from 0, which means "capped, and the cap
+  # is used up".
   def remaining
     return nil if unlimited?
 
-    [ FREE_MONTHLY_LIMIT - used_this_month, 0 ].max
+    [ monthly_allowance - used_this_month, 0 ].max
   end
 
   # False whenever a generation is actually allowed right now: unlimited,
-  # still within the free monthly allowance, or -- beyond that -- a
-  # purchased credit is available to spend. See credit_to_consume for which
-  # of those three reasons applies to the generation about to happen.
+  # still within the monthly allowance, or -- beyond that -- a purchased
+  # credit is available to spend.
   def exceeded?
     return false if unlimited?
-    return false if used_this_month < FREE_MONTHLY_LIMIT
+    return false if used_this_month < monthly_allowance
 
     available_credit.nil?
   end
 
+  # An active/trialing subscription whose tier has no packet allowance
+  # (the Compliance tier, or a pre-tier subscription).
   def unlimited?
-    subscription&.active_or_trialing? || false
+    return false unless subscribed?
+
+    plan.nil? || plan.unlimited_packets?
   end
 
   # The credit ComplianceReportsController should spend for the report
   # about to be generated, or nil if this generation is covered by the
-  # subscription or the free monthly allowance and no credit should be
-  # touched.
+  # subscription/free allowance and no credit should be touched.
   def credit_to_consume
-    return nil if unlimited? || used_this_month < FREE_MONTHLY_LIMIT
+    return nil if unlimited? || used_this_month < monthly_allowance
 
     available_credit
+  end
+
+  # The number a "limit reached" message should quote.
+  def monthly_allowance
+    return FREE_MONTHLY_LIMIT unless subscribed?
+
+    plan&.packet_allowance || FREE_MONTHLY_LIMIT
   end
 
   private
 
   attr_reader :organization
+
+  def subscribed?
+    subscription&.active_or_trialing? || false
+  end
+
+  def plan
+    subscription&.plan
+  end
 
   def available_credit
     organization.report_credits.available.order(:created_at).first
