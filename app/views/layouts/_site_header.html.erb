@@ -1,0 +1,27 @@
+<header class="border-b border-line bg-paper/95 sticky top-0 z-30 backdrop-blur">
+  <div class="mx-auto max-w-6xl px-6 h-[68px] flex items-center justify-between gap-6">
+    <%= link_to root_path, class: "flex items-center gap-2.5 font-sans font-semibold text-[16px] text-ink tracking-[-0.01em] shrink-0" do %>
+      <span class="w-7 h-7 rounded-[7px] bg-brand-700 text-white flex items-center justify-center">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="2.4"/><circle cx="19" cy="12" r="2.4"/><path d="M7.4 12h9.2"/><path d="M12 8.2v7.6"/></svg>
+      </span>
+      <span>Pharma Transport</span>
+    <% end %>
+
+    <nav class="flex items-center gap-1 sm:gap-6 font-sans text-[15px]">
+      <% if user_signed_in? %>
+        <%= link_to "Dashboard", dashboard_path, class: "hidden sm:inline text-ink-soft hover:text-ink px-1" %>
+        <%= link_to "Fleet GPS", gps_path, class: "hidden sm:inline text-ink-soft hover:text-ink px-1" %>
+        <%= link_to "Compliance", compliance_path, class: "hidden sm:inline text-ink-soft hover:text-ink px-1" %>
+        <%= link_to "Billing", billing_path, class: "hidden sm:inline text-ink-soft hover:text-ink px-1" %>
+        <%= link_to "Security", two_factor_setup_path, class: "hidden sm:inline text-ink-soft hover:text-ink px-1" %>
+        <%= button_to "Sign out", destroy_user_session_path, method: :delete,
+              class: "btn btn-secondary btn-sm" %>
+      <% else %>
+        <%= link_to "Pricing", pricing_path, class: "text-ink-soft hover:text-ink px-1" %>
+        <%= link_to "About", about_path, class: "hidden sm:inline text-ink-soft hover:text-ink px-1" %>
+        <%= link_to "Sign in", new_user_session_path, class: "btn btn-secondary btn-sm" %>
+        <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary btn-sm" %>
+      <% end %>
+    </nav>
+  </div>
+</header>

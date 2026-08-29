@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% page_title = content_for?(:title) ? yield(:title) : "Pharma Transport Enterprise" %>
+  <% page_title = content_for?(:title) ? yield(:title) : "Pharma Transport" %>
   <title><%= page_title %></title>
   <% if content_for?(:meta_description) %>
     <meta name="description" content="<%= yield(:meta_description) %>">
@@ -21,119 +21,46 @@
   <% if content_for?(:meta_description) %>
     <meta property="og:description" content="<%= yield(:meta_description) %>">
   <% end %>
+
+  <%# Type system: IBM Plex Serif (headings), Sans (UI/body), Mono (lot
+      numbers, hashes, figures). Loaded from Google Fonts -- the app has no
+      Node build step to self-host with. %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&display=swap">
+
   <%# Never wired up before -- config/importmap.rb didn't even exist, so no
       Stimulus controller in this app (gps_map_controller.js etc.) has ever
       actually loaded in a browser. Needed now for real: signature capture
       below depends on JS actually running. %>
   <%= javascript_importmap_tags %>
-  <%# Same story as the importmap above: every Tailwind utility class used
-      throughout app/views (p-2, border, max-w-lg, text-2xl, bg-gray-100...)
-      has never actually rendered -- nothing linked a compiled stylesheet
-      here. tailwindcss-rails compiles app/assets/tailwind/application.css
-      to app/assets/builds/tailwind.css automatically as part of
-      assets:precompile. %>
+  <%# tailwindcss-rails compiles app/assets/tailwind/application.css to
+      app/assets/builds/tailwind.css automatically as part of
+      assets:precompile. Design tokens and component classes live there. %>
   <%= stylesheet_link_tag "tailwind" %>
-  <style>
-    <%# Deliberately no "* { margin: 0; padding: 0; box-sizing: border-box }"
-        reset here. Tailwind's Preflight (bundled in the @import above)
-        already provides an equivalent reset inside its own base cascade
-        layer -- which is what lets Tailwind's own zero-specificity
-        :where(...) utilities (space-y-*, space-x-*, divide-*) reliably
-        override it. A hand-written reset in a plain, unlayered <style>
-        block outranks EVERY layered rule per the CSS Cascade Layers spec,
-        regardless of specificity -- so it was silently zeroing out every
-        space-y-* gap on the site (this was already true on Terms/Privacy,
-        which use space-y-6; just unnoticed on plain text pages). %>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #ffffff;
-      color: #1f2937;
-      line-height: 1.6;
-    }
-    header {
-      background: linear-gradient(135deg, var(--color-brand-500) 0%, var(--color-brand-700) 100%);
-      color: white;
-      padding: 1rem 0;
-      box-shadow: 0 4px 6px -1px rgba(0, 0,0,0.1);
-    }
-    nav {
-      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .logo { font-size: 1.5rem; font-weight: 700; }
-    nav ul { list-style: none; display: flex; gap: 1.5rem; margin: 0; padding: 0; align-items: center; }
-    nav a {
-      color: white; text-decoration: none; padding: 0.5rem 1rem;
-      border-radius: 0.5rem; transition: all 0.2s;
-    }
-    nav a:hover { background: rgba(255,255,255,0.2); }
-    nav a.nav-cta {
-      background: var(--color-accent-600); font-weight: 600;
-    }
-    nav a.nav-cta:hover { background: var(--color-accent-700); }
-    main {
-      max-width: 1200px; margin: 4rem auto; padding: 0 2rem;
-    }
-    .content-card {
-      background: white; padding: 3rem; border-radius: 1rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0,0,0.1), 0 4px 6px -2px rgba(0, 0,0,0.05);
-      border-top: 4px solid var(--color-brand-500);
-    }
-    h1 { color: var(--color-brand-800); font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; }
-    .flash { padding: 1rem 2rem; margin: 1rem 2rem 0; border-radius: 0.5rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
-    .flash-notice { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-    .flash-alert { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
-    footer {
-      background: #f8fafc; color: #64748b; text-align: center;
-      padding: 2rem; margin-top: 4rem; border-top: 1px solid #e2e8f0;
-    }
-    @media (max-width: 768px) {
-      nav { flex-direction: column; gap: 1rem; }
-      nav ul { flex-wrap: wrap; justify-content: center; }
-      .content-card { padding: 2rem 1rem; margin: 2rem 1rem; }
-    }
-  </style>
 </head>
-<body>
-  <header>
-    <nav>
-      <div class="logo"><%= link_to "🚛 Pharma Transport", root_path, style: "color: white; text-decoration: none;" %></div>
-      <ul>
-        <% if user_signed_in? %>
-          <li><%= link_to "Dashboard", dashboard_path %></li>
-          <li><%= link_to "GPS", gps_path %></li>
-          <li><%= link_to "Billing", billing_path %></li>
-          <li><%= link_to "Compliance", compliance_path %></li>
-          <li><%= link_to "Security", two_factor_setup_path %></li>
-          <li><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %></li>
-        <% else %>
-          <li><%= link_to "About", about_path %></li>
-          <li><%= link_to "Pricing", pricing_path %></li>
-          <li><%= link_to "Sign in", new_user_session_path %></li>
-          <li><%= link_to "Sign up", new_user_registration_path, class: "nav-cta" %></li>
-        <% end %>
-      </ul>
-    </nav>
-  </header>
+<body class="min-h-screen flex flex-col bg-paper text-ink">
+  <%= render "layouts/site_header" %>
 
   <% if notice %>
-    <div class="flash flash-notice"><%= notice %></div>
+    <div class="mx-auto max-w-6xl w-full px-6 pt-4">
+      <div class="rounded border border-accent-100 bg-accent-50 text-accent-700 px-4 py-3 text-sm"><%= notice %></div>
+    </div>
   <% end %>
   <% if alert %>
-    <div class="flash flash-alert"><%= alert %></div>
+    <div class="mx-auto max-w-6xl w-full px-6 pt-4">
+      <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm"><%= alert %></div>
+    </div>
   <% end %>
 
-  <main>
-    <div class="content-card">
+  <main class="flex-1">
+    <% if content_for?(:full_bleed) %>
       <%= yield %>
-    </div>
+    <% else %>
+      <div class="mx-auto max-w-5xl px-6 py-12"><%= yield %></div>
+    <% end %>
   </main>
 
-  <footer>
-    Pharma Transport &middot;
-    <%= link_to "Terms", terms_path %> &middot;
-    <%= link_to "Privacy", privacy_path %> &middot;
-    <%= link_to "DSCSA 2026 Deadline", blog_dscsa_exemption_2026_path %>
-  </footer>
+  <%= render "layouts/site_footer" %>
 </body>
 </html>

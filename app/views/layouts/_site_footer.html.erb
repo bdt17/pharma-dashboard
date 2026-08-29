@@ -1,0 +1,45 @@
+<footer class="bg-brand-900 text-[#b9c6d2] mt-24">
+  <div class="mx-auto max-w-6xl px-6 py-14 grid gap-10 sm:grid-cols-[1.5fr_1fr_1fr_1fr]">
+    <div class="flex flex-col gap-3">
+      <span class="flex items-center gap-2.5 font-sans font-semibold text-white text-[15px]">
+        <span class="w-7 h-7 rounded-[7px] bg-brand-700 text-white flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="2.4"/><circle cx="19" cy="12" r="2.4"/><path d="M7.4 12h9.2"/><path d="M12 8.2v7.6"/></svg>
+        </span>
+        Pharma Transport
+      </span>
+      <p class="text-[13px] text-[#8ba0b0] max-w-[34ch]">
+        Chain-of-custody documentation for pharmaceutical transport. Built by
+        Thomas Information Technology, Phoenix, Arizona.
+      </p>
+    </div>
+
+    <div>
+      <h5 class="font-sans text-[11px] tracking-[0.1em] uppercase text-[#7f93a4] mb-3.5">Product</h5>
+      <div class="flex flex-col gap-2.5 text-[13.5px]">
+        <%= link_to "Overview", root_path, class: "text-[#d7e0e8] hover:text-white" %>
+        <%= link_to "Pricing", pricing_path, class: "text-[#d7e0e8] hover:text-white" %>
+      </div>
+    </div>
+
+    <div>
+      <h5 class="font-sans text-[11px] tracking-[0.1em] uppercase text-[#7f93a4] mb-3.5">Company</h5>
+      <div class="flex flex-col gap-2.5 text-[13.5px]">
+        <%= link_to "About", about_path, class: "text-[#d7e0e8] hover:text-white" %>
+        <%= link_to "DSCSA 2026 deadline", blog_dscsa_exemption_2026_path, class: "text-[#d7e0e8] hover:text-white" %>
+      </div>
+    </div>
+
+    <div>
+      <h5 class="font-sans text-[11px] tracking-[0.1em] uppercase text-[#7f93a4] mb-3.5">Legal</h5>
+      <div class="flex flex-col gap-2.5 text-[13.5px]">
+        <%= link_to "Terms", terms_path, class: "text-[#d7e0e8] hover:text-white" %>
+        <%= link_to "Privacy", privacy_path, class: "text-[#d7e0e8] hover:text-white" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6 pt-6 pb-10 border-t border-white/10 text-[12.5px] text-[#7f93a4]">
+    &copy; <%= Date.current.year %> Thomas Information Technology. Compliance Packets are
+    documentation tools and are not, on their own, a certification of regulatory compliance.
+  </div>
+</footer>
