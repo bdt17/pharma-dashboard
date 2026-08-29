@@ -53,7 +53,7 @@ gem "stripe", "~> 13.0"
 # so the TOTP layer here is built directly on rotp instead. See
 # app/models/concerns/two_factor_authenticatable.rb.
 gem "rotp", "~> 6.3"
-gem "rqrcode", "~> 2.2"
+gem "rqrcode", "~> 3.2"
 
 group :development, :test do
   # Static analysis, linting, and dependency-vulnerability scanning used by CI
