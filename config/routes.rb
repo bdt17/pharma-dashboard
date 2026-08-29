@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get "/pricing", to: "pages#pricing", as: :pricing
   get "/about", to: "pages#about", as: :about
   get "/security", to: "pages#security", as: :security
+  get "/compliance-officer", to: "pages#compliance_officer", as: :compliance_officer
   get "/verify/:token", to: "verifications#show", as: :verification
 
   # Authenticated application pages

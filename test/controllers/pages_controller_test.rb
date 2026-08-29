@@ -23,4 +23,15 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     get root_url
     assert_select "a[href=?]", security_path
   end
+
+  test "compliance officer page is public and renders" do
+    get compliance_officer_url
+    assert_response :success
+    assert_select "h1", text: /can.t hire one/
+  end
+
+  test "the home page teases the compliance officer service" do
+    get root_url
+    assert_select "a[href=?]", compliance_officer_path
+  end
 end

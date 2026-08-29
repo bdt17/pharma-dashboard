@@ -20,4 +20,10 @@ class PagesController < ApplicationController
   # Prospects in regulated pharma ask for this before they'll evaluate.
   def security
   end
+
+  # Pitch page for the fractional-compliance-officer retainer -- a services
+  # offering alongside the subscription. The CTA is an intro call, not
+  # self-serve checkout, so there's no Stripe/plan data to load.
+  def compliance_officer
+  end
 end

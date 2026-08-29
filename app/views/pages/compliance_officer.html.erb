@@ -1,0 +1,150 @@
+<% content_for :full_bleed, "1" %>
+<% content_for :title, "Fractional compliance officer — Pharma Transport" %>
+<% content_for :meta_description, "A named compliance professional on monthly retainer for small pharmacies: SOPs authored and maintained, every compliance packet reviewed, records monitored, and audit support on call." %>
+
+<%
+  scheduling_link = "[SCHEDULING_LINK]"
+  contact_email = "brett@pharmatransport.org"
+%>
+
+<section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
+  <div class="mx-auto max-w-6xl px-6 py-[76px]">
+    <div class="flex flex-col gap-5 max-w-[52ch]">
+      <span class="eyebrow">Fractional compliance officer</span>
+      <h1 class="text-[30px] sm:text-[42px] leading-[1.14]">A compliance officer for pharmacies that can&rsquo;t hire one.</h1>
+      <p class="text-[17px] text-ink-soft">
+        DSCSA didn&rsquo;t add a one-time task &mdash; it added a standing obligation, and
+        someone has to own it. We do: a named compliance professional on monthly retainer who
+        keeps your procedures current, checks your records before an auditor does, and picks
+        up the phone when a regulator calls.
+      </p>
+      <div class="flex flex-wrap gap-3 pt-1">
+        <a class="btn btn-primary" href="<%= scheduling_link %>">Book a 20-minute intro call</a>
+        <a class="btn btn-secondary" href="#included">See what&rsquo;s included</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%# What it covers %>
+<section id="included" class="mx-auto max-w-6xl px-6 py-[80px]">
+  <div class="flex flex-col gap-3 max-w-[44ch] mb-12">
+    <span class="eyebrow">Every month</span>
+    <h2 class="text-[28px] sm:text-[30px]">What your compliance officer actually does.</h2>
+  </div>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <% [
+      ["SOP ownership",
+       "Receiving, quarantine, suspect product, recalls, temperature excursions — written for your operation, kept current as the rules move, and actually followed.",
+       '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/>'],
+      ["Packet review",
+       "Every Compliance Packet you generate is checked before it&rsquo;s relied on — not after an auditor finds the gap.",
+       '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9.5 14.5l1.8 1.8 3.2-3.6"/>'],
+      ["Records monitoring",
+       "Your custody log, audit trail, and excursion history reviewed on a set cadence. Anything missing or inconsistent comes back to you with a fix, not just a flag.",
+       '<path d="M3 3v18h18"/><path d="M7 14l3-4 3 3 4-6"/>'],
+      ["Trading-partner checks",
+       "Confirmation that the wholesalers and carriers you use are licensed, authorized trading partners — monitored for status changes.",
+       '<path d="M16 3.1a4 4 0 0 1 0 7.8"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><circle cx="9" cy="7" r="4"/><path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2"/>'],
+      ["Audit on-call",
+       "When a Board of Pharmacy or FDA inspection happens, you have someone who already knows your operation, assembles the evidence, and can be on the call.",
+       '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12l1.8 1.8 3.2-3.6"/>'],
+      ["Regulatory updates",
+       "DSCSA and state-board changes that actually affect you, translated into what to do — not a link to a 40-page guidance document.",
+       '<path d="M12 8v5"/><path d="M12 16h.01"/><circle cx="12" cy="12" r="9"/>'],
+    ].each do |title, body, icon| %>
+      <div class="card p-6 flex flex-col gap-3">
+        <span class="w-9 h-9 rounded-lg bg-accent-50 text-accent-700 flex items-center justify-center">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><%== icon %></svg>
+        </span>
+        <h3 class="font-sans text-[15px] font-semibold"><%= title %></h3>
+        <p class="text-[13.5px] text-ink-soft"><%== body %></p>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<%# Honesty panel + pricing %>
+<section class="bg-surface border-y border-line">
+  <div class="mx-auto max-w-6xl px-6 py-[80px] grid gap-8 lg:grid-cols-[1fr_0.8fr] items-start">
+    <div class="flex flex-col gap-5">
+      <div class="rounded-r border-l-[3px] p-6 flex flex-col gap-2" style="border-color:#b45309;background-color:#fbf1e4;">
+        <span class="text-[12px] font-semibold tracking-[0.08em] uppercase text-[#b45309]">What this is, plainly</span>
+        <p class="text-[14px] text-[#5c4420] max-w-[75ch]">
+          An advisory service, not a law firm. Your compliance officer works from what your
+          data and processes show and gives you clear direction; final regulatory
+          determinations and legal questions stay with you and your counsel. It&rsquo;s a
+          working relationship with one person who knows your pharmacy &mdash; not a ticket
+          queue.
+        </p>
+      </div>
+      <p class="text-[14px] text-ink-soft max-w-[62ch]">
+        Runs alongside a Pharma Transport subscription. The platform is where the custody
+        records, packets, and audit trail live; the retainer is the person making sure
+        they&rsquo;re right.
+      </p>
+    </div>
+
+    <div class="card p-8 shadow-[0_1px_3px_rgba(19,26,36,0.08)] flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <span class="font-sans font-semibold text-[15px]">Fractional Compliance Officer</span>
+        <span class="badge badge-accent">Month&#8209;to&#8209;month</span>
+      </div>
+      <div class="flex items-baseline gap-2 border-b border-line-soft pb-4">
+        <span class="mono text-[34px] font-medium">$[RETAINER]</span>
+        <span class="text-ink-faint text-[14px]">/ month</span>
+      </div>
+      <div class="flex flex-col gap-2.5 text-[14px] text-ink-soft">
+        <% ["A named compliance professional, not a rotating desk",
+            "Scheduled monthly review of packets and records",
+            "All SOPs authored and maintained",
+            "Audit on-call at no extra charge",
+            "Cancel any time"].each do |item| %>
+          <span class="flex gap-2.5 items-start">
+            <svg class="shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <%= item %>
+          </span>
+        <% end %>
+      </div>
+      <a class="btn btn-primary w-full" href="<%= scheduling_link %>">Book a 20-minute intro call</a>
+      <p class="text-[12.5px] text-ink-faint text-center">
+        Or email <%= mail_to contact_email %>
+      </p>
+    </div>
+  </div>
+</section>
+
+<%# FAQ %>
+<section class="mx-auto max-w-6xl px-6 py-[72px]">
+  <div class="flex flex-col gap-2 mb-8">
+    <span class="eyebrow">Questions</span>
+    <h2 class="text-[26px]">Before the call</h2>
+  </div>
+  <div class="grid gap-6 md:grid-cols-2 md:gap-x-10">
+    <% [
+      ["Do we still need our own staff on this?",
+       "Your team still runs day-to-day receiving and dispensing. The compliance officer owns the framework around it — the written procedures, the record review, the regulator-facing work — so your staff isn&rsquo;t improvising it."],
+      ["What&rsquo;s the commitment?",
+       "Month-to-month. Cancel any time. The SOPs authored during the engagement are yours to keep."],
+      ["Is this legal advice?",
+       "No. It&rsquo;s compliance operations and advisory. When something genuinely needs a lawyer, you&rsquo;ll be told that plainly rather than guessed at."],
+      ["Can we start before we&rsquo;re a subscriber?",
+       "The intro call is free and doesn&rsquo;t require an account. The retainer runs alongside a subscription because the officer works from your live records."],
+    ].each do |q, a| %>
+      <div class="flex flex-col gap-1.5">
+        <h3 class="font-sans text-[15px] font-semibold"><%== q %></h3>
+        <p class="text-[13.5px] text-ink-soft"><%== a %></p>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<section class="bg-brand-700 text-white">
+  <div class="mx-auto max-w-6xl px-6 py-[68px] flex flex-wrap items-center justify-between gap-6">
+    <h2 class="text-[24px] sm:text-[26px] text-white max-w-[26ch]">Twenty minutes to see whether it fits.</h2>
+    <div class="flex gap-3">
+      <a class="btn" style="background:#fff;color:#1f3a53;" href="<%= scheduling_link %>">Book an intro call</a>
+      <a class="btn btn-secondary" style="border-color:rgba(255,255,255,0.3);color:#fff;background:transparent;" href="<%= security_path %>">See the platform</a>
+    </div>
+  </div>
+</section>
