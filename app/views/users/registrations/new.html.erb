@@ -1,61 +1,59 @@
-<div class="max-w-md mx-auto p-8">
-  <h1 class="text-2xl font-bold mb-2">Start your organization</h1>
-  <p class="text-sm text-gray-500 mb-6">Creates a new organization with you as its admin.</p>
+<% content_for :title, "Create your organization — Pharma Transport" %>
+<% content_for :bare_layout, "1" %>
 
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
+<h1 class="text-[20px] mb-1">Start your organization</h1>
+<p class="text-[13px] text-ink-faint mb-6">Creates a new organization with you as its admin.</p>
 
-    <div class="mb-4">
-      <%# organization_name isn't a real User attribute -- f.text_field would call
-          resource.organization_name, which doesn't exist. Spelled out as a plain
-          tag instead, same reason as the signature_data fields on custody logs. %>
-      <%= label_tag "user_organization_name", "Organization name", class: "block font-medium mb-1" %>
-      <%= text_field_tag "user[organization_name]", params.dig(:user, :organization_name), autofocus: true, class: "border rounded p-2 w-full" %>
-    </div>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "flex flex-col gap-4" }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
 
-    <div class="mb-4">
-      <%= f.label :email, class: "block font-medium mb-1" %>
-      <%= f.email_field :email, autocomplete: "email", class: "border rounded p-2 w-full" %>
-    </div>
-
-    <div class="mb-4">
-      <%= f.label :password, class: "block font-medium mb-1" %>
-      <% if @minimum_password_length %>
-        <p class="text-xs text-gray-500 mb-1">(<%= @minimum_password_length %> characters minimum)</p>
-      <% end %>
-      <%= f.password_field :password, autocomplete: "new-password", class: "border rounded p-2 w-full" %>
-    </div>
-
-    <div class="mb-6">
-      <%= f.label :password_confirmation, "Confirm password", class: "block font-medium mb-1" %>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "border rounded p-2 w-full" %>
-    </div>
-
-    <div class="mb-4">
-      <%# Same reasoning as organization_name above -- referral_code isn't a
-          real User attribute, it's read directly off params in the
-          controller to look up the referring organization. %>
-      <%= label_tag "user_referral_code", "Referral code (optional)", class: "block font-medium mb-1" %>
-      <%= text_field_tag "user[referral_code]", params.dig(:user, :referral_code), class: "border rounded p-2 w-full" %>
-      <p class="text-xs text-gray-500 mt-1">Referred by another pharmacy? Enter their code and you'll both get a free month.</p>
-    </div>
-
-    <div class="mb-6 text-sm">
-      <label class="inline-flex items-start gap-2">
-        <%= f.check_box :terms_accepted, class: "mt-1" %>
-        <span>
-          I agree to the
-          <%= link_to "Terms of Service", terms_path, target: "_blank", rel: "noopener", class: "text-blue-600 underline" %>
-          and
-          <%= link_to "Privacy Policy", privacy_path, target: "_blank", rel: "noopener", class: "text-blue-600 underline" %>.
-        </span>
-      </label>
-    </div>
-
-    <%= f.submit "Create organization", class: "bg-blue-600 text-white px-4 py-2 rounded w-full" %>
-  <% end %>
-
-  <div class="mt-6 text-sm">
-    <%= render "devise/shared/links" %>
+  <div class="flex flex-col gap-1.5">
+    <%# organization_name isn't a real User attribute -- f.text_field would call
+        resource.organization_name, which doesn't exist. Spelled out as a plain
+        tag instead, same reason as the signature_data fields on custody logs. %>
+    <%= label_tag "user_organization_name", "Organization name", class: "text-[12.5px] font-semibold text-ink-soft" %>
+    <%= text_field_tag "user[organization_name]", params.dig(:user, :organization_name), autofocus: true, class: "field-input" %>
   </div>
+
+  <div class="flex flex-col gap-1.5">
+    <%= f.label :email, class: "text-[12.5px] font-semibold text-ink-soft" %>
+    <%= f.email_field :email, autocomplete: "email", class: "field-input" %>
+  </div>
+
+  <div class="flex flex-col gap-1.5">
+    <%= f.label :password, class: "text-[12.5px] font-semibold text-ink-soft" %>
+    <% if @minimum_password_length %>
+      <p class="text-[11px] text-ink-faint">(<%= @minimum_password_length %> characters minimum)</p>
+    <% end %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "field-input" %>
+  </div>
+
+  <div class="flex flex-col gap-1.5">
+    <%= f.label :password_confirmation, "Confirm password", class: "text-[12.5px] font-semibold text-ink-soft" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "field-input" %>
+  </div>
+
+  <div class="flex flex-col gap-1.5">
+    <%# Same reasoning as organization_name above -- referral_code isn't a
+        real User attribute, it's read directly off params in the controller. %>
+    <%= label_tag "user_referral_code", "Referral code (optional)", class: "text-[12.5px] font-semibold text-ink-soft" %>
+    <%= text_field_tag "user[referral_code]", params.dig(:user, :referral_code), class: "field-input" %>
+    <p class="text-[11px] text-ink-faint">Referred by another pharmacy? Enter their code and you'll both get a free month.</p>
+  </div>
+
+  <label class="inline-flex items-start gap-2 text-[13px] text-ink-soft">
+    <%= f.check_box :terms_accepted, class: "mt-1" %>
+    <span>
+      I agree to the
+      <%= link_to "Terms of Service", terms_path, target: "_blank", rel: "noopener" %>
+      and
+      <%= link_to "Privacy Policy", privacy_path, target: "_blank", rel: "noopener" %>.
+    </span>
+  </label>
+
+  <%= f.submit "Create organization", class: "btn btn-primary w-full" %>
+<% end %>
+
+<div class="mt-6 text-[13px] [&_a]:block [&_a]:mb-1">
+  <%= render "devise/shared/links" %>
 </div>

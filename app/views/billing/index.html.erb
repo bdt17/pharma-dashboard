@@ -1,70 +1,69 @@
-<div class="max-w-2xl mx-auto p-8">
+<% content_for :title, "Billing — Pharma Transport" %>
+<% content_for :crumb, "Billing" %>
+
+<div class="p-7 max-w-3xl">
   <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold">Billing</h1>
+    <h1 class="text-[24px]">Billing</h1>
     <% if @subscription %>
-      <%= button_to "Manage billing", billing_portal_path, method: :post, class: "text-sm border border-gray-300 rounded px-3 py-1.5 hover:bg-gray-50" %>
+      <%= button_to "Manage billing", billing_portal_path, method: :post, class: "btn btn-secondary btn-sm" %>
     <% end %>
   </div>
 
   <% if @subscription&.active_or_trialing? %>
-    <dl class="grid grid-cols-3 gap-y-3 border rounded-lg p-6">
-      <dt class="text-gray-500">Status</dt>
-      <dd class="col-span-2">
-        <span class="text-green-700 font-semibold">
-          <%= @subscription.status.humanize %>
-        </span>
-      </dd>
+    <dl class="card p-6 grid grid-cols-3 gap-y-3 text-[14px]">
+      <dt class="text-ink-faint">Status</dt>
+      <dd class="col-span-2"><span class="text-accent-700 font-semibold"><%= @subscription.status.humanize %></span></dd>
 
-      <dt class="text-gray-500">Plan amount</dt>
-      <dd class="col-span-2"><%= number_to_currency(@subscription.plan_amount) if @subscription.plan_amount %></dd>
+      <dt class="text-ink-faint">Plan amount</dt>
+      <dd class="col-span-2 mono"><%= number_to_currency(@subscription.plan_amount) if @subscription.plan_amount %></dd>
 
-      <dt class="text-gray-500">Current period ends</dt>
-      <dd class="col-span-2"><%= @subscription.current_period_end&.strftime("%Y-%m-%d") || "—" %></dd>
+      <dt class="text-ink-faint">Current period ends</dt>
+      <dd class="col-span-2 mono"><%= @subscription.current_period_end&.strftime("%Y-%m-%d") || "—" %></dd>
     </dl>
   <% else %>
     <% if @subscription %>
-      <div class="border rounded-lg p-6 bg-red-50 mb-6">
-        <p class="text-gray-700">
+      <div class="card p-6 bg-[#fdeceb] border-[#f0c8c2] mb-6">
+        <p class="text-[14px]">
           Subscription for <%= current_organization&.name %> is
-          <span class="text-red-600 font-semibold"><%= @subscription.status.humanize %></span>.
+          <span class="text-[#b42318] font-semibold"><%= @subscription.status.humanize %></span>.
         </p>
       </div>
     <% else %>
-      <div class="border rounded-lg p-6 bg-gray-50 mb-6">
-        <p class="text-gray-700">No subscription on file for <%= current_organization&.name %>.</p>
+      <div class="card p-6 bg-surface mb-6">
+        <p class="text-[14px]">No subscription on file for <%= current_organization&.name %>.</p>
       </div>
     <% end %>
 
     <% if @plans.present? %>
-      <h2 class="text-lg font-bold mb-3">Available plans</h2>
-      <p class="text-sm text-gray-500 mb-3">
+      <h2 class="text-[17px] font-sans font-semibold mb-3">Available plans</h2>
+      <p class="text-[13px] text-ink-faint mb-3">
         Every plan starts with a <%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial — you won't be charged until it ends.
       </p>
       <% if Time.current <= StripeBilling.founding_offer_cutoff %>
-        <p class="text-sm font-medium text-accent-800 bg-accent-50 border border-accent-300 rounded-lg p-3 mb-3">
+        <p class="text-[13px] font-medium rounded-sm border p-3 mb-3" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
           Founding customer offer: subscribe to the monthly plan before
           <%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %>
           and get 25% off your first 6 months — applied automatically at checkout.
         </p>
       <% end %>
-      <div class="space-y-3">
+      <div class="flex flex-col gap-3">
         <% @plans.group_by { |plan| plan[:product_name] }.each do |product_name, variants| %>
           <% monthly = variants.find { |p| p[:interval] == "month" }
              annual = variants.find { |p| p[:interval] == "year" }
              others = variants - [ monthly, annual ].compact %>
-          <div class="border rounded-lg p-4">
-            <div class="font-semibold mb-2"><%= product_name %></div>
-            <div class="space-y-2">
+          <div class="card p-4">
+            <div class="font-semibold mb-2 text-[14px]"><%= product_name %></div>
+            <div class="flex flex-col gap-2">
               <% [ monthly, annual, *others ].compact.each do |plan| %>
                 <div class="flex items-center justify-between">
-                  <div class="text-sm text-gray-500">
-                    <%= number_to_currency(plan[:amount]) %><% if plan[:interval] %> / <%= plan[:interval] %><% end %>
+                  <div class="text-[13px] text-ink-soft">
+                    <span class="mono"><%= number_to_currency(plan[:amount]) %></span><% if plan[:interval] %> / <%= plan[:interval] %><% end %>
                     <% if plan == annual && monthly %>
-                      <span class="text-green-700 font-medium">— save 10% vs. monthly</span>
+                      <span class="text-accent-700 font-medium">— save 10% vs. monthly</span>
                     <% end %>
                   </div>
                   <% if current_user.admin? %>
-                    <%= button_to "Subscribe", billing_checkout_path(price_id: plan[:id]), method: :post, class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+                    <%= button_to "Subscribe", billing_checkout_path(price_id: plan[:id]), method: :post, class: "btn btn-primary btn-sm" %>
                   <% end %>
                 </div>
               <% end %>
@@ -73,29 +72,29 @@
         <% end %>
       </div>
       <% unless current_user.admin? %>
-        <p class="text-sm text-gray-500 mt-4">Only an organization admin can start a subscription.</p>
+        <p class="text-[13px] text-ink-faint mt-4">Only an organization admin can start a subscription.</p>
       <% end %>
     <% else %>
-      <p class="text-sm text-gray-500">Billing isn't configured yet. Contact us to set up billing.</p>
+      <p class="text-[13px] text-ink-faint">Billing isn't configured yet. Contact us to set up billing.</p>
     <% end %>
 
     <% if @addons.present? %>
-      <h2 class="text-lg font-bold mb-3 mt-8">Need one more this month?</h2>
-      <p class="text-sm text-gray-500 mb-3">
+      <h2 class="text-[17px] font-sans font-semibold mb-3 mt-8">Need one more this month?</h2>
+      <p class="text-[13px] text-ink-faint mb-3">
         Buy a single extra Compliance Packet without subscribing.
         <% if @available_credits.to_i > 0 %>
           You currently have <%= pluralize(@available_credits, "unused credit") %>.
         <% end %>
       </p>
-      <div class="space-y-3">
+      <div class="flex flex-col gap-3">
         <% @addons.each do |addon| %>
-          <div class="border rounded-lg p-4 flex items-center justify-between">
+          <div class="card p-4 flex items-center justify-between">
             <div>
-              <div class="font-semibold"><%= addon[:product_name] %></div>
-              <div class="text-sm text-gray-500"><%= number_to_currency(addon[:amount]) %> one-time</div>
+              <div class="font-semibold text-[14px]"><%= addon[:product_name] %></div>
+              <div class="text-[13px] text-ink-faint"><span class="mono"><%= number_to_currency(addon[:amount]) %></span> one-time</div>
             </div>
             <% if current_user.admin? %>
-              <%= button_to "Buy", billing_addon_checkout_path(price_id: addon[:id]), method: :post, class: "bg-gray-800 text-white px-4 py-2 rounded" %>
+              <%= button_to "Buy", billing_addon_checkout_path(price_id: addon[:id]), method: :post, class: "btn btn-secondary btn-sm" %>
             <% end %>
           </div>
         <% end %>
@@ -103,16 +102,16 @@
     <% end %>
   <% end %>
 
-  <div class="border rounded-lg p-6 bg-gray-50 mt-8 space-y-4">
-    <h2 class="text-lg font-bold">Share Pharma Transport</h2>
+  <div class="card p-6 bg-surface mt-8 flex flex-col gap-4">
+    <h2 class="text-[17px] font-sans font-semibold">Share Pharma Transport</h2>
 
     <div>
-      <div class="text-sm text-gray-500 mb-1">Your referral code — give it to another pharmacy and you both get a free month once they subscribe</div>
-      <code class="bg-white border rounded px-3 py-1.5 inline-block font-mono text-sm"><%= current_organization.referral_code %></code>
+      <div class="text-[13px] text-ink-faint mb-1">Your referral code — give it to another pharmacy and you both get a free month once they subscribe</div>
+      <code class="bg-paper border border-line rounded px-3 py-1.5 inline-block mono text-[13px]"><%= current_organization.referral_code %></code>
     </div>
 
     <div>
-      <div class="text-sm text-gray-500 mb-1">
+      <div class="text-[13px] text-ink-faint mb-1">
         Your DSCSA verification badge —
         <% if current_organization.verified? %>
           shareable on your own site or with an auditor
@@ -120,7 +119,7 @@
           currently shows "not verified" since there's no active subscription; it'll update automatically once you subscribe
         <% end %>
       </div>
-      <code class="bg-white border rounded px-3 py-1.5 inline-block font-mono text-sm break-all"><%= verification_url(current_organization.verification_token) %></code>
+      <code class="bg-paper border border-line rounded px-3 py-1.5 inline-block mono text-[13px] break-all"><%= verification_url(current_organization.verification_token) %></code>
     </div>
   </div>
 </div>
