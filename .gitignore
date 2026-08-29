@@ -8,6 +8,7 @@ db/*.sqlite3-wal
 
 # Logs
 *.log
+*.log.*
 log/*.log
 /log/*.log
 
