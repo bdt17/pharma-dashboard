@@ -1,65 +1,123 @@
+<% content_for :full_bleed, "1" %>
 <% content_for :title, "Pricing — Pharma Transport" %>
-<% content_for :meta_description, "Pharma Transport pricing for pharmaceutical fleet tracking and FDA chain-of-custody documentation." %>
+<% content_for :meta_description, "Pharma Transport pricing for pharmaceutical fleet tracking and FDA chain-of-custody documentation. One plan, 14-day free trial." %>
 
-<div class="max-w-3xl mx-auto space-y-8">
-  <div class="text-center space-y-2">
-    <h1 class="text-3xl font-bold text-gray-900">Simple, transparent pricing</h1>
-    <p class="text-gray-600">One plan. No per-truck upsells, no hidden compliance fees.</p>
-    <p class="text-brand-700 font-medium">Every plan starts with a <%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial.</p>
+<section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
+  <div class="mx-auto max-w-6xl px-6 py-[72px] flex flex-col items-center gap-4 text-center">
+    <span class="eyebrow">Pricing</span>
+    <h1 class="text-[40px] max-w-[16ch]">Simple, transparent pricing.</h1>
+    <p class="text-[17px] text-ink-soft max-w-[52ch]">
+      One plan. No per-truck upsells, no hidden compliance fees. Every plan starts with a
+      <%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial &mdash; you won&rsquo;t be charged until it ends.
+    </p>
   </div>
+</section>
 
-  <% if Time.current <= StripeBilling.founding_offer_cutoff %>
-    <div class="border-2 border-accent-300 bg-accent-50 rounded-xl p-4 text-center">
-      <p class="font-semibold text-accent-800">
-        Founding customer offer: subscribe to the monthly plan before
-        <%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %>
-        and get 25% off your first 6 months — automatically, no code needed.
+<section class="mx-auto max-w-6xl px-6 py-16">
+  <div class="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] items-start">
+    <%# Plan card %>
+    <div class="card p-9 shadow-[0_18px_44px_-18px_rgba(19,26,36,0.24)] flex flex-col gap-6">
+      <div class="flex justify-between items-start gap-4">
+        <div class="flex flex-col gap-1">
+          <span class="font-sans font-semibold text-[17px]">Pharma Transport</span>
+          <span class="text-[13.5px] text-ink-faint">Everything below, one organization, unlimited seats.</span>
+        </div>
+        <span class="badge badge-accent"><%= StripeBilling::TRIAL_PERIOD_DAYS %>-day trial</span>
+      </div>
+
+      <% if @plans.present? %>
+        <% monthly_plans = @plans.select { |p| p[:interval] == "month" }
+           annual_plans  = @plans.select { |p| p[:interval] == "year" }
+           display_plans = monthly_plans.presence || @plans
+           has_annual = annual_plans.any? %>
+        <div class="flex flex-col gap-3 border-b border-line-soft pb-5">
+          <% display_plans.each do |plan| %>
+            <div class="flex items-baseline gap-2">
+              <span class="mono text-[42px] font-medium leading-none"><%= number_to_currency(plan[:amount], precision: 0) %></span>
+              <% if plan[:interval] %><span class="text-ink-faint text-[15px]">/ <%= plan[:interval] %>, billed <%= plan[:interval] == "year" ? "annually" : "monthly" %></span><% end %>
+            </div>
+          <% end %>
+          <% if has_annual %><p class="text-[13px] text-accent-700 font-medium">Pay annually and save 10%.</p><% end %>
+        </div>
+      <% else %>
+        <div class="border border-line rounded-sm p-4 text-[14px] text-ink-soft">
+          Pricing isn&rsquo;t published yet &mdash;
+          <%= link_to "sign up", new_user_registration_path, class: "font-medium" %>
+          or contact us and we&rsquo;ll get you set up.
+        </div>
+      <% end %>
+
+      <% if Time.current <= StripeBilling.founding_offer_cutoff %>
+        <div class="rounded-sm border px-3.5 py-3 text-[13.5px]" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
+          <strong>Founding customer offer.</strong> Subscribe to the monthly plan before
+          <%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %> and get 25% off your
+          first six months &mdash; applied automatically, no code needed.
+        </div>
+      <% end %>
+
+      <div class="grid sm:grid-cols-2 gap-x-5 gap-y-3 text-[14px] text-ink-soft">
+        <% [
+          "Live GPS fleet tracking",
+          "Immutable chain-of-custody event log",
+          "FDA-ready Compliance Packet PDFs",
+          "Signature capture for proof-of-delivery",
+          "Unlimited team members",
+          "Mandatory two-factor for admins",
+        ].each do |item| %>
+          <span class="flex gap-2.5 items-start">
+            <svg class="shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <%= item %>
+          </span>
+        <% end %>
+      </div>
+
+      <div class="flex gap-3 pt-1">
+        <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
+        <%= link_to "About the company", about_path, class: "btn btn-secondary" %>
+      </div>
+      <p class="text-[12.5px] text-ink-faint">
+        Create a free account first &mdash; an organization admin starts the subscription from the
+        Billing page once signed in. Cancel any time from the self-serve billing portal.
       </p>
     </div>
-  <% end %>
 
-  <% if @plans.present? %>
-    <% monthly_plans = @plans.select { |p| p[:interval] == "month" }
-       annual_plans = @plans.select { |p| p[:interval] == "year" }
-       display_plans = monthly_plans.presence || @plans
-       has_annual = annual_plans.any? %>
-    <% grid_cols_class = { 1 => "sm:grid-cols-1", 2 => "sm:grid-cols-2" }.fetch([display_plans.size, 3].min, "sm:grid-cols-3") %>
-    <div class="grid gap-4 <%= grid_cols_class %>">
-      <% display_plans.each do |plan| %>
-        <div class="border-2 border-brand-100 rounded-xl p-6 flex flex-col items-center text-center space-y-3 hover:border-brand-300 transition">
-          <div class="text-lg font-semibold text-gray-900"><%= plan[:product_name] %></div>
-          <div class="text-3xl font-bold text-brand-700">
-            <%= number_to_currency(plan[:amount], precision: 0) %>
-            <% if plan[:interval] %><span class="text-base font-normal text-gray-500">/ <%= plan[:interval] %></span><% end %>
-          </div>
-          <% if has_annual %>
-            <p class="text-sm text-green-700 font-medium">Pay annually and save 10%</p>
-          <% end %>
-          <%= link_to "Sign up to subscribe", new_user_registration_path,
-                class: "mt-2 inline-block bg-accent-600 hover:bg-accent-700 text-white font-semibold px-5 py-2.5 rounded-lg" %>
+    <%# Add-ons %>
+    <div class="flex flex-col gap-5">
+      <div class="card p-6 flex flex-col gap-2">
+        <span class="font-semibold text-[15px]">Need one more this month?</span>
+        <p class="text-[13.5px] text-ink-soft">Buy a single extra Compliance Packet without subscribing. Unused credits roll forward.</p>
+      </div>
+      <div class="card p-6 flex flex-col gap-2">
+        <span class="font-semibold text-[15px]">Bulk compliance-packet pack</span>
+        <p class="text-[13.5px] text-ink-soft">A pack of packets at a discount to the single price, for pharmacies onboarding a backlog.</p>
+      </div>
+      <div class="card p-6 flex flex-col gap-2">
+        <span class="font-semibold text-[15px]">White-Glove Setup</span>
+        <p class="text-[13.5px] text-ink-soft">One-time onboarding: vehicle import, first packets generated with you, and a walkthrough for your compliance lead.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%# FAQ %>
+<section class="bg-surface border-t border-line">
+  <div class="mx-auto max-w-6xl px-6 py-14">
+    <div class="flex flex-col gap-2 mb-8">
+      <span class="eyebrow">Questions</span>
+      <h2 class="text-[26px]">Before you start the trial</h2>
+    </div>
+    <div class="grid gap-6 md:grid-cols-2 md:gap-x-10">
+      <% [
+        ["Is the trial limited?", "No. Full product for #{StripeBilling::TRIAL_PERIOD_DAYS} days — real GPS, real custody logging, real packet generation. No card charged until it ends."],
+        ["What counts as a “seat”?", "Nothing — team members are unlimited per organization. Pricing does not scale with drivers or vehicles."],
+        ["Can we cancel?", "Any time, from the self-serve billing portal. No long-term contract. Generated packets stay downloadable through the end of the period."],
+        ["Do you offer a referral discount?", "Yes — refer another pharmacy and you both get one free month once they subscribe."],
+      ].each do |q, a| %>
+        <div class="flex flex-col gap-1.5">
+          <h3 class="font-sans text-[15px] font-semibold"><%= q %></h3>
+          <p class="text-[13.5px] text-ink-soft"><%= a %></p>
         </div>
       <% end %>
     </div>
-    <p class="text-center text-sm text-gray-500">
-      Create a free account first — an organization admin can start a subscription from the
-      Billing page once signed in<% if has_annual %>, including the option to pay annually<% end %>.
-    </p>
-  <% else %>
-    <div class="border rounded-xl p-8 text-center text-gray-600">
-      Pricing isn't published yet — <%= link_to "sign up", new_user_registration_path, class: "text-brand-700 underline" %>
-      or contact us directly and we'll get you set up.
-    </div>
-  <% end %>
-
-  <div class="border-t pt-8">
-    <h2 class="text-lg font-semibold text-gray-900 mb-3">What's included</h2>
-    <ul class="grid sm:grid-cols-2 gap-3 text-gray-700">
-      <li class="flex gap-2"><span class="text-accent-600">✓</span> Live GPS fleet tracking</li>
-      <li class="flex gap-2"><span class="text-accent-600">✓</span> Immutable chain-of-custody event log</li>
-      <li class="flex gap-2"><span class="text-accent-600">✓</span> FDA-ready Compliance Packet PDFs</li>
-      <li class="flex gap-2"><span class="text-accent-600">✓</span> Signature capture for proof-of-delivery</li>
-      <li class="flex gap-2"><span class="text-accent-600">✓</span> Unlimited team members per organization</li>
-      <li class="flex gap-2"><span class="text-accent-600">✓</span> Cancel anytime — no long-term contract</li>
-    </ul>
   </div>
-</div>
+</section>

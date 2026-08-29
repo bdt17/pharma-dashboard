@@ -1,28 +1,27 @@
 <% content_for :title, "#{@organization.name} — DSCSA Verification — Pharma Transport" %>
 <% content_for :meta_description, "DSCSA compliance verification status for #{@organization.name}, via Pharma Transport." %>
 
-<div class="max-w-xl mx-auto text-center space-y-6">
+<div class="max-w-xl mx-auto text-center flex flex-col items-center gap-6 py-8">
   <% if @organization.verified? %>
-    <div class="inline-flex items-center gap-2 bg-green-50 border-2 border-green-300 text-green-800 rounded-full px-5 py-2 font-semibold">
-      <span aria-hidden="true">✓</span> DSCSA Compliance Verified
-    </div>
-    <h1 class="text-2xl font-bold text-gray-900"><%= @organization.name %></h1>
-    <p class="text-gray-600">
+    <span class="badge badge-accent text-[13px] px-4 py-2">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      DSCSA Compliance Verified
+    </span>
+    <h1 class="text-[26px]"><%= @organization.name %></h1>
+    <p class="text-ink-soft">
       This organization is an active Pharma Transport customer, using chain-of-custody and
       compliance-packet tracking built to DSCSA's electronic tracing and verification
       standards, as of <%= Date.current.strftime("%B %-d, %Y") %>.
     </p>
   <% else %>
-    <div class="inline-flex items-center gap-2 bg-gray-100 border-2 border-gray-300 text-gray-600 rounded-full px-5 py-2 font-semibold">
-      Not currently verified
-    </div>
-    <h1 class="text-2xl font-bold text-gray-900"><%= @organization.name %></h1>
-    <p class="text-gray-600">
+    <span class="badge text-[13px] px-4 py-2">Not currently verified</span>
+    <h1 class="text-[26px]"><%= @organization.name %></h1>
+    <p class="text-ink-soft">
       This organization does not currently have an active Pharma Transport subscription.
     </p>
   <% end %>
 
-  <p class="text-sm text-gray-400">
+  <p class="text-sm text-ink-faint">
     <%= link_to "pharmatransport.org", root_path, class: "underline" %>
   </p>
 </div>
