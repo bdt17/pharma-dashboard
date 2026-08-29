@@ -39,28 +39,63 @@
       assets:precompile. Design tokens and component classes live there. %>
   <%= stylesheet_link_tag "tailwind" %>
 </head>
-<body class="min-h-screen flex flex-col bg-paper text-ink">
-  <%= render "layouts/site_header" %>
+<body class="min-h-screen bg-paper text-ink antialiased">
+  <% if content_for?(:bare_layout) %>
+    <%# Sign-in, sign-up, and the two-factor steps: no nav, no sidebar --
+        just the mark and a centred card, so nothing competes with the form. %>
+    <div class="min-h-screen flex flex-col items-center justify-center px-6 py-12">
+      <%= link_to root_path, class: "flex items-center gap-2.5 font-sans font-semibold text-[15px] text-ink mb-8" do %>
+        <span class="w-7 h-7 rounded-[7px] bg-brand-700 text-white flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="2.4"/><circle cx="19" cy="12" r="2.4"/><path d="M7.4 12h9.2"/><path d="M12 8.2v7.6"/></svg>
+        </span>
+        Pharma Transport
+      <% end %>
+      <div class="w-full max-w-[400px]">
+        <% if notice %><div class="mb-4 rounded border border-accent-100 bg-accent-50 text-accent-700 px-4 py-3 text-sm"><%= notice %></div><% end %>
+        <% if alert %><div class="mb-4 rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm"><%= alert %></div><% end %>
+        <div class="card p-8">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
 
-  <% if notice %>
-    <div class="mx-auto max-w-6xl w-full px-6 pt-4">
-      <div class="rounded border border-accent-100 bg-accent-50 text-accent-700 px-4 py-3 text-sm"><%= notice %></div>
+  <% elsif user_signed_in? %>
+    <%# Authenticated application shell: sidebar + slim topbar. %>
+    <div class="flex min-h-screen">
+      <%= render "layouts/app_sidebar" %>
+      <div class="flex-1 flex flex-col min-w-0">
+        <div class="border-b border-line flex items-center justify-between px-7 shrink-0" style="height:3.75rem;">
+          <span class="text-[12.5px] text-ink-faint">
+            <%= current_organization&.name %><%= " / #{yield(:crumb)}" if content_for?(:crumb) %>
+          </span>
+          <span class="w-7 h-7 rounded-full bg-accent-50 text-accent-700 flex items-center justify-center text-[11px] font-semibold uppercase">
+            <%= current_user.email.to_s[0, 2] %>
+          </span>
+        </div>
+        <% if notice %><div class="px-7 pt-4"><div class="rounded border border-accent-100 bg-accent-50 text-accent-700 px-4 py-3 text-sm"><%= notice %></div></div><% end %>
+        <% if alert %><div class="px-7 pt-4"><div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm"><%= alert %></div></div><% end %>
+        <main class="flex-1 bg-surface"><%= yield %></main>
+      </div>
+    </div>
+
+  <% else %>
+    <div class="flex flex-col min-h-screen">
+      <%= render "layouts/site_header" %>
+      <% if notice %>
+        <div class="mx-auto max-w-6xl w-full px-6 pt-4"><div class="rounded border border-accent-100 bg-accent-50 text-accent-700 px-4 py-3 text-sm"><%= notice %></div></div>
+      <% end %>
+      <% if alert %>
+        <div class="mx-auto max-w-6xl w-full px-6 pt-4"><div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm"><%= alert %></div></div>
+      <% end %>
+      <main class="flex-1">
+        <% if content_for?(:full_bleed) %>
+          <%= yield %>
+        <% else %>
+          <div class="mx-auto max-w-5xl px-6 py-12"><%= yield %></div>
+        <% end %>
+      </main>
+      <%= render "layouts/site_footer" %>
     </div>
   <% end %>
-  <% if alert %>
-    <div class="mx-auto max-w-6xl w-full px-6 pt-4">
-      <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm"><%= alert %></div>
-    </div>
-  <% end %>
-
-  <main class="flex-1">
-    <% if content_for?(:full_bleed) %>
-      <%= yield %>
-    <% else %>
-      <div class="mx-auto max-w-5xl px-6 py-12"><%= yield %></div>
-    <% end %>
-  </main>
-
-  <%= render "layouts/site_footer" %>
 </body>
 </html>

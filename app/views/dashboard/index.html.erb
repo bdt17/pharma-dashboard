@@ -1,48 +1,61 @@
-<div class="max-w-6xl mx-auto p-8">
-  <h1 class="text-3xl font-bold mb-1">Dashboard</h1>
-  <p class="text-sm text-gray-500 mb-8"><%= current_organization&.name %></p>
+<% content_for :title, "Dashboard — Pharma Transport" %>
+<% content_for :crumb, "Dashboard" %>
 
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-    <div class="border rounded-lg p-4">
-      <div class="text-sm text-gray-500">Batches</div>
-      <div class="text-2xl font-bold"><%= @batch_count %></div>
-      <div class="text-xs text-gray-400"><%= @active_batch_count %> active</div>
+<div class="p-7 max-w-6xl">
+  <div class="flex items-end justify-between mb-6">
+    <div class="flex flex-col gap-1">
+      <h1 class="text-[24px]">Dashboard</h1>
+      <span class="text-[13px] text-ink-faint"><%= current_organization&.name %></span>
     </div>
-    <div class="border rounded-lg p-4 <%= "border-red-300 bg-red-50" if @non_compliant_batches.any? %>">
-      <div class="text-sm text-gray-500">Non-compliant batches</div>
-      <div class="text-2xl font-bold <%= "text-red-600" if @non_compliant_batches.any? %>"><%= @non_compliant_batches.size %></div>
-      <div class="text-xs text-gray-400">outside 2-8°C</div>
+    <%= link_to compliance_path, class: "btn btn-primary btn-sm" do %>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+      Compliance detail
+    <% end %>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="card p-4 flex flex-col gap-0.5">
+      <div class="text-[11px] uppercase tracking-wide text-ink-faint">Batches</div>
+      <div class="mono text-[26px] font-medium"><%= @batch_count %></div>
+      <div class="text-[11px] text-ink-faint"><%= @active_batch_count %> active</div>
     </div>
-    <div class="border rounded-lg p-4">
-      <div class="text-sm text-gray-500">Vehicles</div>
-      <div class="text-2xl font-bold"><%= @vehicle_count %></div>
-      <div class="text-xs text-gray-400"><%= @vehicles_online_count %> pinged in last 15 min</div>
+    <div class="card p-4 flex flex-col gap-0.5 <%= "border-[#f0c8c2] bg-[#fdeceb]" if @non_compliant_batches.any? %>">
+      <div class="text-[11px] uppercase tracking-wide <%= @non_compliant_batches.any? ? "text-[#8a2c22]" : "text-ink-faint" %>">Non-compliant batches</div>
+      <div class="mono text-[26px] font-medium <%= "text-[#b42318]" if @non_compliant_batches.any? %>"><%= @non_compliant_batches.size %></div>
+      <div class="text-[11px] <%= @non_compliant_batches.any? ? "text-[#8a2c22]" : "text-ink-faint" %>">outside 2&ndash;8&deg;C</div>
     </div>
-    <div class="border rounded-lg p-4">
-      <div class="text-sm text-gray-500">Fleet view</div>
-      <div class="text-sm mt-2"><%= link_to "Live positions →", gps_path, class: "text-blue-600 underline" %></div>
+    <div class="card p-4 flex flex-col gap-0.5">
+      <div class="text-[11px] uppercase tracking-wide text-ink-faint">Vehicles</div>
+      <div class="mono text-[26px] font-medium"><%= @vehicle_count %></div>
+      <div class="text-[11px] text-ink-faint"><%= @vehicles_online_count %> pinged in last 15 min</div>
+    </div>
+    <div class="card p-4 flex flex-col gap-1">
+      <div class="text-[11px] uppercase tracking-wide text-ink-faint">Fleet view</div>
+      <%= link_to "Live positions →", gps_path, class: "text-[13px] font-medium mt-1" %>
     </div>
   </div>
 
   <% if @non_compliant_batches.any? %>
-    <div class="mb-10">
-      <h2 class="text-lg font-bold mb-3 text-red-700">Temperature excursions</h2>
-      <table class="w-full border-collapse border border-gray-300">
+    <div class="card overflow-hidden mb-8 border-[#f0c8c2]">
+      <div class="px-4 py-3 border-b border-line-soft text-[13px] font-semibold text-[#b42318] flex items-center gap-2">
+        Temperature excursions <span class="badge badge-danger">Action needed</span>
+      </div>
+      <table class="w-full text-[13px]">
         <thead>
-          <tr class="bg-gray-100">
-            <th class="border border-gray-300 p-2 text-left">Lot</th>
-            <th class="border border-gray-300 p-2 text-left">Temperature</th>
-            <th class="border border-gray-300 p-2 text-left">Status</th>
-            <th class="border border-gray-300 p-2 text-left"></th>
+          <tr class="bg-surface text-[11px] uppercase tracking-wide text-ink-faint">
+            <th class="text-left font-medium px-4 py-2">Lot</th>
+            <th class="text-left font-medium px-4 py-2">Temperature</th>
+            <th class="text-left font-medium px-4 py-2">Status</th>
+            <th class="px-4 py-2"></th>
           </tr>
         </thead>
         <tbody>
           <% @non_compliant_batches.each do |batch| %>
-            <tr class="bg-red-50">
-              <td class="border border-gray-300 p-2"><%= batch.lot_number %></td>
-              <td class="border border-gray-300 p-2 text-red-600 font-bold"><%= batch.temperature_celsius %>°C</td>
-              <td class="border border-gray-300 p-2"><%= batch.status.presence || "unknown" %></td>
-              <td class="border border-gray-300 p-2"><%= link_to "Chain of custody", batch_chain_of_custody_pdf_path(batch) %></td>
+            <tr class="border-t border-line-soft">
+              <td class="px-4 py-2.5 mono"><%= batch.lot_number %></td>
+              <td class="px-4 py-2.5 mono text-[#b42318] font-semibold"><%= batch.temperature_celsius %>&deg;C</td>
+              <td class="px-4 py-2.5 text-ink-soft"><%= batch.status.presence || "unknown" %></td>
+              <td class="px-4 py-2.5"><%= link_to "Chain of custody →", batch_chain_of_custody_pdf_path(batch) %></td>
             </tr>
           <% end %>
         </tbody>
@@ -50,35 +63,38 @@
     </div>
   <% end %>
 
-  <div class="grid md:grid-cols-2 gap-8">
-    <div>
-      <h2 class="text-lg font-bold mb-3">Recent custody events</h2>
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="card overflow-hidden">
+      <div class="px-4 py-3 border-b border-line-soft text-[13px] font-semibold">Recent custody events</div>
       <% if @recent_custody_logs.empty? %>
-        <p class="text-gray-500 text-sm">None recorded yet.</p>
+        <p class="px-4 py-4 text-ink-faint text-[13px]">None recorded yet.</p>
       <% else %>
-        <ul class="text-sm space-y-2">
+        <ul>
           <% @recent_custody_logs.each do |log| %>
-            <li class="border-b pb-2">
-              <span class="font-medium"><%= log.action_type %></span> —
-              <%= link_to log.batch.lot_number, batch_custody_logs_path(log.batch), class: "text-blue-600 underline" %>
-              at <%= log.location %>
-              <span class="text-gray-400"><%= log.timestamp.strftime("%Y-%m-%d %H:%M") %></span>
+            <li class="px-4 py-2.5 border-t border-line-soft first:border-t-0 text-[13px] flex items-center gap-2.5">
+              <span class="badge badge-accent"><%= log.action_type %></span>
+              <span class="text-ink-soft">
+                <%= link_to log.batch.lot_number, batch_custody_logs_path(log.batch), class: "mono font-medium" %>
+                at <%= log.location %>
+                <span class="text-ink-faint"><%= log.timestamp.strftime("%Y-%m-%d %H:%M") %></span>
+              </span>
             </li>
           <% end %>
         </ul>
       <% end %>
     </div>
 
-    <div>
-      <h2 class="text-lg font-bold mb-3">Recent activity</h2>
+    <div class="card overflow-hidden">
+      <div class="px-4 py-3 border-b border-line-soft text-[13px] font-semibold">Recent activity</div>
       <% if @recent_audit_logs.empty? %>
-        <p class="text-gray-500 text-sm">None recorded yet.</p>
+        <p class="px-4 py-4 text-ink-faint text-[13px]">None recorded yet.</p>
       <% else %>
-        <ul class="text-sm space-y-2">
+        <ul>
           <% @recent_audit_logs.each do |log| %>
-            <li class="border-b pb-2">
-              <span class="font-medium"><%= log.event %></span> by <%= log.user.email %>
-              <span class="text-gray-400"><%= log.created_at.strftime("%Y-%m-%d %H:%M") %></span>
+            <li class="px-4 py-2.5 border-t border-line-soft first:border-t-0 text-[13px] text-ink-soft">
+              <span class="mono font-medium text-ink"><%= log.event %></span>
+              by <%= log.user.email %>
+              <span class="text-ink-faint"><%= log.created_at.strftime("%Y-%m-%d %H:%M") %></span>
             </li>
           <% end %>
         </ul>
