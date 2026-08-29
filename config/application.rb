@@ -36,12 +36,16 @@ module PharmaDashboard
     # not in config/initializers/, because the framework consumes this config
     # before app initializers run.
     #
-    # `support_unencrypted_data` stays on so rows written before each column
-    # was encrypted still read; the per-model backfill tasks
-    # (`two_factor:encrypt_secrets`, `vehicles:encrypt_api_tokens`) re-save
-    # them encrypted. It can be turned off in a later change once those have
-    # run everywhere.
-    config.active_record.encryption.support_unencrypted_data = true
+    # `support_unencrypted_data` is off: every encrypted column
+    # (User#otp_secret, Vehicle#api_token) has been confirmed to hold no
+    # legacy plaintext rows in production -- the backfill tasks
+    # (`two_factor:encrypt_secrets`, `vehicles:encrypt_api_tokens`) have run
+    # and were verified. A plaintext value in one of these columns now raises
+    # a decryption error instead of being read silently. Anything marked
+    # `encrypts` from here on is encrypted-only by construction; run its
+    # backfill (if the column already had data) with this briefly flipped
+    # back to true, then flip it off again.
+    config.active_record.encryption.support_unencrypted_data = false
     if Rails.env.local?
       config.active_record.encryption.primary_key = "development-and-test-only-not-a-real-key-primary"
       config.active_record.encryption.deterministic_key = "development-and-test-only-not-a-real-key-deterministic"

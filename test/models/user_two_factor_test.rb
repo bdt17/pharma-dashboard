@@ -23,21 +23,6 @@ class UserTwoFactorTest < ActiveSupport::TestCase
     assert_equal plaintext, @user.reload.otp_secret
   end
 
-  test "a legacy plaintext otp_secret migrates to encrypted (what two_factor:encrypt_secrets does)" do
-    User.connection.execute(
-      User.sanitize_sql([ "UPDATE users SET otp_secret = ? WHERE id = ?", "LEGACYPLAINTEXTSECRET", @user.id ])
-    )
-    assert_equal "LEGACYPLAINTEXTSECRET", @user.reload.otp_secret # readable while unencrypted data is supported
-
-    @user.encrypt
-
-    stored = User.connection.select_value(
-      User.sanitize_sql([ "SELECT otp_secret FROM users WHERE id = ?", @user.id ])
-    )
-    assert_not_equal "LEGACYPLAINTEXTSECRET", stored
-    assert_equal "LEGACYPLAINTEXTSECRET", @user.reload.otp_secret
-  end
-
   test "generate_otp_secret! assigns a secret and is a no-op once enabled" do
     assert @user.otp_secret.present?
 
