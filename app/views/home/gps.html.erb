@@ -1,37 +1,44 @@
-<div class="max-w-5xl mx-auto p-8">
-  <h1 class="text-3xl font-bold mb-2">Live fleet</h1>
-  <p class="text-sm text-gray-500 mb-6"><%= current_organization&.name %></p>
+<% content_for :title, "Fleet GPS — Pharma Transport" %>
+<% content_for :crumb, "Fleet GPS" %>
+
+<div class="p-7 max-w-5xl">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Live fleet</h1>
+    <span class="text-[13px] text-ink-faint"><%= current_organization&.name %></span>
+  </div>
 
   <% if @vehicles.empty? %>
-    <p class="text-gray-500">No vehicles yet.</p>
+    <div class="card p-8 text-center text-ink-faint text-[14px]">No vehicles yet.</div>
   <% else %>
-    <table class="w-full border-collapse border border-gray-300">
-      <thead>
-        <tr class="bg-gray-100">
-          <th class="border border-gray-300 p-2 text-left">Vehicle</th>
-          <th class="border border-gray-300 p-2 text-left">Status</th>
-          <th class="border border-gray-300 p-2 text-left">Position</th>
-          <th class="border border-gray-300 p-2 text-left">Speed</th>
-          <th class="border border-gray-300 p-2 text-left">Last ping</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @vehicles.each do |vehicle| %>
-          <tr>
-            <td class="border border-gray-300 p-2"><%= vehicle.name.presence || vehicle.identifier %></td>
-            <td class="border border-gray-300 p-2"><%= vehicle.status.presence || "unknown" %></td>
-            <td class="border border-gray-300 p-2">
-              <% if vehicle.latitude && vehicle.longitude %>
-                <%= "%.4f, %.4f" % [ vehicle.latitude, vehicle.longitude ] %>
-              <% else %>
-                <span class="text-gray-400">no signal yet</span>
-              <% end %>
-            </td>
-            <td class="border border-gray-300 p-2"><%= vehicle.speed ? "#{vehicle.speed.round(1)} mph" : "—" %></td>
-            <td class="border border-gray-300 p-2"><%= vehicle.last_ping_at&.strftime("%Y-%m-%d %H:%M") || "never" %></td>
+    <div class="card overflow-hidden">
+      <table class="w-full text-[13px]">
+        <thead>
+          <tr class="bg-surface text-[11px] uppercase tracking-wide text-ink-faint">
+            <th class="text-left font-medium px-4 py-2.5">Vehicle</th>
+            <th class="text-left font-medium px-4 py-2.5">Status</th>
+            <th class="text-left font-medium px-4 py-2.5">Position</th>
+            <th class="text-left font-medium px-4 py-2.5">Speed</th>
+            <th class="text-left font-medium px-4 py-2.5">Last ping</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @vehicles.each do |vehicle| %>
+            <tr class="border-t border-line-soft">
+              <td class="px-4 py-2.5 font-medium"><%= vehicle.name.presence || vehicle.identifier %></td>
+              <td class="px-4 py-2.5 text-ink-soft"><%= vehicle.status.presence || "unknown" %></td>
+              <td class="px-4 py-2.5 mono text-ink-soft">
+                <% if vehicle.latitude && vehicle.longitude %>
+                  <%= "%.4f, %.4f" % [ vehicle.latitude, vehicle.longitude ] %>
+                <% else %>
+                  <span class="text-ink-faint">no signal yet</span>
+                <% end %>
+              </td>
+              <td class="px-4 py-2.5 mono"><%= vehicle.speed ? "#{vehicle.speed.round(1)} mph" : "—" %></td>
+              <td class="px-4 py-2.5 mono text-ink-soft"><%= vehicle.last_ping_at&.strftime("%Y-%m-%d %H:%M") || "never" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% end %>
 </div>

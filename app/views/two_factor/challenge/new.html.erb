@@ -1,24 +1,24 @@
 <% content_for :title, "Two-factor authentication" %>
+<% content_for :bare_layout, "1" %>
 
-<h1>Enter your authentication code</h1>
+<h1 class="text-[20px] mb-2">Enter your authentication code</h1>
 
-<p>
+<p class="text-[14px] text-ink-soft">
   Open your authenticator app and enter the current 6-digit code for
   Pharma Transport. Lost your device? Enter one of your backup codes instead.
 </p>
 
-<%= form_with url: two_factor_challenge_path, method: :post do |f| %>
-  <div style="margin: 1.5rem 0;">
-    <%= label_tag :otp_code, "Authentication or backup code" %><br>
+<%= form_with url: two_factor_challenge_path, method: :post, class: "mt-6 flex flex-col gap-4" do %>
+  <div class="flex flex-col gap-1.5">
+    <%= label_tag :otp_code, "Authentication or backup code", class: "text-[12.5px] font-semibold text-ink-soft" %>
     <%= text_field_tag :otp_code, nil,
           autocomplete: "one-time-code", inputmode: "numeric",
           autofocus: true, placeholder: "123456",
-          style: "font-size: 1.25rem; letter-spacing: 0.25em; padding: 0.5rem; width: 14rem;" %>
+          class: "field-input mono text-[18px] tracking-[0.25em]" %>
   </div>
-  <%= f.submit "Verify",
-        style: "background: var(--color-brand-600, #0369a1); color: #fff; padding: 0.75rem 1.5rem; border: 0; border-radius: 0.5rem; font-weight: 600; cursor: pointer;" %>
+  <%= submit_tag "Verify", class: "btn btn-primary w-full" %>
 <% end %>
 
-<p style="margin-top: 2rem;">
+<p class="mt-6 text-[13px]">
   <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %>
 </p>
