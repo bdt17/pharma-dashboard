@@ -43,7 +43,7 @@ gem "prawn-table", "~> 0.2"
 # so the webhook endpoint is real and safe to point Stripe at whenever real API
 # keys are configured -- no live checkout/charge code ships in this phase, since
 # that needs a real Stripe account this repo doesn't have (see the Phase 5 PR).
-gem "stripe", "~> 13.0"
+gem "stripe", "~> 19.5"
 
 # Two-factor authentication (TOTP). rotp does the RFC 6238 verify/provision;
 # rqrcode renders the enrollment QR as inline SVG. Both are pure Ruby with no
