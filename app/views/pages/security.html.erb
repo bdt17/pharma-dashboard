@@ -1,0 +1,132 @@
+<% content_for :full_bleed, "1" %>
+<% content_for :title, "Security & compliance — Pharma Transport" %>
+<% content_for :meta_description, "How Pharma Transport protects the integrity of the chain-of-custody record: hash-chained custody events, mandatory two-factor, static analysis and dependency auditing, and alignment with 21 CFR Part 11 and DSCSA." %>
+
+<section class="bg-brand-900 text-[#eaf0f4]">
+  <div class="mx-auto max-w-6xl px-6 py-[76px]">
+   <div class="flex flex-col gap-4 max-w-[760px]">
+    <span class="eyebrow" style="color:#5fb6ac;">Security &amp; compliance</span>
+    <h1 class="text-[40px] text-white">The controls behind a record that&rsquo;s meant to survive an audit.</h1>
+    <p class="text-[17px] text-[#b9c6d2]">
+      Chain-of-custody documentation is only worth as much as its integrity. This is a plain
+      account of how the data is protected, how the application is built, and which regulatory
+      frameworks the design is aligned to &mdash; including what is not yet claimed.
+    </p>
+   </div>
+  </div>
+</section>
+
+<%# Integrity model %>
+<section class="mx-auto max-w-6xl px-6 py-[76px] border-b border-line">
+  <div class="grid gap-14 md:grid-cols-2 items-center">
+    <div class="flex flex-col gap-4">
+      <span class="eyebrow">Integrity model</span>
+      <h2 class="text-[28px]">Every custody event is hash-chained to the one before it.</h2>
+      <p class="text-[15px] text-ink-soft">Each event record stores a cryptographic hash of its own contents plus the hash of the previous event for that batch. Changing a past event &mdash; a time, a location, a signature &mdash; changes its hash, which breaks every link after it. The tampering is detectable; it is not a silent edit.</p>
+      <p class="text-[15px] text-ink-soft">Alongside the chain, a separate append-only audit trail records who did what and when, across the whole organization.</p>
+    </div>
+    <div class="card p-6 bg-[#fbfcfd]">
+      <div class="flex flex-col">
+        <% [
+          ["1", "Pickup — Mesa DC", "hash 9f3c…  prev —"],
+          ["2", "Transfer — Phoenix hub", "hash 41ab…  prev 9f3c…"],
+          ["3", "Delivery — Tucson, AZ  ✓ signed", "hash c7d0…  prev 41ab…"],
+        ].each_with_index do |(n, label, hashes), i| %>
+          <% if i > 0 %><div class="w-px h-3.5 bg-line ml-4"></div><% end %>
+          <div class="flex gap-3.5 items-center py-3.5">
+            <span class="w-[34px] h-[34px] shrink-0 rounded-lg bg-accent-50 text-accent-700 flex items-center justify-center text-[13px] font-semibold"><%= n %></span>
+            <div class="flex flex-col">
+              <span class="text-[13.5px] font-semibold"><%= label %></span>
+              <span class="mono text-[11.5px] text-ink-faint"><%= hashes %></span>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%# Controls grid %>
+<section class="mx-auto max-w-6xl px-6 py-[76px]">
+  <div class="flex flex-col gap-2.5 mb-10">
+    <span class="eyebrow">Controls</span>
+    <h2 class="text-[28px]">How the application itself is secured</h2>
+  </div>
+  <div class="grid gap-6 md:grid-cols-2">
+    <% [
+      ["Authentication", [
+        "TOTP two-factor authentication, mandatory for admins and pharmacists, opt-in for other roles",
+        "One-time backup codes issued at enrollment for device loss",
+        "Second-factor secrets encrypted at rest with application-level encryption",
+        "Operator reset path for locked-out users, which forces re-enrollment",
+      ]],
+      ["Application security", [
+        "Static analysis (Brakeman) runs on every change in CI",
+        "Dependency vulnerability auditing (bundler-audit) on every change",
+        "Rate limiting on authentication and sensitive endpoints",
+        "Secret scanning on every commit to the repository",
+      ]],
+      ["Access control & audit", [
+        "Policy-based authorization on every action, with per-organization data scoping",
+        "Append-only audit trail of user events, visible on the Compliance screen",
+        "Custody records hash-chained rather than editable",
+      ]],
+      ["Billing & data handling", [
+        "Payments handled by Stripe; card details never touch our servers",
+        "Inbound billing webhooks verified by signature before they are trusted",
+        "Hosted on managed infrastructure with encrypted transport (TLS) throughout",
+      ]],
+    ].each do |heading, items| %>
+      <div class="card p-6.5" style="padding:1.625rem;">
+        <h3 class="font-sans text-[15px] font-semibold mb-3"><%= heading %></h3>
+        <ul class="flex flex-col gap-2">
+          <% items.each do |item| %>
+            <li class="text-[13.5px] text-ink-soft pl-5 relative">
+              <span class="absolute left-0 top-[7px] w-1.5 h-1.5 rounded-full bg-accent-600"></span><%= item %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<%# Regulatory alignment %>
+<section class="mx-auto max-w-6xl px-6 pb-[76px]">
+  <div class="card p-8.5 bg-surface grid gap-9 md:grid-cols-2" style="padding:2.125rem;">
+    <div class="flex flex-col gap-3">
+      <span class="eyebrow">Regulatory alignment</span>
+      <h3 class="text-[20px]">21 CFR Part 11</h3>
+      <p class="text-[14px] text-ink-soft">The custody log and generated packets are designed around Part 11&rsquo;s expectations for electronic records: attributable, time-stamped, and protected against undetected alteration, with an independent audit trail.</p>
+    </div>
+    <div class="flex flex-col gap-3">
+      <h3 class="text-[20px]">DSCSA</h3>
+      <p class="text-[14px] text-ink-soft">Custody-event logging and per-shipment compliance packets give dispensers an audit-ready record of what happened in transit &mdash; the documentation that matters once the small-dispenser exemption ends on November&nbsp;27,&nbsp;2026. It does not replace a wholesaler&rsquo;s serialization system.</p>
+    </div>
+  </div>
+</section>
+
+<%# Honest roadmap %>
+<section class="mx-auto max-w-6xl px-6 pb-[84px]">
+  <div class="rounded-r border-l-[3px] p-7 flex flex-col gap-2" style="border-color:#b45309;background-color:#fbf1e4;">
+    <span class="text-[12px] font-semibold tracking-[0.08em] uppercase text-[#b45309]">What we don&rsquo;t claim yet</span>
+    <p class="text-[14px] text-[#5c4420] max-w-[80ch]">
+      Pharma Transport is an early-stage product built and run by a single founder. There is
+      no SOC&nbsp;2 report or third-party penetration test on file today, and we do not
+      currently sign HIPAA business associate agreements. A Compliance Packet is a
+      documentation tool &mdash; it is not, on its own, a certification of regulatory
+      compliance. If a formal attestation is a procurement requirement for you,
+      <%= link_to "tell us", new_user_registration_path %> and we&rsquo;ll be candid about timelines.
+    </p>
+  </div>
+</section>
+
+<section class="bg-brand-700 text-white">
+  <div class="mx-auto max-w-6xl px-6 py-16 flex flex-wrap items-center justify-between gap-8">
+    <h2 class="text-[26px] text-white max-w-[24ch]">Have a security questionnaire? Send it over.</h2>
+    <div class="flex gap-3">
+      <%= link_to "Sign up", new_user_registration_path, class: "btn", style: "background:#fff;color:#1f3a53;" %>
+      <%= link_to "See pricing", pricing_path, class: "btn btn-secondary", style: "border-color:rgba(255,255,255,0.3);color:#fff;background:transparent;" %>
+    </div>
+  </div>
+</section>

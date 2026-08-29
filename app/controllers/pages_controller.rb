@@ -13,4 +13,11 @@ class PagesController < ApplicationController
 
   def about
   end
+
+  # Public security & compliance overview -- a plain account of how the
+  # custody record's integrity is protected, how the app is built, and which
+  # frameworks the design is aligned to (including what is not yet claimed).
+  # Prospects in regulated pharma ask for this before they'll evaluate.
+  def security
+  end
 end
