@@ -1,0 +1,116 @@
+<% content_for :full_bleed, "1" %>
+<% content_for :title, "Your DSCSA readiness — Pharma Transport" %>
+
+<%
+  band_color = {
+    "significant_gaps" => "#b42318",
+    "progressing"      => "#b45309",
+    "nearly_ready"     => "#0f766e",
+    "well_positioned"  => "#0f766e"
+  }.fetch(@assessment.band, "#47566a")
+
+  # Which gaps the platform closes directly vs. what the retainer handles.
+  platform_keys = %w[custody coldchain records].freeze
+%>
+
+<section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
+  <div class="mx-auto max-w-3xl px-6 py-[64px]">
+    <span class="eyebrow">DSCSA readiness check</span>
+    <div class="flex flex-wrap items-end gap-x-8 gap-y-3 mt-4">
+      <div class="flex items-baseline gap-2">
+        <span class="mono text-[64px] font-medium leading-none" style="color: <%= band_color %>;"><%= @assessment.score %></span>
+        <span class="text-ink-faint text-[18px]">/ 100</span>
+      </div>
+      <span class="badge text-[13px] px-3 py-1.5" style="color: <%= band_color %>; border-color: <%= band_color %>33; background-color: <%= band_color %>14;">
+        <%= @assessment.band_label %>
+      </span>
+    </div>
+    <p class="text-[15px] text-ink-soft mt-4 max-w-[60ch]">
+      <% unless @assessment.still_exempt? %>
+        You indicated the small-dispenser exemption may not apply to you &mdash; in that case
+        the enhanced requirements below are <strong>already in force</strong>, not pending.
+      <% else %>
+        Based on your answers, here&rsquo;s where you stand against the requirements that take
+        effect when the exemption ends on November&nbsp;27,&nbsp;2026.
+      <% end %>
+    </p>
+  </div>
+</section>
+
+<section class="mx-auto max-w-3xl px-6 py-14 flex flex-col gap-12">
+  <% if @assessment.gaps.any? %>
+    <div class="flex flex-col gap-4">
+      <h2 class="text-[22px]">Gaps to close &mdash; <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %></h2>
+      <div class="flex flex-col gap-3">
+        <% @assessment.gaps.each do |q| %>
+          <div class="card p-5 flex flex-col gap-1.5">
+            <div class="flex items-center gap-2">
+              <span class="badge badge-danger">Gap</span>
+              <span class="font-sans text-[14px] font-semibold"><%= q[:category] %></span>
+              <span class="text-[12px] text-ink-faint">&mdash; you answered &ldquo;<%= { "no" => "No", "unsure" => "Not sure" }[@assessment.answers[q[:key]]] %>&rdquo;</span>
+            </div>
+            <p class="text-[13.5px] text-ink-soft"><%= q[:gap] %></p>
+            <p class="text-[13px] text-accent-700">
+              <% if platform_keys.include?(q[:key]) %>
+                Pharma Transport closes this directly &mdash; it&rsquo;s core to the platform.
+              <% else %>
+                Your fractional compliance officer owns this: written, maintained, and monitored.
+              <% end %>
+            </p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @assessment.strengths.any? %>
+    <div class="flex flex-col gap-3">
+      <h2 class="text-[18px]">Already in place</h2>
+      <div class="flex flex-wrap gap-2">
+        <% @assessment.strengths.each do |q| %>
+          <span class="badge badge-accent"><%= q[:category] %></span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <%# CTAs %>
+  <div class="border-t border-line pt-10 flex flex-col gap-6">
+    <h2 class="text-[22px]">Close the gaps</h2>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="card p-6 flex flex-col gap-3">
+        <h3 class="font-sans text-[15px] font-semibold">Start with the platform</h3>
+        <p class="text-[13.5px] text-ink-soft">
+          Chain of custody, temperature monitoring, and 6-year retrievable records &mdash; live in
+          production, 14-day free trial.
+        </p>
+        <%= link_to "Start free trial", new_user_registration_path, class: "btn btn-primary btn-sm self-start" %>
+      </div>
+      <div class="card p-6 flex flex-col gap-3">
+        <h3 class="font-sans text-[15px] font-semibold">Have someone own it</h3>
+        <p class="text-[13.5px] text-ink-soft">
+          A fractional compliance officer authors your SOPs, checks your trading partners, and
+          runs the exception process. Book a call to walk through your results.
+        </p>
+        <%= link_to "How the retainer works", compliance_officer_path, class: "btn btn-secondary btn-sm self-start" %>
+      </div>
+    </div>
+
+    <div class="card p-6 sm:p-8">
+      <h3 class="font-sans text-[15px] font-semibold mb-1">Walk through your results with us</h3>
+      <p class="text-[13px] text-ink-soft mb-5">Twenty minutes, no pitch. We&rsquo;ll bring your score up on the call.</p>
+      <% prefill = CallRequest.new(
+           topic: "dscsa_assessment",
+           email: @assessment.email,
+           pharmacy_name: @assessment.pharmacy_name,
+           context: @assessment.summary_for_call
+         ) %>
+      <%= render "call_requests/form", call_request: prefill %>
+    </div>
+  </div>
+
+  <p class="text-[12px] text-ink-faint">
+    This self-assessment is informational and is not a compliance determination or legal advice.
+    Confirm current requirements against the FDA&rsquo;s DSCSA guidance or with counsel.
+  </p>
+</section>

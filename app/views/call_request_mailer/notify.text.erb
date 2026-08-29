@@ -1,0 +1,17 @@
+New call request — <%= @call_request.topic_label %>
+
+Name:      <%= @call_request.name %>
+Email:     <%= @call_request.email %>
+Pharmacy:  <%= @call_request.pharmacy_name.presence || "—" %>
+Phone:     <%= @call_request.phone.presence || "—" %>
+Submitted: <%= @call_request.created_at.strftime("%Y-%m-%d %H:%M %Z") %>
+
+<% if @call_request.message.present? -%>
+Message:
+<%= @call_request.message %>
+
+<% end -%>
+<% if @call_request.context.present? -%>
+Context:
+<%= @call_request.context %>
+<% end -%>

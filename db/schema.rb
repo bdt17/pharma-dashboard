@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_29_212316) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_29_223207) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -48,6 +48,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_212316) do
     t.index ["vehicle_id"], name: "index_batches_on_vehicle_id"
   end
 
+  create_table "call_requests", force: :cascade do |t|
+    t.text "context"
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.datetime "handled_at"
+    t.text "message"
+    t.string "name", null: false
+    t.string "pharmacy_name"
+    t.string "phone"
+    t.string "topic", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_call_requests_on_created_at"
+  end
+
   create_table "compliance_reports", force: :cascade do |t|
     t.bigint "batch_id", null: false
     t.string "content_hash", null: false
@@ -75,6 +89,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_212316) do
     t.datetime "timestamp"
     t.datetime "updated_at", null: false
     t.index ["batch_id"], name: "index_custody_logs_on_batch_id"
+  end
+
+  create_table "dscsa_assessments", force: :cascade do |t|
+    t.jsonb "answers", default: {}, null: false
+    t.string "band", default: "unknown", null: false
+    t.datetime "created_at", null: false
+    t.string "email"
+    t.string "pharmacy_name"
+    t.integer "score", default: 0, null: false
+    t.string "token", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_dscsa_assessments_on_token", unique: true
   end
 
   create_table "organizations", force: :cascade do |t|

@@ -28,6 +28,16 @@ Rails.application.routes.draw do
   get "/compliance-officer", to: "pages#compliance_officer", as: :compliance_officer
   get "/verify/:token", to: "verifications#show", as: :verification
 
+  # DSCSA readiness self-assessment (acquisition funnel)
+  get  "/dscsa-assessment", to: "dscsa_assessments#new", as: :dscsa_assessment
+  post "/dscsa-assessment", to: "dscsa_assessments#create"
+  get  "/dscsa-assessment/:token", to: "dscsa_assessments#result", as: :dscsa_assessment_result
+
+  # Inbound "request a call" leads from the marketing pages
+  get  "/request-a-call", to: "call_requests#new", as: :request_a_call
+  post "/request-a-call", to: "call_requests#create"
+  get  "/request-a-call/thanks", to: "call_requests#thanks", as: :call_request_thanks
+
   # Authenticated application pages
   get "/dashboard", to: "dashboard#index", as: :dashboard
   get "/enterprise/dashboard", to: "dashboard#index"
