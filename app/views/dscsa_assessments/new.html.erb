@@ -1,0 +1,72 @@
+<% content_for :full_bleed, "1" %>
+<% content_for :title, "DSCSA readiness check — Pharma Transport" %>
+<% content_for :meta_description, "A short self-assessment of how ready your pharmacy is for DSCSA's enhanced drug distribution security requirements once the small-dispenser exemption ends on November 27, 2026." %>
+
+<section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
+  <div class="mx-auto max-w-3xl px-6 py-[64px]">
+    <div class="flex flex-col gap-4 max-w-[52ch]">
+      <span class="eyebrow">DSCSA readiness check</span>
+      <h1 class="text-[28px] sm:text-[36px] leading-[1.15]">Where does your pharmacy actually stand?</h1>
+      <p class="text-[16px] text-ink-soft">
+        Eight questions, about two minutes. You&rsquo;ll get a readiness score and a plain
+        breakdown of the gaps that matter before the small-dispenser exemption ends on
+        <strong>November&nbsp;27,&nbsp;2026</strong>. No account, and nothing is shared.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="mx-auto max-w-3xl px-6 py-14">
+  <%= form_with url: dscsa_assessment_path, method: :post, class: "flex flex-col gap-8" do %>
+    <div class="rounded-r border-l-[3px] p-4 text-[13.5px]" style="border-color:#1f3a53;background-color:#eef2f6;color:#243b53;">
+      First, for context &mdash; this one isn&rsquo;t scored:
+    </div>
+    <fieldset class="flex flex-col gap-3">
+      <legend class="text-[15px] font-sans font-semibold mb-1"><%= DscsaAssessment::CONTEXT_QUESTION[:prompt] %></legend>
+      <div class="flex flex-wrap gap-2">
+        <% DscsaAssessment::ANSWERS.each do |value| %>
+          <label class="inline-flex items-center gap-2 border border-line rounded-sm px-3 py-2 text-[13.5px] cursor-pointer hover:bg-surface has-[:checked]:border-accent-600 has-[:checked]:bg-accent-50">
+            <input type="radio" name="<%= DscsaAssessment::CONTEXT_QUESTION[:key] %>" value="<%= value %>" <%= "checked" if value == "unsure" %>>
+            <%= { "yes" => "Yes", "unsure" => "Not sure", "no" => "No" }[value] %>
+          </label>
+        <% end %>
+      </div>
+    </fieldset>
+
+    <hr class="border-line">
+
+    <% DscsaAssessment::QUESTIONS.each_with_index do |q, i| %>
+      <fieldset class="flex flex-col gap-3">
+        <legend class="text-[15px] font-sans font-semibold mb-1">
+          <span class="text-ink-faint mono text-[13px] mr-1"><%= i + 1 %>.</span><%= q[:prompt] %>
+        </legend>
+        <div class="flex flex-wrap gap-2">
+          <% DscsaAssessment::ANSWERS.each do |value| %>
+            <label class="inline-flex items-center gap-2 border border-line rounded-sm px-3 py-2 text-[13.5px] cursor-pointer hover:bg-surface has-[:checked]:border-accent-600 has-[:checked]:bg-accent-50">
+              <input type="radio" name="<%= q[:key] %>" value="<%= value %>" <%= "checked" if value == "unsure" %>>
+              <%= { "yes" => "Yes", "unsure" => "Not sure", "no" => "No" }[value] %>
+            </label>
+          <% end %>
+        </div>
+      </fieldset>
+    <% end %>
+
+    <hr class="border-line">
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-1.5">
+        <label for="pharmacy_name" class="text-[12.5px] font-semibold text-ink-soft">Pharmacy (optional)</label>
+        <input type="text" name="pharmacy_name" id="pharmacy_name" autocomplete="organization" class="field-input">
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for="email" class="text-[12.5px] font-semibold text-ink-soft">Email (optional &mdash; to get your results by email)</label>
+        <input type="email" name="email" id="email" autocomplete="email" class="field-input">
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-full sm:w-auto sm:self-start">See my readiness score</button>
+    <p class="text-[12px] text-ink-faint">
+      This is an informational self-assessment, not a compliance determination or legal advice.
+    </p>
+  <% end %>
+</section>

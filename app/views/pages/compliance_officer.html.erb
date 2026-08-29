@@ -3,7 +3,7 @@
 <% content_for :meta_description, "A named compliance professional on monthly retainer for small pharmacies: SOPs authored and maintained, every compliance packet reviewed, records monitored, and audit support on call." %>
 
 <%
-  scheduling_link = "[SCHEDULING_LINK]"
+  call_link = request_a_call_path(topic: "compliance_officer")
   contact_email = "brett@pharmatransport.org"
 %>
 
@@ -19,7 +19,7 @@
         up the phone when a regulator calls.
       </p>
       <div class="flex flex-wrap gap-3 pt-1">
-        <a class="btn btn-primary" href="<%= scheduling_link %>">Book a 20-minute intro call</a>
+        <a class="btn btn-primary" href="<%= call_link %>">Book a 20-minute intro call</a>
         <a class="btn btn-secondary" href="#included">See what&rsquo;s included</a>
       </div>
     </div>
@@ -91,7 +91,7 @@
         <span class="badge badge-accent">Month&#8209;to&#8209;month</span>
       </div>
       <div class="flex items-baseline gap-2 border-b border-line-soft pb-4">
-        <span class="mono text-[34px] font-medium">$[RETAINER]</span>
+        <span class="mono text-[34px] font-medium">$900</span>
         <span class="text-ink-faint text-[14px]">/ month</span>
       </div>
       <div class="flex flex-col gap-2.5 text-[14px] text-ink-soft">
@@ -106,7 +106,7 @@
           </span>
         <% end %>
       </div>
-      <a class="btn btn-primary w-full" href="<%= scheduling_link %>">Book a 20-minute intro call</a>
+      <a class="btn btn-primary w-full" href="<%= call_link %>">Book a 20-minute intro call</a>
       <p class="text-[12.5px] text-ink-faint text-center">
         Or email <%= mail_to contact_email %>
       </p>
@@ -143,7 +143,7 @@
   <div class="mx-auto max-w-6xl px-6 py-[68px] flex flex-wrap items-center justify-between gap-6">
     <h2 class="text-[24px] sm:text-[26px] text-white max-w-[26ch]">Twenty minutes to see whether it fits.</h2>
     <div class="flex gap-3">
-      <a class="btn" style="background:#fff;color:#1f3a53;" href="<%= scheduling_link %>">Book an intro call</a>
+      <a class="btn" style="background:#fff;color:#1f3a53;" href="<%= call_link %>">Book an intro call</a>
       <a class="btn btn-secondary" style="border-color:rgba(255,255,255,0.3);color:#fff;background:transparent;" href="<%= security_path %>">See the platform</a>
     </div>
   </div>

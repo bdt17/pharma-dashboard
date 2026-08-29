@@ -47,6 +47,13 @@ class Rack::Attack
     req.ip if req.path == "/two_factor_setup" && %w[POST DELETE].include?(req.request_method)
   end
 
+  # Public lead forms (request-a-call, DSCSA assessment). Same reasoning as
+  # the signup throttle: a burst of spam submissions both fills the leads
+  # inbox and can flag the sending Gmail account for abuse.
+  throttle("lead_forms/ip", limit: 10, period: 1.hour) do |req|
+    req.ip if %w[/request-a-call /dscsa-assessment].include?(req.path) && req.post?
+  end
+
   # General backstop against basic flooding of any endpoint, independent of
   # the specific throttles above.
   throttle("requests/ip", limit: 300, period: 5.minutes, &:ip)

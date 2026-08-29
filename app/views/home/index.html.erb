@@ -148,7 +148,10 @@
       <span class="text-[12px] font-semibold tracking-[0.08em] uppercase text-[#b45309]">DSCSA &mdash; small dispenser exemption</span>
       <p class="text-[15px] text-[#5c4420]">The FDA&rsquo;s small-dispenser exemption from enhanced drug distribution security requirements ends <strong>November&nbsp;27,&nbsp;2026</strong>. If your pharmacy has relied on it, preparation needs to be finished &mdash; not starting.</p>
     </div>
-    <%= link_to "Read what changes →", blog_dscsa_exemption_2026_path, class: "btn btn-secondary", style: "border-color:#d8b98a;" %>
+    <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+      <%= link_to "Take the 2-minute readiness check", dscsa_assessment_path, class: "btn", style: "background:#b45309;color:#fff;" %>
+      <%= link_to "Read what changes →", blog_dscsa_exemption_2026_path, class: "btn btn-secondary", style: "border-color:#d8b98a;" %>
+    </div>
   </div>
 </section>
 
