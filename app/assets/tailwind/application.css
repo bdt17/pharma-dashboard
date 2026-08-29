@@ -4,23 +4,151 @@
    Ruby CLI, which is CSS-first -- it does NOT read tailwind.config.js unless
    the file is pulled in with an explicit @config directive (it isn't here),
    so a JS config file sitting next to this is silently inert. This @theme
-   block is the real, effective place to define brand colors; see the removed
-   tailwind.config.js for the previous (dead) attempt at the same thing. */
-@theme {
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
-  --color-brand-900: #1e3a8a;
+   block is the real, effective place to define brand colors and fonts.
 
-  --color-accent-50: #ecfdf5;
-  --color-accent-100: #d1fae5;
-  --color-accent-500: #10b981;
-  --color-accent-600: #059669;
-  --color-accent-700: #047857;
+   Direction: restrained, compliance-grade. IBM Plex Serif for headings
+   (documentary authority), IBM Plex Sans for UI/body, IBM Plex Mono for lot
+   numbers, hashes, codes and figures. Navy is the primary; a single teal
+   accent carries the "verified / compliant" meaning; red is reserved for
+   temperature excursions. See design-canvas/ for the reference artboards. */
+@theme {
+  /* Navy -- primary. Buttons, active nav, headings on dark, footer. */
+  --color-brand-50:  #f4f6f8;
+  --color-brand-100: #e5eaef;
+  --color-brand-200: #c8d3dd;
+  --color-brand-300: #9fb1c1;
+  --color-brand-400: #6d869c;
+  --color-brand-500: #47637d;
+  --color-brand-600: #34506a;
+  --color-brand-700: #1f3a53;
+  --color-brand-800: #182f43;
+  --color-brand-900: #14273a;
+
+  /* Teal -- the single accent. Links, "verified / compliant", accent CTAs. */
+  --color-accent-50:  #e7f2f1;
+  --color-accent-100: #cfe6e2;
+  --color-accent-200: #a9d3cd;
+  --color-accent-500: #14867d;
+  --color-accent-600: #0f766e;
+  --color-accent-700: #0b5a54;
+
+  /* Neutrals -- subtly cool. */
+  --color-paper:      #ffffff;
+  --color-surface:    #f5f7f9;
+  --color-line:       #e3e8ee;
+  --color-line-soft:  #eef1f5;
+  --color-ink:        #131a24;
+  --color-ink-soft:   #47566a;
+  --color-ink-faint:  #71809a;
+
+  --font-sans:  "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --font-mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-DEFAULT: 0.375rem; /* 6px -- cards, buttons */
+  --radius-sm:      0.25rem;  /* 4px -- inline controls, pills */
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background-color: var(--color-paper);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.16;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+  }
+
+  a {
+    color: var(--color-accent-600);
+    text-decoration: none;
+  }
+  a:hover { color: var(--color-accent-700); }
+}
+
+@layer components {
+  /* Buttons -- one primary action per view. No drop shadows. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: 0.625rem 1.125rem;
+    border-radius: var(--radius-DEFAULT);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn-primary   { background-color: var(--color-brand-700); color: #fff; }
+  .btn-primary:hover   { background-color: var(--color-brand-900); color: #fff; }
+  .btn-accent    { background-color: var(--color-accent-600); color: #fff; }
+  .btn-accent:hover    { background-color: var(--color-accent-700); color: #fff; }
+  .btn-secondary { background-color: var(--color-paper); color: var(--color-ink); border-color: var(--color-line); }
+  .btn-secondary:hover { background-color: var(--color-surface); color: var(--color-ink); }
+  .btn-sm { font-size: 0.8125rem; padding: 0.375rem 0.75rem; border-radius: var(--radius-sm); }
+
+  .card {
+    background-color: var(--color-paper);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-DEFAULT);
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--color-accent-600);
+  }
+
+  /* Status badges. Teal = verified/compliant, red = excursion, amber = DSCSA. */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 0.1875rem 0.5rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    color: var(--color-ink-soft);
+    background-color: var(--color-paper);
+  }
+  .badge-accent { color: var(--color-accent-700); background-color: var(--color-accent-50);  border-color: var(--color-accent-100); }
+  .badge-danger { color: #b42318;                 background-color: #fdeceb;                 border-color: #f0c8c2; }
+  .badge-amber  { color: #b45309;                 background-color: #fbf1e4;                 border-color: #ecd3ac; }
+
+  /* Form inputs. */
+  .field-input {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    padding: 0.5625rem 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--color-ink);
+    background-color: var(--color-paper);
+  }
+  .field-input:focus {
+    outline: 2px solid var(--color-accent-50);
+    border-color: var(--color-accent-600);
+  }
+
+  .mono { font-family: var(--font-mono); font-feature-settings: "tnum"; }
 }
