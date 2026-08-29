@@ -28,16 +28,19 @@ module PharmaDashboard
     # 301 dashboard.<domain> -> the canonical host. See the middleware file.
     config.middleware.use DashboardSubdomainRedirect
 
-    # ActiveRecord Encryption for User#otp_secret (and anything else marked
-    # `encrypts` later). This app keeps no Rails credentials file, so the keys
-    # come from env vars in real environments and from fixed, non-secret
-    # values in development/test -- nothing sensitive is stored locally and CI
-    # must run without secrets. Set here, not in config/initializers/, because
-    # the framework consumes this config before app initializers run.
+    # ActiveRecord Encryption for User#otp_secret, Vehicle#api_token, and
+    # anything else marked `encrypts` later. This app keeps no Rails
+    # credentials file, so the keys come from env vars in real environments
+    # and from fixed, non-secret values in development/test -- nothing
+    # sensitive is stored locally and CI must run without secrets. Set here,
+    # not in config/initializers/, because the framework consumes this config
+    # before app initializers run.
     #
-    # `support_unencrypted_data` stays on so rows written before this shipped
-    # still read; `bin/rails two_factor:encrypt_secrets` re-saves them
-    # encrypted. It can be turned off in a later change once that has run.
+    # `support_unencrypted_data` stays on so rows written before each column
+    # was encrypted still read; the per-model backfill tasks
+    # (`two_factor:encrypt_secrets`, `vehicles:encrypt_api_tokens`) re-save
+    # them encrypted. It can be turned off in a later change once those have
+    # run everywhere.
     config.active_record.encryption.support_unencrypted_data = true
     if Rails.env.local?
       config.active_record.encryption.primary_key = "development-and-test-only-not-a-real-key-primary"
