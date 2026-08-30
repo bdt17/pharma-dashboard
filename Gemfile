@@ -6,6 +6,13 @@ ruby "3.3.5"
 gem "rails", "~> 8.1.3"
 gem "puma", "~> 8.0"
 gem "devise", "~> 5.0"  # SINGLE devise entry
+# bcrypt is a devise dependency, so it's always installed -- but a transitive
+# dep is not auto-required by Bundler. Devise loads it lazily on the first
+# password check, which never happens on a session-cookie request, so
+# TwoFactorAuthentication#generate_backup_codes! (BCrypt::Password) hit an
+# uninitialized-constant NameError in production. Naming it here makes
+# Bundler require it at boot.
+gem "bcrypt", "~> 3.1"
 gem "pundit", "~> 2.4"
 gem "rack-attack", "~> 6.7"
 gem "bootsnap", require: false

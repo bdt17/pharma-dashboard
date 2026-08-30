@@ -33,9 +33,10 @@ module TwoFactorAuthentication
 
   BACKUP_CODE_COUNT = 10
 
-  # Small clock-skew allowance (in seconds) on either side of the current
-  # 30-second step, so a user whose phone clock is slightly off still works.
-  OTP_DRIFT = 15
+  # Clock-skew allowance (in seconds) on either side of the current
+  # 30-second step, so a user whose phone clock is a little off still works.
+  # 30 gives roughly a 90-second window, matching what most services allow.
+  OTP_DRIFT = 30
 
   # otpauth:// URI a QR code / manual-entry field is built from.
   def otp_provisioning_uri
@@ -59,11 +60,14 @@ module TwoFactorAuthentication
     TWO_FACTOR_REQUIRED_ROLES.include?(role)
   end
 
-  # Assign a fresh secret for a not-yet-enrolled user starting setup. A no-op
-  # once two-factor is enabled, so hitting the setup page again can never
-  # silently rotate the secret out from under a working authenticator.
+  # Assign a secret for a not-yet-enrolled user starting setup. Only when
+  # there isn't one yet: a plain reload of the setup page must NOT rotate
+  # the secret out from under a phone the user has already added it to
+  # (which silently breaks every code they generate). A never-confirmed
+  # secret is useless to anyone but its owner, so keeping a stale one for
+  # an abandoned enrolment costs nothing. No-op once enrolled.
   def generate_otp_secret!
-    update!(otp_secret: ROTP::Base32.random) unless otp_enabled?
+    update!(otp_secret: ROTP::Base32.random) if otp_secret.blank? && !otp_enabled?
   end
 
   # Verify a 6-digit TOTP and, on success, remember its timestep so the same
@@ -81,12 +85,18 @@ module TwoFactorAuthentication
   end
 
   # Flip the user to enrolled and hand back a fresh set of backup codes (the
-  # only time the plaintext codes exist). Sends a security notification --
-  # deliver_later so a mail-provider hiccup can't fail the enrollment request.
+  # only time the plaintext codes exist). Atomic: if backup-code generation
+  # fails, the enrolled flag rolls back rather than leaving a half-enrolled
+  # user who can't be challenged and has no recovery codes. The security
+  # notification is queued after the commit -- deliver_later so a
+  # mail-provider hiccup can't fail the enrollment.
   def enable_two_factor!
-    update!(otp_enabled: true, otp_enabled_at: Time.current)
+    codes = transaction do
+      update!(otp_enabled: true, otp_enabled_at: Time.current)
+      generate_backup_codes!
+    end
     TwoFactorMailer.with(user: self).enabled.deliver_later
-    generate_backup_codes!
+    codes
   end
 
   # Turn two-factor off and clear every trace of the old secret / codes, so a
@@ -105,7 +115,7 @@ module TwoFactorAuthentication
   # for one-time display. Digests (never the codes) are what gets stored.
   def generate_backup_codes!
     codes = Array.new(BACKUP_CODE_COUNT) { SecureRandom.hex(4) }
-    digests = codes.map { |c| BCrypt::Password.create(c, cost: backup_code_bcrypt_cost).to_s }
+    digests = codes.map { |c| ::BCrypt::Password.create(c, cost: backup_code_bcrypt_cost).to_s }
     update!(otp_backup_codes: digests.to_json)
     codes
   end
@@ -117,7 +127,7 @@ module TwoFactorAuthentication
 
     normalized = code.to_s.strip
     digests = backup_code_digests
-    match = digests.find { |digest| BCrypt::Password.new(digest) == normalized }
+    match = digests.find { |digest| ::BCrypt::Password.new(digest) == normalized }
     return false unless match
 
     digests.delete(match)
@@ -145,6 +155,6 @@ module TwoFactorAuthentication
   # than fast-digested. The work factor drops to the minimum under test --
   # otherwise every spec that enrolls a user pays for 10 full-cost hashes.
   def backup_code_bcrypt_cost
-    Rails.env.test? ? BCrypt::Engine::MIN_COST : BCrypt::Engine::DEFAULT_COST
+    Rails.env.test? ? ::BCrypt::Engine::MIN_COST : ::BCrypt::Engine::DEFAULT_COST
   end
 end
