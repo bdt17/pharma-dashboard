@@ -22,20 +22,27 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
   # Matches the real shape Stripe sends as of API version 2025-11-17.clover:
   # current_period_end lives on the subscription item, not the subscription
   # itself.
-  def subscription_event_payload(status: "active", tier: nil)
-    price = { unit_amount: 9900 }
+  def subscription_event_payload(status: "active", tier: nil, type: "customer.subscription.updated",
+                                 id: "sub_123", amount: 9900)
+    price = { unit_amount: amount }
     price[:metadata] = { tier: tier } if tier
     {
-      type: "customer.subscription.updated",
+      type: type,
       data: {
         object: {
-          id: "sub_123",
+          id: id,
           customer: "cus_123",
           status: status,
           items: { data: [ { price: price, current_period_end: 1.month.from_now.to_i } ] }
         }
       }
     }.to_json
+  end
+
+  def post_event(payload)
+    post stripe_webhooks_url,
+      params: payload,
+      headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
   end
 
   test "rejects a request with no signature header" do
@@ -70,13 +77,43 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "syncs the tier from the price metadata when present" do
-    payload = subscription_event_payload(tier: "pro")
-
-    post stripe_webhooks_url,
-      params: payload,
-      headers: signed_headers_for(payload).merge("Content-Type" => "application/json")
-
+    post_event subscription_event_payload(tier: "pro")
     assert_equal "pro", Subscription.find_by(stripe_subscription_id: "sub_123").tier
+  end
+
+  test "the full subscription lifecycle: created (trial) -> active -> upgrade -> canceled" do
+    post_event subscription_event_payload(type: "customer.subscription.created", status: "trialing", tier: "starter", amount: 9900)
+    sub = Subscription.find_by(stripe_subscription_id: "sub_123")
+    assert sub.trialing?
+    assert_equal "starter", sub.tier
+
+    post_event subscription_event_payload(status: "active", tier: "starter", amount: 9900)
+    assert sub.reload.active?
+    assert_equal 15, ComplianceReportQuota.new(@organization).monthly_allowance
+
+    post_event subscription_event_payload(status: "active", tier: "pro", amount: 24_900)
+    assert_equal "pro", sub.reload.tier
+    assert_equal 24_900 / 100.0, sub.plan_amount
+    assert_equal 60, ComplianceReportQuota.new(@organization).monthly_allowance
+
+    post_event subscription_event_payload(status: "active", tier: "compliance", amount: 49_900)
+    assert ComplianceReportQuota.new(@organization).unlimited?
+
+    payload = { type: "customer.subscription.deleted", data: { object: { id: "sub_123", customer: "cus_123" } } }.to_json
+    post_event payload
+    assert sub.reload.canceled?
+    assert_not ComplianceReportQuota.new(@organization).unlimited?
+  end
+
+  test "a past_due status syncs through" do
+    Subscription.sync_from_stripe!(organization: @organization, stripe_subscription_id: "sub_123", status: "active", tier: "pro")
+    post_event subscription_event_payload(status: "past_due", tier: "pro")
+    assert Subscription.find_by(stripe_subscription_id: "sub_123").past_due?
+  end
+
+  test "replaying the same subscription event is idempotent" do
+    2.times { post_event subscription_event_payload(status: "active", tier: "pro") }
+    assert_equal 1, Subscription.where(stripe_subscription_id: "sub_123").count
   end
 
   test "accepts a correctly signed subscription.deleted event and cancels the subscription" do
