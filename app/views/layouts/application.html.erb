@@ -10,14 +10,21 @@
   <meta charset="UTF-8">
   <%= csrf_meta_tags %>
   <%# Open Graph / Twitter Card tags -- without these, any link to the site
-      shared in Slack, email, or social media renders as a bare URL with no
-      preview. No og:image is set (no real social-preview asset exists yet)
-      -- omitting it entirely renders better than a wrong or broken image. %>
+      shared in Slack, email, or chat renders as a bare URL with no preview.
+      og.svg is a 1200x630 branded card; SVG previews render on Slack,
+      LinkedIn, Discord and iMessage (the B2B surfaces that matter here).
+      X and Facebook still want a raster -- add og.png alongside it and
+      swap this line if that becomes a priority. %>
+  <% og_image = image_url("og.svg") %>
   <meta property="og:title" content="<%= page_title %>">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Pharma Transport">
   <meta property="og:url" content="<%= request.original_url %>">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="<%= og_image %>">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="<%= og_image %>">
   <% if content_for?(:meta_description) %>
     <meta property="og:description" content="<%= yield(:meta_description) %>">
   <% end %>
