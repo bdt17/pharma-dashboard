@@ -75,6 +75,12 @@ group :test do
   # is proving real data replaced hardcoded stub content.
   gem "pdf-reader", "~> 2.12"
 
+  # Browser system tests (test/system/*). Headless Chrome via Selenium
+  # Manager -- no separate chromedriver to install. Chrome itself is
+  # pre-installed on the GitHub ubuntu runners.
+  gem "capybara", "~> 3.40"
+  gem "selenium-webdriver", "~> 4.27"
+
   # minitest 6 extracted Minitest::Mock / Object#stub into this separate
   # gem. Needed to stub Stripe API calls in tests without a real Stripe
   # account or network access (see StripeBillingTest).
