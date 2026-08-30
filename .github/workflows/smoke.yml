@@ -1,0 +1,38 @@
+name: Smoke
+
+# Hits the live deployment and checks the public surface is healthy.
+# Runs on a schedule (so breakage is caught within a few hours regardless),
+# on demand, and after a push to main (with a wait for Render to deploy).
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      host:
+        description: "Base URL to check"
+        required: false
+        default: "https://pharmatransport.org"
+  push:
+    branches: [ main ]
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      # Only for the post-merge run: give Render time to build and deploy
+      # the new commit before checking it.
+      - name: Wait for deploy
+        if: github.event_name == 'push'
+        run: sleep 210
+
+      - name: Smoke check
+        run: |
+          bundle exec rake "smoke:check[${{ github.event.inputs.host || 'https://pharmatransport.org' }}]"
