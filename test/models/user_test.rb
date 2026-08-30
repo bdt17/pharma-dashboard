@@ -24,6 +24,22 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "dispatcher", user.role
   end
 
+  test "a directly-created user is auto-confirmed (console / rake / seeds), unlike a signup" do
+    # The accounts:create rake task and db/seeds rely on this: only the
+    # public signup form (Users::RegistrationsController) flags
+    # requires_email_confirmation, so a user built any other way is usable
+    # immediately without a mail provider.
+    user = build_user
+    user.save!
+    assert user.confirmed?
+
+    signup = build_user
+    signup.requires_email_confirmation = true
+    signup.terms_accepted = true
+    signup.save!
+    assert_not signup.confirmed?
+  end
+
   test "accepts each defined role" do
     %w[admin dispatcher driver pharmacist].each do |role|
       user = build_user(role: role)
