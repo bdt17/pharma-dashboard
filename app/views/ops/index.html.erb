@@ -1,0 +1,50 @@
+<% content_for :title, "Ops diagnostics — Pharma Transport" %>
+<% content_for :crumb, "Ops" %>
+
+<%
+  status_badge = ->(status) do
+    case status
+    when :ok    then tag.span("OK", class: "badge badge-accent")
+    when :warn  then tag.span("Check", class: "badge badge-amber")
+    else             tag.span("Problem", class: "badge badge-danger")
+    end
+  end
+  worst = ->(group) { group.checks.map(&:status).include?(:error) ? :error : (group.checks.map(&:status).include?(:warn) ? :warn : :ok) }
+%>
+
+<div class="p-7 max-w-4xl">
+  <div class="flex items-start justify-between mb-6">
+    <div class="flex flex-col gap-1">
+      <h1 class="text-[24px]">Ops diagnostics</h1>
+      <span class="text-[13px] text-ink-faint">Integration and configuration health. Read-only.</span>
+    </div>
+    <%= button_to "Send myself a test email", ops_test_email_path, method: :post, class: "btn btn-secondary btn-sm" %>
+  </div>
+
+  <div class="flex flex-col gap-5">
+    <% @groups.each do |group| %>
+      <div class="card overflow-hidden">
+        <div class="px-4 py-3 border-b border-line-soft flex items-center gap-2.5">
+          <span class="font-sans text-[13px] font-semibold"><%= group.name %></span>
+          <%= status_badge.(worst.(group)) %>
+        </div>
+        <table class="w-full text-[13px]">
+          <tbody>
+            <% group.checks.each do |check| %>
+              <tr class="border-t border-line-soft first:border-t-0">
+                <td class="px-4 py-2.5 w-[220px] text-ink-soft align-top"><%= check.label %></td>
+                <td class="px-4 py-2.5 w-[90px] align-top"><%= status_badge.(check.status) %></td>
+                <td class="px-4 py-2.5 mono text-[12px] text-ink align-top"><%= check.detail %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+
+  <p class="text-[12px] text-ink-faint mt-6">
+    Gated by the <span class="mono">OPERATOR_EMAILS</span> env var. Env values are never shown &mdash;
+    only whether each one is set.
+  </p>
+</div>
