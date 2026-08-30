@@ -93,3 +93,37 @@ jobs:
           # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
           # REDIS_URL: redis://localhost:6379/0
         run: bin/rails db:test:prepare test
+
+  system:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev
+
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      # Chrome is pre-installed on ubuntu-latest; selenium-webdriver's
+      # Selenium Manager fetches the matching chromedriver at runtime.
+      - name: Run browser system tests
+        env:
+          RAILS_ENV: test
+          PHARMA_DATABASE_HOST: localhost
+          PHARMA_DATABASE_USER: postgres
+        run: bin/rails db:test:prepare test:system
