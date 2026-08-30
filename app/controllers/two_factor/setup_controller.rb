@@ -20,7 +20,7 @@ module TwoFactor
         flash[:backup_codes] = codes
         redirect_to two_factor_backup_codes_path
       else
-        flash.now[:alert] = "That code didn't match. Scan the QR code again and enter the current 6-digit code."
+        flash.now[:alert] = "That code didn't match. Enter the current 6-digit code from your authenticator app -- it changes every 30 seconds."
         render :show, status: :unprocessable_content
       end
     end
