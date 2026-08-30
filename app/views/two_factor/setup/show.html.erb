@@ -53,13 +53,14 @@
     1Password, Microsoft Authenticator), then enter the 6-digit code it shows.
   </p>
 
-  <div class="my-5 max-w-[200px] [&_svg]:w-full [&_svg]:h-auto">
+  <div class="my-5 inline-block bg-white p-4 rounded border border-line [&_svg]:block [&_svg]:w-[240px] [&_svg]:max-w-full [&_svg]:h-auto">
     <%= raw current_user.otp_qr_code_svg %>
   </div>
 
   <p class="text-[12.5px] text-ink-soft">
-    Can't scan? Enter this key manually (type "Time based"):<br>
-    <code class="mono text-[14px] tracking-[0.1em]"><%= current_user.otp_secret %></code>
+    Can't scan it? In your authenticator app choose &ldquo;enter a setup key&rdquo; and type this
+    in (key type: time-based):<br>
+    <code class="mono text-[14px] tracking-[0.1em] break-all"><%= current_user.otp_secret %></code>
   </p>
 
   <%= form_with url: two_factor_setup_path, method: :post, class: "mt-5 flex flex-col gap-3" do %>

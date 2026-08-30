@@ -43,9 +43,14 @@ module TwoFactorAuthentication
   end
 
   # Inline SVG (no binary, no ImageMagick) for the enrollment page.
+  # viewbox: true emits a viewBox instead of fixed width/height, so the
+  # view can scale it in CSS without the fuzzy non-integer bitmap downscale
+  # (with shape-rendering: crispEdges) that stopped some phone cameras from
+  # decoding it. The white quiet-zone the code needs is added by the view's
+  # padded wrapper.
   def otp_qr_code_svg
     RQRCode::QRCode.new(otp_provisioning_uri).as_svg(
-      module_size: 4, standalone: true, use_path: true
+      module_size: 6, standalone: true, use_path: true, viewbox: true
     )
   end
 
