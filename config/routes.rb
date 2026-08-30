@@ -38,6 +38,11 @@ Rails.application.routes.draw do
   post "/request-a-call", to: "call_requests#create"
   get  "/request-a-call/thanks", to: "call_requests#thanks", as: :call_request_thanks
 
+  # Operator diagnostics -- integration health at a glance. Gated to an
+  # OPERATOR_EMAILS allowlist (see OpsController).
+  get  "/ops", to: "ops#index", as: :ops
+  post "/ops/test-email", to: "ops#test_email", as: :ops_test_email
+
   # Authenticated application pages
   get "/dashboard", to: "dashboard#index", as: :dashboard
   get "/enterprise/dashboard", to: "dashboard#index"
