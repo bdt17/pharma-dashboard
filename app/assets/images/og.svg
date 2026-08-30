@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif">
+  <rect width="1200" height="630" fill="#14273a"/>
+  <g stroke="#ffffff" stroke-opacity="0.05" stroke-width="1">
+    <path d="M80 0V630M176 0V630M272 0V630M368 0V630M464 0V630M560 0V630M656 0V630M752 0V630M848 0V630M944 0V630M1040 0V630M1136 0V630"/>
+    <path d="M0 54H1200M0 150H1200M0 246H1200M0 342H1200M0 438H1200M0 534H1200"/>
+  </g>
+
+  <g transform="translate(80,72)">
+    <rect width="52" height="52" rx="13" fill="#1f3a53"/>
+    <g transform="translate(11,11)" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <circle cx="5" cy="12" r="2.4"/><circle cx="19" cy="12" r="2.4"/>
+      <path d="M7.4 12h9.2"/><path d="M12 8.2v7.6"/>
+    </g>
+    <text x="72" y="35" fill="#ffffff" font-size="27" font-weight="600" letter-spacing="-0.3">Pharma Transport</text>
+  </g>
+
+  <text fill="#ffffff" font-family="'IBM Plex Serif', Georgia, 'Times New Roman', serif" font-size="58" font-weight="600" letter-spacing="-0.8">
+    <tspan x="80" y="300">The shipment record you can</tspan>
+    <tspan x="80" y="372">produce on demand <tspan fill="#5fb6ac">&#8212;</tspan> not</tspan>
+    <tspan x="80" y="444">reconstruct from memory.</tspan>
+  </text>
+
+  <g transform="translate(80,516)" fill="#b9c6d2" font-size="18">
+    <g><rect width="196" height="40" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.15"/><text x="24" y="26">Chain of custody</text></g>
+    <g transform="translate(212,0)"><rect width="252" height="40" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.15"/><text x="24" y="26">Temperature monitoring</text></g>
+    <g transform="translate(480,0)"><rect width="136" height="40" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.15"/><text x="24" y="26">DSCSA-ready</text></g>
+  </g>
+</svg>
