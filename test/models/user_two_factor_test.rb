@@ -32,6 +32,16 @@ class UserTwoFactorTest < ActiveSupport::TestCase
     assert_equal secret, @user.reload.otp_secret
   end
 
+  test "generate_otp_secret! does not rotate an existing secret for a not-yet-enrolled user" do
+    # A plain reload of the setup page must not change the secret out from
+    # under a phone the user has already added it to.
+    first = @user.otp_secret
+    assert first.present?
+
+    3.times { @user.generate_otp_secret! }
+    assert_equal first, @user.reload.otp_secret
+  end
+
   test "otp_provisioning_uri carries the issuer and account" do
     uri = @user.otp_provisioning_uri
     assert_includes uri, "otpauth://totp/"
