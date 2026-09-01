@@ -1,0 +1,90 @@
+<% content_for :title, "Alerts — Pharma Transport" %>
+<% content_for :crumb, "Alerts" %>
+
+<div class="p-7 max-w-3xl">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Temperature alerts</h1>
+    <span class="text-[13px] text-ink-faint">Who hears about it when a shipment goes outside 2&ndash;8&deg;C</span>
+  </div>
+
+  <div class="card p-6 bg-surface mb-6">
+    <div class="text-[13px] font-semibold mb-1">Email — always on</div>
+    <p class="text-[13px] text-ink-soft">
+      Every admin and pharmacist in <%= current_organization&.name %> gets an email the moment an
+      excursion starts, and again when temperatures recover. Nothing to configure.
+    </p>
+  </div>
+
+  <h2 class="text-[17px] font-sans font-semibold mb-1">Text messages</h2>
+  <p class="text-[13px] text-ink-faint mb-4">
+    A text the moment an excursion starts — for the shipments where an email that waits until
+    morning is too late.
+  </p>
+
+  <% unless @sms_available %>
+    <div class="card p-6 bg-[#fbf1e4] border-[#ecd3ac] mb-4">
+      <p class="text-[13px]" style="color:#5c4420;">
+        SMS alerts are included on the <strong>Pro</strong> and <strong>Compliance</strong> plans.
+        <%= link_to "See plans", billing_path, class: "font-medium underline" %>.
+      </p>
+    </div>
+  <% end %>
+
+  <% if @sms_available || @recipients.any? %>
+    <div class="card overflow-hidden mb-4">
+      <% if @recipients.any? %>
+        <table class="w-full text-[13px]">
+          <thead>
+            <tr class="bg-surface text-[11px] uppercase tracking-wide text-ink-faint">
+              <th class="text-left font-medium px-4 py-2">Name</th>
+              <th class="text-left font-medium px-4 py-2">Number</th>
+              <th class="px-4 py-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @recipients.each do |recipient| %>
+              <tr class="border-t border-line-soft">
+                <td class="px-4 py-2.5"><%= recipient.label %></td>
+                <td class="px-4 py-2.5 mono"><%= recipient.phone %></td>
+                <td class="px-4 py-2.5 text-right">
+                  <% if current_user.admin? %>
+                    <%= button_to "Remove", alert_recipient_path(recipient), method: :delete,
+                          form: { data: { turbo_confirm: "Remove #{recipient.label} from SMS alerts?" } },
+                          class: "text-[12px] text-[#b42318] hover:underline" %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="px-4 py-4 text-ink-faint text-[13px]">No numbers on the list yet.</p>
+      <% end %>
+    </div>
+
+    <% if @sms_available && current_user.admin? %>
+      <%= form_with model: @recipient, url: alert_recipients_path, method: :post, class: "card p-5 flex flex-col gap-3" do |f| %>
+        <% if @recipient.errors.any? %>
+          <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
+            <%= @recipient.errors.full_messages.to_sentence %>
+          </div>
+        <% end %>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <div class="flex-1">
+            <%= f.label :label, "Name", class: "block text-[12px] text-ink-faint mb-1" %>
+            <%= f.text_field :label, placeholder: "On-call pharmacist", class: "w-full border border-line rounded px-3 py-1.5 text-[13px]" %>
+          </div>
+          <div class="flex-1">
+            <%= f.label :phone, "Mobile number", class: "block text-[12px] text-ink-faint mb-1" %>
+            <%= f.telephone_field :phone, placeholder: "+1 415 555 0100", class: "w-full border border-line rounded px-3 py-1.5 text-[13px] mono" %>
+          </div>
+        </div>
+        <div>
+          <%= f.submit "Add number", class: "btn btn-primary btn-sm" %>
+        </div>
+      <% end %>
+    <% elsif @sms_available %>
+      <p class="text-[13px] text-ink-faint">Only an organization admin can change the list.</p>
+    <% end %>
+  <% end %>
+</div>

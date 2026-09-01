@@ -5,6 +5,7 @@ class Organization < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_many :compliance_reports, dependent: :restrict_with_error
   has_many :report_credits, dependent: :destroy
+  has_many :alert_recipients, dependent: :destroy
   has_many :referrals_made, class_name: "Referral", foreign_key: :referrer_organization_id, inverse_of: :referrer_organization, dependent: :destroy
   has_one :referral_received, class_name: "Referral", foreign_key: :referred_organization_id, inverse_of: :referred_organization, dependent: :destroy
 
@@ -31,6 +32,25 @@ class Organization < ApplicationRecord
   # the app to track a real shipment, not just browsing a marketing page.
   def verified?
     subscriptions.order(created_at: :desc).first&.active_or_trialing? || false
+  end
+
+  # The organization's current plan (SubscriptionPlan), or nil if there's
+  # no active/trialing subscription or it predates tiers.
+  def current_plan
+    sub = subscriptions.order(created_at: :desc).first
+    sub&.active_or_trialing? ? sub.plan : nil
+  end
+
+  # SMS excursion alerts are a Pro/Compliance-tier feature. A pre-tier
+  # subscription (current_plan nil despite an active sub) is treated as
+  # full-featured, the same way ComplianceReportQuota treats it as
+  # unlimited.
+  def alert_sms_available?
+    sub = subscriptions.order(created_at: :desc).first
+    return false unless sub&.active_or_trialing?
+
+    plan = sub.plan
+    plan.nil? || %w[pro compliance].include?(plan.tier)
   end
 
   private

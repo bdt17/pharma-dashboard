@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_000002) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_000003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "alert_recipients", force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.string "label", null: false
+    t.bigint "organization_id", null: false
+    t.string "phone", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_id", "phone"], name: "index_alert_recipients_on_organization_id_and_phone", unique: true
+    t.index ["organization_id"], name: "index_alert_recipients_on_organization_id"
+  end
 
   create_table "audit_logs", force: :cascade do |t|
     t.bigint "batch_id"
@@ -384,6 +395,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_000002) do
     t.index ["imei"], name: "index_vehicles_on_imei", unique: true
   end
 
+  add_foreign_key "alert_recipients", "organizations"
   add_foreign_key "audit_logs", "batches"
   add_foreign_key "audit_logs", "users"
   add_foreign_key "batches", "organizations"
