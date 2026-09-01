@@ -1,11 +1,13 @@
-# Turns a stream of Telemetry readings into ExcursionEvents and fires the
-# alert email on the transition *into* an excursion (and a follow-up when
-# temps return to range). Called from Telemetry#after_create_commit.
+# Turns a stream of Telemetry readings into ExcursionEvents and hands each
+# state transition to ExcursionNotifier -- once when a shipment goes out
+# of the 2-8°C range, once when it comes back. Called from
+# Telemetry#after_create_commit.
 #
 # Deduplication is the whole point: a truck parked at 15°C pings every
-# few seconds, and we send exactly one "excursion started" email, not one
-# per ping. The open ExcursionEvent is that piece of state -- while one is
-# open for a batch, further out-of-range readings only extend it.
+# few seconds, and we send exactly one "excursion started" notification,
+# not one per ping. The open ExcursionEvent is that piece of state --
+# while one is open for a batch, further out-of-range readings only
+# extend it.
 class ExcursionMonitor
   def self.evaluate(telemetry)
     new(telemetry).evaluate
@@ -56,7 +58,7 @@ class ExcursionMonitor
       readings_count: 1,
       alerted_at: Time.current
     )
-    ExcursionMailer.alert(event).deliver_later
+    ExcursionNotifier.alert(event)
   rescue ActiveRecord::RecordNotUnique
     # A concurrent reading opened the event first -- treat this one as an
     # extension of that event instead. Bounded so a genuinely stuck state
@@ -71,7 +73,7 @@ class ExcursionMonitor
     return unless event
 
     event.update!(ended_at: reading_time)
-    ExcursionMailer.resolved(event).deliver_later
+    ExcursionNotifier.resolved(event)
   end
 
   # Keep whichever temperature is the more severe excursion -- farthest

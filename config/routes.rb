@@ -56,6 +56,11 @@ Rails.application.routes.draw do
   get "/compliance", to: "compliance#index", as: :compliance
   get "/subscribe", to: redirect("/billing")
 
+  # SMS temperature-excursion alert recipients (Pro/Compliance tiers)
+  get    "/alerts", to: "alert_settings#index", as: :alert_settings
+  post   "/alerts/recipients", to: "alert_settings#create", as: :alert_recipients
+  delete "/alerts/recipients/:id", to: "alert_settings#destroy", as: :alert_recipient
+
   # Application endpoints
   get "/batches.pdf", to: "batches#index", as: :batches_pdf
   post "/stripe/webhooks", to: "stripe_webhooks#create"

@@ -73,6 +73,13 @@ gem "stripe", "~> 19.5"
 gem "rotp", "~> 6.3"
 gem "rqrcode", "~> 3.2"
 
+# SMS temperature-excursion alerts (Pro/Compliance tiers). Twilio's REST
+# client -- used only by SmsSender, which is a no-op until
+# TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN / TWILIO_MESSAGING_FROM are set as
+# env vars, the same "safe until configured" pattern as Stripe and SMTP
+# here. No live credentials ship in this repo.
+gem "twilio-ruby", "~> 7.4"
+
 group :development, :test do
   # Static analysis, linting, and dependency-vulnerability scanning used by CI
   # (.github/workflows/ci.yml). These match what that workflow actually invokes.
