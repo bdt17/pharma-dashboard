@@ -16,6 +16,13 @@ class AuthenticationFlowTest < ApplicationSystemTestCase
     check "user_terms_accepted"
     click_on "Create organization"
 
+    # click_on returns as soon as the click is dispatched -- the signup
+    # POST may not have hit the database yet. Wait on the post-signup flash
+    # (a Capybara matcher, which retries) before querying for the user
+    # directly with User.find_by!, which does not. This race is what made
+    # the test flake in CI.
+    assert_text "confirmation link has been sent"
+
     # Confirmable is on for the signup path; a real inbox isn't available in
     # a system test, so confirm directly -- the point here is the 2FA gate.
     user = User.find_by!(email: email)
