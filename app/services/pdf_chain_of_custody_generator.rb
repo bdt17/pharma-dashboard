@@ -72,34 +72,87 @@ class PdfChainOfCustodyGenerator
     pdf.move_down 6
 
     readings = batch.telemetries.where.not(temp: nil).to_a
-    if readings.empty?
+    excursions = batch.temperature_excursions.to_a
+    events = batch.excursion_events.recent_first.to_a
+
+    if readings.empty? && events.empty?
       pdf.text "No temperature-monitoring data recorded for this shipment.", size: 10, style: :italic, color: "666666"
     else
-      temps = readings.map(&:temp)
-      excursions = batch.temperature_excursions.to_a
-
-      pdf.text "#{readings.size} reading#{'s' unless readings.size == 1} " \
-                "(#{temps.min}°C to #{temps.max}°C) -- #{excursions.size} outside the 2-8°C range.",
-                size: 10
+      pdf.text "#{monitoring_summary(readings, excursions, events)}.", size: 10
       pdf.move_down 6
 
-      if excursions.any?
-        rows = [ [ "Time", "Temperature", "Location" ] ]
-        excursions.each do |reading|
-          rows << [
-            reading.recorded_at&.strftime("%Y-%m-%d %H:%M") || "-",
-            "#{reading.temp}°C",
-            reading.lat && reading.lng ? "#{reading.lat.round(4)}, #{reading.lng.round(4)}" : "-"
-          ]
-        end
-        pdf.table(rows, header: true, cell_style: { size: 9, padding: 5 }, width: pdf.bounds.width) do
-          row(0).background_color = "b91c1c"
-          row(0).text_color = "FFFFFF"
-          row(0).font_style = :bold
-        end
-      end
+      excursion_events_table(pdf, events) if events.any?
+      excursion_readings_table(pdf, excursions) if excursions.any?
     end
     pdf.move_down 20
+  end
+
+  def monitoring_summary(readings, excursions, events)
+    parts = []
+    if readings.any?
+      temps = readings.map(&:temp)
+      parts << "#{readings.size} reading#{'s' unless readings.size == 1} " \
+               "(#{temps.min}°C to #{temps.max}°C) -- #{excursions.size} outside the 2-8°C range"
+    end
+    if events.any?
+      lead = readings.any? ? "across " : "#{excursions.size} readings outside the 2-8°C range, across "
+      parts << "#{lead}#{events.size} excursion event#{'s' unless events.size == 1}"
+    end
+    parts.join(" ")
+  end
+
+  # One row per excursion *interval* (ExcursionEvent) -- the summary an
+  # auditor reads first: when the shipment went out of range, for how
+  # long, which way, and how far.
+  def excursion_events_table(pdf, events)
+    rows = [ [ "Started", "Ended", "Duration", "Direction", "Peak", "Readings" ] ]
+    events.each do |event|
+      rows << [
+        event.started_at.strftime("%Y-%m-%d %H:%M"),
+        event.ended_at ? event.ended_at.strftime("%Y-%m-%d %H:%M") : "ongoing",
+        humanized_duration(event.duration),
+        event.direction,
+        "#{event.peak_temp}°C",
+        event.readings_count.to_s
+      ]
+    end
+    pdf.table(rows, header: true, cell_style: { size: 9, padding: 5 }, width: pdf.bounds.width) do
+      row(0).background_color = "b91c1c"
+      row(0).text_color = "FFFFFF"
+      row(0).font_style = :bold
+    end
+    pdf.move_down 8
+  end
+
+  # Every individual out-of-range reading -- the forensic detail behind
+  # the event summary above. Kept separately because historical telemetry
+  # from before excursion events were tracked still shows up here.
+  def excursion_readings_table(pdf, excursions)
+    rows = [ [ "Time", "Temperature", "Location" ] ]
+    excursions.each do |reading|
+      rows << [
+        reading.recorded_at&.strftime("%Y-%m-%d %H:%M") || "-",
+        "#{reading.temp}°C",
+        reading.lat && reading.lng ? "#{reading.lat.round(4)}, #{reading.lng.round(4)}" : "-"
+      ]
+    end
+    pdf.table(rows, header: true, cell_style: { size: 9, padding: 5 }, width: pdf.bounds.width) do
+      row(0).background_color = "b91c1c"
+      row(0).text_color = "FFFFFF"
+      row(0).font_style = :bold
+    end
+  end
+
+  # Compact "1h 15m" / "42m" / "30s" -- distance_of_time_in_words isn't
+  # available outside a view, and its "about 1 hour" phrasing is too loose
+  # for a compliance record anyway.
+  def humanized_duration(seconds)
+    seconds = seconds.round
+    return "#{seconds}s" if seconds < 60
+
+    minutes, = seconds.divmod(60)
+    hours, minutes = minutes.divmod(60)
+    hours.positive? ? "#{hours}h #{minutes}m" : "#{minutes}m"
   end
 
   def custody_history(pdf)

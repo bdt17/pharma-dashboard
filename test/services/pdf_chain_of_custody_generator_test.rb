@@ -81,6 +81,35 @@ class PdfChainOfCustodyGeneratorTest < ActiveSupport::TestCase
     refute_includes text, "Location", "no excursion table should render when there's nothing to list"
   end
 
+  test "summarizes each excursion event: window, duration, direction, peak and reading count" do
+    @batch.telemetries.create!(vehicle: @vehicle, lat: 33.4, lng: -112.0, temp: 5.0, recorded_at: 3.hours.ago)
+    ExcursionEvent.create!(
+      batch: @batch, vehicle: @vehicle,
+      started_at: Time.utc(2026, 8, 22, 14, 0), ended_at: Time.utc(2026, 8, 22, 15, 15),
+      trigger_temp: 12.0, peak_temp: 15.7, readings_count: 8
+    )
+
+    text = extracted_text(@batch)
+    assert_includes text, "1 excursion event"
+    assert_includes text, "2026-08-22 14:00"
+    assert_includes text, "2026-08-22 15:15"
+    assert_includes text, "1h 15m"
+    assert_includes text, "warm"
+    assert_includes text, "15.7"
+    assert_includes text, "8"
+  end
+
+  test "marks an unresolved excursion event as ongoing" do
+    ExcursionEvent.create!(
+      batch: @batch, vehicle: @vehicle,
+      started_at: 20.minutes.ago, trigger_temp: 1.0, peak_temp: 0.4, readings_count: 3
+    )
+
+    text = extracted_text(@batch)
+    assert_includes text, "ongoing"
+    assert_includes text, "cold"
+  end
+
   # 1x1 transparent PNG -- just enough of a real image for Prawn to embed
   # without raising, so this exercises the actual image-decoding path
   # rather than stubbing it out.
