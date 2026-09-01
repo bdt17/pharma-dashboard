@@ -66,6 +66,13 @@ Rails.application.routes.draw do
   post   "/alerts/recipients", to: "alert_settings#create", as: :alert_recipients
   delete "/alerts/recipients/:id", to: "alert_settings#destroy", as: :alert_recipient
 
+  # Outbound event webhooks (Compliance tier)
+  get    "/webhooks", to: "webhook_endpoints#index", as: :webhook_endpoints
+  post   "/webhooks", to: "webhook_endpoints#create"
+  delete "/webhooks/:id", to: "webhook_endpoints#destroy", as: :webhook_endpoint
+  post   "/webhooks/:id/enable", to: "webhook_endpoints#enable", as: :enable_webhook_endpoint
+  post   "/webhooks/:id/test", to: "webhook_endpoints#test", as: :test_webhook_endpoint
+
   # Application endpoints
   get "/batches.pdf", to: "batches#index", as: :batches_pdf
   post "/stripe/webhooks", to: "stripe_webhooks#create"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_000004) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_000005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -397,6 +397,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_000004) do
     t.index ["imei"], name: "index_vehicles_on_imei", unique: true
   end
 
+  create_table "webhook_endpoints", force: :cascade do |t|
+    t.boolean "active", default: true, null: false
+    t.integer "consecutive_failures", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.string "last_error"
+    t.datetime "last_failure_at"
+    t.datetime "last_success_at"
+    t.bigint "organization_id", null: false
+    t.string "signing_secret", null: false
+    t.datetime "updated_at", null: false
+    t.string "url", null: false
+    t.index ["organization_id", "url"], name: "index_webhook_endpoints_on_organization_id_and_url", unique: true
+    t.index ["organization_id"], name: "index_webhook_endpoints_on_organization_id"
+  end
+
   add_foreign_key "alert_recipients", "organizations"
   add_foreign_key "audit_logs", "batches"
   add_foreign_key "audit_logs", "users"
@@ -425,4 +440,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_000004) do
   add_foreign_key "telemetries", "vehicles"
   add_foreign_key "users", "organizations"
   add_foreign_key "vehicles", "organizations"
+  add_foreign_key "webhook_endpoints", "organizations"
 end

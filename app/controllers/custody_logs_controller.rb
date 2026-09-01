@@ -38,6 +38,19 @@ class CustodyLogsController < ApplicationController
         GenerateDeliveryPacketJob.perform_later(@custody_log.id, current_user.id)
       end
 
+      WebhookDispatcher.publish(
+        organization: @batch.organization,
+        event: "custody.recorded",
+        data: {
+          lot_number: @batch.lot_number,
+          action_type: @custody_log.action_type,
+          handler_name: @custody_log.handler_name,
+          location: @custody_log.location,
+          signed: @custody_log.signed?,
+          recorded_at: @custody_log.timestamp&.iso8601
+        }
+      )
+
       redirect_to batch_custody_log_path(@batch, @custody_log), notice: "Custody event recorded."
     else
       render :new, status: :unprocessable_content

@@ -109,6 +109,18 @@ class CustodyLogsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "recording a custody event fires the custody.recorded webhook on the Compliance plan" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_c", tier: "compliance")
+    @organization.webhook_endpoints.create!(url: "https://8.8.8.8/hook")
+    sign_in @driver
+
+    assert_enqueued_jobs 1, only: WebhookDeliveryJob do
+      post batch_custody_logs_url(@batch), params: {
+        custody_log: { action_type: "pickup", handler_name: "Jane Doe", location: "Phoenix, AZ" }
+      }
+    end
+  end
+
   test "a non-delivery event doesn't need a signature" do
     sign_in @driver
 
