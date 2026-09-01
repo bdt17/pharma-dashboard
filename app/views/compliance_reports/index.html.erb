@@ -1,50 +1,70 @@
-<div class="max-w-4xl mx-auto p-8">
-  <h1 class="text-2xl font-bold mb-2">Compliance packets — <%= @batch.lot_number %></h1>
-  <p class="text-sm text-gray-500 mb-6">
-    <%= link_to "View custody history", batch_custody_logs_path(@batch) %>
-  </p>
+<% content_for :title, "Compliance packets — Pharma Transport" %>
+<% content_for :crumb, "Compliance packets" %>
+
+<div class="p-7 max-w-4xl">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Compliance packets</h1>
+    <span class="text-[13px] text-ink-faint">
+      Lot <span class="mono"><%= @batch.lot_number %></span>
+      <span class="mx-1">·</span>
+      <%= link_to "View custody history", batch_custody_logs_path(@batch), class: "font-medium" %>
+    </span>
+  </div>
 
   <% if policy(@batch).generate_compliance_report? %>
-    <% if @quota.unlimited? %>
-      <p class="text-sm text-gray-500 mb-2">Unlimited compliance packets on your current plan.</p>
-    <% elsif @quota.exceeded? %>
-      <p class="text-sm text-red-600 mb-2">
-        Monthly limit reached (<%= @quota.monthly_allowance %>/month on your current plan).
-        <%= link_to "Upgrade for a higher allowance", billing_path, class: "underline" %>.
-      </p>
-    <% else %>
-      <p class="text-sm text-gray-500 mb-2">
-        <%= @quota.remaining %> of <%= @quota.monthly_allowance %> compliance packets left this month.
-      </p>
-    <% end %>
-    <%= button_to "Generate new compliance packet", batch_compliance_reports_path(@batch), method: :post,
-          class: "bg-blue-600 text-white px-4 py-2 rounded mb-6", disabled: @quota.exceeded? %>
+    <div class="card p-4 mb-6 flex items-center justify-between gap-4">
+      <div class="text-[13px]">
+        <% if @quota.unlimited? %>
+          <span class="text-ink-soft">Unlimited compliance packets on your current plan.</span>
+        <% elsif @quota.exceeded? %>
+          <span class="text-[#b42318] font-medium">Monthly limit reached</span>
+          <span class="text-ink-faint">
+            (<%= @quota.monthly_allowance %>/month on your current plan).
+            <%= link_to "Upgrade for a higher allowance", billing_path, class: "font-medium" %>.
+          </span>
+        <% else %>
+          <span class="text-ink-soft">
+            <span class="mono"><%= @quota.remaining %></span> of
+            <span class="mono"><%= @quota.monthly_allowance %></span> compliance packets left this month.
+          </span>
+        <% end %>
+      </div>
+      <%= button_to "Generate new packet", batch_compliance_reports_path(@batch), method: :post,
+            class: "btn btn-primary btn-sm shrink-0", disabled: @quota.exceeded? %>
+    </div>
   <% end %>
 
-  <% if @compliance_reports.empty? %>
-    <p class="text-gray-500">No compliance packets generated yet.</p>
-  <% else %>
-    <table class="w-full border-collapse border border-gray-300">
-      <thead>
-        <tr class="bg-gray-100">
-          <th class="border border-gray-300 p-2 text-left">Version</th>
-          <th class="border border-gray-300 p-2 text-left">Generated</th>
-          <th class="border border-gray-300 p-2 text-left">By</th>
-          <th class="border border-gray-300 p-2 text-left">Hash</th>
-          <th class="border border-gray-300 p-2 text-left"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @compliance_reports.each do |report| %>
-          <tr>
-            <td class="border border-gray-300 p-2"><%= link_to "v#{report.version}", batch_compliance_report_path(@batch, report) %></td>
-            <td class="border border-gray-300 p-2"><%= report.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-            <td class="border border-gray-300 p-2"><%= report.generated_by.email %></td>
-            <td class="border border-gray-300 p-2 font-mono text-xs"><%= report.content_hash[0, 12] %>…</td>
-            <td class="border border-gray-300 p-2"><%= link_to "Download", batch_compliance_report_download_path(@batch, report) %></td>
+  <div class="card overflow-hidden">
+    <div class="px-4 py-3 border-b border-line-soft text-[13px] font-semibold">Issued versions</div>
+    <% if @compliance_reports.empty? %>
+      <p class="px-4 py-4 text-ink-faint text-[13px]">No compliance packets generated yet.</p>
+    <% else %>
+      <table class="w-full text-[13px]">
+        <thead>
+          <tr class="bg-surface text-[11px] uppercase tracking-wide text-ink-faint">
+            <th class="text-left font-medium px-4 py-2">Version</th>
+            <th class="text-left font-medium px-4 py-2">Generated</th>
+            <th class="text-left font-medium px-4 py-2">By</th>
+            <th class="text-left font-medium px-4 py-2">Hash</th>
+            <th class="px-4 py-2"></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-  <% end %>
+        </thead>
+        <tbody>
+          <% @compliance_reports.each do |report| %>
+            <tr class="border-t border-line-soft">
+              <td class="px-4 py-2.5">
+                <%= link_to "v#{report.version}", batch_compliance_report_path(@batch, report), class: "font-medium" %>
+              </td>
+              <td class="px-4 py-2.5 mono text-ink-soft"><%= report.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td class="px-4 py-2.5 text-ink-soft"><%= report.generated_by.email %></td>
+              <td class="px-4 py-2.5 mono text-[12px] text-ink-faint"><%= report.content_hash[0, 12] %>…</td>
+              <td class="px-4 py-2.5 text-right">
+                <%= link_to "Download", batch_compliance_report_download_path(@batch, report), class: "font-medium" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
 </div>

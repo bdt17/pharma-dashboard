@@ -1,24 +1,42 @@
-<div class="max-w-2xl mx-auto p-8">
-  <h1 class="text-2xl font-bold mb-4">Custody event — <%= @batch.lot_number %></h1>
+<% content_for :title, "Custody event — Pharma Transport" %>
+<% content_for :crumb, "Custody event" %>
 
-  <dl class="grid grid-cols-3 gap-y-2">
-    <dt class="text-gray-500">Time</dt>
-    <dd class="col-span-2"><%= @custody_log.timestamp.strftime("%Y-%m-%d %H:%M") %></dd>
+<div class="p-7 max-w-2xl">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Custody event</h1>
+    <span class="text-[13px] text-ink-faint">
+      Lot <span class="mono"><%= @batch.lot_number %></span>
+    </span>
+  </div>
 
-    <dt class="text-gray-500">Action</dt>
-    <dd class="col-span-2"><%= @custody_log.action_type %></dd>
+  <dl class="card p-6 grid grid-cols-3 gap-y-3 text-[14px]">
+    <dt class="text-ink-faint">Time</dt>
+    <dd class="col-span-2 mono"><%= @custody_log.timestamp.strftime("%Y-%m-%d %H:%M") %></dd>
 
-    <dt class="text-gray-500">Handler</dt>
-    <dd class="col-span-2"><%= @custody_log.handler_name %></dd>
+    <dt class="text-ink-faint">Action</dt>
+    <dd class="col-span-2"><span class="badge badge-accent"><%= @custody_log.action_type %></span></dd>
 
-    <dt class="text-gray-500">Location</dt>
+    <dt class="text-ink-faint">Handler</dt>
+    <dd class="col-span-2 font-semibold"><%= @custody_log.handler_name %></dd>
+
+    <dt class="text-ink-faint">Location</dt>
     <dd class="col-span-2"><%= @custody_log.location %></dd>
 
-    <dt class="text-gray-500">Notes</dt>
-    <dd class="col-span-2"><%= @custody_log.condition_notes.presence || "—" %></dd>
+    <dt class="text-ink-faint">Notes</dt>
+    <dd class="col-span-2 text-ink-soft"><%= @custody_log.condition_notes.presence || "—" %></dd>
+
+    <% if @custody_log.signed? %>
+      <dt class="text-ink-faint">Signed by</dt>
+      <dd class="col-span-2">
+        <%= @custody_log.signature_data["signer_name"] %>
+        <% if @custody_log.signature_data["signed_at"].present? %>
+          <span class="text-ink-faint">· <%= Time.zone.parse(@custody_log.signature_data["signed_at"]).strftime("%Y-%m-%d %H:%M") %></span>
+        <% end %>
+      </dd>
+    <% end %>
   </dl>
 
-  <p class="mt-6">
-    <%= link_to "← Back to custody history", batch_custody_logs_path(@batch) %>
+  <p class="text-[13px] mt-4">
+    <%= link_to "← Back to custody history", batch_custody_logs_path(@batch), class: "font-medium" %>
   </p>
 </div>

@@ -1,11 +1,20 @@
-<div class="max-w-lg mx-auto p-8">
-  <h1 class="text-2xl font-bold mb-4">Record a custody event — <%= @batch.lot_number %></h1>
+<% content_for :title, "Record a custody event — Pharma Transport" %>
+<% content_for :crumb, "Record a custody event" %>
+
+<div class="p-7 max-w-lg">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Record a custody event</h1>
+    <span class="text-[13px] text-ink-faint">
+      Lot <span class="mono"><%= @batch.lot_number %></span>
+    </span>
+  </div>
 
   <%= form_with model: @custody_log, url: batch_custody_logs_path(@batch), local: true,
-        data: { controller: "signature-pad", action: "submit->signature-pad#save" } do |f| %>
+        data: { controller: "signature-pad", action: "submit->signature-pad#save" },
+        class: "card p-6 flex flex-col gap-4" do |f| %>
     <% if @custody_log.errors.any? %>
-      <div class="text-red-600 mb-4">
-        <ul>
+      <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
+        <ul class="list-disc pl-4">
           <% @custody_log.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
@@ -13,33 +22,36 @@
       </div>
     <% end %>
 
-    <div class="mb-4">
-      <%= f.label :action_type, class: "block font-medium mb-1" %>
-      <%= f.select :action_type, CustodyLog::ACTION_TYPES, {}, class: "border rounded p-2 w-full" %>
+    <div>
+      <%= f.label :action_type, "Action type", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.select :action_type, CustodyLog::ACTION_TYPES, {}, class: "field-input" %>
     </div>
 
-    <div class="mb-4">
-      <%= f.label :handler_name, "Handler name", class: "block font-medium mb-1" %>
-      <%= f.text_field :handler_name, class: "border rounded p-2 w-full" %>
+    <div>
+      <%= f.label :handler_name, "Handler name", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :handler_name, class: "field-input" %>
     </div>
 
-    <div class="mb-4">
-      <%= f.label :location, class: "block font-medium mb-1" %>
-      <%= f.text_field :location, class: "border rounded p-2 w-full" %>
+    <div>
+      <%= f.label :location, "Location", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :location, class: "field-input" %>
     </div>
 
-    <div class="mb-4">
-      <%= f.label :condition_notes, "Notes (optional)", class: "block font-medium mb-1" %>
-      <%= f.text_area :condition_notes, class: "border rounded p-2 w-full" %>
+    <div>
+      <%= f.label :condition_notes, "Notes (optional)", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_area :condition_notes, rows: 3, class: "field-input" %>
     </div>
 
-    <fieldset class="mb-4 border rounded p-4">
-      <legend class="font-medium px-1">Signature (required to confirm delivery)</legend>
+    <fieldset class="border border-line rounded-sm p-4 flex flex-col gap-3">
+      <legend class="text-[12px] font-semibold text-ink-soft px-1">Signature — required to confirm delivery</legend>
 
-      <canvas data-signature-pad-target="canvas"
-              class="border rounded w-full bg-gray-50"
-              style="height: 160px; touch-action: none;"></canvas>
-      <button type="button" data-action="signature-pad#clear" class="text-sm text-blue-600 underline mt-1">Clear</button>
+      <div>
+        <canvas data-signature-pad-target="canvas"
+                class="border border-line rounded-sm w-full bg-surface block"
+                style="height: 160px; touch-action: none;"></canvas>
+        <button type="button" data-action="signature-pad#clear" class="text-[12px] text-accent-600 hover:text-accent-700 mt-1">Clear</button>
+      </div>
+
       <%# signature_data is a plain jsonb column, not a real association --
           FormBuilder's f.* methods don't produce correct nested bracket
           names for that ("custody_log[signature_data[image]]", which
@@ -47,17 +59,19 @@
           with the exact name spelled out instead. %>
       <%= hidden_field_tag "custody_log[signature_data][image]", "", data: { signature_pad_target: "input" } %>
 
-      <div class="mt-3">
-        <%= label_tag "custody_log_signature_data_signer_name", "Signer name", class: "block font-medium mb-1" %>
-        <%= text_field_tag "custody_log[signature_data][signer_name]", nil, class: "border rounded p-2 w-full" %>
+      <div>
+        <%= label_tag "custody_log_signature_data_signer_name", "Signer name", class: "block text-[12px] text-ink-faint mb-1" %>
+        <%= text_field_tag "custody_log[signature_data][signer_name]", nil, class: "field-input" %>
       </div>
 
-      <div class="mt-3">
-        <%= label_tag "custody_log_signature_data_signer_role", "Signer role", class: "block font-medium mb-1" %>
-        <%= select_tag "custody_log[signature_data][signer_role]", options_for_select([ "recipient", "driver", "witness" ]), class: "border rounded p-2 w-full" %>
+      <div>
+        <%= label_tag "custody_log_signature_data_signer_role", "Signer role", class: "block text-[12px] text-ink-faint mb-1" %>
+        <%= select_tag "custody_log[signature_data][signer_role]", options_for_select([ "recipient", "driver", "witness" ]), class: "field-input" %>
       </div>
     </fieldset>
 
-    <%= f.submit "Record event", class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+    <div>
+      <%= f.submit "Record event", class: "btn btn-primary btn-sm" %>
+    </div>
   <% end %>
 </div>
