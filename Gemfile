@@ -35,6 +35,18 @@ gem "tailwindcss-rails"
 gem "jbuilder"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
+# Background jobs. The ActiveJob adapter was the in-process :async pool,
+# which drops every queued job on process restart -- fine for nothing that
+# matters, but the temperature-excursion alert emails (ExcursionMonitor ->
+# deliver_later) do matter. Solid Queue is Rails 8's default: a real,
+# durable queue backed by Postgres (no Redis), with its tables living in
+# the primary database here rather than a separate one. Runs inside Puma
+# via the plugin in config/puma.rb -- right for this app's volume; split
+# it into a dedicated worker process later if that changes.
+# config/queue.yml and config/recurring.yml were already in the repo,
+# waiting for this.
+gem "solid_queue", "~> 1.4"
+
 # PostgreSQL adapter — used in every environment (development, test, production).
 gem "pg", "~> 1.5"
 
