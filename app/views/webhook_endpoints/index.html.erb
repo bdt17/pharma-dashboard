@@ -1,0 +1,91 @@
+<% content_for :title, "Webhooks — Pharma Transport" %>
+<% content_for :crumb, "Webhooks" %>
+
+<div class="p-7 max-w-3xl">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Webhooks</h1>
+    <span class="text-[13px] text-ink-faint">
+      POST excursion and custody events to your own systems as they happen
+    </span>
+  </div>
+
+  <div class="card p-6 bg-surface mb-6 text-[13px] text-ink-soft flex flex-col gap-2">
+    <p>
+      Each delivery is a JSON <span class="mono">POST</span> with an
+      <span class="mono">X-PharmaTransport-Signature: sha256=…</span> header — an HMAC-SHA256
+      of the raw body using that endpoint's signing secret. Verify it before trusting the payload.
+    </p>
+    <p>Events: <span class="mono"><%= WebhookEndpoint::EVENT_TYPES.join(", ") %></span>.</p>
+    <p>An endpoint that fails <%= WebhookEndpoint::AUTO_DISABLE_AFTER %> deliveries in a row is disabled automatically until you re-enable it.</p>
+  </div>
+
+  <% unless @available %>
+    <div class="card p-6 bg-[#fbf1e4] border-[#ecd3ac] mb-4">
+      <p class="text-[13px]" style="color:#5c4420;">
+        Webhooks are included on the <strong>Compliance</strong> plan.
+        <%= link_to "See plans", billing_path, class: "font-medium underline" %>.
+      </p>
+    </div>
+  <% end %>
+
+  <% if @endpoints.any? %>
+    <div class="flex flex-col gap-3 mb-4">
+      <% @endpoints.each do |endpoint| %>
+        <div class="card p-4 flex flex-col gap-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="mono text-[13px] break-all"><%= endpoint.url %></div>
+              <div class="text-[12px] mt-1">
+                <% if endpoint.auto_disabled? %>
+                  <span class="badge badge-danger">Disabled after <%= endpoint.consecutive_failures %> failures</span>
+                <% elsif endpoint.active? %>
+                  <span class="badge badge-accent">Active</span>
+                <% else %>
+                  <span class="badge">Inactive</span>
+                <% end %>
+                <% if endpoint.last_success_at %>
+                  <span class="text-ink-faint">· last delivered <%= endpoint.last_success_at.strftime("%Y-%m-%d %H:%M") %></span>
+                <% end %>
+                <% if endpoint.last_error.present? %>
+                  <span class="text-[#b42318]">· <%= endpoint.last_error %></span>
+                <% end %>
+              </div>
+            </div>
+            <% if current_user.admin? %>
+              <div class="flex items-center gap-2 shrink-0">
+                <%= button_to "Send test", test_webhook_endpoint_path(endpoint), method: :post, class: "btn btn-secondary btn-sm" %>
+                <% if endpoint.auto_disabled? %>
+                  <%= button_to "Re-enable", enable_webhook_endpoint_path(endpoint), method: :post, class: "btn btn-secondary btn-sm" %>
+                <% end %>
+                <%= button_to "Remove", webhook_endpoint_path(endpoint), method: :delete,
+                      form: { data: { turbo_confirm: "Remove this webhook endpoint?" } },
+                      class: "text-[12px] text-[#b42318] hover:underline px-1" %>
+              </div>
+            <% end %>
+          </div>
+          <div class="text-[12px] text-ink-faint">
+            Signing secret: <code class="bg-paper border border-line rounded px-2 py-0.5 mono break-all"><%= endpoint.signing_secret %></code>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% if @available && current_user.admin? %>
+    <%= form_with model: @endpoint, url: webhook_endpoints_path, method: :post, class: "card p-5 flex flex-col gap-3" do |f| %>
+      <% if @endpoint.errors.any? %>
+        <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
+          <%= @endpoint.errors.full_messages.to_sentence %>
+        </div>
+      <% end %>
+      <div>
+        <%= f.label :url, "Endpoint URL", class: "block text-[12px] text-ink-faint mb-1" %>
+        <%= f.url_field :url, placeholder: "https://api.your-wms.example.com/hooks/pharma-transport", class: "field-input mono" %>
+        <p class="text-[12px] text-ink-faint mt-1">Must be HTTPS and reachable on the public internet.</p>
+      </div>
+      <div><%= f.submit "Add endpoint", class: "btn btn-primary btn-sm" %></div>
+    <% end %>
+  <% elsif @available %>
+    <p class="text-[13px] text-ink-faint">Only an organization admin can manage webhooks.</p>
+  <% end %>
+</div>

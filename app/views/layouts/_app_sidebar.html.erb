@@ -27,6 +27,8 @@
         ico.('<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9.5 12l1.8 1.8 3.2-3.6"/>')) %>
   <%= nav_item.("Alerts", alert_settings_path, path == alert_settings_path,
         ico.('<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>')) %>
+  <%= nav_item.("Webhooks", webhook_endpoints_path, path == webhook_endpoints_path,
+        ico.('<path d="M10 12a4 4 0 1 0 4 4"/><path d="M6 12a6 6 0 1 1 11 3"/><path d="M12 8v4l3 2"/>')) %>
   <%= nav_item.("Billing", billing_path, path == billing_path,
         ico.('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/>')) %>
   <%= nav_item.("Security", two_factor_setup_path, path.start_with?("/two_factor"),

@@ -55,4 +55,25 @@ class ExcursionNotifierTest < ActiveSupport::TestCase
       end
     end
   end
+
+  test "publishes excursion.started / .resolved webhooks on the Compliance plan" do
+    subscribe("compliance")
+    @organization.webhook_endpoints.create!(url: "https://8.8.8.8/hook")
+
+    assert_enqueued_jobs 1, only: WebhookDeliveryJob do
+      ExcursionNotifier.alert(@event)
+    end
+    assert_enqueued_jobs 1, only: WebhookDeliveryJob do
+      ExcursionNotifier.resolved(@event)
+    end
+  end
+
+  test "no webhook without the Compliance plan" do
+    subscribe("pro")
+    @organization.webhook_endpoints.create!(url: "https://8.8.8.8/hook")
+
+    assert_no_enqueued_jobs only: WebhookDeliveryJob do
+      ExcursionNotifier.alert(@event)
+    end
+  end
 end
