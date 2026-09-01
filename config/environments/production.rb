@@ -73,6 +73,14 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.active_record.async_query_executor = :global_thread_pool
 
+  # Durable background jobs (temperature-excursion alert emails, and
+  # whatever gets queued next). Solid Queue's tables live in the primary
+  # database (no separate `queue` DB), so no connects_to override is
+  # needed. The worker runs inside Puma via `plugin :solid_queue` in
+  # config/puma.rb -- no separate process to deploy. config/queue.yml
+  # controls its concurrency; config/recurring.yml its scheduled tasks.
+  config.active_job.queue_adapter = :solid_queue
+
   # Required for signed cookies, encrypted credentials, etc.
   config.secret_key_base = ENV.fetch("SECRET_KEY_BASE")
 

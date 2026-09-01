@@ -24,4 +24,11 @@ Rails.application.configure do
   # body short of `ActionMailer::Base.deliveries` in a console.
   config.action_mailer.delivery_method = :test
   config.action_mailer.raise_delivery_errors = false
+
+  # Match production: jobs go through Solid Queue, run by the in-Puma
+  # worker (`plugin :solid_queue` in config/puma.rb) when the app is
+  # started with `bin/dev` / `bin/rails server`. Run `bin/rails db:prepare`
+  # once to create its tables. The test environment keeps the :test
+  # adapter (set by rails/test_help).
+  config.active_job.queue_adapter = :solid_queue
 end
