@@ -12,4 +12,17 @@ class VerificationsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render "not_found", status: :not_found
   end
+
+  # The SVG the "Share Pharma Transport" snippet on the Billing page embeds.
+  # Served to anyone -- it's on the customer's public site. Cached for an
+  # hour so a busy page doesn't hammer this on every load; the badge only
+  # flips when a subscription starts or lapses, which the customer isn't
+  # watching by the minute.
+  def badge
+    organization = Organization.find_by(verification_token: params[:token])
+    return head :not_found unless organization
+
+    expires_in 1.hour, public: true
+    render plain: VerificationBadge.new(organization).svg, content_type: "image/svg+xml"
+  end
 end

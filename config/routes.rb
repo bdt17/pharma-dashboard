@@ -27,6 +27,11 @@ Rails.application.routes.draw do
   get "/security", to: "pages#security", as: :security
   get "/compliance-officer", to: "pages#compliance_officer", as: :compliance_officer
   get "/verify/:token", to: "verifications#show", as: :verification
+  # Embeddable SVG version of the badge -- a pharmacy drops this on its own
+  # site (see the snippet on the Billing page), and every embed links back
+  # to the full verification page. `format: false` keeps the ".svg" a
+  # literal part of the path, not a Rails format token.
+  get "/verify/:token/badge.svg", to: "verifications#badge", as: :verification_badge, format: false
 
   # DSCSA readiness self-assessment (acquisition funnel)
   get  "/dscsa-assessment", to: "dscsa_assessments#new", as: :dscsa_assessment
