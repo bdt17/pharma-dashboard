@@ -36,6 +36,14 @@ scraped_content_*.txt
 script/audit/*.pdf
 coc.pdf
 
+# Local-only working files -- Claude Code's workspace, the design-canvas
+# skill's scratch artboards, and ad-hoc session notes. None of these are
+# meant for the repo; ignoring them keeps a stray `git add -A` from
+# sweeping them into a commit.
+/.claude/
+/design-canvas/
+/PROGRESS.txt
+
 # Compiled assets
 /app/assets/builds/*
 !/app/assets/builds/.keep
