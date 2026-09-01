@@ -1,0 +1,15 @@
+We tried to charge the card on file for <%= @organization.name %>'s Pharma Transport
+subscription and it didn't go through.
+
+Stripe will keep retrying for a few weeks, but until the payment clears your
+organization has lost:
+
+  - Compliance Packet generation beyond the free monthly allowance
+  - Your public DSCSA verification badge
+  - SMS temperature alerts, if you're on Pro or Compliance
+
+Update your payment method: <%= billing_url %>
+
+Already fixed it? You can ignore this -- everything switches back on automatically
+once Stripe confirms the payment. You're getting this because you're an admin on
+this organization.

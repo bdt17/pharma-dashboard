@@ -1,6 +1,8 @@
 require "test_helper"
 
 class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
+  include ActionMailer::TestHelper
+
   setup do
     @webhook_secret = SecureRandom.hex(16)
     @previous_secret = ENV["STRIPE_WEBHOOK_SECRET"]
@@ -109,6 +111,20 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
     Subscription.sync_from_stripe!(organization: @organization, stripe_subscription_id: "sub_123", status: "active", tier: "pro")
     post_event subscription_event_payload(status: "past_due", tier: "pro")
     assert Subscription.find_by(stripe_subscription_id: "sub_123").past_due?
+  end
+
+  test "a past_due event sends the payment-recovery email once" do
+    User.create!(email: "admin@acme.test", password: "password123!", organization: @organization, role: "admin")
+    Subscription.sync_from_stripe!(organization: @organization, stripe_subscription_id: "sub_123", status: "active", tier: "pro")
+
+    assert_enqueued_emails 1 do
+      post_event subscription_event_payload(status: "past_due", tier: "pro")
+    end
+
+    assert_no_enqueued_emails do
+      post_event subscription_event_payload(status: "past_due", tier: "pro")
+    end
+    assert_equal 1, Subscription.find_by(stripe_subscription_id: "sub_123").dunning_email_count
   end
 
   test "replaying the same subscription event is idempotent" do
