@@ -16,6 +16,14 @@ class Subscription < ApplicationRecord
 
   validates :stripe_subscription_id, uniqueness: true, allow_nil: true
 
+  # Payment-recovery email cadence: the first goes out the moment the
+  # subscription starts failing (from the webhook), then DunningSweepJob
+  # sends a follow-up every DUNNING_INTERVAL until the card is fixed or
+  # DUNNING_MAX_EMAILS is reached (Stripe gives up and cancels after ~3
+  # weeks, so 4 emails at 3-day spacing covers the whole window once).
+  DUNNING_INTERVAL = 3.days
+  DUNNING_MAX_EMAILS = 4
+
   def active_or_trialing?
     active? || trialing?
   end
@@ -41,7 +49,43 @@ class Subscription < ApplicationRecord
     subscription.current_period_end = current_period_end if current_period_end
     subscription.tier = tier if tier
     subscription.save!
+    subscription.handle_dunning_after_sync!
     subscription
+  end
+
+  # Run after every webhook sync. Kicks off the payment-recovery email the
+  # first time a subscription starts failing, and clears the dunning state
+  # once it's healthy again. Idempotent against Stripe's at-least-once
+  # delivery: the `dunning_email_count.zero?` guard means replayed
+  # "updated" events for an already-failing subscription do nothing here.
+  def handle_dunning_after_sync!
+    if active_or_trialing?
+      reset_dunning!
+    elsif payment_failing? && dunning_email_count.zero?
+      send_dunning_email!
+    end
+  end
+
+  # True when DunningSweepJob should send the next follow-up: still
+  # failing, under the cap, and DUNNING_INTERVAL has passed since the last
+  # one (or none has been sent yet).
+  def dunning_email_due?
+    return false unless payment_failing?
+    return false if dunning_email_count >= DUNNING_MAX_EMAILS
+
+    last_dunning_email_at.nil? || last_dunning_email_at <= DUNNING_INTERVAL.ago
+  end
+
+  def send_dunning_email!
+    SubscriptionMailer.payment_failed(self).deliver_later
+    update!(last_dunning_email_at: Time.current, dunning_email_count: dunning_email_count + 1)
+  end
+
+  # Back to a fresh slate so a future failure starts its own sequence.
+  def reset_dunning!
+    return if last_dunning_email_at.nil? && dunning_email_count.zero?
+
+    update!(last_dunning_email_at: nil, dunning_email_count: 0)
   end
 
   # The SubscriptionPlan for this subscription's tier, or nil for a

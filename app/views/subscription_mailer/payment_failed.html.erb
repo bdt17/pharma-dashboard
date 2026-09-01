@@ -1,0 +1,25 @@
+<p style="font-size:14px;">
+  We tried to charge the card on file for <strong><%= @organization.name %></strong>'s
+  Pharma Transport subscription and it didn't go through.
+</p>
+
+<p style="font-size:14px;">
+  Stripe will keep retrying for a few weeks, but until the payment clears your
+  organization has lost:
+</p>
+
+<ul style="font-size:14px;">
+  <li>Compliance Packet generation beyond the free monthly allowance</li>
+  <li>Your public DSCSA verification badge</li>
+  <li>SMS temperature alerts, if you're on Pro or Compliance</li>
+</ul>
+
+<p style="font-size:14px;">
+  <%= link_to "Update your payment method", billing_url %>
+</p>
+
+<p style="font-size:12px; color:#666;">
+  Already fixed it? You can ignore this — everything switches back on automatically
+  once Stripe confirms the payment. You're getting this because you're an admin on
+  this organization.
+</p>
