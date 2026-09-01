@@ -1,0 +1,87 @@
+PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
+Last updated: 2026-09-01 (rev 11 — FINAL)
+
+====================================================================
+STATUS: DONE. Entire ROADMAP.md (steps 1-7) built and merged.
+====================================================================
+main @ 42f8ba33  ·  no open PRs  ·  all CI green.
+
+Remote CI on the merge commit: CI workflow = success (lint, brakeman,
+bundler-audit, rails test, test:system); Smoke workflow (live prod
+surface check) = success.
+
+Local on main (fresh db:schema:load):
+  bin/rails test           456 runs, 0 failures
+  bin/rails test:system      7 runs, 0 failures
+  rubocop                  clean (273 files)
+  brakeman                 0 warnings
+  bundler-audit            0 vulnerabilities
+  db:seed:replant          OK
+  schema version           2026_08_31_000005  (migrations 001-005 contiguous)
+  config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep
+
+MERGED to main (13 PRs, all this session):
+  #112  failed-payment recovery banner            (retention)
+  #113  GPS telemetry -> shipment linking + temperature-excursion
+        detection & email alerts                  (core promise, was unwired)
+  #114  ROADMAP.md
+  #115  Solid Queue — durable ActiveJob backend   (roadmap 1)
+  #116  per-org SMS excursion alerts (Pro/Compliance tier)   (roadmap 2)
+  #117  auto-generate a Compliance Packet on delivery        (roadmap 3)
+  #118  fix the flaky AuthenticationFlowTest CI race
+  #119  restyle custody-log / compliance-packet pages to the design system
+  #120  .gitignore for .claude/, design-canvas/, PROGRESS.txt
+  #121  past_due recovery email                   (roadmap 4)
+  #122  excursion-events table in the Compliance Packet PDF   (roadmap 5)
+  #123  embeddable SVG verification badge         (roadmap 7)
+  #124  outbound event webhooks (Compliance tier) (roadmap 6)
+        WebhookEndpoint (per-org URL + HMAC secret; strict SSRF
+        validation — HTTPS only, host must resolve to public IPs,
+        re-checked at send). WebhookDispatcher fan-out from
+        ExcursionNotifier + CustodyLogsController. WebhookDeliveryJob
+        (signed POST, backoff retries on timeout/5xx/429, auto-disable
+        after 10 failed events). /webhooks admin page.
+
+====================================================================
+DEPLOY / GO-LIVE NOTES
+====================================================================
+- SMS alerts (#116): set TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN /
+  TWILIO_MESSAGING_FROM as Render env vars. Inert until then.
+- Solid Queue (#115): the Procfile `release:` step already runs
+  db:migrate, so the tables get created on deploy. The worker runs
+  inside Puma (plugin :solid_queue) — no separate service. The
+  scheduler runs config/recurring.yml (production key only):
+  clear_solid_queue_finished_jobs + dunning_sweep (daily 9am).
+- Webhooks (#124) + dunning email (#121) both ride Solid Queue.
+
+====================================================================
+FOLLOW-UP WORK (roadmap is done; these are smaller)
+====================================================================
+- Confirm rack-attack covers POST /api/v1/gps — the device-token
+  ingest endpoint, will get hammered once real trackers connect.
+- Webhooks: per-endpoint event-type filtering; a delivery-log / replay
+  UI; a real `enterprise` Stripe tier (gated on `compliance` for now).
+- SMS: quiet hours, voice calls, per-recipient severity filters.
+- past_due email: add a plan-amount / next-retry-date line.
+- Webhook delivery has a small DNS-rebinding window (validated at save,
+  re-checked at send, but not pinned to the resolved IP).
+- Optional: split the Solid Queue worker into its own Render service if
+  job volume grows (drop the puma plugin line, run `bin/jobs`).
+
+====================================================================
+DEV ENVIRONMENT CHANGES (local only, never committed)
+====================================================================
+- dispatch@demo.test / ClaudeDemo123!  — created as a dispatcher on the
+  demo org for quick UI checks (not 2FA-gated, unlike admins).
+- admin@example.com dev password set to ClaudeDemo123!
+- dev DB has every migration through ...000005 applied; demo org was
+  reset clean at various points (demo:reset).
+- Pre-existing dev server on pid 9233 / port 3111 left running;
+  tmp/pids/server.pid restored to point at it.
+
+====================================================================
+PRE-EXISTING ISSUES FOUND & FIXED THIS SESSION
+====================================================================
+  1. AuthenticationFlowTest CI flake (non-waiting find_by!)  -> #118
+  2. custody/packet pages using pre-design-system Tailwind    -> #119
+  3. .claude/ + design-canvas/ + PROGRESS.txt swept by git add -A -> #120
