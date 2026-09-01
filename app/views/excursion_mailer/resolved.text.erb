@@ -1,0 +1,13 @@
+Temperatures for <%= @batch.lot_number %> are back within the 2-8C range.
+
+Lot:          <%= @batch.lot_number %>
+<% if @batch.name.present? -%>
+Product:      <%= @batch.name %>
+<% end -%>
+Peak reading: <%= @event.peak_temp.round(1) %>C
+Out of range: <%= distance_of_time_in_words(@event.started_at, @event.ended_at) %> (<%= @event.readings_count %> readings)
+Window:       <%= @event.started_at.strftime("%Y-%m-%d %H:%M") %> - <%= @event.ended_at.strftime("%H:%M %Z") %>
+
+Chain of custody: <%= batch_custody_logs_url(@batch) %>
+
+This excursion is on the shipment's record and will appear in its compliance packet.

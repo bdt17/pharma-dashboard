@@ -44,6 +44,19 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
   # (that only lists non-compliant ones), so recent custody events was the
   # only path from the dashboard to a batch's own page -- and it wasn't a
   # link at all before this.
+  test "shows an in-progress temperature excursion with a link to the batch" do
+    batch = Batch.create!(lot_number: "LOT-HOT", vehicle: @vehicle, organization: @organization, status: "active")
+    ExcursionEvent.create!(batch: batch, vehicle: @vehicle, started_at: 20.minutes.ago, trigger_temp: 13.0, peak_temp: 14.2)
+
+    sign_in @user
+    get dashboard_url
+
+    assert_response :success
+    assert_match "Live temperature excursions", response.body
+    assert_select "td", text: "LOT-HOT"
+    assert_select "a[href=?]", batch_custody_logs_path(batch)
+  end
+
   test "shows the failed-payment recovery banner when the subscription is past_due" do
     @organization.update!(stripe_customer_id: "cus_123")
     Subscription.sync_from_stripe!(organization: @organization, stripe_subscription_id: "sub_1", status: "past_due")

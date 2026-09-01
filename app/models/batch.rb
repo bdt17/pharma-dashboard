@@ -14,6 +14,9 @@ class Batch < ApplicationRecord
   # gap is closed; the compliance packet says so honestly rather than
   # falling back to a broader, misleading query.
   has_many :telemetries, -> { order(:recorded_at) }, dependent: :nullify
+  # Derived monitoring data -- rebuilt from telemetry, safe to drop with
+  # the batch (unlike compliance_reports, which are issued records).
+  has_many :excursion_events, dependent: :destroy
 
   validates :lot_number, presence: true
   # Intentionally *not* validated into the compliant range: a temperature
