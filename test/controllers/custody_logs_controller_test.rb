@@ -1,6 +1,8 @@
 require "test_helper"
 
 class CustodyLogsControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+
   setup do
     @organization = Organization.create!(name: "Acme Pharma")
     @vehicle = Vehicle.create!(name: "Truck 1", organization: @organization)
@@ -84,6 +86,27 @@ class CustodyLogsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_content
     assert_match "must include a signature", response.body
+  end
+
+  test "recording a delivery enqueues the auto Compliance Packet job" do
+    sign_in @driver
+
+    assert_enqueued_with(job: GenerateDeliveryPacketJob) do
+      post batch_custody_logs_url(@batch), params: {
+        custody_log: { action_type: "delivered", handler_name: "Jane Doe", location: "Phoenix, AZ", signature_data: signature_params }
+      }
+    end
+    assert_equal [ CustodyLog.last.id, @driver.id ], enqueued_jobs.last[:args]
+  end
+
+  test "a non-delivery custody event does not enqueue the packet job" do
+    sign_in @driver
+
+    assert_no_enqueued_jobs only: GenerateDeliveryPacketJob do
+      post batch_custody_logs_url(@batch), params: {
+        custody_log: { action_type: "pickup", handler_name: "Jane Doe", location: "Phoenix, AZ" }
+      }
+    end
   end
 
   test "a non-delivery event doesn't need a signature" do
