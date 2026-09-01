@@ -10,12 +10,21 @@ class ApplicationController < ActionController::Base
   # TwoFactor::BaseController).
   before_action :enforce_two_factor
 
-  helper_method :current_organization
+  helper_method :current_organization, :current_subscription
 
   private
 
   def current_organization
     current_user&.organization
+  end
+
+  # The organization's most recent subscription (any status), or nil. The
+  # layout reads this to decide whether to show the failed-payment
+  # recovery banner; keeping it here means one query per request, memoized.
+  def current_subscription
+    return @current_subscription if defined?(@current_subscription)
+
+    @current_subscription = current_organization&.subscriptions&.order(created_at: :desc)&.first
   end
 
   def enforce_two_factor

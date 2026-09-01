@@ -20,6 +20,15 @@ class Subscription < ApplicationRecord
     active? || trialing?
   end
 
+  # Stripe is still retrying a failed charge (past_due) or has given up
+  # short of canceling (unpaid). The organization has already lost its
+  # packet allowance and verification badge at this point, so the app
+  # surfaces a recovery prompt on every authenticated page -- see
+  # layouts/_payment_recovery_banner.
+  def payment_failing?
+    past_due? || unpaid?
+  end
+
   # The one write path for applying a Stripe webhook event to our local
   # copy of subscription state -- see StripeWebhooksController. Idempotent:
   # replaying the same event (Stripe's own delivery guarantee is

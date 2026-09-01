@@ -18,6 +18,14 @@ class SubscriptionTest < ActiveSupport::TestCase
     assert_not Subscription.new(status: "past_due").active_or_trialing?
   end
 
+  test "payment_failing? is true for past_due and unpaid, false otherwise" do
+    assert Subscription.new(status: "past_due").payment_failing?
+    assert Subscription.new(status: "unpaid").payment_failing?
+    assert_not Subscription.new(status: "active").payment_failing?
+    assert_not Subscription.new(status: "trialing").payment_failing?
+    assert_not Subscription.new(status: "canceled").payment_failing?
+  end
+
   test ".sync_from_stripe! creates a new subscription" do
     subscription = Subscription.sync_from_stripe!(
       organization: @organization,
