@@ -9,6 +9,11 @@ class Api::V1::GpsController < ApplicationController
     return unless vehicle
 
     telemetry = vehicle.telemetries.new(telemetry_params)
+    # Attribute the reading to whatever delivery the truck is currently
+    # carrying, so it lands on that shipment's temperature history and
+    # feeds ExcursionMonitor. Devices don't know batch numbers; the
+    # vehicle does.
+    telemetry.batch = vehicle.current_batch
 
     if telemetry.save
       head :created

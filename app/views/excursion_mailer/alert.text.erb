@@ -1,0 +1,16 @@
+A shipment in <%= @batch.organization.name %>'s fleet has gone <%= @event.direction == "warm" ? "above" : "below" %> the 2-8C cold-chain range.
+
+Lot:      <%= @batch.lot_number %>
+<% if @batch.name.present? -%>
+Product:  <%= @batch.name %>
+<% end -%>
+<% if @event.vehicle -%>
+Vehicle:  <%= @event.vehicle.name.presence || @event.vehicle.identifier %>
+<% end -%>
+Reading:  <%= @event.trigger_temp.round(1) %>C
+Started:  <%= @event.started_at.strftime("%Y-%m-%d %H:%M %Z") %>
+
+Chain of custody: <%= batch_custody_logs_url(@batch) %>
+
+You're getting this because you're an admin or pharmacist on this organization.
+A follow-up will go out automatically once temperatures return to range.

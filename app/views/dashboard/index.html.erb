@@ -35,6 +35,36 @@
     </div>
   </div>
 
+  <% if @ongoing_excursions.any? %>
+    <div class="card overflow-hidden mb-8 border-[#f0c8c2]">
+      <div class="px-4 py-3 border-b border-line-soft text-[13px] font-semibold text-[#b42318] flex items-center gap-2">
+        Live temperature excursions <span class="badge badge-danger">In progress</span>
+      </div>
+      <table class="w-full text-[13px]">
+        <thead>
+          <tr class="bg-surface text-[11px] uppercase tracking-wide text-ink-faint">
+            <th class="text-left font-medium px-4 py-2">Lot</th>
+            <th class="text-left font-medium px-4 py-2">Vehicle</th>
+            <th class="text-left font-medium px-4 py-2">Peak</th>
+            <th class="text-left font-medium px-4 py-2">Since</th>
+            <th class="px-4 py-2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @ongoing_excursions.each do |excursion| %>
+            <tr class="border-t border-line-soft">
+              <td class="px-4 py-2.5 mono"><%= excursion.batch.lot_number %></td>
+              <td class="px-4 py-2.5 text-ink-soft"><%= excursion.vehicle&.name || "—" %></td>
+              <td class="px-4 py-2.5 mono text-[#b42318] font-semibold"><%= excursion.peak_temp.round(1) %>&deg;C <span class="text-ink-faint font-normal">(<%= excursion.direction %>)</span></td>
+              <td class="px-4 py-2.5 text-ink-soft"><%= time_ago_in_words(excursion.started_at) %> ago</td>
+              <td class="px-4 py-2.5"><%= link_to "Chain of custody →", batch_custody_logs_path(excursion.batch) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
   <% if @non_compliant_batches.any? %>
     <div class="card overflow-hidden mb-8 border-[#f0c8c2]">
       <div class="px-4 py-3 border-b border-line-soft text-[13px] font-semibold text-[#b42318] flex items-center gap-2">

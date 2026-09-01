@@ -9,6 +9,7 @@ class DashboardController < ApplicationController
     @batch_count = batches.count
     @active_batch_count = batches.active.count
     @non_compliant_batches = batches.non_compliant.order(updated_at: :desc).limit(10)
+    @ongoing_excursions = ExcursionEvent.ongoing.where(batch: batches).includes(:batch, :vehicle).recent_first
 
     vehicles = policy_scope(Vehicle)
     @vehicle_count = vehicles.count

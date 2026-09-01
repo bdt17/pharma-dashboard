@@ -1,0 +1,19 @@
+<p style="font-size:14px;">
+  Temperatures for <strong><%= @batch.lot_number %></strong> are back within the 2&ndash;8&deg;C range.
+</p>
+
+<table cellpadding="4" style="border-collapse: collapse; font-size: 14px;">
+  <tr><td><strong>Lot</strong></td><td><%= @batch.lot_number %></td></tr>
+  <% if @batch.name.present? %><tr><td><strong>Product</strong></td><td><%= @batch.name %></td></tr><% end %>
+  <tr><td><strong>Peak reading</strong></td><td><%= @event.peak_temp.round(1) %>&deg;C</td></tr>
+  <tr><td><strong>Out of range</strong></td><td><%= distance_of_time_in_words(@event.started_at, @event.ended_at) %> (<%= @event.readings_count %> readings)</td></tr>
+  <tr><td><strong>Window</strong></td><td><%= @event.started_at.strftime("%Y-%m-%d %H:%M") %> &ndash; <%= @event.ended_at.strftime("%H:%M %Z") %></td></tr>
+</table>
+
+<p style="font-size:14px;">
+  <%= link_to "Open the chain of custody", batch_custody_logs_url(@batch) %>
+</p>
+
+<p style="font-size:12px; color:#666;">
+  This excursion is on the shipment's record and will appear in its compliance packet.
+</p>

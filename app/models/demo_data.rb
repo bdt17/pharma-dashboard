@@ -30,6 +30,7 @@ module DemoData
 
   def self.reset!(organization)
     batch_ids = organization.batches.ids
+    ExcursionEvent.where(batch_id: batch_ids).delete_all
     CustodyLog.where(batch_id: batch_ids).delete_all
     Telemetry.where(batch_id: batch_ids).delete_all
     AuditLog.where(batch_id: batch_ids).delete_all

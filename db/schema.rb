@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_29_224924) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_000001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -101,6 +101,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_224924) do
     t.string "token", null: false
     t.datetime "updated_at", null: false
     t.index ["token"], name: "index_dscsa_assessments_on_token", unique: true
+  end
+
+  create_table "excursion_events", force: :cascade do |t|
+    t.datetime "alerted_at"
+    t.bigint "batch_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "ended_at"
+    t.float "peak_temp", null: false
+    t.integer "readings_count", default: 1, null: false
+    t.datetime "started_at", null: false
+    t.float "trigger_temp", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "vehicle_id"
+    t.index ["batch_id"], name: "index_excursion_events_on_batch_id"
+    t.index ["batch_id"], name: "index_excursion_events_one_open_per_batch", unique: true, where: "(ended_at IS NULL)"
+    t.index ["vehicle_id"], name: "index_excursion_events_on_vehicle_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -227,6 +243,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_29_224924) do
   add_foreign_key "compliance_reports", "organizations"
   add_foreign_key "compliance_reports", "users", column: "generated_by_id"
   add_foreign_key "custody_logs", "batches"
+  add_foreign_key "excursion_events", "batches"
+  add_foreign_key "excursion_events", "vehicles"
   add_foreign_key "referrals", "organizations", column: "referred_organization_id"
   add_foreign_key "referrals", "organizations", column: "referrer_organization_id"
   add_foreign_key "report_credits", "organizations"

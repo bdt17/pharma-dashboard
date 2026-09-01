@@ -13,8 +13,19 @@ class Telemetry < ApplicationRecord
   before_validation :set_recorded_at, on: :create
 
   after_create_commit :update_vehicle_snapshot
+  after_create_commit :monitor_excursion
 
   private
+
+  # Cold-chain alerting: hand each reading to ExcursionMonitor, which opens
+  # or closes the batch's ExcursionEvent and sends the alert email. Never
+  # let an alerting failure turn into a failed GPS ingest -- the reading
+  # itself is the source of truth and is already saved by this point.
+  def monitor_excursion
+    ExcursionMonitor.evaluate(self)
+  rescue StandardError => e
+    Rails.logger.error("[ExcursionMonitor] #{e.class}: #{e.message}")
+  end
 
   def set_recorded_at
     self.recorded_at ||= Time.current

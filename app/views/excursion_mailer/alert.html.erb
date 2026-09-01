@@ -1,0 +1,21 @@
+<p style="font-size:14px;">
+  A shipment in <strong><%= @batch.organization.name %></strong>'s fleet has gone
+  <strong><%= @event.direction == "warm" ? "above" : "below" %></strong> the 2&ndash;8&deg;C cold-chain range.
+</p>
+
+<table cellpadding="4" style="border-collapse: collapse; font-size: 14px;">
+  <tr><td><strong>Lot</strong></td><td><%= @batch.lot_number %></td></tr>
+  <% if @batch.name.present? %><tr><td><strong>Product</strong></td><td><%= @batch.name %></td></tr><% end %>
+  <% if @event.vehicle %><tr><td><strong>Vehicle</strong></td><td><%= @event.vehicle.name.presence || @event.vehicle.identifier %></td></tr><% end %>
+  <tr><td><strong>Reading</strong></td><td><%= @event.trigger_temp.round(1) %>&deg;C</td></tr>
+  <tr><td><strong>Started</strong></td><td><%= @event.started_at.strftime("%Y-%m-%d %H:%M %Z") %></td></tr>
+</table>
+
+<p style="font-size:14px;">
+  <%= link_to "Open the chain of custody", batch_custody_logs_url(@batch) %>
+</p>
+
+<p style="font-size:12px; color:#666;">
+  You're getting this because you're an admin or pharmacist on this organization.
+  A follow-up will go out automatically once temperatures return to range.
+</p>

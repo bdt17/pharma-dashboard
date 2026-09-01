@@ -30,6 +30,20 @@ class VehicleTest < ActiveSupport::TestCase
     assert other.valid?
   end
 
+  test "current_batch is the most recent batch that hasn't been delivered" do
+    vehicle = Vehicle.create!(name: "Truck 1", organization: @organization)
+    assert_nil vehicle.current_batch
+
+    delivered = Batch.create!(lot_number: "LOT-OLD", vehicle: vehicle, organization: @organization, status: "delivered")
+    active = Batch.create!(lot_number: "LOT-NEW", vehicle: vehicle, organization: @organization, status: "active")
+
+    assert_equal active, vehicle.current_batch
+
+    active.update!(status: "delivered")
+    assert_nil vehicle.current_batch
+    assert_not_equal delivered, vehicle.current_batch
+  end
+
   test "api_token_matches? uses a constant-time comparison and rejects blanks" do
     vehicle = Vehicle.create!(name: "Truck 1", organization: @organization)
 
