@@ -30,6 +30,14 @@ class CustodyLogsController < ApplicationController
         ip_address: request.remote_ip,
         data: { action_type: @custody_log.action_type, location: @custody_log.location }
       )
+
+      # A recorded delivery is the trigger for the shipment's formal
+      # Compliance Packet -- generated in the background so a slow PDF
+      # render never holds up the signature-capture request.
+      if @custody_log.action_type == "delivered"
+        GenerateDeliveryPacketJob.perform_later(@custody_log.id, current_user.id)
+      end
+
       redirect_to batch_custody_log_path(@batch, @custody_log), notice: "Custody event recorded."
     else
       render :new, status: :unprocessable_content
