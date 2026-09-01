@@ -1,0 +1,20 @@
+<%# Involuntary-churn recovery. When a subscription charge fails, Stripe
+    retries it for ~3 weeks (past_due) before giving up (unpaid -> canceled).
+    Through that whole window the organization has already lost its
+    Compliance Packet allowance and DSCSA verification badge, but nothing
+    tells them why unless they happen to open the Billing page. This banner
+    rides every authenticated page with a one-click path to the Stripe
+    portal to fix the card -- the single highest-leverage retention prompt
+    for a subscription business. %>
+<% if current_subscription&.payment_failing? %>
+  <div class="px-7 pt-4">
+    <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm flex items-center justify-between gap-4">
+      <span>
+        <span class="font-semibold">Your last payment didn't go through.</span>
+        Update your card to keep GPS tracking, Compliance Packets, and your DSCSA verification badge active.
+      </span>
+      <%= button_to "Update payment method", billing_portal_path, method: :post,
+            class: "btn btn-secondary btn-sm shrink-0 whitespace-nowrap" %>
+    </div>
+  </div>
+<% end %>
