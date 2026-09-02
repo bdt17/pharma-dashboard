@@ -16,11 +16,16 @@
       <div class="text-[13px]">
         <% if @quota.unlimited? %>
           <span class="text-ink-soft">Unlimited compliance packets on your current plan.</span>
+        <% elsif @quota.overage_billable? %>
+          <span class="text-ink-soft">
+            Past this month's allowance of <span class="mono"><%= @quota.monthly_allowance %></span> —
+            new packets are billed as extras on your next invoice.
+          </span>
         <% elsif @quota.exceeded? %>
           <span class="text-[#b42318] font-medium">Monthly limit reached</span>
           <span class="text-ink-faint">
             (<%= @quota.monthly_allowance %>/month on your current plan).
-            <%= link_to "Upgrade for a higher allowance", billing_path, class: "font-medium" %>.
+            <%= link_to "Upgrade, buy a packet, or turn on overage billing", billing_path, class: "font-medium" %>.
           </span>
         <% else %>
           <span class="text-ink-soft">
@@ -30,7 +35,7 @@
         <% end %>
       </div>
       <%= button_to "Generate new packet", batch_compliance_reports_path(@batch), method: :post,
-            class: "btn btn-primary btn-sm shrink-0", disabled: @quota.exceeded? %>
+            class: "btn btn-primary btn-sm shrink-0", disabled: @quota.exceeded? && !@quota.overage_billable? %>
     </div>
   <% end %>
 

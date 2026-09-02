@@ -156,4 +156,55 @@ class ComplianceReportQuotaTest < ActiveSupport::TestCase
     assert_not quota.exceeded?
     assert_equal credit, quota.credit_to_consume
   end
+
+  # --- overage billing ---
+
+  def start_over_limit_starter!(overage_enabled:, customer: "cus_1")
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "starter")
+    @organization.update!(overage_billing_enabled: overage_enabled, stripe_customer_id: customer)
+    SubscriptionPlan::STARTER.packet_allowance.times { generate_report! }
+  end
+
+  test "overage_billable? once a capped plan that opted in is past its allowance" do
+    start_over_limit_starter!(overage_enabled: true)
+    assert ComplianceReportQuota.new(@organization).overage_billable?
+  end
+
+  test "overage_billable? is false while the allowance still has room" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "starter")
+    @organization.update!(overage_billing_enabled: true, stripe_customer_id: "cus_1")
+    assert_not ComplianceReportQuota.new(@organization).overage_billable?
+  end
+
+  test "overage_billable? is false when the org has not opted in" do
+    start_over_limit_starter!(overage_enabled: false)
+    assert_not ComplianceReportQuota.new(@organization).overage_billable?
+  end
+
+  test "overage_billable? is false without a Stripe customer to invoice" do
+    start_over_limit_starter!(overage_enabled: true, customer: nil)
+    assert_not ComplianceReportQuota.new(@organization).overage_billable?
+  end
+
+  test "overage_billable? is false on an unlimited plan" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_c", tier: "compliance")
+    @organization.update!(overage_billing_enabled: true, stripe_customer_id: "cus_1")
+    SubscriptionPlan::PRO.packet_allowance.times { generate_report! }
+    assert_not ComplianceReportQuota.new(@organization).overage_billable?
+  end
+
+  test "overage_billable? is false with no subscription, even if the flag is set" do
+    @organization.update!(overage_billing_enabled: true, stripe_customer_id: "cus_1")
+    ComplianceReportQuota::FREE_MONTHLY_LIMIT.times { generate_report! }
+    assert_not ComplianceReportQuota.new(@organization).overage_billable?
+  end
+
+  test "a purchased credit is spent before an overage is billed" do
+    start_over_limit_starter!(overage_enabled: true)
+    credit = ReportCredit.grant!(organization: @organization, stripe_checkout_session_id: "cs_1")
+
+    quota = ComplianceReportQuota.new(@organization)
+    assert_equal credit, quota.credit_to_consume
+    assert_not quota.overage_billable?, "a credit covers it, so it's not an overage"
+  end
 end

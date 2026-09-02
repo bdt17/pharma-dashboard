@@ -59,12 +59,33 @@ class ComplianceReportQuota
     plan&.packet_allowance || FREE_MONTHLY_LIMIT
   end
 
+  # True when a generation right now would be billed as an overage rather
+  # than blocked: the organization is on a capped paid tier (Starter /
+  # Pro), has used its monthly allowance with no purchased credit left,
+  # has opted in to overage billing, and has a Stripe customer to invoice.
+  # Unlimited tiers never reach here (nothing to exceed); the free tier
+  # never does either (no subscription) -- overage is only for paying
+  # customers who chose it.
+  def overage_billable?
+    return false unless capped_plan?
+    return false unless organization.overage_billing_enabled?
+    return false if organization.stripe_customer_id.blank?
+    return false if used_this_month < monthly_allowance
+
+    available_credit.nil?
+  end
+
   private
 
   attr_reader :organization
 
   def subscribed?
     subscription&.active_or_trialing? || false
+  end
+
+  # A paying tier with a finite monthly allowance -- Starter or Pro.
+  def capped_plan?
+    subscribed? && plan&.packet_allowance.present?
   end
 
   def plan

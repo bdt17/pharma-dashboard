@@ -19,6 +19,38 @@ class StripeBillingTest < ActiveSupport::TestCase
     Stripe::Price.stub(:retrieve, fake_price, &block)
   end
 
+  test "add_packet_overage_item! creates a pending invoice item priced off the single-packet Price" do
+    Stripe.api_key = "sk_test_fake"
+    @organization.update!(stripe_customer_id: "cus_1")
+    packet_price = Stripe::Price.construct_from(id: "price_pkt", unit_amount: 14_900, currency: "usd", product: { name: "Extra Compliance Packet" })
+    list = Stripe::ListObject.construct_from(data: [ packet_price ])
+    created = nil
+
+    Stripe::Price.stub :list, list do
+      Stripe::InvoiceItem.stub :create, ->(params) { created = params; Stripe::InvoiceItem.construct_from(id: "ii_1") } do
+        result = StripeBilling.add_packet_overage_item!(organization: @organization, description: "Extra packet — LOT-1")
+
+        assert_equal({ invoice_item_id: "ii_1", amount_cents: 14_900, currency: "usd" }, result)
+        assert_equal "cus_1", created[:customer]
+        assert_equal "price_pkt", created[:price]
+        assert_nil created[:invoice], "must be a pending item, not attached to an invoice"
+      end
+    end
+  end
+
+  test "add_packet_overage_item! raises NotConfigured without a key, a customer, or the Price" do
+    Stripe.api_key = nil
+    assert_raises(StripeBilling::NotConfigured) { StripeBilling.add_packet_overage_item!(organization: @organization, description: "x") }
+
+    Stripe.api_key = "sk_test_fake"
+    assert_raises(StripeBilling::NotConfigured) { StripeBilling.add_packet_overage_item!(organization: @organization, description: "x") }
+
+    @organization.update!(stripe_customer_id: "cus_1")
+    Stripe::Price.stub :list, Stripe::ListObject.construct_from(data: []) do
+      assert_raises(StripeBilling::NotConfigured) { StripeBilling.add_packet_overage_item!(organization: @organization, description: "x") }
+    end
+  end
+
   test "configured? is false without an api key, true with one" do
     Stripe.api_key = nil
     assert_not StripeBilling.configured?
