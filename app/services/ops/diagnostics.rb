@@ -112,8 +112,28 @@ module Ops
                   detail: Subscription.group(:status).count.map { |s, n| "#{n} #{s}" }.join(", ").presence || "none yet"),
         Check.new(label: "Last subscription sync",
                   status: :ok,
-                  detail: last_sub ? "#{last_sub.updated_at.iso8601} (#{last_sub.tier || 'no tier'})" : "never")
+                  detail: last_sub ? "#{last_sub.updated_at.iso8601} (#{last_sub.tier || 'no tier'})" : "never"),
+        Check.new(label: "Overage billing",
+                  status: :ok,
+                  detail: overage_detail),
+        Check.new(label: "Cards expiring soon",
+                  status: cards_expiring.zero? ? :ok : :warn,
+                  detail: "#{cards_expiring} organization#{'s' unless cards_expiring == 1} flagged")
       ])
+    end
+
+    def overage_detail
+      opted_in = Organization.where(overage_billing_enabled: true).count
+      overages = PacketOverage.this_month
+      billed = overages.sum(:amount_cents) / 100.0
+
+      "#{opted_in} org#{'s' unless opted_in == 1} opted in; " \
+        "#{overages.count} extra packet#{'s' unless overages.count == 1} this month" \
+        "#{" (#{ActiveSupport::NumberHelper.number_to_currency(billed)})" if overages.any?}"
+    end
+
+    def cards_expiring
+      Organization.where.not(card_expiry_notified_for: nil).select(&:card_expiring_soon?).size
     end
 
     def encryption_group
