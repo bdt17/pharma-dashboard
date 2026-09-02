@@ -1,16 +1,16 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-01 (rev 14)
+Last updated: 2026-09-01 (rev 15)
 
 ====================================================================
 STATUS
 ====================================================================
-The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Nine
+The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Ten
 follow-up PRs shipped on top. Production is live and verified.
 
-main @ 4e4ac075  ·  no open PRs.
+main @ 55e48419  ·  no open PRs.
 
 Local on main:
-  bin/rails test           496 runs, 0 failures
+  bin/rails test           502 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_01_000007  (migrations 001-007)
@@ -23,7 +23,7 @@ new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
 pharmatransport.org, confirming the release migrations ran.
 
 ====================================================================
-MERGED THIS SESSION (24 PRs)
+MERGED THIS SESSION (25 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -95,6 +95,18 @@ Rev-12 follow-up-list work (all merged):
         MIGRATION 000007 -- new table only, safe on deploy. The job
         signature changed from (endpoint_id, event, envelope) to
         (delivery_id).
+  #138  Enterprise subscription tier -- $1,499/mo, contact-sales (no
+        self-serve Checkout button; a live Stripe Price exists so a
+        subscription can be created for it by hand). SubscriptionPlan
+        gains ENTERPRISE + a contact_sales flag; .self_serve is the list
+        the pricing grid / Checkout use. webhooks_available? and
+        alert_sms_available? widened to include enterprise; unlimited
+        packets. Pricing page + Billing page + home teaser show it;
+        CTAs go to /request-a-call?topic=enterprise (new CallRequest
+        topic). No migration.
+        Stripe Prices created in production (run 2026-09-01):
+          monthly  price_1UB53KCDVKifSEsceipruOnD  ($1,499/mo)
+          annual   price_1UB53bCDVKifSEscCQUFOXCx  ($16,189.20/yr)
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -113,13 +125,21 @@ DEPLOY / GO-LIVE NOTES
 - Webhooks, dunning email, SMS jobs, packet generation all ride Solid Queue.
 - Migrations 000006 + 000007 both additive (webhook_endpoints
   .subscribed_events; new webhook_deliveries table). No downtime.
+- Enterprise tier (#138): its Stripe Product + monthly/annual Prices were
+  synced to production on 2026-09-01. If SubscriptionPlan::ENTERPRISE is
+  ever re-priced, re-run `bin/rails stripe:sync_subscription_plans` and
+  `stripe:sync_annual_prices` (both idempotent). To put a customer on
+  Enterprise: create the subscription against the monthly Price in the
+  Stripe dashboard -- the existing webhook then syncs tier="enterprise".
 
 ====================================================================
 FOLLOW-UP WORK (product)
 ====================================================================
-- A real `enterprise` Stripe tier (webhooks gated on `compliance` for now).
-  Needs a product decision on price + Stripe Price setup before building.
 - SMS: quiet hours, voice calls, per-recipient severity filters.
+- Enterprise tier is contact-sales only. If self-serve Enterprise is ever
+  wanted, drop the contact_sales flag and reconcile the feature list with
+  what's actually built (SSO / custom SOP authoring are sales-time work,
+  not app toggles).
 - Webhook delivery log (#136) shows the newest 100 only -- add real
   pagination + a status/event filter if a customer's volume needs it.
 - Webhook delivery has a small DNS-rebinding window (validated at save,
