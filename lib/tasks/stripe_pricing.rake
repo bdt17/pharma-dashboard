@@ -1,5 +1,5 @@
 namespace :stripe do
-  desc "Ensure the Starter / Pro / Compliance subscription Products + monthly Prices exist (safe to re-run)"
+  desc "Ensure the Starter / Pro / Compliance / Enterprise subscription Products + monthly Prices exist (safe to re-run)"
   task sync_subscription_plans: :environment do
     unless StripeBilling.configured?
       puts "STRIPE_SECRET_KEY isn't set -- nothing to do."

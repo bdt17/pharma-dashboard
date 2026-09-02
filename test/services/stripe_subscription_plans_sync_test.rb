@@ -26,15 +26,15 @@ class StripeSubscriptionPlansSyncTest < ActiveSupport::TestCase
             Stripe::Price.construct_from(id: "price_#{params[:metadata][:tier]}", unit_amount: params[:unit_amount], currency: "usd")
           } do
             result = StripeSubscriptionPlansSync.call
-            assert_equal 3, result.created.size
+            assert_equal 4, result.created.size
             assert_empty result.existing
           end
         end
       end
     end
 
-    assert_equal %w[Starter Pro Compliance], created_products.map { |p| p[:name] }
-    assert_equal [ 9_900, 24_900, 49_900 ], created_prices.map { |p| p[:unit_amount] }
+    assert_equal %w[Starter Pro Compliance Enterprise], created_products.map { |p| p[:name] }
+    assert_equal [ 9_900, 24_900, 49_900, 149_900 ], created_prices.map { |p| p[:unit_amount] }
     assert created_prices.all? { |p| p[:recurring] == { interval: "month" } }
     assert_equal "15", created_prices.first[:metadata]["packet_allowance"]
     assert_equal "unlimited", created_prices.last[:metadata]["packet_allowance"]
@@ -50,7 +50,7 @@ class StripeSubscriptionPlansSyncTest < ActiveSupport::TestCase
           Stripe::Price.stub :create, ->(params) { Stripe::Price.construct_from(id: "price_new", unit_amount: params[:unit_amount]) } do
             result = StripeSubscriptionPlansSync.call
             assert_equal [ starter_price ], result.existing
-            assert_equal 2, result.created.size
+            assert_equal 3, result.created.size
           end
         end
       end

@@ -179,7 +179,7 @@
   <div class="mx-auto max-w-6xl px-6 py-[88px] grid gap-14 md:grid-cols-2 items-center">
     <div class="flex flex-col gap-4">
       <span class="eyebrow">Pricing</span>
-      <h2 class="text-[30px]">Three plans, priced on packet volume &mdash; not per truck or per seat.</h2>
+      <h2 class="text-[30px]">Priced on packet volume &mdash; not per truck or per seat.</h2>
       <p class="text-[15px] text-ink-soft">Every plan is the whole product, with unlimited team members and a 14-day free trial. You are not charged until it ends. Cancel any time.</p>
       <div class="flex gap-3 pt-1">
         <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
@@ -187,8 +187,8 @@
       </div>
     </div>
     <div class="card p-8 flex flex-col gap-3 shadow-[0_1px_3px_rgba(19,26,36,0.08)]">
-      <% SubscriptionPlan::ALL.each do |plan| %>
-        <div class="flex items-baseline justify-between border-b border-line-soft last:border-b-0 pb-3 last:pb-0">
+      <% SubscriptionPlan.self_serve.each do |plan| %>
+        <div class="flex items-baseline justify-between border-b border-line-soft pb-3">
           <div class="flex flex-col">
             <span class="font-sans font-semibold text-[14px]"><%= plan.name %></span>
             <span class="text-[12px] text-ink-faint"><%= plan.unlimited_packets? ? "Unlimited" : plan.packet_allowance %> Compliance Packets / month</span>
@@ -196,6 +196,13 @@
           <span class="mono text-[18px] font-medium">$<%= plan.monthly_dollars %><span class="text-[12px] text-ink-faint">/mo</span></span>
         </div>
       <% end %>
+      <div class="flex items-baseline justify-between pb-0">
+        <div class="flex flex-col">
+          <span class="font-sans font-semibold text-[14px]"><%= SubscriptionPlan::ENTERPRISE.name %></span>
+          <span class="text-[12px] text-ink-faint">Multi-location &mdash; <%= link_to "talk to us", pricing_path, class: "underline" %></span>
+        </div>
+        <span class="mono text-[13px] text-ink-faint">from $<%= number_with_delimiter(SubscriptionPlan::ENTERPRISE.monthly_dollars) %>/mo</span>
+      </div>
       <div class="bg-accent-50 border border-accent-100 rounded-sm px-3 py-2 text-[12.5px] text-accent-700 mt-1">
         Founding-customer offer: 25% off your first 6 months for early monthly subscribers.
       </div>

@@ -7,6 +7,12 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", "Simple, transparent pricing."
   end
 
+  test "pricing page offers Enterprise as a contact-sales tier" do
+    get pricing_url
+    assert_select "a[href=?]", request_a_call_path(topic: "enterprise"), text: /Talk to us/
+    assert_select ".btn", text: "Start free trial", count: SubscriptionPlan.self_serve.size
+  end
+
   test "about page is public and renders" do
     get about_url
     assert_response :success

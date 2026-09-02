@@ -3,11 +3,12 @@
 # an account. CallRequestMailer notifies the founder; handled_at is set
 # by hand once it's been followed up.
 class CallRequest < ApplicationRecord
-  TOPICS = %w[compliance_officer dscsa_assessment general].freeze
+  TOPICS = %w[compliance_officer dscsa_assessment enterprise general].freeze
 
   TOPIC_LABELS = {
     "compliance_officer" => "Fractional compliance officer",
     "dscsa_assessment" => "DSCSA readiness check",
+    "enterprise" => "Enterprise plan",
     "general" => "General enquiry"
   }.freeze
 

@@ -8,7 +8,11 @@ class BillingController < ApplicationController
   def index
     @subscription = current_organization&.subscriptions&.order(created_at: :desc)&.first
     unlimited = @subscription&.active_or_trialing?
-    @plans = unlimited ? [] : StripeBilling.available_plans
+    # Contact-sales tiers (Enterprise) have a live Stripe Price so a
+    # subscription can be created for them by hand, but they're not
+    # offered as a self-serve Subscribe button -- the page links to the
+    # "talk to us" form instead.
+    @plans = unlimited ? [] : StripeBilling.available_plans.reject { |plan| SubscriptionPlan.find(plan[:tier])&.contact_sales? }
     @addons = unlimited ? [] : StripeBilling.available_addons
     @available_credits = current_organization&.report_credits&.available&.count || 0
   end

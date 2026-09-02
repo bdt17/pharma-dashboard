@@ -7,6 +7,7 @@
     <span class="eyebrow">
       <%= { "compliance_officer" => "Fractional compliance officer",
             "dscsa_assessment" => "DSCSA readiness",
+            "enterprise" => "Enterprise plan",
             "general" => "Talk to us" }.fetch(@call_request.topic, "Talk to us") %>
     </span>
     <h1 class="text-[28px] sm:text-[32px]">Have someone call you.</h1>
@@ -16,6 +17,9 @@
         the retainer is a fit. No pitch deck.
       <% elsif @call_request.topic == "dscsa_assessment" %>
         We&rsquo;ll go through your readiness results and the fastest way to close the gaps that matter.
+      <% elsif @call_request.topic == "enterprise" %>
+        Tell us about your locations and volume &mdash; we&rsquo;ll scope an Enterprise plan,
+        walk through SSO and onboarding, and put pricing in writing.
       <% else %>
         Tell us a little about your pharmacy and we&rsquo;ll get back to you.
       <% end %>

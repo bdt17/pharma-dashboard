@@ -1,6 +1,6 @@
 <% content_for :full_bleed, "1" %>
 <% content_for :title, "Pricing — Pharma Transport" %>
-<% content_for :meta_description, "Pharma Transport pricing: Starter, Pro, and Compliance plans for pharmaceutical fleet tracking and DSCSA chain-of-custody documentation. 14-day free trial." %>
+<% content_for :meta_description, "Pharma Transport pricing: Starter, Pro, Compliance, and Enterprise plans for pharmaceutical fleet tracking and DSCSA chain-of-custody documentation. 14-day free trial." %>
 
 <%
   # Match each tier to its live Stripe monthly price, if pricing is published.
@@ -14,7 +14,7 @@
     <span class="eyebrow">Pricing</span>
     <h1 class="text-[30px] sm:text-[40px]">Simple, transparent pricing.</h1>
     <p class="text-[17px] text-ink-soft max-w-[56ch]">
-      Three plans, priced on Compliance Packet volume &mdash; not per truck or per seat. Every
+      Priced on Compliance Packet volume &mdash; not per truck or per seat. Every
       plan is the whole product and starts with a
       <%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial; you won&rsquo;t be charged until it ends.
     </p>
@@ -31,7 +31,7 @@
   <% end %>
 
   <div class="grid gap-6 lg:grid-cols-3 items-start">
-    <% SubscriptionPlan::ALL.each do |plan| %>
+    <% SubscriptionPlan.self_serve.each do |plan| %>
       <% featured = plan.tier == "pro"
          stripe_price = stripe_by_tier[plan.tier]
          amount = stripe_price ? stripe_price[:amount].to_i : plan.monthly_dollars %>
@@ -57,6 +57,28 @@
               class: "btn #{featured ? "btn-primary" : "btn-secondary"} w-full mt-1" %>
       </div>
     <% end %>
+  </div>
+
+  <% enterprise = SubscriptionPlan::ENTERPRISE %>
+  <div class="card mt-6 p-7 flex flex-col lg:flex-row lg:items-center gap-6 bg-surface">
+    <div class="flex flex-col gap-2 lg:flex-1">
+      <div class="flex items-center gap-3">
+        <span class="font-sans font-semibold text-[17px]"><%= enterprise.name %></span>
+        <span class="text-ink-faint text-[13.5px]">from <span class="mono">$<%= number_with_delimiter(enterprise.monthly_dollars) %></span> / month</span>
+      </div>
+      <p class="text-[13.5px] text-ink-soft max-w-[62ch]"><%= enterprise.tagline %></p>
+      <div class="flex flex-wrap gap-x-5 gap-y-1.5 mt-1 text-[13px] text-ink-soft">
+        <% enterprise.features.each do |feature| %>
+          <span class="flex gap-2 items-start">
+            <svg class="shrink-0 mt-0.5" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <%= feature %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+    <div class="shrink-0">
+      <%= link_to "Talk to us", request_a_call_path(topic: "enterprise"), class: "btn btn-secondary" %>
+    </div>
   </div>
 
   <p class="text-center text-[13px] text-ink-faint mt-8">

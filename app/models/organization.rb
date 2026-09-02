@@ -42,27 +42,26 @@ class Organization < ApplicationRecord
     sub&.active_or_trialing? ? sub.plan : nil
   end
 
-  # SMS excursion alerts are a Pro/Compliance-tier feature. A pre-tier
-  # subscription (current_plan nil despite an active sub) is treated as
-  # full-featured, the same way ComplianceReportQuota treats it as
-  # unlimited.
+  # SMS excursion alerts are a Pro-and-up feature. A pre-tier subscription
+  # (current_plan nil despite an active sub) is treated as full-featured,
+  # the same way ComplianceReportQuota treats it as unlimited.
   def alert_sms_available?
     sub = subscriptions.order(created_at: :desc).first
     return false unless sub&.active_or_trialing?
 
     plan = sub.plan
-    plan.nil? || %w[pro compliance].include?(plan.tier)
+    plan.nil? || %w[pro compliance enterprise].include?(plan.tier)
   end
 
-  # Outbound event webhooks are a Compliance-tier feature (the "handle the
-  # deadline for me" plan) -- the integration an Enterprise buyer expects.
-  # A pre-tier subscription counts, matching alert_sms_available?.
+  # Outbound event webhooks are a Compliance-and-up feature (the
+  # "handle the deadline for me" plans). A pre-tier subscription counts,
+  # matching alert_sms_available?.
   def webhooks_available?
     sub = subscriptions.order(created_at: :desc).first
     return false unless sub&.active_or_trialing?
 
     plan = sub.plan
-    plan.nil? || plan.tier == "compliance"
+    plan.nil? || %w[compliance enterprise].include?(plan.tier)
   end
 
   private

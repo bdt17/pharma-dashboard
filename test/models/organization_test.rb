@@ -64,7 +64,7 @@ class OrganizationTest < ActiveSupport::TestCase
     assert_not org.verified?
   end
 
-  test "alert_sms_available? only on the Pro and Compliance tiers of an active subscription" do
+  test "alert_sms_available? on the Pro tier and up of an active subscription" do
     org = Organization.create!(name: "Acme Pharma")
     assert_not org.alert_sms_available?, "no subscription"
 
@@ -77,8 +77,34 @@ class OrganizationTest < ActiveSupport::TestCase
     sub.update!(tier: "compliance")
     assert org.alert_sms_available?, "compliance tier"
 
+    sub.update!(tier: "enterprise")
+    assert org.alert_sms_available?, "enterprise tier"
+
     sub.update!(status: "past_due")
     assert_not org.alert_sms_available?, "not active"
+  end
+
+  test "webhooks_available? on the Compliance tier and up of an active subscription" do
+    org = Organization.create!(name: "Acme Pharma")
+    assert_not org.webhooks_available?, "no subscription"
+
+    sub = Subscription.create!(organization: org, status: "active", stripe_subscription_id: "sub_1", tier: "pro")
+    assert_not org.webhooks_available?, "pro tier"
+
+    sub.update!(tier: "compliance")
+    assert org.webhooks_available?, "compliance tier"
+
+    sub.update!(tier: "enterprise")
+    assert org.webhooks_available?, "enterprise tier"
+
+    sub.update!(status: "canceled")
+    assert_not org.webhooks_available?, "not active"
+  end
+
+  test "webhooks_available? treats a pre-tier subscription as full-featured" do
+    org = Organization.create!(name: "Acme Pharma")
+    Subscription.create!(organization: org, status: "active", stripe_subscription_id: "sub_legacy", tier: nil)
+    assert org.webhooks_available?
   end
 
   test "alert_sms_available? treats a pre-tier subscription as full-featured" do
