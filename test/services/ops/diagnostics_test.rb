@@ -35,11 +35,43 @@ module Ops
       end
     end
 
+    test "SMS group warns when Twilio is unconfigured and is ok when all three vars are set" do
+      with_env("TWILIO_ACCOUNT_SID" => nil, "TWILIO_AUTH_TOKEN" => nil, "TWILIO_MESSAGING_FROM" => nil) do
+        assert_equal :warn, sms_check("Overall").status
+      end
+
+      with_env("TWILIO_ACCOUNT_SID" => "AC123", "TWILIO_AUTH_TOKEN" => "tok", "TWILIO_MESSAGING_FROM" => "MG999") do
+        assert_equal :ok, sms_check("Overall").status
+        assert_match "Messaging Service", sms_check("Sender (TWILIO_MESSAGING_FROM)").detail
+      end
+    end
+
+    test "SMS group never prints the env values, only whether they're set" do
+      with_env("TWILIO_ACCOUNT_SID" => "AC_secret_value", "TWILIO_AUTH_TOKEN" => "tok_secret", "TWILIO_MESSAGING_FROM" => "+15551234567") do
+        details = group("SMS alerts (Twilio)").checks.map(&:detail).join(" ")
+        assert_not_includes details, "AC_secret_value"
+        assert_not_includes details, "tok_secret"
+        assert_not_includes details, "+15551234567"
+      end
+    end
+
+    test "webhooks group flags auto-disabled endpoints" do
+      org = Organization.create!(name: "Acme")
+      org.webhook_endpoints.create!(url: "https://8.8.8.8/ok")
+      org.webhook_endpoints.create!(url: "https://8.8.8.8/dead", active: false,
+                                    consecutive_failures: WebhookEndpoint::AUTO_DISABLE_AFTER)
+
+      assert_equal "1 active of 2", webhooks_check("Endpoints").detail
+      assert_equal :warn, webhooks_check("Auto-disabled (failed #{WebhookEndpoint::AUTO_DISABLE_AFTER}x)").status
+    end
+
     private
 
     def group(name) = Ops::Diagnostics.call.find { |g| g.name == name }
     def email_check(label) = group("Email").checks.find { |c| c.label == label }
     def billing_check(label) = group("Billing (Stripe)").checks.find { |c| c.label == label }
+    def sms_check(label) = group("SMS alerts (Twilio)").checks.find { |c| c.label == label }
+    def webhooks_check(label) = group("Outbound webhooks").checks.find { |c| c.label == label }
 
     def with_env(overrides)
       original = ENV.to_h
