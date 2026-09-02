@@ -1,21 +1,21 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-01 (rev 15)
+Last updated: 2026-09-01 (rev 16)
 
 ====================================================================
 STATUS
 ====================================================================
-The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Ten
+The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Twelve
 follow-up PRs shipped on top. Production is live and verified.
 
-main @ 55e48419  ·  no open PRs.
+main @ 8cfad8fc  ·  no open PRs.
 
 Local on main:
-  bin/rails test           502 runs, 0 failures
+  bin/rails test           533 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
-  schema version           2026_09_01_000007  (migrations 001-007)
+  schema version           2026_09_01_000009  (migrations 001-009)
   config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep,
-                           purge_old_webhook_deliveries
+                           purge_old_webhook_deliveries, card_expiry_check
 
 Production: Render auto-deploys main on push. Latest deploy verified --
 the CI and Smoke (live public-surface) workflows both passed, and the
@@ -23,7 +23,7 @@ new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
 pharmatransport.org, confirming the release migrations ran.
 
 ====================================================================
-MERGED THIS SESSION (25 PRs)
+MERGED THIS SESSION (28 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -107,6 +107,25 @@ Rev-12 follow-up-list work (all merged):
         Stripe Prices created in production (run 2026-09-01):
           monthly  price_1UB53KCDVKifSEsceipruOnD  ($1,499/mo)
           annual   price_1UB53bCDVKifSEscCQUFOXCx  ($16,189.20/yr)
+  #140  Compliance Packet overage billing. A Starter/Pro org that opts in
+        (Organization#overage_billing_enabled, toggle on the Billing
+        page) is no longer blocked at its monthly allowance -- each extra
+        packet is added to the next invoice as a pending Stripe invoice
+        item, priced off the existing "Extra Compliance Packet" one-time
+        Price. A purchased ReportCredit is still spent first; a Stripe
+        failure blocks (no free billable artifact); a generation failure
+        after billing voids the item. New PacketOverage ledger (one row
+        per report, unique index). MIGRATION 000008 -- new column +
+        table. No new Stripe setup.
+  #141  Card-expiry warning. CardExpiryCheckJob (daily 8am) reads each
+        live-subscription customer's default card expiry from Stripe and
+        emails the admins once when it falls inside a 45-day window
+        (tracked by Organization#card_expiry_notified_for; a replaced
+        card's different expiry resets it). New
+        StripeBilling.default_card_for + SubscriptionMailer#card_expiring.
+        MIGRATION 000009 -- one nullable string column. No new Stripe
+        setup. Stripe has no reliable expiring-PaymentMethod webhook, so
+        this polls.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -121,10 +140,12 @@ DEPLOY / GO-LIVE NOTES
   worker runs inside Puma (plugin :solid_queue), no separate service.
   The scheduler runs config/recurring.yml (production key only):
   clear_solid_queue_finished_jobs (hourly) + dunning_sweep (daily 9am) +
-  purge_old_webhook_deliveries (daily 4am, trims the delivery log).
+  purge_old_webhook_deliveries (daily 4am) + card_expiry_check (daily 8am).
 - Webhooks, dunning email, SMS jobs, packet generation all ride Solid Queue.
-- Migrations 000006 + 000007 both additive (webhook_endpoints
-  .subscribed_events; new webhook_deliveries table). No downtime.
+- Migrations 000006-000009 all additive (webhook subscribed_events;
+  webhook_deliveries table; organizations.overage_billing_enabled +
+  packet_overages table; organizations.card_expiry_notified_for).
+  No downtime, no data backfill.
 - Enterprise tier (#138): its Stripe Product + monthly/annual Prices were
   synced to production on 2026-09-01. If SubscriptionPlan::ENTERPRISE is
   ever re-priced, re-run `bin/rails stripe:sync_subscription_plans` and
@@ -136,6 +157,11 @@ DEPLOY / GO-LIVE NOTES
 FOLLOW-UP WORK (product)
 ====================================================================
 - SMS: quiet hours, voice calls, per-recipient severity filters.
+- Overage billing (#140) is a pending invoice item on the next renewal;
+  there's no in-app "you've been billed $X in overages this month"
+  summary yet (PacketOverage.this_month has the data).
+- Card-expiry warning (#141) is opt-out-free -- consider a matching
+  in-app banner on the dashboard, not just the email.
 - Enterprise tier is contact-sales only. If self-serve Enterprise is ever
   wanted, drop the contact_sales flag and reconcile the feature list with
   what's actually built (SSO / custom SOP authoring are sales-time work,
@@ -178,7 +204,7 @@ DEV ENVIRONMENT CHANGES (local only, never committed)
 - dispatch@demo.test / ClaudeDemo123!  -- a dispatcher on the demo org
   for quick UI checks (not 2FA-gated, unlike admins).
 - admin@example.com dev password set to ClaudeDemo123!
-- dev DB has all migrations through ...000007; demo org reset at points
+- dev DB has all migrations through ...000009; demo org reset at points
   (demo:reset).
 - Pre-existing dev server on pid 9233 / port 3111 left running;
   tmp/pids/server.pid restored to point at it.
