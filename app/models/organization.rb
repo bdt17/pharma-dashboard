@@ -65,6 +65,22 @@ class Organization < ApplicationRecord
     plan.nil? || %w[compliance enterprise].include?(plan.tier)
   end
 
+  # Whether to show the "your card is about to expire" banner. Driven by
+  # the flag CardExpiryCheckJob sets (and clears) daily -- so this is a
+  # plain column read on every request, no Stripe call. The window check
+  # is belt-and-suspenders in case a stale flag outlives its usefulness
+  # before the next job run.
+  def card_expiring_soon?
+    return false if card_expiry_notified_for.blank?
+
+    year, month = card_expiry_notified_for.split("-").map(&:to_i)
+    return false unless year&.positive? && month&.between?(1, 12)
+
+    Date.new(year, month, 1).end_of_month <= CardExpiryCheckJob::LEAD_TIME.from_now.to_date
+  rescue ArgumentError
+    false
+  end
+
   private
 
   # Retries on the rare collision the same way ComplianceReport retries a

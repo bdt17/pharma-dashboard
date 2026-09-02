@@ -20,6 +20,7 @@ class BillingController < ApplicationController
     # subscribe rather than pay per packet.
     @current_plan = current_organization&.current_plan
     @overage_eligible = @current_plan&.packet_allowance.present?
+    @overages_this_month = current_organization&.packet_overages&.this_month || PacketOverage.none
   end
 
   def checkout

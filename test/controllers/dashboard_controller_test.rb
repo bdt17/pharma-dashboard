@@ -79,6 +79,26 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_no_match "Your last payment didn't go through", response.body
   end
 
+  test "shows the card-expiry banner when the flag is set for a near period" do
+    Subscription.sync_from_stripe!(organization: @organization, stripe_subscription_id: "sub_1", status: "active")
+    @organization.update!(card_expiry_notified_for: Date.current.strftime("%Y-%m"))
+
+    sign_in @user
+    get dashboard_url
+
+    assert_match "The card on file is about to expire", response.body
+    assert_select "form[action=?]", billing_portal_path
+  end
+
+  test "no card-expiry banner once the flag is cleared" do
+    Subscription.sync_from_stripe!(organization: @organization, stripe_subscription_id: "sub_1", status: "active")
+
+    sign_in @user
+    get dashboard_url
+
+    assert_no_match "The card on file is about to expire", response.body
+  end
+
   test "a recent custody event links to its batch's custody history" do
     batch = Batch.create!(lot_number: "LOT-1", temperature_celsius: 5, vehicle: @vehicle, organization: @organization)
     batch.custody_logs.create!(action_type: "pickup", handler_name: "Jane Doe", location: "Phoenix, AZ")

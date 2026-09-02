@@ -80,6 +80,7 @@
           </span>
         </div>
         <%= render "layouts/payment_recovery_banner" %>
+        <%= render "layouts/card_expiry_banner" %>
         <% if notice %><div class="px-7 pt-4"><div class="rounded border border-accent-100 bg-accent-50 text-accent-700 px-4 py-3 text-sm"><%= notice %></div></div><% end %>
         <% if alert %><div class="px-7 pt-4"><div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm"><%= alert %></div></div><% end %>
         <main class="flex-1 bg-surface"><%= yield %></main>
