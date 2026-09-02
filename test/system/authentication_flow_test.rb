@@ -36,7 +36,13 @@ class AuthenticationFlowTest < ApplicationSystemTestCase
 
     # Admins are forced into enrolment before any authenticated page.
     assert_selector "h1", text: "Set up two-factor authentication"
-    assert_selector "svg"                        # the QR renders
+    # visible: :all skips Capybara's per-candidate displayed? RPC, which
+    # intermittently threw "Node with given id does not belong to the
+    # document" here -- the bare selector matched the layout mark as well
+    # as the QR, and a match could detach mid-check. Presence is all this
+    # asserts; the manual-key <code> check on the next line (text-filtered,
+    # so it retries cleanly) confirms the page actually rendered.
+    assert_selector "svg", visible: :all           # the QR renders
     assert_selector "code", text: user.reload.otp_secret
 
     fill_in "6-digit code", with: ROTP::TOTP.new(user.otp_secret).now
@@ -44,7 +50,7 @@ class AuthenticationFlowTest < ApplicationSystemTestCase
 
     # Backup codes shown exactly once.
     assert_selector "h1", text: "Backup codes"
-    assert_selector "li", minimum: 10
+    assert_selector "li", minimum: 10, visible: :all
     click_on "I've saved these"
 
     assert_selector "h1", text: "Dashboard"
