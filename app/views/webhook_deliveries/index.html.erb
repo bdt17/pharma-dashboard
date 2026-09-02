@@ -1,0 +1,66 @@
+<% content_for :title, "Webhook delivery log — Pharma Transport" %>
+<% content_for :crumb, "Webhooks" %>
+
+<div class="p-7 max-w-4xl">
+  <div class="flex flex-col gap-1 mb-2">
+    <%= link_to "← Webhooks", webhook_endpoints_path, class: "text-[12px] text-ink-faint underline" %>
+    <h1 class="text-[24px]">Delivery log</h1>
+    <span class="mono text-[13px] text-ink-soft break-all"><%= @endpoint.url %></span>
+  </div>
+
+  <p class="text-[13px] text-ink-faint mb-6">
+    The last <%= WebhookDeliveriesController::PAGE_SIZE %> events sent to this endpoint. Deliveries older than
+    <%= WebhookDelivery::RETENTION.inspect %> are removed automatically.
+  </p>
+
+  <% if @deliveries.empty? %>
+    <div class="card p-6 bg-surface text-[13px] text-ink-soft">
+      Nothing delivered yet. Use <strong>Send test</strong> on the Webhooks page to check the endpoint.
+    </div>
+  <% else %>
+    <div class="flex flex-col gap-2">
+      <% @deliveries.each do |delivery| %>
+        <div class="card p-4 flex flex-col gap-2">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0 flex flex-col gap-1">
+              <div class="flex items-center gap-2 flex-wrap">
+                <% case delivery.status %>
+                <% when "succeeded" %>
+                  <span class="badge badge-accent">Delivered</span>
+                <% when "failed" %>
+                  <span class="badge badge-danger">Failed</span>
+                <% else %>
+                  <span class="badge badge-amber">Pending</span>
+                <% end %>
+                <span class="mono text-[13px]"><%= delivery.event %></span>
+                <% if delivery.replay? %>
+                  <span class="badge">Re-send</span>
+                <% end %>
+              </div>
+              <div class="text-[12px] text-ink-faint">
+                <%= delivery.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+                · <%= pluralize(delivery.attempts, "attempt") %>
+                <% if delivery.response_status %>· HTTP <%= delivery.response_status %><% end %>
+                <% if delivery.duration_ms %>· <%= delivery.duration_ms %> ms<% end %>
+              </div>
+              <% if delivery.error.present? %>
+                <div class="text-[12px] text-[#b42318]"><%= delivery.error %></div>
+              <% end %>
+              <div class="text-[11px] text-ink-faint mono break-all">id: <%= delivery.event_id %></div>
+            </div>
+
+            <% if current_user.admin? %>
+              <%= button_to "Re-send", replay_webhook_endpoint_delivery_path(@endpoint, delivery),
+                    method: :post, class: "btn btn-secondary btn-sm shrink-0" %>
+            <% end %>
+          </div>
+
+          <details class="text-[12px]">
+            <summary class="cursor-pointer text-ink-faint select-none">Payload</summary>
+            <pre class="bg-paper border border-line rounded p-3 mt-1 overflow-x-auto mono text-[11px]"><%= JSON.pretty_generate(delivery.payload) %></pre>
+          </details>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

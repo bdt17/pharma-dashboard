@@ -1,10 +1,12 @@
 require "net/http"
 
-# POSTs one event envelope to one endpoint, signed with that endpoint's
-# secret. Retries transient failures (timeouts, 5xx, 429) with backoff;
-# a 4xx is treated as "the receiver rejected it, don't keep trying".
-# consecutive_failures is bumped once per *event* that ultimately fails,
-# not once per retry -- so AUTO_DISABLE_AFTER counts real dead deliveries.
+# POSTs one WebhookDelivery's envelope to its endpoint, signed with that
+# endpoint's secret, and records the outcome back on the delivery row
+# (status, HTTP code, attempts, timing). Retries transient failures
+# (timeouts, 5xx, 429) with backoff; a 4xx is treated as "the receiver
+# rejected it, don't keep trying". The endpoint's consecutive_failures is
+# bumped once per *delivery* that ultimately fails, not once per retry --
+# so AUTO_DISABLE_AFTER counts real dead deliveries.
 class WebhookDeliveryJob < ApplicationJob
   queue_as :default
 
@@ -16,33 +18,51 @@ class WebhookDeliveryJob < ApplicationJob
   discard_on ActiveJob::DeserializationError
 
   retry_on(*RETRYABLE, RetryableResponse, wait: :polynomially_longer, attempts: 5) do |job, error|
-    endpoint = WebhookEndpoint.find_by(id: job.arguments.first)
-    endpoint&.record_failure!(error.message)
+    delivery = WebhookDelivery.find_by(id: job.arguments.first)
+    next unless delivery
+
+    delivery.update!(status: :failed, error: error.message, completed_at: Time.current)
+    delivery.webhook_endpoint.record_failure!(error.message)
   end
 
-  def perform(endpoint_id, event, envelope)
-    endpoint = WebhookEndpoint.find_by(id: endpoint_id)
-    return unless endpoint&.active?
+  def perform(delivery_id)
+    delivery = WebhookDelivery.find_by(id: delivery_id)
+    return unless delivery
+
+    endpoint = delivery.webhook_endpoint
+    return unless endpoint.active?
+
+    delivery.increment!(:attempts)
 
     unless WebhookEndpoint.public_https_url?(endpoint.url)
-      endpoint.record_failure!("URL no longer resolves to a public HTTPS address")
+      finish_failed(delivery, endpoint, "URL no longer resolves to a public HTTPS address")
       return
     end
 
-    body = envelope.to_json
-    response = deliver(endpoint, event, body)
+    body = delivery.payload.to_json
+    started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    response = deliver(endpoint, delivery.event, body)
+    duration_ms = ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - started) * 1000).round
     code = response.code.to_i
+    delivery.update!(response_status: code, duration_ms: duration_ms)
 
     if code.between?(200, 299)
+      delivery.update!(status: :succeeded, error: nil, completed_at: Time.current)
       endpoint.record_success!
     elsif code == 429 || code.between?(500, 599)
+      delivery.update!(error: "HTTP #{code}")
       raise RetryableResponse, "HTTP #{code}"
     else
-      endpoint.record_failure!("HTTP #{code}")
+      finish_failed(delivery, endpoint, "HTTP #{code}")
     end
   end
 
   private
+
+  def finish_failed(delivery, endpoint, message)
+    delivery.update!(status: :failed, error: message, completed_at: Time.current)
+    endpoint.record_failure!(message)
+  end
 
   def deliver(endpoint, event, body)
     uri = URI.parse(endpoint.url)

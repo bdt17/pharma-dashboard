@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_000006) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_000007) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -397,6 +397,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_000006) do
     t.index ["imei"], name: "index_vehicles_on_imei", unique: true
   end
 
+  create_table "webhook_deliveries", force: :cascade do |t|
+    t.integer "attempts", default: 0, null: false
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.integer "duration_ms"
+    t.string "error"
+    t.string "event", null: false
+    t.string "event_id", null: false
+    t.jsonb "payload", default: {}, null: false
+    t.bigint "replayed_from_id"
+    t.integer "response_status"
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "webhook_endpoint_id", null: false
+    t.index ["event_id"], name: "index_webhook_deliveries_on_event_id"
+    t.index ["webhook_endpoint_id", "created_at"], name: "index_webhook_deliveries_on_webhook_endpoint_id_and_created_at"
+    t.index ["webhook_endpoint_id"], name: "index_webhook_deliveries_on_webhook_endpoint_id"
+  end
+
   create_table "webhook_endpoints", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.integer "consecutive_failures", default: 0, null: false
@@ -441,5 +460,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_000006) do
   add_foreign_key "telemetries", "vehicles"
   add_foreign_key "users", "organizations"
   add_foreign_key "vehicles", "organizations"
+  add_foreign_key "webhook_deliveries", "webhook_endpoints"
   add_foreign_key "webhook_endpoints", "organizations"
 end

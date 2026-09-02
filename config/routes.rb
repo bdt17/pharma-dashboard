@@ -74,6 +74,8 @@ Rails.application.routes.draw do
   delete "/webhooks/:id", to: "webhook_endpoints#destroy", as: :webhook_endpoint
   post   "/webhooks/:id/enable", to: "webhook_endpoints#enable", as: :enable_webhook_endpoint
   post   "/webhooks/:id/test", to: "webhook_endpoints#test", as: :test_webhook_endpoint
+  get    "/webhooks/:webhook_endpoint_id/deliveries", to: "webhook_deliveries#index", as: :webhook_endpoint_deliveries
+  post   "/webhooks/:webhook_endpoint_id/deliveries/:id/replay", to: "webhook_deliveries#replay", as: :replay_webhook_endpoint_delivery
 
   # Application endpoints
   get "/batches.pdf", to: "batches#index", as: :batches_pdf

@@ -19,3 +19,8 @@ production:
   dunning_sweep:
     class: DunningSweepJob
     schedule: every day at 9am
+
+  # Trim the webhook delivery log to WebhookDelivery::RETENTION.
+  purge_old_webhook_deliveries:
+    command: "WebhookDelivery.expired.in_batches.delete_all"
+    schedule: every day at 4am
