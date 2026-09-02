@@ -35,7 +35,13 @@ class Telemetry < ApplicationRecord
   # of "where is this vehicle right now" so dashboard reads don't have to
   # scan telemetry history on every request. Telemetry itself remains the
   # full, real history.
+  #
+  # A reading older than what the snapshot already reflects -- a buffered
+  # reading flushed after the device reconnected -- is kept in history but
+  # must not drag the "where is it now" cache backwards.
   def update_vehicle_snapshot
+    return if vehicle.last_ping_at && recorded_at && recorded_at < vehicle.last_ping_at
+
     vehicle.update_columns(
       latitude: lat,
       longitude: lng,
