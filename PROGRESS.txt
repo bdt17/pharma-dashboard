@@ -1,16 +1,16 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-02 (rev 17)
+Last updated: 2026-09-02 (rev 18)
 
 ====================================================================
 STATUS
 ====================================================================
-The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Thirteen
+The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Fifteen
 follow-up PRs shipped on top. Production is live and verified.
 
-main @ a18d0efd  ·  no open PRs.
+main @ da776312  ·  no open PRs.
 
 Local on main:
-  bin/rails test           538 runs, 0 failures
+  bin/rails test           540 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_01_000009  (migrations 001-009)
@@ -23,7 +23,7 @@ new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
 pharmatransport.org, confirming the release migrations ran.
 
 ====================================================================
-MERGED THIS SESSION (30 PRs)
+MERGED THIS SESSION (32 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -133,6 +133,9 @@ Rev-12 follow-up-list work (all merged):
         authenticated page below the payment-recovery banner. Billing
         page summarizes PacketOverage.this_month (count + total heading
         to the next invoice). No migration.
+  #145  /ops Billing group now also reports overage opt-ins + extra
+        packets billed this month ($), and how many orgs have a card
+        flagged as expiring (warns if any). Read-only. No migration.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
