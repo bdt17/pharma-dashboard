@@ -4,7 +4,7 @@
 # the opt-in SMS layer, which is a Pro/Compliance-tier feature.
 class AlertSettingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_admin, only: %i[create destroy]
+  before_action :require_admin, only: %i[create destroy test]
 
   def index
     @sms_available = current_organization&.alert_sms_available? || false
@@ -32,6 +32,18 @@ class AlertSettingsController < ApplicationController
     recipient = current_organization.alert_recipients.find(params[:id])
     recipient.destroy
     redirect_to alert_settings_path, notice: "Removed #{recipient.label} from SMS alerts."
+  end
+
+  def test
+    unless current_organization&.alert_sms_available?
+      redirect_to alert_settings_path, alert: "SMS alerts are available on the Pro and Compliance plans."
+      return
+    end
+
+    recipient = current_organization.alert_recipients.find(params[:id])
+    SmsTestJob.perform_later(recipient.id)
+    redirect_to alert_settings_path,
+      notice: "Test message queued for #{recipient.phone}. If it doesn't arrive, check /ops and the Twilio message logs."
   end
 
   private

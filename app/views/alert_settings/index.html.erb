@@ -48,9 +48,13 @@
                 <td class="px-4 py-2.5 mono"><%= recipient.phone %></td>
                 <td class="px-4 py-2.5 text-right">
                   <% if current_user.admin? %>
-                    <%= button_to "Remove", alert_recipient_path(recipient), method: :delete,
-                          form: { data: { turbo_confirm: "Remove #{recipient.label} from SMS alerts?" } },
-                          class: "text-[12px] text-[#b42318] hover:underline" %>
+                    <div class="flex items-center justify-end gap-3">
+                      <%= button_to "Send test", test_alert_recipient_path(recipient), method: :post,
+                            class: "text-[12px] text-accent-600 hover:text-accent-700" %>
+                      <%= button_to "Remove", alert_recipient_path(recipient), method: :delete,
+                            form: { data: { turbo_confirm: "Remove #{recipient.label} from SMS alerts?" } },
+                            class: "text-[12px] text-[#b42318] hover:underline" %>
+                    </div>
                   <% end %>
                 </td>
               </tr>
