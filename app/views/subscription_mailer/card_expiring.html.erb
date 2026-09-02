@@ -1,0 +1,20 @@
+<p style="font-size:14px;">
+  The card we have on file for <strong><%= @organization.name %></strong>'s
+  Pharma Transport subscription &mdash; the one ending
+  <strong><%= @card[:last4] %></strong> &mdash; expires <strong><%= @expires %></strong>.
+</p>
+
+<p style="font-size:14px;">
+  Update it before your next renewal so your subscription doesn't lapse. A failed
+  renewal charge would suspend Compliance Packet generation beyond your free
+  allowance, your verification badge, and SMS temperature alerts until it's fixed.
+</p>
+
+<p style="font-size:14px;">
+  <%= link_to "Update your card", billing_url %>
+</p>
+
+<p style="font-size:12px; color:#666;">
+  Already replaced it? You can ignore this. You're getting this because you're an
+  admin on this organization.
+</p>

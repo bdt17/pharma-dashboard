@@ -24,3 +24,8 @@ production:
   purge_old_webhook_deliveries:
     command: "WebhookDelivery.expired.in_batches.delete_all"
     schedule: every day at 4am
+
+  # Warn admins once when the subscription's card is close to expiring.
+  card_expiry_check:
+    class: CardExpiryCheckJob
+    schedule: every day at 8am

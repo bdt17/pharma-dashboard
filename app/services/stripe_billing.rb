@@ -162,6 +162,35 @@ class StripeBilling
       raise(NotConfigured, "no '#{StripeAddonPriceSync::PRODUCT_NAME}' Price in Stripe -- run stripe:sync_addon_prices")
   end
 
+  # The card currently backing this organization's subscription, as
+  # { last4:, exp_month:, exp_year: } -- or nil if there's no Stripe
+  # customer, no card on file, or Stripe can't be reached. Prefers the
+  # customer's default payment method (what renewals actually charge) and
+  # falls back to their first saved card. Used by CardExpiryCheckJob.
+  def self.default_card_for(organization)
+    raise NotConfigured unless configured?
+    return nil if organization.stripe_customer_id.blank?
+
+    customer = Stripe::Customer.retrieve(
+      id: organization.stripe_customer_id,
+      expand: [ "invoice_settings.default_payment_method" ]
+    )
+    payment_method = customer.invoice_settings&.default_payment_method
+    payment_method = first_card(organization.stripe_customer_id) unless payment_method.respond_to?(:card)
+    return nil unless payment_method.respond_to?(:card) && payment_method.card
+
+    card = payment_method.card
+    { last4: card.last4, exp_month: card.exp_month, exp_year: card.exp_year }
+  rescue Stripe::StripeError => e
+    Rails.logger.warn("StripeBilling.default_card_for(#{organization.id}): #{e.class}: #{e.message}")
+    nil
+  end
+
+  def self.first_card(customer_id)
+    Stripe::PaymentMethod.list(customer: customer_id, type: "card").data.first
+  end
+  private_class_method :first_card
+
   # Shared by start_checkout! and start_addon_checkout!: ensures a Stripe
   # Customer exists, yields its id to build whatever Checkout Session the
   # caller needs, and retries once if the stored customer id turns out to
