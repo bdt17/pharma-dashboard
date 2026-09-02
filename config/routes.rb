@@ -70,6 +70,7 @@ Rails.application.routes.draw do
   # Outbound event webhooks (Compliance tier)
   get    "/webhooks", to: "webhook_endpoints#index", as: :webhook_endpoints
   post   "/webhooks", to: "webhook_endpoints#create"
+  patch  "/webhooks/:id", to: "webhook_endpoints#update"
   delete "/webhooks/:id", to: "webhook_endpoints#destroy", as: :webhook_endpoint
   post   "/webhooks/:id/enable", to: "webhook_endpoints#enable", as: :enable_webhook_endpoint
   post   "/webhooks/:id/test", to: "webhook_endpoints#test", as: :test_webhook_endpoint

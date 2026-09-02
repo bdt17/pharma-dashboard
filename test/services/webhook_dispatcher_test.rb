@@ -33,6 +33,17 @@ class WebhookDispatcherTest < ActiveSupport::TestCase
     end
   end
 
+  test "only delivers to endpoints subscribed to the event (empty filter = all)" do
+    subscribe("compliance")
+    @organization.webhook_endpoints.create!(url: "https://8.8.8.8/all")
+    @organization.webhook_endpoints.create!(url: "https://8.8.8.8/custody-only", subscribed_events: %w[custody.recorded])
+    @organization.webhook_endpoints.create!(url: "https://8.8.8.8/excursions", subscribed_events: %w[excursion.started excursion.resolved])
+
+    assert_enqueued_jobs 2, only: WebhookDeliveryJob do
+      WebhookDispatcher.publish(organization: @organization, event: "excursion.started", data: {})
+    end
+  end
+
   test "the envelope carries an id, the event name, a timestamp and the data" do
     subscribe("compliance")
     endpoint = @organization.webhook_endpoints.create!(url: PUBLIC_URL)

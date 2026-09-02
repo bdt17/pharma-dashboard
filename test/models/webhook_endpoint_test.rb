@@ -52,6 +52,32 @@ class WebhookEndpointTest < ActiveSupport::TestCase
     assert_includes dupe.errors[:url].join, "already been taken"
   end
 
+  test "delivers? respects the subscribed_events filter" do
+    all = @organization.webhook_endpoints.create!(url: "https://8.8.8.8/all")
+    assert all.delivers?("excursion.started")
+    assert all.delivers?("custody.recorded")
+
+    filtered = @organization.webhook_endpoints.create!(url: "https://8.8.8.8/f", subscribed_events: %w[custody.recorded])
+    assert filtered.delivers?("custody.recorded")
+    assert_not filtered.delivers?("excursion.started")
+    # webhook.test always goes through so the Send-test button keeps working
+    assert filtered.delivers?("webhook.test")
+  end
+
+  test "normalizes subscribed_events -- drops blanks, de-dupes" do
+    endpoint = @organization.webhook_endpoints.create!(
+      url: "https://8.8.8.8/n", subscribed_events: [ "", "custody.recorded", "custody.recorded", "" ]
+    )
+    assert_equal %w[custody.recorded], endpoint.subscribed_events
+    assert_not endpoint.all_events?
+  end
+
+  test "rejects an unknown event name in the filter" do
+    endpoint = @organization.webhook_endpoints.build(url: PUBLIC_URL, subscribed_events: %w[custody.recorded not.a.real.event])
+    assert_not endpoint.valid?
+    assert_includes endpoint.errors[:subscribed_events].join, "not.a.real.event"
+  end
+
   test "record_failure! auto-disables after the threshold and record_success! clears it" do
     endpoint = @organization.webhook_endpoints.create!(url: PUBLIC_URL)
 
