@@ -7,6 +7,12 @@ class SubscriptionMailer < ApplicationMailer
   def payment_failed(subscription)
     @subscription = subscription
     @organization = subscription.organization
+    @plan = subscription.plan
+    @amount = subscription.plan_amount
+    # Only worth showing if it's still ahead of us -- once the period end
+    # has passed, Stripe is in its retry grace window and the date is just
+    # confusing.
+    @period_end = subscription.current_period_end if subscription.current_period_end&.future?
 
     mail(
       to: recipients,

@@ -1,5 +1,17 @@
 We tried to charge the card on file for <%= @organization.name %>'s Pharma Transport
 subscription and it didn't go through.
+<% if @plan || @amount || @period_end -%>
+
+<% if @plan -%>
+  Plan:                 <%= @plan.name %>
+<% end -%>
+<% if @amount -%>
+  Amount due:           <%= number_to_currency(@amount) %> / month
+<% end -%>
+<% if @period_end -%>
+  Billing period ends:  <%= @period_end.strftime("%B %-d, %Y") %>
+<% end -%>
+<% end -%>
 
 Stripe will keep retrying for a few weeks, but until the payment clears your
 organization has lost:
