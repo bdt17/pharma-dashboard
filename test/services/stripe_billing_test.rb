@@ -51,6 +51,45 @@ class StripeBillingTest < ActiveSupport::TestCase
     end
   end
 
+  test "default_card_for returns the customer's default card" do
+    Stripe.api_key = "sk_test_fake"
+    @organization.update!(stripe_customer_id: "cus_1")
+    pm = Stripe::PaymentMethod.construct_from(card: { last4: "4242", exp_month: 8, exp_year: 2027 })
+    customer = Stripe::Customer.construct_from(invoice_settings: { default_payment_method: pm })
+
+    Stripe::Customer.stub :retrieve, customer do
+      assert_equal({ last4: "4242", exp_month: 8, exp_year: 2027 }, StripeBilling.default_card_for(@organization))
+    end
+  end
+
+  test "default_card_for falls back to the first saved card when there's no default" do
+    Stripe.api_key = "sk_test_fake"
+    @organization.update!(stripe_customer_id: "cus_1")
+    customer = Stripe::Customer.construct_from(invoice_settings: { default_payment_method: nil })
+    pm = Stripe::PaymentMethod.construct_from(card: { last4: "1881", exp_month: 1, exp_year: 2026 })
+
+    Stripe::Customer.stub :retrieve, customer do
+      Stripe::PaymentMethod.stub :list, Stripe::ListObject.construct_from(data: [ pm ]) do
+        assert_equal({ last4: "1881", exp_month: 1, exp_year: 2026 }, StripeBilling.default_card_for(@organization))
+      end
+    end
+  end
+
+  test "default_card_for returns nil without a customer, or on a Stripe error" do
+    Stripe.api_key = "sk_test_fake"
+    assert_nil StripeBilling.default_card_for(@organization)
+
+    @organization.update!(stripe_customer_id: "cus_1")
+    Stripe::Customer.stub :retrieve, ->(*) { raise Stripe::InvalidRequestError.new("no such customer", "id") } do
+      assert_nil StripeBilling.default_card_for(@organization)
+    end
+  end
+
+  test "default_card_for raises NotConfigured without an API key" do
+    Stripe.api_key = nil
+    assert_raises(StripeBilling::NotConfigured) { StripeBilling.default_card_for(@organization) }
+  end
+
   test "configured? is false without an api key, true with one" do
     Stripe.api_key = nil
     assert_not StripeBilling.configured?

@@ -51,4 +51,18 @@ class SubscriptionMailerTest < ActionMailer::TestCase
 
     assert_equal [ SubscriptionMailer.default[:from] ], mail.to
   end
+
+  test "card_expiring goes to admins with the last4 and expiry" do
+    mail = SubscriptionMailer.card_expiring(@organization, { last4: "4242", exp_month: 3, exp_year: 2027 })
+
+    assert_equal [ "admin@example.com" ], mail.to
+    assert_match "expires soon", mail.subject
+
+    [ mail.html_part, mail.text_part ].each do |part|
+      body = part.body.encoded
+      assert_match "4242", body
+      assert_match "03/2027", body
+      assert_match "/billing", body
+    end
+  end
 end

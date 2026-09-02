@@ -1,0 +1,11 @@
+The card we have on file for <%= @organization.name %>'s Pharma Transport
+subscription -- the one ending <%= @card[:last4] %> -- expires <%= @expires %>.
+
+Update it before your next renewal so your subscription doesn't lapse. A failed
+renewal charge would suspend Compliance Packet generation beyond your free
+allowance, your verification badge, and SMS temperature alerts until it's fixed.
+
+Update your card: <%= billing_url %>
+
+Already replaced it? You can ignore this. You're getting this because you're an
+admin on this organization.

@@ -4,6 +4,19 @@
 # once on the transition into `past_due` and then on a cadence from
 # DunningSweepJob.
 class SubscriptionMailer < ApplicationMailer
+  # Heads-up that the saved card is about to expire, sent once per card by
+  # CardExpiryCheckJob. `card` is { last4:, exp_month:, exp_year: }.
+  def card_expiring(organization, card)
+    @organization = organization
+    @card = card
+    @expires = format("%02d/%d", card[:exp_month], card[:exp_year])
+
+    mail(
+      to: recipients,
+      subject: "The card on file for #{organization.name} expires soon"
+    )
+  end
+
   def payment_failed(subscription)
     @subscription = subscription
     @organization = subscription.organization
