@@ -3,6 +3,29 @@
   Pharma Transport subscription and it didn't go through.
 </p>
 
+<% if @amount || @plan || @period_end %>
+  <table style="font-size:14px; border-collapse:collapse; margin:16px 0;">
+    <% if @plan %>
+      <tr>
+        <td style="padding:2px 16px 2px 0; color:#666;">Plan</td>
+        <td><%= @plan.name %></td>
+      </tr>
+    <% end %>
+    <% if @amount %>
+      <tr>
+        <td style="padding:2px 16px 2px 0; color:#666;">Amount due</td>
+        <td><%= number_to_currency(@amount) %> / month</td>
+      </tr>
+    <% end %>
+    <% if @period_end %>
+      <tr>
+        <td style="padding:2px 16px 2px 0; color:#666;">Billing period ends</td>
+        <td><%= @period_end.strftime("%B %-d, %Y") %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
 <p style="font-size:14px;">
   Stripe will keep retrying for a few weeks, but until the payment clears your
   organization has lost:
