@@ -1,6 +1,8 @@
 require "test_helper"
 
 class AlertSettingsControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+
   setup do
     @organization = Organization.create!(name: "Acme Pharma")
     @admin = User.create!(email: "admin@example.com", password: "password123!", organization: @organization, role: "admin")
@@ -98,5 +100,39 @@ class AlertSettingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :not_found
     assert AlertRecipient.exists?(theirs.id)
+  end
+
+  test "an admin can queue a test SMS to a recipient" do
+    enable_sms
+    recipient = @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
+    sign_in @admin
+
+    assert_enqueued_with(job: SmsTestJob, args: [ recipient.id ]) do
+      post test_alert_recipient_url(recipient)
+    end
+    assert_redirected_to alert_settings_path
+    follow_redirect!
+    assert_match "Test message queued", response.body
+  end
+
+  test "a non-admin cannot send a test SMS" do
+    enable_sms
+    recipient = @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
+    sign_in @dispatcher
+
+    assert_no_enqueued_jobs only: SmsTestJob do
+      post test_alert_recipient_url(recipient)
+    end
+    assert_redirected_to alert_settings_path
+  end
+
+  test "a test SMS is refused without an eligible plan" do
+    recipient = @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
+    sign_in @admin
+
+    assert_no_enqueued_jobs only: SmsTestJob do
+      post test_alert_recipient_url(recipient)
+    end
+    assert_redirected_to alert_settings_path
   end
 end
