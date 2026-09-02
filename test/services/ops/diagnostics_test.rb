@@ -55,6 +55,25 @@ module Ops
       end
     end
 
+    test "billing group reports overage opt-ins and this month's extra packets" do
+      org = Organization.create!(name: "Acme", overage_billing_enabled: true)
+      vehicle = Vehicle.create!(name: "T", organization: org)
+      batch = Batch.create!(lot_number: "LOT-1", temperature_celsius: 5, vehicle: vehicle, organization: org)
+      admin = User.create!(email: "a@acme.test", password: "password123!", organization: org, role: "admin")
+      report = ComplianceReport.create_next_version!(batch: batch, generated_by: admin, content_hash: SecureRandom.hex(32), pdf_data: "%PDF")
+      PacketOverage.create!(organization: org, compliance_report: report, stripe_invoice_item_id: "ii_1", amount_cents: 14_900)
+
+      detail = billing_check("Overage billing").detail
+      assert_match "1 org opted in", detail
+      assert_match "1 extra packet this month", detail
+      assert_match "$149.00", detail
+    end
+
+    test "billing group warns when a card is flagged as expiring soon" do
+      Organization.create!(name: "Acme", card_expiry_notified_for: Date.current.strftime("%Y-%m"))
+      assert_equal :warn, billing_check("Cards expiring soon").status
+    end
+
     test "webhooks group flags auto-disabled endpoints" do
       org = Organization.create!(name: "Acme")
       org.webhook_endpoints.create!(url: "https://8.8.8.8/ok")
