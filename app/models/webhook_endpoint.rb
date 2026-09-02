@@ -7,6 +7,7 @@ require "ipaddr"
 # WebhookDeliveryJob (the actual POST).
 class WebhookEndpoint < ApplicationRecord
   belongs_to :organization
+  has_many :deliveries, class_name: "WebhookDelivery", dependent: :delete_all
 
   # Consecutive failed deliveries (not retry attempts -- see
   # WebhookDeliveryJob) before the endpoint is switched off. The owner

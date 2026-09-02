@@ -44,18 +44,31 @@ class WebhookDispatcherTest < ActiveSupport::TestCase
     end
   end
 
-  test "the envelope carries an id, the event name, a timestamp and the data" do
+  test "records a WebhookDelivery per endpoint and enqueues the job with its id" do
     subscribe("compliance")
     endpoint = @organization.webhook_endpoints.create!(url: PUBLIC_URL)
 
-    WebhookDispatcher.publish(organization: @organization, event: "excursion.started", data: { lot_number: "LOT-9" })
+    assert_difference -> { WebhookDelivery.count }, 1 do
+      WebhookDispatcher.publish(organization: @organization, event: "excursion.started", data: { lot_number: "LOT-9" })
+    end
+
+    delivery = endpoint.deliveries.sole
+    assert delivery.pending?
+    assert_equal "excursion.started", delivery.event
+    assert_equal delivery.event_id, delivery.payload["id"]
+    assert_equal "excursion.started", delivery.payload["event"]
+    assert_equal "LOT-9", delivery.payload.dig("data", "lot_number")
 
     job = enqueued_jobs.find { |j| j["job_class"] == "WebhookDeliveryJob" }
-    endpoint_id, event, envelope = job["arguments"]
-    assert_equal endpoint.id, endpoint_id
-    assert_equal "excursion.started", event
-    assert envelope["id"].present?
-    assert_equal "excursion.started", envelope["event"]
-    assert_equal "LOT-9", envelope.dig("data", "lot_number")
+    assert_equal [ delivery.id ], job["arguments"]
+  end
+
+  test "no delivery rows are written when the plan doesn't include webhooks" do
+    subscribe("pro")
+    @organization.webhook_endpoints.create!(url: PUBLIC_URL)
+
+    assert_no_difference -> { WebhookDelivery.count } do
+      WebhookDispatcher.publish(organization: @organization, event: "custody.recorded", data: {})
+    end
   end
 end

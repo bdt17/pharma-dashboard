@@ -63,8 +63,9 @@
               </div>
             <% end %>
           </div>
-          <div class="text-[12px] text-ink-faint">
-            Signing secret: <code class="bg-paper border border-line rounded px-2 py-0.5 mono break-all"><%= endpoint.signing_secret %></code>
+          <div class="text-[12px] text-ink-faint flex items-center gap-3 flex-wrap">
+            <span>Signing secret: <code class="bg-paper border border-line rounded px-2 py-0.5 mono break-all"><%= endpoint.signing_secret %></code></span>
+            <%= link_to "Delivery log →", webhook_endpoint_deliveries_path(endpoint), class: "font-medium underline shrink-0" %>
           </div>
 
           <div class="border-t border-line pt-2 mt-1">

@@ -52,10 +52,12 @@ class WebhookEndpointsController < ApplicationController
   end
 
   def test
-    WebhookDeliveryJob.perform_later(@endpoint.id, "webhook.test", {
+    envelope = {
       id: SecureRandom.uuid, event: "webhook.test", created_at: Time.current.iso8601,
       data: { message: "This is a test delivery from Pharma Transport." }
-    })
+    }
+    delivery = @endpoint.deliveries.create!(event: "webhook.test", event_id: envelope[:id], payload: envelope.as_json)
+    WebhookDeliveryJob.perform_later(delivery.id)
     redirect_to webhook_endpoints_path, notice: "Test event queued for #{@endpoint.url}."
   end
 
