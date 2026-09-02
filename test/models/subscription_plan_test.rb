@@ -28,7 +28,7 @@ class SubscriptionPlanTest < ActiveSupport::TestCase
   end
 
   test "monthly_dollars is the whole-dollar amount" do
-    assert_equal 99, SubscriptionPlan::STARTER.monthly_dollars
+    assert_equal 129, SubscriptionPlan::STARTER.monthly_dollars
     assert_equal 1_499, SubscriptionPlan::ENTERPRISE.monthly_dollars
   end
 end

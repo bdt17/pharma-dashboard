@@ -1,0 +1,103 @@
+PHARMA DASHBOARD — NEXT STEPS (for picking back up after a reboot)
+Written 2026-09-02. Companion to PROGRESS.txt (the full session handoff).
+
+====================================================================
+WHERE THINGS STAND
+====================================================================
+- Full ROADMAP shipped + 15 follow-up PRs. Production live and verified.
+- main @ c16f05f6, green. Local suite ~540 tests, 0 failures. schema 000009.
+- No open PRs.
+- The revenue-plan "quick win" engineering backlog is DRAINED:
+    overage billing (#140), card-expiry warning (#141 + #143 banner),
+    Enterprise tier (#138), /ops visibility for both (#145).
+- Nothing is blocking a launch. The code is ahead of the go-to-market.
+- PROGRESS.txt is at rev 18 (tracked, full handoff). This file is
+  untracked scratch -- the short "what to do next" version.
+
+====================================================================
+DO FIRST (non-engineering, highest leverage) -- these are Brett's calls
+====================================================================
+1. RAISE LIST PRICES on Starter / Pro / Compliance; grandfather current
+   customers. The Enterprise tier is done; the price raise is not.
+   - Engineering part is tiny: bump `monthly_cents` in
+     app/models/subscription_plan.rb.
+   - Stripe part is MANUAL: StripeSubscriptionPlansSync will NOT touch a
+     live Price. Archive the old Price in the Stripe dashboard and let
+     `bin/rails stripe:sync_subscription_plans` create the new one, then
+     `bin/rails stripe:sync_annual_prices`. Existing subscriptions keep
+     their old Price automatically.
+
+2. POINT THE FUNNEL AT THE NOV 27 2026 DSCSA DEADLINE (~3 months out).
+   Content + paid search on "small pharmacy DSCSA 2026", the
+   DSCSA-assessment follow-up sequence, one state-pharmacy-association
+   conversation. Nothing else compounds without traffic.
+
+3. Make the fractional compliance officer the hero offer for the anxious
+   segment -- dedicated page + funnel, intake capped, waitlist as scarcity.
+
+4. Default annual billing to "2 months free" (currently 10% off) and
+   pre-select it at checkout.
+
+====================================================================
+ENGINEERING -- NEEDS A DECISION FROM BRETT BEFORE BUILDING
+====================================================================
+- SMS QUIET HOURS. Question: is "delay the excursion text to the end of
+  the quiet window" (email + webhook still immediate) the right behavior
+  for a cold chain, or should quiet hours be off the table entirely
+  because a 3am breach is exactly when you want the buzz?
+  If "delay": the app has NO timezone model today (runs UTC). Build =
+  add per-org timezone + quiet window (default off) + re-enqueue logic in
+  SmsExcursionAlertJob. ~1 day once the behavior is decided.
+
+- SELF-SERVE ENTERPRISE. Currently contact-sales (deliberate). Only
+  revisit if the sales conversation proves too slow to close deals.
+
+====================================================================
+ENGINEERING -- ONLY WHEN A TRIGGER HAPPENS (not now)
+====================================================================
+- Webhook delivery log pagination + status/event filter -- when a real
+  integration customer needs history past the newest 100 rows.
+- Split Solid Queue into its own Render service -- when job volume climbs
+  (drop `plugin :solid_queue` from config/puma.rb, run `bin/jobs`).
+- Webhook delivery DNS-rebinding pin -- low likelihood, fiddly; deferred.
+- SMS voice calls -- needs a Twilio Voice account.
+- Per-recipient alert severity filters -- needs an excursion-severity
+  model, which doesn't exist.
+
+====================================================================
+SMALL POLISH IDEAS (nice-to-have, no decision needed)
+====================================================================
+- Overage summary on the Billing page only renders while the org is still
+  on a capped plan (@overage_eligible). If they upgrade mid-month they
+  lose sight of accrued overages. Move the summary outside that guard.
+- Dashboard "extra packets this month" tile, mirroring the Billing line.
+- ExcursionNotifier.resolved sends no SMS by design -- consider a single
+  "all clear" text as an option (per-org toggle) for customers who want
+  closure on a 3am alert.
+
+====================================================================
+WORKFLOW REMINDERS (from memory + this session)
+====================================================================
+- Branch -> PR -> wait for CI (lint/scan_ruby/test/system all green) ->
+  squash-merge --delete-branch -> pull main. Never commit to main.
+- Tracked-file changes (incl. PROGRESS.txt) go through a PR too.
+- AuthenticationFlowTest system flake: green on rerun; #128/#134 hardened
+  it. If CI on main goes red on it alone, just re-run the job.
+- Schema pollution on branch switches: `git checkout origin/main --
+  db/schema.rb` then `RAILS_ENV=test bin/rails db:drop db:create
+  db:migrate` to regenerate cleanly. Watch the version line.
+- Stripe secret work (price sync, etc.) must be run by Brett with `!` in
+  the prompt -- the agent can't reach live Stripe.
+- Dev server: pre-existing user server on pid 9233 / port 3111. If you
+  boot a test server, use `-P <tmpfile>` for the pidfile and restore
+  `printf '9233' > tmp/pids/server.pid` after.
+
+====================================================================
+KEY IDENTIFIERS
+====================================================================
+- Enterprise Stripe Prices (live): monthly price_1UB53KCDVKifSEsceipruOnD
+  ($1,499/mo), annual price_1UB53bCDVKifSEscCQUFOXCx ($16,189.20/yr).
+- Production: pharmatransport.org, Render auto-deploys main, Procfile
+  release runs `rails db:migrate && rails db:seed`.
+- Docs produced this session (private Artifacts) -- URLs in PROGRESS.txt
+  "DOCUMENTS PRODUCED THIS SESSION".

@@ -34,7 +34,7 @@ class StripeSubscriptionPlansSyncTest < ActiveSupport::TestCase
     end
 
     assert_equal %w[Starter Pro Compliance Enterprise], created_products.map { |p| p[:name] }
-    assert_equal [ 9_900, 24_900, 49_900, 149_900 ], created_prices.map { |p| p[:unit_amount] }
+    assert_equal [ 12_900, 29_900, 59_900, 149_900 ], created_prices.map { |p| p[:unit_amount] }
     assert created_prices.all? { |p| p[:recurring] == { interval: "month" } }
     assert_equal "15", created_prices.first[:metadata]["packet_allowance"]
     assert_equal "unlimited", created_prices.last[:metadata]["packet_allowance"]
