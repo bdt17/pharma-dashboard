@@ -1,16 +1,16 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-01 (rev 16)
+Last updated: 2026-09-02 (rev 17)
 
 ====================================================================
 STATUS
 ====================================================================
-The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Twelve
+The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Thirteen
 follow-up PRs shipped on top. Production is live and verified.
 
-main @ 8cfad8fc  ·  no open PRs.
+main @ a18d0efd  ·  no open PRs.
 
 Local on main:
-  bin/rails test           533 runs, 0 failures
+  bin/rails test           538 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_01_000009  (migrations 001-009)
@@ -23,7 +23,7 @@ new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
 pharmatransport.org, confirming the release migrations ran.
 
 ====================================================================
-MERGED THIS SESSION (28 PRs)
+MERGED THIS SESSION (30 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -126,6 +126,13 @@ Rev-12 follow-up-list work (all merged):
         MIGRATION 000009 -- one nullable string column. No new Stripe
         setup. Stripe has no reliable expiring-PaymentMethod webhook, so
         this polls.
+  #143  Surface both of the above in-app, not just email. CardExpiryCheckJob
+        now clears card_expiry_notified_for once it sees a good card;
+        Organization#card_expiring_soon? reads that flag (no per-request
+        Stripe call); _card_expiry_banner (amber) rides every
+        authenticated page below the payment-recovery banner. Billing
+        page summarizes PacketOverage.this_month (count + total heading
+        to the next invoice). No migration.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -156,24 +163,28 @@ DEPLOY / GO-LIVE NOTES
 ====================================================================
 FOLLOW-UP WORK (product)
 ====================================================================
-- SMS: quiet hours, voice calls, per-recipient severity filters.
-- Overage billing (#140) is a pending invoice item on the next renewal;
-  there's no in-app "you've been billed $X in overages this month"
-  summary yet (PacketOverage.this_month has the data).
-- Card-expiry warning (#141) is opt-out-free -- consider a matching
-  in-app banner on the dashboard, not just the email.
-- Enterprise tier is contact-sales only. If self-serve Enterprise is ever
-  wanted, drop the contact_sales flag and reconcile the feature list with
-  what's actually built (SSO / custom SOP authoring are sales-time work,
-  not app toggles).
-- Webhook delivery log (#136) shows the newest 100 only -- add real
-  pagination + a status/event filter if a customer's volume needs it.
+- SMS quiet hours -- needs a product call first. Suppressing a cold-chain
+  excursion text at 3am arguably defeats the core promise. A defensible
+  build: per-org timezone (the app currently has NO timezone model, runs
+  UTC) + quiet window that DELAYS the text to the window's end rather than
+  dropping it, with email + webhook still immediate. Default off. Not
+  built pending that decision.
+- SMS: voice calls (needs Twilio Voice setup), per-recipient severity
+  filters (no excursion severity model exists yet).
+- Self-serve Enterprise -- contact-sales for now; see #138 note above.
+- Webhook delivery log (#136) shows the newest 100 only -- add pagination
+  + a status/event filter if a real integration customer needs history.
 - Webhook delivery has a small DNS-rebinding window (validated at save,
-  re-checked at send, not pinned to the resolved IP). Fixing means
-  resolving the host once and pinning Net::HTTP to that IP with the
-  Host header preserved for TLS SNI -- fiddly, low likelihood, deferred.
+  re-checked at send, not pinned to the resolved IP). Fiddly, low
+  likelihood, deferred.
 - Split the Solid Queue worker into its own Render service if job volume
   grows (drop the puma plugin line, run bin/jobs).
+
+Note: the "quick win" backlog from the revenue plan is now drained --
+overage billing (#140), card-expiry (#141, #143), and the Enterprise tier
+(#138) all shipped. Everything left above needs either a product decision
+(quiet hours) or a triggering condition (customer volume) before it's
+worth building.
 
 ====================================================================
 DOCUMENTS PRODUCED THIS SESSION (Artifacts -- private by default)
