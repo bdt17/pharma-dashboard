@@ -57,6 +57,23 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_match "$99.00", response.body
   end
 
+  test "the Enterprise tier is not a self-serve Subscribe button, just a contact link" do
+    plans = [
+      { id: "price_s", product_name: "Starter", amount: 99.0, currency: "usd", interval: "month", tier: "starter" },
+      { id: "price_e", product_name: "Enterprise", amount: 1499.0, currency: "usd", interval: "month", tier: "enterprise" }
+    ]
+
+    sign_in @user
+    StripeBilling.stub :available_plans, plans do
+      get billing_url
+    end
+
+    assert_response :success
+    assert_select "form[action=?]", billing_checkout_path(price_id: "price_s")
+    assert_select "form[action=?]", billing_checkout_path(price_id: "price_e"), count: 0
+    assert_select "a[href=?]", request_a_call_path(topic: "enterprise")
+  end
+
   test "shows the founding-customer offer banner before the cutoff, not after" do
     plans = [ { id: "price_123", product_name: "Starter", amount: 200.0, currency: "usd", interval: "month" } ]
     sign_in @user

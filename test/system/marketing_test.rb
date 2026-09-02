@@ -21,7 +21,7 @@ class MarketingTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Simple, transparent pricing."
   end
 
-  test "pricing shows the three tiers with their prices" do
+  test "pricing shows the self-serve tiers with their prices, plus Enterprise" do
     visit pricing_path
 
     assert_text "Starter"
@@ -31,6 +31,9 @@ class MarketingTest < ApplicationSystemTestCase
     assert_text "$249"
     assert_text "$499"
     assert_selector ".badge", text: "Most popular"
+
+    assert_text "Enterprise"
+    assert_link "Talk to us", href: request_a_call_path(topic: "enterprise")
   end
 
   test "the security page loads and states what is not yet claimed" do

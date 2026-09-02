@@ -13,6 +13,11 @@ class CallRequestTest < ActiveSupport::TestCase
     assert_includes cr.errors[:topic], "is not included in the list"
 
     assert CallRequest.new(name: "Jane", email: "jane@example.com", topic: "general").valid?
+    assert CallRequest.new(name: "Jane", email: "jane@example.com", topic: "enterprise").valid?
+  end
+
+  test "enterprise topic has a label" do
+    assert_equal "Enterprise plan", CallRequest.new(topic: "enterprise").topic_label
   end
 
   test "topic_label is human readable" do
