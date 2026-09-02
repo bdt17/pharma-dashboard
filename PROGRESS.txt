@@ -1,87 +1,141 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-01 (rev 11 — FINAL)
+Last updated: 2026-09-01 (rev 12)
 
 ====================================================================
-STATUS: DONE. Entire ROADMAP.md (steps 1-7) built and merged.
+STATUS
 ====================================================================
-main @ 42f8ba33  ·  no open PRs  ·  all CI green.
+The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Four
+follow-up PRs shipped on top. Production is live and verified.
 
-Remote CI on the merge commit: CI workflow = success (lint, brakeman,
-bundler-audit, rails test, test:system); Smoke workflow (live prod
-surface check) = success.
+main @ 7f940137  ·  no open PRs.
 
-Local on main (fresh db:schema:load):
-  bin/rails test           456 runs, 0 failures
+Local on main:
+  bin/rails test           469 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
-  rubocop                  clean (273 files)
-  brakeman                 0 warnings
-  bundler-audit            0 vulnerabilities
-  db:seed:replant          OK
-  schema version           2026_08_31_000005  (migrations 001-005 contiguous)
+  rubocop / brakeman / bundler-audit / db:seed:replant   clean
+  schema version           2026_08_31_000005  (migrations 001-005)
   config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep
 
-MERGED to main (13 PRs, all this session):
-  #112  failed-payment recovery banner            (retention)
+Production: Render auto-deploys main on push. Latest deploy verified --
+the CI and Smoke (live public-surface) workflows both passed, and the
+new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
+pharmatransport.org, confirming the release migrations ran.
+
+====================================================================
+MERGED THIS SESSION (18 PRs)
+====================================================================
+
+Roadmap + core:
+  #112  failed-payment recovery banner                     (retention)
   #113  GPS telemetry -> shipment linking + temperature-excursion
-        detection & email alerts                  (core promise, was unwired)
+        detection & email alerts        (the core promise; was unwired)
   #114  ROADMAP.md
-  #115  Solid Queue — durable ActiveJob backend   (roadmap 1)
-  #116  per-org SMS excursion alerts (Pro/Compliance tier)   (roadmap 2)
-  #117  auto-generate a Compliance Packet on delivery        (roadmap 3)
-  #118  fix the flaky AuthenticationFlowTest CI race
-  #119  restyle custody-log / compliance-packet pages to the design system
-  #120  .gitignore for .claude/, design-canvas/, PROGRESS.txt
-  #121  past_due recovery email                   (roadmap 4)
-  #122  excursion-events table in the Compliance Packet PDF   (roadmap 5)
-  #123  embeddable SVG verification badge         (roadmap 7)
-  #124  outbound event webhooks (Compliance tier) (roadmap 6)
+  #115  Solid Queue -- durable ActiveJob backend           (roadmap 1)
+  #116  per-org SMS excursion alerts, Pro/Compliance       (roadmap 2)
+  #117  auto-generate a Compliance Packet on delivery      (roadmap 3)
+  #121  past_due recovery email + DunningSweepJob          (roadmap 4)
+  #122  excursion-events table in the Compliance Packet PDF (roadmap 5)
+  #124  outbound event webhooks, Compliance tier           (roadmap 6)
         WebhookEndpoint (per-org URL + HMAC secret; strict SSRF
-        validation — HTTPS only, host must resolve to public IPs,
-        re-checked at send). WebhookDispatcher fan-out from
-        ExcursionNotifier + CustodyLogsController. WebhookDeliveryJob
-        (signed POST, backoff retries on timeout/5xx/429, auto-disable
-        after 10 failed events). /webhooks admin page.
+        validation, re-checked at send), WebhookDispatcher fan-out from
+        ExcursionNotifier + CustodyLogsController, WebhookDeliveryJob
+        (signed POST, backoff retries, auto-disable after 10 fails),
+        /webhooks admin page.
+  #123  embeddable SVG verification badge                  (roadmap 7)
+        GET /verify/:token/badge.svg (public, 1h cache) + copy-paste
+        <a><img></a> embed snippet on the Billing page.
+
+Cleanup / hardening:
+  #118  fix a race in AuthenticationFlowTest (non-waiting find_by!)
+  #119  restyle custody-log / compliance-packet pages to the design system
+  #120  .gitignore for .claude/ and design-canvas/
+  #125  track PROGRESS.txt in the repo (un-ignored it)
+  #128  harden AuthenticationFlowTest against Selenium node staleness
+        (visible: :all on the bare svg/li asserts -- the flake that hit
+        #113/#117/#127 CI, green on rerun every time)
+
+Post-deploy follow-ups:
+  #126  /ops now reports SMS (Twilio) and outbound-webhook health --
+        each env var set/unset (never the value), sender kind, recipient
+        counts, endpoints active / auto-disabled / failing.
+  #127  "Send test" button per recipient on /alerts -> SmsTestJob, so
+        confirming Twilio works no longer needs a forced excursion.
+  #129  GPS ingest accepts an optional captured_at (ISO-8601 or Unix
+        epoch seconds) for buffered readings -- trusted 7 days back /
+        5 min ahead, else falls back to receive time. A late-flushed
+        reading no longer drags the vehicle's live snapshot backwards.
+        No migration. Excursion events now get correct backdated times.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
 ====================================================================
-- SMS alerts (#116): set TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN /
-  TWILIO_MESSAGING_FROM as Render env vars. Inert until then.
-- Solid Queue (#115): the Procfile `release:` step already runs
-  db:migrate, so the tables get created on deploy. The worker runs
-  inside Puma (plugin :solid_queue) — no separate service. The
-  scheduler runs config/recurring.yml (production key only):
+- SMS alerts: set TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN /
+  TWILIO_MESSAGING_FROM as Render env vars -- inert until all three are
+  set. MESSAGING_FROM takes an MG... Messaging Service SID (preferred:
+  handles opt-out + A2P) or a +1... number. US SMS also needs A2P 10DLC
+  or toll-free verification with the carriers or messages get filtered.
+  Verify: /ops shows the SMS group green, then /alerts -> Send test.
+- Solid Queue: the Procfile release: step runs db:migrate on deploy; the
+  worker runs inside Puma (plugin :solid_queue), no separate service.
+  The scheduler runs config/recurring.yml (production key only):
   clear_solid_queue_finished_jobs + dunning_sweep (daily 9am).
-- Webhooks (#124) + dunning email (#121) both ride Solid Queue.
+- Webhooks, dunning email, SMS jobs, packet generation all ride Solid Queue.
 
 ====================================================================
-FOLLOW-UP WORK (roadmap is done; these are smaller)
+FOLLOW-UP WORK (product)
 ====================================================================
-- Confirm rack-attack covers POST /api/v1/gps — the device-token
-  ingest endpoint, will get hammered once real trackers connect.
-- Webhooks: per-endpoint event-type filtering; a delivery-log / replay
-  UI; a real `enterprise` Stripe tier (gated on `compliance` for now).
+- Confirm rack-attack covers POST /api/v1/gps before real trackers connect.
+- Webhooks: per-endpoint event-type filtering; a delivery-log / replay UI.
+- A real `enterprise` Stripe tier (webhooks gated on `compliance` for now).
 - SMS: quiet hours, voice calls, per-recipient severity filters.
 - past_due email: add a plan-amount / next-retry-date line.
 - Webhook delivery has a small DNS-rebinding window (validated at save,
-  re-checked at send, but not pinned to the resolved IP).
-- Optional: split the Solid Queue worker into its own Render service if
-  job volume grows (drop the puma plugin line, run `bin/jobs`).
+  re-checked at send, not pinned to the resolved IP).
+- Split the Solid Queue worker into its own Render service if job volume
+  grows (drop the puma plugin line, run bin/jobs).
+
+====================================================================
+DOCUMENTS PRODUCED THIS SESSION (Artifacts -- private by default)
+====================================================================
+Customer-facing (share these):
+  Using Pharma Transport    claude.ai/code/artifact/7acb5ff5-16a3-4e00-bd18-4e09aa3a516e
+  The Pharma Transport Case (sales pitch)
+                            claude.ai/code/artifact/a4d04def-bba0-47d7-9ccb-bf6fceac22df
+
+Internal:
+  Operating Pharma Transport (operator runbook)
+                            claude.ai/code/artifact/3356559f-0329-4aaf-908d-50d73f50d801
+  Pharma Transport Revenue Plan
+                            claude.ai/code/artifact/8571f98c-cf4b-48cc-b420-e253097964dc
+  Tracker Blueprint (device spec + patent assessment)
+                            claude.ai/code/artifact/8696d100-4385-43d2-a513-c58a60882d95
+  Tracker Build Guide (Blues Notecard bench build)
+                            claude.ai/code/artifact/f5ab96a3-e120-4a89-8ab2-e31dc32ba755
+
+Revenue-plan top priorities: (1) point the funnel at the Nov 27 2026
+DSCSA deadline; (2) raise prices + add a tier above Compliance; (3) push
+annual prepay (2 months free, default it); (4) make the fractional
+compliance officer the hero offer for the anxious segment.
 
 ====================================================================
 DEV ENVIRONMENT CHANGES (local only, never committed)
 ====================================================================
-- dispatch@demo.test / ClaudeDemo123!  — created as a dispatcher on the
-  demo org for quick UI checks (not 2FA-gated, unlike admins).
+- dispatch@demo.test / ClaudeDemo123!  -- a dispatcher on the demo org
+  for quick UI checks (not 2FA-gated, unlike admins).
 - admin@example.com dev password set to ClaudeDemo123!
-- dev DB has every migration through ...000005 applied; demo org was
-  reset clean at various points (demo:reset).
+- dev DB has all migrations through ...000005; demo org reset at points
+  (demo:reset).
 - Pre-existing dev server on pid 9233 / port 3111 left running;
   tmp/pids/server.pid restored to point at it.
+- Step 0 of the Tracker Build Guide, if run, creates a PT-BENCH-01
+  vehicle in PRODUCTION data -- delete it from the app afterward.
 
 ====================================================================
 PRE-EXISTING ISSUES FOUND & FIXED THIS SESSION
 ====================================================================
-  1. AuthenticationFlowTest CI flake (non-waiting find_by!)  -> #118
-  2. custody/packet pages using pre-design-system Tailwind    -> #119
-  3. .claude/ + design-canvas/ + PROGRESS.txt swept by git add -A -> #120
+  1. AuthenticationFlowTest CI flake -- two separate races:
+     non-waiting find_by! after signup (#118), and a stale-node
+     visibility check on bare selectors (#128).
+  2. custody / packet pages on pre-design-system Tailwind    -> #119
+  3. .claude/ + design-canvas/ swept into a commit by git add -A -> #120
+  4. GPS ingest had no way to timestamp a buffered reading   -> #129
