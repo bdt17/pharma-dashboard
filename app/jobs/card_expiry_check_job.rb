@@ -22,7 +22,15 @@ class CardExpiryCheckJob < ApplicationJob
       next unless subscribed?(organization)
 
       card = StripeBilling.default_card_for(organization)
-      next unless card && expiring_soon?(card)
+      next unless card
+
+      unless expiring_soon?(card)
+        # The card was replaced with a good one (or we misjudged) -- clear
+        # the flag so the in-app banner (Organization#card_expiring_soon?)
+        # drops.
+        organization.update!(card_expiry_notified_for: nil) if organization.card_expiry_notified_for.present?
+        next
+      end
 
       period = format("%04d-%02d", card[:exp_year], card[:exp_month])
       next if organization.card_expiry_notified_for == period

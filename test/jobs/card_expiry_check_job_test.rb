@@ -68,6 +68,16 @@ class CardExpiryCheckJobTest < ActiveJob::TestCase
     assert_nil @organization.reload.card_expiry_notified_for
   end
 
+  test "clears the flag once the card is replaced with a good one" do
+    with_card(soon) { CardExpiryCheckJob.perform_now }
+    assert @organization.reload.card_expiry_notified_for.present?
+
+    with_card(far) do
+      assert_no_enqueued_emails { CardExpiryCheckJob.perform_now }
+    end
+    assert_nil @organization.reload.card_expiry_notified_for
+  end
+
   test "skips an organization with no active subscription" do
     @organization.subscriptions.update_all(status: "canceled")
     with_card(soon) do

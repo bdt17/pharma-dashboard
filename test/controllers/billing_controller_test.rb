@@ -94,6 +94,24 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_no_match "Overage billing", response.body
   end
 
+  test "the billing page summarizes this month's overage charges" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "starter")
+    @organization.update!(stripe_customer_id: "cus_1")
+    vehicle = Vehicle.create!(name: "T", organization: @organization)
+    batch = Batch.create!(lot_number: "LOT-1", temperature_celsius: 5, vehicle: vehicle, organization: @organization)
+    2.times do |n|
+      report = ComplianceReport.create_next_version!(batch: batch, generated_by: @user, content_hash: SecureRandom.hex(32), pdf_data: "%PDF-x")
+      PacketOverage.create!(organization: @organization, compliance_report: report, stripe_invoice_item_id: "ii_#{n}", amount_cents: 14_900)
+    end
+    sign_in @user
+
+    StripeBilling.stub :available_plans, [] do
+      get billing_url
+    end
+    assert_match "2 extra packets", response.body
+    assert_match "$298.00", response.body
+  end
+
   test "the Enterprise tier is not a self-serve Subscribe button, just a contact link" do
     plans = [
       { id: "price_s", product_name: "Starter", amount: 99.0, currency: "usd", interval: "month", tier: "starter" },

@@ -107,6 +107,23 @@ class OrganizationTest < ActiveSupport::TestCase
     assert org.webhooks_available?
   end
 
+  test "card_expiring_soon? tracks the flag CardExpiryCheckJob maintains" do
+    org = Organization.create!(name: "Acme Pharma")
+    assert_not org.card_expiring_soon?, "no flag"
+
+    org.update!(card_expiry_notified_for: Date.current.strftime("%Y-%m"))
+    assert org.card_expiring_soon?, "current-month expiry"
+
+    org.update!(card_expiry_notified_for: 2.months.ago.strftime("%Y-%m"))
+    assert org.card_expiring_soon?, "already-lapsed card still warns"
+
+    org.update!(card_expiry_notified_for: 2.years.from_now.strftime("%Y-%m"))
+    assert_not org.card_expiring_soon?, "a far-future stale flag does not warn"
+
+    org.update!(card_expiry_notified_for: "garbage")
+    assert_not org.card_expiring_soon?
+  end
+
   test "alert_sms_available? treats a pre-tier subscription as full-featured" do
     org = Organization.create!(name: "Acme Pharma")
     Subscription.create!(organization: org, status: "active", stripe_subscription_id: "sub_legacy", tier: nil)

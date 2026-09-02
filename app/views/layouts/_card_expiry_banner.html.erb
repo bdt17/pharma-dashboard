@@ -1,0 +1,18 @@
+<%# Proactive-churn prevention. CardExpiryCheckJob emails the admins once
+    when the saved card is about to expire, but email is easy to miss --
+    this banner rides every authenticated page until the card is replaced
+    (the job clears the flag once it sees a good card). Amber, not red:
+    nothing is broken yet, unlike the payment-recovery banner. %>
+<% if current_organization&.card_expiring_soon? && !current_subscription&.payment_failing? %>
+  <div class="px-7 pt-4">
+    <div class="rounded border px-4 py-3 text-sm flex items-center justify-between gap-4"
+         style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
+      <span>
+        <span class="font-semibold">The card on file is about to expire.</span>
+        Update it before your next renewal so your subscription doesn't lapse.
+      </span>
+      <%= button_to "Update payment method", billing_portal_path, method: :post,
+            class: "btn btn-secondary btn-sm shrink-0 whitespace-nowrap" %>
+    </div>
+  </div>
+<% end %>
