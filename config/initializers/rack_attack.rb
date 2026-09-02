@@ -47,6 +47,27 @@ class Rack::Attack
     req.ip if req.path == "/two_factor_setup" && %w[POST DELETE].include?(req.request_method)
   end
 
+  # Device telemetry ingest (POST /api/v1/gps). Real trackers in a fleet
+  # commonly share one public IP -- carrier-grade NAT on cellular networks
+  # puts every truck on the same wholesale address -- so the per-IP
+  # backstop below is the wrong control here: a big enough fleet reporting
+  # at a normal cadence would trip it. Throttle per device token instead,
+  # at a rate far above any sane reporting interval, so one wedged device
+  # can't flood us while a whole fleet reporting normally never notices.
+  # Requests with no token fall through to the stricter anon throttle.
+  throttle("gps_ingest/token", limit: 120, period: 1.minute) do |req|
+    if req.path == "/api/v1/gps" && req.post?
+      req.get_header("HTTP_X_DEVICE_TOKEN").presence || req.ip
+    end
+  end
+
+  # A POST to the ingest endpoint with no device token is either a
+  # misconfigured device or something probing for valid IMEIs. Keep those
+  # on a tight per-IP leash regardless of the fleet-friendly limit above.
+  throttle("gps_ingest/anon", limit: 20, period: 1.minute) do |req|
+    req.ip if req.path == "/api/v1/gps" && req.post? && req.get_header("HTTP_X_DEVICE_TOKEN").blank?
+  end
+
   # Public lead forms (request-a-call, DSCSA assessment). Same reasoning as
   # the signup throttle: a burst of spam submissions both fills the leads
   # inbox and can flag the sending Gmail account for abuse.
@@ -55,8 +76,12 @@ class Rack::Attack
   end
 
   # General backstop against basic flooding of any endpoint, independent of
-  # the specific throttles above.
-  throttle("requests/ip", limit: 300, period: 5.minutes, &:ip)
+  # the specific throttles above. Device telemetry ingest is exempt -- it
+  # has its own per-token and anon throttles (see gps_ingest/*), and a
+  # NAT'd fleet's combined volume would otherwise trip this per-IP limit.
+  throttle("requests/ip", limit: 300, period: 5.minutes) do |req|
+    req.ip unless req.path == "/api/v1/gps" && req.post?
+  end
 
   self.throttled_responder = lambda do |request|
     [ 429, { "Content-Type" => "application/json" }, [ { error: "Too many requests. Please try again shortly." }.to_json ] ]
