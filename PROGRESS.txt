@@ -1,20 +1,21 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-01 (rev 13)
+Last updated: 2026-09-01 (rev 14)
 
 ====================================================================
 STATUS
 ====================================================================
-The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Eight
+The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Nine
 follow-up PRs shipped on top. Production is live and verified.
 
-main @ ba6ca484  ·  no open PRs.
+main @ 4e4ac075  ·  no open PRs.
 
 Local on main:
-  bin/rails test           483 runs, 0 failures
+  bin/rails test           496 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
-  schema version           2026_09_01_000006  (migrations 001-006)
-  config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep
+  schema version           2026_09_01_000007  (migrations 001-007)
+  config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep,
+                           purge_old_webhook_deliveries
 
 Production: Render auto-deploys main on push. Latest deploy verified --
 the CI and Smoke (live public-surface) workflows both passed, and the
@@ -22,7 +23,7 @@ new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
 pharmatransport.org, confirming the release migrations ran.
 
 ====================================================================
-MERGED THIS SESSION (22 PRs)
+MERGED THIS SESSION (24 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -83,6 +84,17 @@ Rev-12 follow-up-list work (all merged):
         assert_selector/text once past Chrome's CDP "Node with given id
         does not belong to the document" error (the #128 flake, new
         call site -- it hit main CI after #132).
+  #136  Webhook delivery log + re-send. New WebhookDelivery model/table
+        (status, HTTP code, attempts, duration, error, full payload).
+        WebhookDispatcher and the Send-test action create a delivery row
+        and enqueue WebhookDeliveryJob(delivery_id); the job records the
+        outcome back. GET /webhooks/:id/deliveries shows the newest 100
+        (any org member); POST .../deliveries/:id/replay re-sends the
+        stored envelope as a linked new delivery (admin only).
+        purge_old_webhook_deliveries recurring task trims past 30 days.
+        MIGRATION 000007 -- new table only, safe on deploy. The job
+        signature changed from (endpoint_id, event, envelope) to
+        (delivery_id).
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -96,19 +108,20 @@ DEPLOY / GO-LIVE NOTES
 - Solid Queue: the Procfile release: step runs db:migrate on deploy; the
   worker runs inside Puma (plugin :solid_queue), no separate service.
   The scheduler runs config/recurring.yml (production key only):
-  clear_solid_queue_finished_jobs + dunning_sweep (daily 9am).
+  clear_solid_queue_finished_jobs (hourly) + dunning_sweep (daily 9am) +
+  purge_old_webhook_deliveries (daily 4am, trims the delivery log).
 - Webhooks, dunning email, SMS jobs, packet generation all ride Solid Queue.
-- Next deploy runs migration 000006 (webhook_endpoints.subscribed_events).
-  Additive column, default [] -- no downtime, existing endpoints keep
-  receiving every event.
+- Migrations 000006 + 000007 both additive (webhook_endpoints
+  .subscribed_events; new webhook_deliveries table). No downtime.
 
 ====================================================================
 FOLLOW-UP WORK (product)
 ====================================================================
-- Webhooks: a delivery-log / replay UI (per-endpoint event filtering done, #133).
 - A real `enterprise` Stripe tier (webhooks gated on `compliance` for now).
   Needs a product decision on price + Stripe Price setup before building.
 - SMS: quiet hours, voice calls, per-recipient severity filters.
+- Webhook delivery log (#136) shows the newest 100 only -- add real
+  pagination + a status/event filter if a customer's volume needs it.
 - Webhook delivery has a small DNS-rebinding window (validated at save,
   re-checked at send, not pinned to the resolved IP). Fixing means
   resolving the host once and pinning Net::HTTP to that IP with the
@@ -145,7 +158,7 @@ DEV ENVIRONMENT CHANGES (local only, never committed)
 - dispatch@demo.test / ClaudeDemo123!  -- a dispatcher on the demo org
   for quick UI checks (not 2FA-gated, unlike admins).
 - admin@example.com dev password set to ClaudeDemo123!
-- dev DB has all migrations through ...000006; demo org reset at points
+- dev DB has all migrations through ...000007; demo org reset at points
   (demo:reset).
 - Pre-existing dev server on pid 9233 / port 3111 left running;
   tmp/pids/server.pid restored to point at it.
