@@ -1,13 +1,13 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-02 (rev 18)
+Last updated: 2026-09-02 (rev 19)
 
 ====================================================================
 STATUS
 ====================================================================
-The entire ROADMAP.md (steps 1-7) is built, merged, and deployed. Fifteen
-follow-up PRs shipped on top. Production is live and verified.
+The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
+Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ da776312  ·  no open PRs.
+main @ 5dae2bd8  ·  no open PRs.
 
 Local on main:
   bin/rails test           540 runs, 0 failures
@@ -23,7 +23,7 @@ new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
 pharmatransport.org, confirming the release migrations ran.
 
 ====================================================================
-MERGED THIS SESSION (32 PRs)
+MERGED THIS SESSION (35 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -136,6 +136,13 @@ Rev-12 follow-up-list work (all merged):
   #145  /ops Billing group now also reports overage opt-ins + extra
         packets billed this month ($), and how many orgs have a card
         flagged as expiring (warns if any). Read-only. No migration.
+  #147  Raise list prices -- Starter $129, Pro $299, Compliance $599
+        (was 99/249/499); Enterprise $1,499 unchanged. CONSTANTS ONLY:
+        does not move any bill or the website numbers until the Stripe
+        Prices are re-synced (see DEPLOY note below). Existing subs keep
+        their old Price = grandfathered.
+  #148  Untrack NEXT_STEPS.txt (local reboot scratch swept into #147 by a
+        stray git add -A) + gitignore it.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -162,6 +169,13 @@ DEPLOY / GO-LIVE NOTES
   `stripe:sync_annual_prices` (both idempotent). To put a customer on
   Enterprise: create the subscription against the monthly Price in the
   Stripe dashboard -- the existing webhook then syncs tier="enterprise".
+- PENDING: the #147 list-price raise is code-only. To activate it, ARCHIVE
+  the old Starter/Pro/Compliance monthly (and annual) Prices in the Stripe
+  dashboard, then run `bin/rails stripe:sync_subscription_plans` and
+  `stripe:sync_annual_prices`. The sync never mutates a live Price, so
+  without the archive step it's a no-op. Existing subscriptions keep their
+  old Price (grandfathered); the pricing/billing pages read the live
+  Stripe amount, so they show 99/249/499 until the sync runs.
 
 ====================================================================
 FOLLOW-UP WORK (product)
