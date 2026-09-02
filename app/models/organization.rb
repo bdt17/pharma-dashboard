@@ -7,6 +7,7 @@ class Organization < ApplicationRecord
   has_many :report_credits, dependent: :destroy
   has_many :alert_recipients, dependent: :destroy
   has_many :webhook_endpoints, dependent: :destroy
+  has_many :packet_overages, dependent: :destroy
   has_many :referrals_made, class_name: "Referral", foreign_key: :referrer_organization_id, inverse_of: :referrer_organization, dependent: :destroy
   has_one :referral_received, class_name: "Referral", foreign_key: :referred_organization_id, inverse_of: :referred_organization, dependent: :destroy
 

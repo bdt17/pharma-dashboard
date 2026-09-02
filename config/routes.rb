@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   post "/billing/checkout", to: "billing#checkout", as: :billing_checkout
   post "/billing/addon_checkout", to: "billing#addon_checkout", as: :billing_addon_checkout
   post "/billing/portal", to: "billing#portal", as: :billing_portal
+  patch "/billing/overage", to: "billing#overage", as: :billing_overage
   get "/billing/success", to: "billing#success", as: :billing_success
   get "/billing/cancel", to: "billing#cancel", as: :billing_cancel
   get "/compliance", to: "compliance#index", as: :compliance

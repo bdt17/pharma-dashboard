@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_000007) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_000008) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -133,6 +133,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_000007) do
   create_table "organizations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
+    t.boolean "overage_billing_enabled", default: false, null: false
     t.string "plan"
     t.string "referral_code"
     t.string "status"
@@ -143,6 +144,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_000007) do
     t.index ["referral_code"], name: "index_organizations_on_referral_code", unique: true
     t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true
     t.index ["verification_token"], name: "index_organizations_on_verification_token", unique: true
+  end
+
+  create_table "packet_overages", force: :cascade do |t|
+    t.integer "amount_cents", null: false
+    t.bigint "compliance_report_id", null: false
+    t.datetime "created_at", null: false
+    t.string "currency", default: "usd", null: false
+    t.bigint "organization_id", null: false
+    t.string "stripe_invoice_item_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["compliance_report_id"], name: "index_packet_overages_on_compliance_report_id", unique: true
+    t.index ["organization_id"], name: "index_packet_overages_on_organization_id"
   end
 
   create_table "referrals", force: :cascade do |t|
@@ -444,6 +457,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_000007) do
   add_foreign_key "custody_logs", "batches"
   add_foreign_key "excursion_events", "batches"
   add_foreign_key "excursion_events", "vehicles"
+  add_foreign_key "packet_overages", "compliance_reports"
+  add_foreign_key "packet_overages", "organizations"
   add_foreign_key "referrals", "organizations", column: "referred_organization_id"
   add_foreign_key "referrals", "organizations", column: "referrer_organization_id"
   add_foreign_key "report_credits", "organizations"

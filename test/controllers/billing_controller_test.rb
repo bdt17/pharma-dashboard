@@ -57,6 +57,43 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_match "$99.00", response.body
   end
 
+  test "an admin on a capped plan can toggle overage billing" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "starter")
+    sign_in @user
+
+    patch billing_overage_url(enabled: true)
+    assert @organization.reload.overage_billing_enabled?
+    assert_redirected_to billing_path
+
+    patch billing_overage_url(enabled: false)
+    assert_not @organization.reload.overage_billing_enabled?
+  end
+
+  test "a non-admin cannot toggle overage billing" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "starter")
+    member = User.create!(email: "m@example.com", password: "password123!", organization: @organization, role: "dispatcher")
+    sign_in member
+
+    patch billing_overage_url(enabled: true)
+    assert_not @organization.reload.overage_billing_enabled?
+    assert_redirected_to billing_path
+  end
+
+  test "the overage toggle shows on a capped plan and not on an unlimited one" do
+    sub = Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "starter")
+    sign_in @user
+    StripeBilling.stub :available_plans, [] do
+      get billing_url
+    end
+    assert_match "Overage billing", response.body
+
+    sub.update!(tier: "compliance")
+    StripeBilling.stub :available_plans, [] do
+      get billing_url
+    end
+    assert_no_match "Overage billing", response.body
+  end
+
   test "the Enterprise tier is not a self-serve Subscribe button, just a contact link" do
     plans = [
       { id: "price_s", product_name: "Starter", amount: 99.0, currency: "usd", interval: "month", tier: "starter" },

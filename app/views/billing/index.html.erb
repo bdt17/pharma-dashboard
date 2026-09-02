@@ -25,6 +25,37 @@
       <dt class="text-ink-faint">Current period ends</dt>
       <dd class="col-span-2 mono"><%= @subscription.current_period_end&.strftime("%Y-%m-%d") || "—" %></dd>
     </dl>
+
+    <% if @overage_eligible %>
+      <% overage_addon = (@addons || []).find { |a| a[:product_name] == "Extra Compliance Packet" } %>
+      <div class="card p-6 mt-4 flex flex-col gap-3">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex flex-col gap-1">
+            <span class="font-semibold text-[14px]">Overage billing</span>
+            <p class="text-[13px] text-ink-soft max-w-[52ch]">
+              Keep generating Compliance Packets after you hit your plan's monthly
+              allowance of <%= @current_plan.packet_allowance %>. Each extra packet
+              <% if overage_addon %>(<span class="mono"><%= number_to_currency(overage_addon[:amount]) %></span>)<% end %>
+              is added to your next invoice — no separate purchase. Off by default; your plan blocks at the allowance.
+            </p>
+          </div>
+          <span class="badge <%= current_organization.overage_billing_enabled? ? "badge-accent" : "" %> shrink-0">
+            <%= current_organization.overage_billing_enabled? ? "On" : "Off" %>
+          </span>
+        </div>
+        <% if current_user.admin? %>
+          <div>
+            <% if current_organization.overage_billing_enabled? %>
+              <%= button_to "Turn off overage billing", billing_overage_path(enabled: false), method: :patch, class: "btn btn-secondary btn-sm" %>
+            <% else %>
+              <%= button_to "Turn on overage billing", billing_overage_path(enabled: true), method: :patch, class: "btn btn-primary btn-sm" %>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-[12px] text-ink-faint">Only an organization admin can change this.</p>
+        <% end %>
+      </div>
+    <% end %>
   <% else %>
     <% if @subscription %>
       <div class="card p-6 bg-[#fdeceb] border-[#f0c8c2] mb-6">

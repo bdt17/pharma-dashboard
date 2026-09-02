@@ -133,6 +133,35 @@ class StripeBilling
     customer.id
   end
 
+  # Adds a single extra Compliance Packet to the organization's next
+  # subscription invoice as a *pending* invoice item -- no immediate card
+  # charge, it just rides along on the next monthly renewal. Priced off
+  # the same one-time "Extra Compliance Packet" Stripe Price the Billing
+  # page sells as a standalone credit, so there's one number to change.
+  # Raises NotConfigured if Stripe or that Price isn't set up, or if the
+  # organization has no Stripe customer yet -- ComplianceReportsController
+  # treats any failure here as "block, don't hand out a free packet".
+  def self.add_packet_overage_item!(organization:, description:)
+    raise NotConfigured unless configured?
+    raise NotConfigured, "organization has no Stripe customer" if organization.stripe_customer_id.blank?
+
+    price = single_packet_price
+    item = Stripe::InvoiceItem.create(
+      customer: organization.stripe_customer_id,
+      price: price.id,
+      description: description
+    )
+    { invoice_item_id: item.id, amount_cents: price.unit_amount, currency: price.currency }
+  end
+
+  # The active one-time Price for a single extra Compliance Packet,
+  # matched by product name the same way StripeAddonPriceSync finds it.
+  def self.single_packet_price
+    Stripe::Price.list(active: true, expand: [ "data.product" ]).data
+      .find { |price| !price.recurring && price.product.name == StripeAddonPriceSync::PRODUCT_NAME } ||
+      raise(NotConfigured, "no '#{StripeAddonPriceSync::PRODUCT_NAME}' Price in Stripe -- run stripe:sync_addon_prices")
+  end
+
   # Shared by start_checkout! and start_addon_checkout!: ensures a Stripe
   # Customer exists, yields its id to build whatever Checkout Session the
   # caller needs, and retries once if the stored customer id turns out to

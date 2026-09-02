@@ -15,6 +15,11 @@ class BillingController < ApplicationController
     @plans = unlimited ? [] : StripeBilling.available_plans.reject { |plan| SubscriptionPlan.find(plan[:tier])&.contact_sales? }
     @addons = unlimited ? [] : StripeBilling.available_addons
     @available_credits = current_organization&.report_credits&.available&.count || 0
+    # The overage toggle only makes sense on a capped paid plan -- an
+    # unlimited plan has no allowance to exceed, and the free tier should
+    # subscribe rather than pay per packet.
+    @current_plan = current_organization&.current_plan
+    @overage_eligible = @current_plan&.packet_allowance.present?
   end
 
   def checkout
@@ -65,6 +70,20 @@ class BillingController < ApplicationController
   rescue Stripe::InvalidRequestError => e
     Rails.logger.error("BillingController#portal: #{e.class}: #{e.message}")
     redirect_to billing_path, alert: "Couldn't open the billing portal right now. Try again shortly."
+  end
+
+  # Opt in / out of overage billing -- letting a capped plan (Starter /
+  # Pro) generate Compliance Packets past its monthly allowance, each
+  # billed as an extra on the next invoice instead of being blocked.
+  def overage
+    authorize_billing_admin!
+    return if performed?
+
+    enabled = ActiveModel::Type::Boolean.new.cast(params[:enabled])
+    current_organization.update!(overage_billing_enabled: enabled)
+    redirect_to billing_path,
+                notice: enabled ? "Overage billing is on. Extra packets will be added to your next invoice." :
+                                  "Overage billing is off. Your plan will block at its monthly allowance."
   end
 
   def success

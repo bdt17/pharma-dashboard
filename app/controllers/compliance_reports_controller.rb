@@ -21,14 +21,24 @@ class ComplianceReportsController < ApplicationController
 
   def create
     authorize @batch, :generate_compliance_report?
-    quota = ComplianceReportQuota.new(@batch.organization)
-    enforce_quota!(quota)
-    return if performed?
+    organization = @batch.organization
+    quota = ComplianceReportQuota.new(organization)
 
     credit = quota.credit_to_consume
-    result = ComplianceReportGenerator.new(@batch).generate!(generated_by: current_user)
-    credit&.consume!
+    overage = credit.nil? && quota.overage_billable?
+
+    if credit.nil? && !overage && quota.exceeded?
+      redirect_to batch_compliance_reports_path(@batch), alert: limit_reached_message(quota)
+      return
+    end
+
+    invoice_item = charge_overage!(organization) if overage
+    return if performed?
+
+    result = generate_report!(invoice_item)
     report = result.compliance_report
+    credit&.consume!
+    PacketOverage.record!(organization: organization, compliance_report: report, invoice_item: invoice_item) if invoice_item
 
     AuditLog.record!(
       event: "compliance_report_generated",
@@ -38,7 +48,7 @@ class ComplianceReportsController < ApplicationController
       data: { version: report.version, content_hash: report.content_hash }
     )
 
-    redirect_to batch_compliance_report_path(@batch, report), notice: "Compliance packet v#{report.version} generated."
+    redirect_to batch_compliance_report_path(@batch, report), notice: generated_message(report, invoice_item)
   end
 
   def download
@@ -59,15 +69,48 @@ class ComplianceReportsController < ApplicationController
     @compliance_report = @batch.compliance_reports.find(params[:id])
   end
 
-  # The pricing-metering gate -- see ComplianceReportQuota. Distinct from
-  # authorize above: that's "can this user role generate reports for this
-  # org," this is "has the org run out of free ones this month, with no
-  # purchased credit to fall back on."
-  def enforce_quota!(quota)
-    return unless quota.exceeded?
-
+  # Creates the pending Stripe invoice item for one extra packet. Any
+  # failure here (Stripe down or misconfigured, no customer) blocks the
+  # generation rather than handing out a free billable artifact -- the
+  # customer can retry or buy a single packet from Billing.
+  def charge_overage!(organization)
+    StripeBilling.add_packet_overage_item!(
+      organization: organization,
+      description: "Extra Compliance Packet — lot #{@batch.lot_number}"
+    )
+  rescue StripeBilling::NotConfigured, Stripe::StripeError => e
+    Rails.logger.error("ComplianceReportsController#create: overage billing failed (#{e.class}: #{e.message})")
     redirect_to batch_compliance_reports_path(@batch),
-                alert: "Monthly limit reached: #{quota.monthly_allowance} compliance packets " \
-                       "per month on your current plan. Upgrade for a higher allowance, or buy a single extra packet from Billing."
+                alert: "Couldn't add an extra packet to your next invoice just now. Try again, " \
+                       "or buy a single packet from Billing."
+    nil
+  end
+
+  # If generation blows up after the invoice item was created, back the
+  # charge out so the customer isn't billed for a packet they never got.
+  def generate_report!(invoice_item)
+    ComplianceReportGenerator.new(@batch).generate!(generated_by: current_user)
+  rescue StandardError
+    if invoice_item
+      begin
+        Stripe::InvoiceItem.delete(invoice_item[:invoice_item_id])
+      rescue Stripe::StripeError => e
+        Rails.logger.error("ComplianceReportsController#create: failed to void overage item #{invoice_item[:invoice_item_id]} (#{e.message})")
+      end
+    end
+    raise
+  end
+
+  def limit_reached_message(quota)
+    "Monthly limit reached: #{quota.monthly_allowance} compliance packets per month on your current plan. " \
+      "Upgrade for a higher allowance, buy a single extra packet from Billing, or turn on overage billing there."
+  end
+
+  def generated_message(report, invoice_item)
+    base = "Compliance packet v#{report.version} generated."
+    return base unless invoice_item
+
+    "#{base} This one is past your monthly allowance — " \
+      "#{helpers.number_to_currency(invoice_item[:amount_cents] / 100.0)} will be added to your next invoice."
   end
 end
