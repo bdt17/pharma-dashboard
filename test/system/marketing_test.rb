@@ -27,9 +27,9 @@ class MarketingTest < ApplicationSystemTestCase
     assert_text "Starter"
     assert_text "Pro"
     assert_text "Compliance"
-    assert_text "$99"
-    assert_text "$249"
-    assert_text "$499"
+    assert_text "$129"
+    assert_text "$299"
+    assert_text "$599"
     assert_selector ".badge", text: "Most popular"
 
     assert_text "Enterprise"

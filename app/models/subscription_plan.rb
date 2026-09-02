@@ -22,7 +22,7 @@ module SubscriptionPlan
   STARTER = Plan.new(
     tier: "starter",
     name: "Starter",
-    monthly_cents: 9_900,
+    monthly_cents: 12_900,
     packet_allowance: 15,
     contact_sales: false,
     tagline: "The full record for a pharmacy moving product occasionally.",
@@ -41,7 +41,7 @@ module SubscriptionPlan
   PRO = Plan.new(
     tier: "pro",
     name: "Pro",
-    monthly_cents: 24_900,
+    monthly_cents: 29_900,
     packet_allowance: 60,
     contact_sales: false,
     tagline: "For a pharmacy running regular cold-chain shipments.",
@@ -56,7 +56,7 @@ module SubscriptionPlan
   COMPLIANCE = Plan.new(
     tier: "compliance",
     name: "Compliance",
-    monthly_cents: 49_900,
+    monthly_cents: 59_900,
     packet_allowance: nil,
     contact_sales: false,
     tagline: "For a pharmacy that wants the deadline handled, not managed.",
