@@ -11,10 +11,57 @@ module Ops
     end
 
     def groups
-      [ email_group, billing_group, encryption_group, jobs_group, app_group, activity_group ]
+      [ email_group, billing_group, sms_group, webhooks_group, encryption_group, jobs_group, app_group, activity_group ]
     end
 
     private
+
+    def sms_group
+      sid   = ENV["TWILIO_ACCOUNT_SID"].present?
+      token = ENV["TWILIO_AUTH_TOKEN"].present?
+      from  = ENV["TWILIO_MESSAGING_FROM"].to_s
+      configured = SmsSender.configured?
+      recipients = AlertRecipient.active.count
+      orgs = AlertRecipient.active.distinct.count(:organization_id)
+
+      from_detail =
+        if from.blank? then "unset -- excursion texts can't be sent"
+        elsif from.start_with?("MG") then "set (Messaging Service)"
+        else "set (sender number)"
+        end
+
+      Group.new(name: "SMS alerts (Twilio)", checks: [
+        Check.new(label: "Overall",
+                  status: configured ? :ok : :warn,
+                  detail: configured ? "configured -- texts will send" : "not configured -- SMS excursion alerts are a silent no-op"),
+        Check.new(label: "Account SID (TWILIO_ACCOUNT_SID)", status: sid ? :ok : :warn,
+                  detail: sid ? "set" : "unset"),
+        Check.new(label: "Auth token (TWILIO_AUTH_TOKEN)", status: token ? :ok : :warn,
+                  detail: token ? "set" : "unset"),
+        Check.new(label: "Sender (TWILIO_MESSAGING_FROM)", status: from.present? ? :ok : :warn,
+                  detail: from_detail),
+        Check.new(label: "Configured recipients", status: :ok,
+                  detail: "#{recipients} active across #{orgs} organization#{'s' unless orgs == 1}")
+      ])
+    end
+
+    def webhooks_group
+      total    = WebhookEndpoint.count
+      active   = WebhookEndpoint.active.count
+      disabled = WebhookEndpoint.where(active: false).where("consecutive_failures >= ?", WebhookEndpoint::AUTO_DISABLE_AFTER).count
+      failing  = WebhookEndpoint.active.where("consecutive_failures > 0").count
+
+      Group.new(name: "Outbound webhooks", checks: [
+        Check.new(label: "Endpoints", status: :ok,
+                  detail: total.zero? ? "none registered" : "#{active} active of #{total}"),
+        Check.new(label: "Auto-disabled (failed #{WebhookEndpoint::AUTO_DISABLE_AFTER}x)",
+                  status: disabled.zero? ? :ok : :warn,
+                  detail: disabled.to_s),
+        Check.new(label: "Active endpoints currently failing",
+                  status: failing.zero? ? :ok : :warn,
+                  detail: failing.to_s)
+      ])
+    end
 
     def email_group
       smtp = ENV["SMTP_ADDRESS"].present?
