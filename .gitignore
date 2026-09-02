@@ -41,6 +41,9 @@ coc.pdf
 # `git add -A` from sweeping them into a commit.
 /.claude/
 /design-canvas/
+# Short "what to do next session" scratch note. The tracked handoff is
+# PROGRESS.txt; this one stays local.
+/NEXT_STEPS.txt
 
 # Compiled assets
 /app/assets/builds/*
