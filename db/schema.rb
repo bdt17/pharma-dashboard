@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_000005) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_01_000006) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -406,6 +406,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_000005) do
     t.datetime "last_success_at"
     t.bigint "organization_id", null: false
     t.string "signing_secret", null: false
+    t.string "subscribed_events", default: [], null: false, array: true
     t.datetime "updated_at", null: false
     t.string "url", null: false
     t.index ["organization_id", "url"], name: "index_webhook_endpoints_on_organization_id_and_url", unique: true

@@ -4,8 +4,8 @@
 # third-party credential) so they can verify deliveries on their side.
 class WebhookEndpointsController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_admin, only: %i[create destroy enable test]
-  before_action :set_endpoint, only: %i[destroy enable test]
+  before_action :require_admin, only: %i[create update destroy enable test]
+  before_action :set_endpoint, only: %i[update destroy enable test]
 
   def index
     @available = current_organization&.webhooks_available? || false
@@ -26,6 +26,17 @@ class WebhookEndpointsController < ApplicationController
       @available = true
       @endpoints = current_organization.webhook_endpoints.order(:created_at)
       render :index, status: :unprocessable_content
+    end
+  end
+
+  # Only the event filter is editable after creation -- changing the URL
+  # would orphan the signing secret the receiver has already stored, so
+  # that's a remove-and-re-add.
+  def update
+    if @endpoint.update(event_filter_params)
+      redirect_to webhook_endpoints_path, notice: "Updated which events #{@endpoint.url} receives."
+    else
+      redirect_to webhook_endpoints_path, alert: @endpoint.errors.full_messages.to_sentence
     end
   end
 
@@ -55,7 +66,11 @@ class WebhookEndpointsController < ApplicationController
   end
 
   def endpoint_params
-    params.require(:webhook_endpoint).permit(:url)
+    params.require(:webhook_endpoint).permit(:url, subscribed_events: [])
+  end
+
+  def event_filter_params
+    params.require(:webhook_endpoint).permit(subscribed_events: [])
   end
 
   def require_admin

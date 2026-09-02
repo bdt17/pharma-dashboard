@@ -15,10 +15,17 @@ class WebhookEndpoint < ApplicationRecord
 
   EVENT_TYPES = %w[excursion.started excursion.resolved custody.recorded webhook.test].freeze
 
+  # The events an endpoint can choose to filter on. `webhook.test` is
+  # excluded -- it's a manual test delivery, always sent regardless of an
+  # endpoint's filter (see WebhookEndpointsController#test).
+  SUBSCRIBABLE_EVENTS = (EVENT_TYPES - %w[webhook.test]).freeze
+
   before_validation :assign_signing_secret, on: :create
+  before_validation :normalize_subscribed_events
 
   validates :url, presence: true, uniqueness: { scope: :organization_id }
   validates :signing_secret, presence: true
+  validate :subscribed_events_are_known
   # Only when the URL is actually being set -- the failure-tracking writes
   # (record_failure!) must not be blocked because an endpoint's DNS went
   # bad after it was created. The delivery job re-checks at send time.
@@ -48,6 +55,18 @@ class WebhookEndpoint < ApplicationRecord
 
   def auto_disabled?
     !active? && consecutive_failures >= AUTO_DISABLE_AFTER
+  end
+
+  # Whether this endpoint should receive a given event. An empty
+  # `subscribed_events` means "all events" (the pre-filtering default);
+  # `webhook.test` is always delivered so the Send-test button works even
+  # on a narrowly filtered endpoint.
+  def delivers?(event)
+    event.to_s == "webhook.test" || subscribed_events.empty? || subscribed_events.include?(event.to_s)
+  end
+
+  def all_events?
+    subscribed_events.empty?
   end
 
   # HTTPS, and the host must resolve only to public addresses -- the guard
@@ -85,6 +104,17 @@ class WebhookEndpoint < ApplicationRecord
 
   def assign_signing_secret
     self.signing_secret ||= "whsec_#{SecureRandom.hex(24)}"
+  end
+
+  # Drop blanks (Rails sends a "" from the unchecked-box hidden field) and
+  # de-dupe, so `subscribed_events` is always a clean set.
+  def normalize_subscribed_events
+    self.subscribed_events = Array(subscribed_events).map(&:to_s).reject(&:blank?).uniq
+  end
+
+  def subscribed_events_are_known
+    unknown = subscribed_events - SUBSCRIBABLE_EVENTS
+    errors.add(:subscribed_events, "contains unknown events: #{unknown.join(', ')}") if unknown.any?
   end
 
   def url_is_a_public_https_endpoint

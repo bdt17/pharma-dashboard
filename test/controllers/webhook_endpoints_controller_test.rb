@@ -87,6 +87,51 @@ class WebhookEndpointsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "an admin can add an endpoint with an event filter" do
+    enable_webhooks
+    sign_in @admin
+
+    post webhook_endpoints_url, params: {
+      webhook_endpoint: { url: PUBLIC_URL, subscribed_events: [ "custody.recorded", "" ] }
+    }
+    assert_equal %w[custody.recorded], @organization.webhook_endpoints.last.subscribed_events
+  end
+
+  test "the index renders a per-event filter form for each endpoint" do
+    enable_webhooks
+    @organization.webhook_endpoints.create!(url: PUBLIC_URL, subscribed_events: %w[custody.recorded])
+    sign_in @admin
+
+    get webhook_endpoints_url
+    assert_response :success
+    assert_select "input[type=checkbox][name=?][value=?][checked=checked]", "webhook_endpoint[subscribed_events][]", "custody.recorded"
+    assert_select "input[type=checkbox][name=?][value=?]:not([checked])", "webhook_endpoint[subscribed_events][]", "excursion.started"
+  end
+
+  test "an admin can change an endpoint's event filter, and clear it back to all" do
+    enable_webhooks
+    endpoint = @organization.webhook_endpoints.create!(url: PUBLIC_URL)
+    sign_in @admin
+
+    patch webhook_endpoint_url(endpoint), params: {
+      webhook_endpoint: { subscribed_events: [ "excursion.started", "" ] }
+    }
+    assert_equal %w[excursion.started], endpoint.reload.subscribed_events
+
+    patch webhook_endpoint_url(endpoint), params: { webhook_endpoint: { subscribed_events: [ "" ] } }
+    assert endpoint.reload.all_events?
+  end
+
+  test "a non-admin cannot change an endpoint's event filter" do
+    enable_webhooks
+    endpoint = @organization.webhook_endpoints.create!(url: PUBLIC_URL, subscribed_events: %w[custody.recorded])
+    sign_in @dispatcher
+
+    patch webhook_endpoint_url(endpoint), params: { webhook_endpoint: { subscribed_events: [ "excursion.started" ] } }
+    assert_redirected_to webhook_endpoints_path
+    assert_equal %w[custody.recorded], endpoint.reload.subscribed_events
+  end
+
   test "one organization cannot touch another's endpoint" do
     other = Organization.create!(name: "Other Pharma")
     theirs = other.webhook_endpoints.create!(url: PUBLIC_URL)

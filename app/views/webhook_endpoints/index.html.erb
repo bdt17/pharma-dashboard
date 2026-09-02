@@ -15,7 +15,7 @@
       <span class="mono">X-PharmaTransport-Signature: sha256=…</span> header — an HMAC-SHA256
       of the raw body using that endpoint's signing secret. Verify it before trusting the payload.
     </p>
-    <p>Events: <span class="mono"><%= WebhookEndpoint::EVENT_TYPES.join(", ") %></span>.</p>
+    <p>Events: <span class="mono"><%= WebhookEndpoint::EVENT_TYPES.join(", ") %></span>. Each endpoint can subscribe to a subset.</p>
     <p>An endpoint that fails <%= WebhookEndpoint::AUTO_DISABLE_AFTER %> deliveries in a row is disabled automatically until you re-enable it.</p>
   </div>
 
@@ -66,6 +66,30 @@
           <div class="text-[12px] text-ink-faint">
             Signing secret: <code class="bg-paper border border-line rounded px-2 py-0.5 mono break-all"><%= endpoint.signing_secret %></code>
           </div>
+
+          <div class="border-t border-line pt-2 mt-1">
+            <% if @available && current_user.admin? %>
+              <%= form_with model: endpoint, url: webhook_endpoint_path(endpoint), method: :patch, class: "flex flex-wrap items-center gap-x-4 gap-y-1" do %>
+                <span class="text-[12px] text-ink-faint">Delivers:</span>
+                <% WebhookEndpoint::SUBSCRIBABLE_EVENTS.each do |event_type| %>
+                  <label class="flex items-center gap-1.5 text-[12px] mono">
+                    <%= check_box_tag "webhook_endpoint[subscribed_events][]", event_type, endpoint.subscribed_events.include?(event_type) %>
+                    <%= event_type %>
+                  </label>
+                <% end %>
+                <%= hidden_field_tag "webhook_endpoint[subscribed_events][]", "" %>
+                <%= submit_tag "Save", class: "btn btn-secondary btn-sm" %>
+                <% if endpoint.all_events? %>
+                  <span class="text-[12px] text-ink-faint">— none checked means every event</span>
+                <% end %>
+              <% end %>
+            <% else %>
+              <span class="text-[12px] text-ink-faint">
+                Delivers:
+                <span class="mono"><%= endpoint.all_events? ? "all events" : endpoint.subscribed_events.join(", ") %></span>
+              </span>
+            <% end %>
+          </div>
         </div>
       <% end %>
     </div>
@@ -82,6 +106,17 @@
         <%= f.label :url, "Endpoint URL", class: "block text-[12px] text-ink-faint mb-1" %>
         <%= f.url_field :url, placeholder: "https://api.your-wms.example.com/hooks/pharma-transport", class: "field-input mono" %>
         <p class="text-[12px] text-ink-faint mt-1">Must be HTTPS and reachable on the public internet.</p>
+      </div>
+      <div>
+        <span class="block text-[12px] text-ink-faint mb-1">Events (leave all unchecked to receive every event)</span>
+        <div class="flex flex-wrap gap-x-4 gap-y-1">
+          <% WebhookEndpoint::SUBSCRIBABLE_EVENTS.each do |event_type| %>
+            <label class="flex items-center gap-1.5 text-[13px] mono">
+              <%= check_box_tag "webhook_endpoint[subscribed_events][]", event_type, @endpoint.subscribed_events.include?(event_type) %>
+              <%= event_type %>
+            </label>
+          <% end %>
+        </div>
       </div>
       <div><%= f.submit "Add endpoint", class: "btn btn-primary btn-sm" %></div>
     <% end %>

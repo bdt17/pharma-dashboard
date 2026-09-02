@@ -11,6 +11,8 @@ module WebhookDispatcher
     envelope = { id: SecureRandom.uuid, event: event, created_at: Time.current.iso8601, data: data }
 
     organization.webhook_endpoints.active.find_each do |endpoint|
+      next unless endpoint.delivers?(event)
+
       WebhookDeliveryJob.perform_later(endpoint.id, event, envelope)
     end
   end
