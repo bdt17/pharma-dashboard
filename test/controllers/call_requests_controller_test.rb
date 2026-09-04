@@ -15,6 +15,26 @@ class CallRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[type=hidden][name=?][value=?]", "call_request[topic]", "general"
   end
 
+  test "the compliance officer waitlist topic renders its own copy and submit label" do
+    get request_a_call_url(topic: "compliance_officer_waitlist")
+    assert_response :success
+    assert_select "h1", text: "Get on the list."
+    assert_match "Every retainer slot is taken", response.body
+    assert_select "button[type=submit]", text: "Join the waitlist"
+  end
+
+  test "a compliance officer waitlist signup is stored and emailed like any other lead" do
+    assert_enqueued_emails 1 do
+      assert_difference "CallRequest.count", 1 do
+        post request_a_call_url, params: { call_request: {
+          name: "Dana Rx", email: "dana@example.com", pharmacy_name: "Dana Pharmacy",
+          topic: "compliance_officer_waitlist", message: "Please add us"
+        } }
+      end
+    end
+    assert_equal "compliance_officer_waitlist", CallRequest.last.topic
+  end
+
   test "create stores the lead, emails the team, and redirects to thanks" do
     assert_enqueued_emails 1 do
       assert_difference "CallRequest.count", 1 do

@@ -37,6 +37,11 @@
     <%= f.text_area :message, rows: 3, class: "field-input" %>
   </div>
 
-  <button type="submit" class="btn btn-primary w-full sm:w-auto sm:self-start">Request a call</button>
-  <p class="text-[12px] text-ink-faint">We&rsquo;ll reply within one business day. No account needed.</p>
+  <% on_waitlist = call_request.topic == "compliance_officer_waitlist" %>
+  <button type="submit" class="btn btn-primary w-full sm:w-auto sm:self-start">
+    <%= on_waitlist ? "Join the waitlist" : "Request a call" %>
+  </button>
+  <p class="text-[12px] text-ink-faint">
+    <%= on_waitlist ? "We’ll reach out the moment a retainer slot opens. No account needed." : "We’ll reply within one business day. No account needed." %>
+  </p>
 <% end %>

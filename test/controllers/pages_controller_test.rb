@@ -36,6 +36,36 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_select "h1", text: /can.t hire one/
   end
 
+  def with_active_clients(value)
+    original = ENV["COMPLIANCE_OFFICER_ACTIVE_CLIENTS"]
+    value.nil? ? ENV.delete("COMPLIANCE_OFFICER_ACTIVE_CLIENTS") : ENV["COMPLIANCE_OFFICER_ACTIVE_CLIENTS"] = value.to_s
+    yield
+  ensure
+    original.nil? ? ENV.delete("COMPLIANCE_OFFICER_ACTIVE_CLIENTS") : ENV["COMPLIANCE_OFFICER_ACTIVE_CLIENTS"] = original
+  end
+
+  test "compliance officer page offers a real intro call while slots are open" do
+    with_active_clients(3) do
+      get compliance_officer_url
+    end
+
+    assert_response :success
+    assert_match "2 retainer slots open", response.body
+    assert_select "a[href=?]", request_a_call_path(topic: "compliance_officer"), text: /Book a 20-minute intro call/
+    assert_select "a[href=?]", request_a_call_path(topic: "compliance_officer_waitlist"), count: 0
+  end
+
+  test "compliance officer page switches to the waitlist once every slot is taken" do
+    with_active_clients(RetainerCapacity::TOTAL_SLOTS) do
+      get compliance_officer_url
+    end
+
+    assert_response :success
+    assert_match "Full", response.body
+    assert_select "a[href=?]", request_a_call_path(topic: "compliance_officer_waitlist"), text: "Join the waitlist"
+    assert_select "a[href=?]", request_a_call_path(topic: "compliance_officer"), count: 0
+  end
+
   test "the home page teases the compliance officer service" do
     get root_url
     assert_select "a[href=?]", compliance_officer_path

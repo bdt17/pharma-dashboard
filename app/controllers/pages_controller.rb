@@ -37,7 +37,11 @@ class PagesController < ApplicationController
 
   # Pitch page for the fractional-compliance-officer retainer -- a services
   # offering alongside the subscription. The CTA is an intro call, not
-  # self-serve checkout, so there's no Stripe/plan data to load.
+  # self-serve checkout, so there's no Stripe/plan data to load -- but
+  # see RetainerCapacity for the one real number this page does show:
+  # how many of the (deliberately capped at 5) retainer slots are open.
   def compliance_officer
+    @slots_available = RetainerCapacity.slots_available
+    @retainer_full = RetainerCapacity.full?
   end
 end
