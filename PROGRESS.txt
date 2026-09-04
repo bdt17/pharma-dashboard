@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-02 (rev 19)
+Last updated: 2026-09-03 (rev 20)
 
 ====================================================================
 STATUS
@@ -7,7 +7,8 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ 5dae2bd8  ·  no open PRs.
+main @ 883df10c  ·  PR #150 open (Stripe .list() pagination fix,
+awaiting CI, to be squash-merged once green).
 
 Local on main:
   bin/rails test           540 runs, 0 failures
@@ -21,6 +22,73 @@ Production: Render auto-deploys main on push. Latest deploy verified --
 the CI and Smoke (live public-surface) workflows both passed, and the
 new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
 pharmatransport.org, confirming the release migrations ran.
+
+====================================================================
+SESSION 2026-09-03: #147 PRICE RAISE ACTIVATED IN LIVE STRIPE
+====================================================================
+Finished the item NEXT_STEPS.txt had flagged as the top priority: #147
+changed the list-price constants on 2026-09-01 but that alone never
+moves a live price, and it sat un-activated for two days. Activated it
+today; /pricing now serves $129 / $299 / $599 for real, confirmed by
+curl against production, and existing subscribers kept their old Price
+(grandfathered).
+
+Getting there took longer than it should have, for reasons worth
+recording so the next Stripe session avoids them:
+  - Brett's Stripe login has access to multiple accounts (a "Network
+    Swap app" side project among them), and the browser was defaulted
+    to the wrong one. The real Pharma Transport account had no business
+    name set (showed as "Brett Thomas"), which is almost certainly why
+    it got missed in the account switcher -- now renamed to "Pharma
+    Transport" so this won't recur. Its account id is
+    acct_1Sd3BXCDVKifSEsc.
+  - The first two archive attempts happened in the wrong account, so
+    stripe:sync_subscription_plans kept reporting every plan
+    "Already present" with no effect.
+  - Once in the right account, an accidental extra product/price got
+    created (a duplicate "Starter" at the old $99 rate) and Enterprise's
+    original monthly Price got swept up in an archive pass meant for
+    Compliance. Archiving a Stripe *product* does not archive its
+    *prices* -- they're independent -- so the duplicate Starter product
+    left two dangling active Prices behind even after the product itself
+    was archived. All of this was found and cleaned up by cross-checking
+    Stripe::Price.list output directly (product name, amount, product
+    active/inactive, created timestamp) rather than trusting the
+    dashboard summary view, and every archive was done by exact Price ID
+    rather than by clicking through the UI again.
+  - Enterprise ended up on a new Price id as a side effect:
+    price_1UBkRiCDVKifSEscwhOwlrnI ($1,499/mo, replaces the old
+    price_1UB53KCDVKifSEsceipruOnD, which is now archived). No live
+    Enterprise subscription existed yet, so nothing broke; the annual
+    Enterprise Price (price_1UB53bCDVKifSEscCQUFOXCx, $16,189.20/yr) was
+    untouched and still matches. Use the new monthly id for any future
+    hand-created Enterprise subscription.
+
+Final reconciled live Prices (verified via a full paginated listing,
+see the pagination bug below for why that distinction mattered):
+  Starter     price_1UBlJzCDVKifSEsc4aWky9Vw   $129/mo
+              price_1UBlKICDVKifSEscCGiuHazt   $1,393.20/yr
+  Pro         price_1UBkRiCDVKifSEscHbRPPrGF   $299/mo
+              price_1UBlKICDVKifSEscqMoafiP9   $3,229.20/yr
+  Compliance  price_1UBkRiCDVKifSEscLaHQQTkM   $599/mo
+              price_1UBlKICDVKifSEsckwYbnzUD   $6,469.20/yr
+  Enterprise  price_1UBkRiCDVKifSEscwhOwlrnI   $1,499/mo (unchanged)
+              price_1UB53bCDVKifSEscCQUFOXCx   $16,189.20/yr (unchanged)
+
+BUG FOUND ALONG THE WAY (PR #150, open): every Stripe*Sync service and
+StripeBilling.available_plans / available_addons / single_packet_price
+called Stripe::Price.list / Stripe::Product.list with no limit, so
+Stripe silently capped results at its default page size of 10. The
+account now has 13 active Prices, and "Extra Compliance Packet" ($149)
+landed at position 11 -- past the cutoff. That Price backs both the
+Billing page's addon-purchase button and
+StripeBilling.single_packet_price, which overage billing (#140) uses to
+bill a Starter/Pro org that opts in and exceeds its allowance;
+single_packet_price raises NotConfigured when it can't find the Price,
+so overage billing for any opted-in org was actually broken in
+production, not just a missing upsell button. Fix: limit: 100 on every
+Price/Product .list() call (Stripe's own per-page max, comfortably
+above current scale). 540 tests still green, rubocop clean.
 
 ====================================================================
 MERGED THIS SESSION (35 PRs)
@@ -169,13 +237,14 @@ DEPLOY / GO-LIVE NOTES
   `stripe:sync_annual_prices` (both idempotent). To put a customer on
   Enterprise: create the subscription against the monthly Price in the
   Stripe dashboard -- the existing webhook then syncs tier="enterprise".
-- PENDING: the #147 list-price raise is code-only. To activate it, ARCHIVE
-  the old Starter/Pro/Compliance monthly (and annual) Prices in the Stripe
-  dashboard, then run `bin/rails stripe:sync_subscription_plans` and
-  `stripe:sync_annual_prices`. The sync never mutates a live Price, so
-  without the archive step it's a no-op. Existing subscriptions keep their
-  old Price (grandfathered); the pricing/billing pages read the live
-  Stripe amount, so they show 99/249/499 until the sync runs.
+  The monthly Price id changed 2026-09-03 (see "SESSION 2026-09-03"
+  above) to price_1UBkRiCDVKifSEscwhOwlrnI -- use that one, not the old
+  price_1UB53KCDVKifSEsceipruOnD, which is now archived.
+- DONE 2026-09-03: the #147 list-price raise is now live in Stripe, not
+  just in code. /pricing serves $129/$299/$599. See the "SESSION
+  2026-09-03" section above for the new Price ids and what went sideways
+  getting there. Existing subscriptions kept their old Price
+  (grandfathered), as designed.
 
 ====================================================================
 FOLLOW-UP WORK (product)
