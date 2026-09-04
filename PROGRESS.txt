@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-03 (rev 23)
+Last updated: 2026-09-04 (rev 24)
 
 ====================================================================
 STATUS
@@ -7,17 +7,19 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ 51dd57e7  ·  no open PRs. #150-#157 all merged and deployed this
+main @ a87df1e2  ·  no open PRs. #150-#160 all merged and deployed this
 session; the price raise, both bugs found along the way, the DSCSA
-funnel work (follow-up emails + landing page), and the annual-billing
-default (2 months free, pre-selected) all verified live -- including
-the actual Stripe activation for the annual pricing, not just the code.
+funnel work (follow-up emails + landing page), the annual-billing
+default (2 months free, pre-selected, activated live in Stripe), the
+overage-visibility fix + dashboard tile, and SMS quiet hours all
+shipped and (where they don't need an authenticated session to see)
+verified live.
 
 Local on main:
-  bin/rails test           568 runs, 0 failures
+  bin/rails test           585 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
-  schema version           2026_09_04_000010  (migrations 001-010)
+  schema version           2026_09_04_000011  (migrations 001-011)
   config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep,
                            purge_old_webhook_deliveries, card_expiry_check
 
@@ -176,6 +178,35 @@ page: Starter/Pro/Compliance each show the new $1,290 / $2,990 / $5,990
 annual amounts as the primary button, correct monthly amounts secondary,
 Enterprise untouched.
 
+OVERAGE VISIBILITY FIX + DASHBOARD TILE (PR #159, merged): the Billing
+page's "N extra packets this month, $X due" summary only rendered
+inside the @overage_eligible guard, so an org that racked up overage
+charges on a capped plan and then upgraded mid-month to unlimited lost
+all visibility into charges it still owed. Extracted into a shared
+partial, now rendered either way. Also added a matching "Extra packets
+this month" Dashboard tile so noticing an accruing charge doesn't need
+a trip to Billing first.
+
+SMS QUIET HOURS (PR #160, merged): product decision made this session
+-- delay excursion SMS to the end of a 9pm-7am local quiet window
+(fixed, not per-org-configurable yet); email and webhooks stay
+instant regardless, always. Off by default, opt-in per org. Required
+giving the app its first timezone concept ever (it ran entirely on
+UTC before this) -- new Organization#time_zone (validated against the
+real ActiveSupport::TimeZone list) + #sms_quiet_hours_enabled, with
+Organization#sms_quiet_hours_active?/#sms_quiet_hours_end_at handling
+the midnight wrap so callers don't reason about it themselves.
+ExcursionNotifier.enqueue_sms enqueues SmsExcursionAlertJob with
+wait_until: instead of immediately when quiet hours are active. New
+"Quiet hours" card on /alerts (admin-only) -- a timezone select +
+enabled checkbox saved together in one form, deliberately not two
+separate controls (toggling on without a timezone set would silently
+compute against UTC). MIGRATION 000011 -- two additive columns.
+NOT VISUALLY VERIFIED LIVE -- needs an authenticated session and I
+don't enter passwords myself, even in dev; 12 new DOM/behavior-
+asserting tests are the verification instead. Worth a look next
+session once someone's signed in anyway.
+
 ====================================================================
 MERGED THIS SESSION (35 PRs)
 ====================================================================
@@ -310,6 +341,10 @@ Rev-12 follow-up-list work (all merged):
   #156  Update PROGRESS.txt to rev 22.
   #157  Default annual billing to 2 months free, pre-selected -- see
         "ANNUAL BILLING DEFAULTED" above. No migration.
+  #158  Update PROGRESS.txt to rev 23.
+  #159  Overage-summary visibility fix + Dashboard tile -- see
+        "OVERAGE VISIBILITY FIX" above. No migration.
+  #160  SMS quiet hours -- see "SMS QUIET HOURS" above. MIGRATION 000011.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -326,10 +361,11 @@ DEPLOY / GO-LIVE NOTES
   clear_solid_queue_finished_jobs (hourly) + dunning_sweep (daily 9am) +
   purge_old_webhook_deliveries (daily 4am) + card_expiry_check (daily 8am).
 - Webhooks, dunning email, SMS jobs, packet generation all ride Solid Queue.
-- Migrations 000006-000009 all additive (webhook subscribed_events;
+- Migrations 000006-000011 all additive (webhook subscribed_events;
   webhook_deliveries table; organizations.overage_billing_enabled +
-  packet_overages table; organizations.card_expiry_notified_for).
-  No downtime, no data backfill.
+  packet_overages table; organizations.card_expiry_notified_for;
+  email_suppressions table; organizations.time_zone +
+  organizations.sms_quiet_hours_enabled). No downtime, no data backfill.
 - Enterprise tier (#138): its Stripe Product + monthly/annual Prices were
   synced to production on 2026-09-01. If SubscriptionPlan::ENTERPRISE is
   ever re-priced, re-run `bin/rails stripe:sync_subscription_plans` and
@@ -348,12 +384,9 @@ DEPLOY / GO-LIVE NOTES
 ====================================================================
 FOLLOW-UP WORK (product)
 ====================================================================
-- SMS quiet hours -- needs a product call first. Suppressing a cold-chain
-  excursion text at 3am arguably defeats the core promise. A defensible
-  build: per-org timezone (the app currently has NO timezone model, runs
-  UTC) + quiet window that DELAYS the text to the window's end rather than
-  dropping it, with email + webhook still immediate. Default off. Not
-  built pending that decision.
+- SMS quiet hours -- DONE, see #160 above. The window (9pm-7am) is
+  fixed, not per-org configurable; revisit if a customer asks for a
+  different one.
 - SMS: voice calls (needs Twilio Voice setup), per-recipient severity
   filters (no excursion severity model exists yet).
 - Self-serve Enterprise -- contact-sales for now; see #138 note above.
