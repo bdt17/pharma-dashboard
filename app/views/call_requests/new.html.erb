@@ -6,15 +6,21 @@
   <div class="flex flex-col gap-3 mb-8">
     <span class="eyebrow">
       <%= { "compliance_officer" => "Fractional compliance officer",
+            "compliance_officer_waitlist" => "Compliance officer waitlist",
             "dscsa_assessment" => "DSCSA readiness",
             "enterprise" => "Enterprise plan",
             "general" => "Talk to us" }.fetch(@call_request.topic, "Talk to us") %>
     </span>
-    <h1 class="text-[28px] sm:text-[32px]">Have someone call you.</h1>
+    <h1 class="text-[28px] sm:text-[32px]">
+      <%= @call_request.topic == "compliance_officer_waitlist" ? "Get on the list." : "Have someone call you." %>
+    </h1>
     <p class="text-[15px] text-ink-soft">
       <% if @call_request.topic == "compliance_officer" %>
         Twenty minutes to walk through your pharmacy&rsquo;s compliance obligations and whether
         the retainer is a fit. No pitch deck.
+      <% elsif @call_request.topic == "compliance_officer_waitlist" %>
+        Every retainer slot is taken right now &mdash; five active clients is what one person can
+        properly serve. Leave your info and you&rsquo;re first up when a spot opens.
       <% elsif @call_request.topic == "dscsa_assessment" %>
         We&rsquo;ll go through your readiness results and the fastest way to close the gaps that matter.
       <% elsif @call_request.topic == "enterprise" %>

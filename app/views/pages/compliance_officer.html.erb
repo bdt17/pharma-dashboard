@@ -3,23 +3,34 @@
 <% content_for :meta_description, "A named compliance professional on monthly retainer for small pharmacies: SOPs authored and maintained, every compliance packet reviewed, records monitored, and audit support on call." %>
 
 <%
-  call_link = request_a_call_path(topic: "compliance_officer")
+  call_link = request_a_call_path(topic: @retainer_full ? "compliance_officer_waitlist" : "compliance_officer")
   contact_email = "brett@pharmatransport.org"
 %>
 
 <section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
   <div class="mx-auto max-w-6xl px-6 py-[76px]">
     <div class="flex flex-col gap-5 max-w-[52ch]">
-      <span class="eyebrow">Fractional compliance officer</span>
+      <div class="flex flex-wrap items-center gap-2.5">
+        <span class="eyebrow">Fractional compliance officer</span>
+        <% if @retainer_full %>
+          <span class="badge" style="color:#b45309;border-color:#ecd3ac;background-color:#fbf1e4;">Full &mdash; waitlist open</span>
+        <% else %>
+          <span class="badge badge-accent"><%= pluralize(@slots_available, "retainer slot") %> open</span>
+        <% end %>
+      </div>
       <h1 class="text-[30px] sm:text-[42px] leading-[1.14]">A compliance officer for pharmacies that can&rsquo;t hire one.</h1>
       <p class="text-[17px] text-ink-soft">
         DSCSA didn&rsquo;t add a one-time task &mdash; it added a standing obligation, and
         someone has to own it. We do: a named compliance professional on monthly retainer who
         keeps your procedures current, checks your records before an auditor does, and picks
-        up the phone when a regulator calls.
+        up the phone when a regulator calls. Capped at <%= RetainerCapacity::TOTAL_SLOTS %>
+        clients on purpose &mdash; past that, it stops being a named person who knows your
+        pharmacy and starts being a ticket queue.
       </p>
       <div class="flex flex-wrap gap-3 pt-1">
-        <a class="btn btn-primary" href="<%= call_link %>">Book a 20-minute intro call</a>
+        <a class="btn btn-primary" href="<%= call_link %>">
+          <%= @retainer_full ? "Join the waitlist" : "Book a 20-minute intro call" %>
+        </a>
         <a class="btn btn-secondary" href="#included">See what&rsquo;s included</a>
       </div>
     </div>
@@ -106,7 +117,12 @@
           </span>
         <% end %>
       </div>
-      <a class="btn btn-primary w-full" href="<%= call_link %>">Book a 20-minute intro call</a>
+      <a class="btn btn-primary w-full" href="<%= call_link %>">
+        <%= @retainer_full ? "Join the waitlist" : "Book a 20-minute intro call" %>
+      </a>
+      <% if @retainer_full %>
+        <p class="text-[12.5px] text-ink-faint text-center">All 5 slots are taken right now &mdash; you&rsquo;ll hear from us the moment one opens.</p>
+      <% end %>
       <p class="text-[12.5px] text-ink-faint text-center">
         Or email <%= mail_to contact_email %>
       </p>
@@ -130,6 +146,8 @@
        "No. It&rsquo;s compliance operations and advisory. When something genuinely needs a lawyer, you&rsquo;ll be told that plainly rather than guessed at."],
       ["Can we start before we&rsquo;re a subscriber?",
        "The intro call is free and doesn&rsquo;t require an account. The retainer runs alongside a subscription because the officer works from your live records."],
+      ["Why cap it at #{RetainerCapacity::TOTAL_SLOTS} clients?",
+       "Because &ldquo;named professional who knows your pharmacy&rdquo; stops being true past a certain caseload. The waitlist exists so growth doesn&rsquo;t come at the cost of the thing that makes this different from a ticket queue."],
     ].each do |q, a| %>
       <div class="flex flex-col gap-1.5">
         <h3 class="font-sans text-[15px] font-semibold"><%== q %></h3>
@@ -141,9 +159,13 @@
 
 <section class="bg-brand-700 text-white">
   <div class="mx-auto max-w-6xl px-6 py-[68px] flex flex-wrap items-center justify-between gap-6">
-    <h2 class="text-[24px] sm:text-[26px] text-white max-w-[26ch]">Twenty minutes to see whether it fits.</h2>
+    <h2 class="text-[24px] sm:text-[26px] text-white max-w-[26ch]">
+      <%= @retainer_full ? "Every slot is full. Get in line for the next one." : "Twenty minutes to see whether it fits." %>
+    </h2>
     <div class="flex gap-3">
-      <a class="btn" style="background:#fff;color:#1f3a53;" href="<%= call_link %>">Book an intro call</a>
+      <a class="btn" style="background:#fff;color:#1f3a53;" href="<%= call_link %>">
+        <%= @retainer_full ? "Join the waitlist" : "Book an intro call" %>
+      </a>
       <a class="btn btn-secondary" style="border-color:rgba(255,255,255,0.3);color:#fff;background:transparent;" href="<%= security_path %>">See the platform</a>
     </div>
   </div>
