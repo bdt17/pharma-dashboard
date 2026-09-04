@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-04 (rev 24)
+Last updated: 2026-09-04 (rev 25)
 
 ====================================================================
 STATUS
@@ -7,16 +7,17 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ a87df1e2  ·  no open PRs. #150-#160 all merged and deployed this
-session; the price raise, both bugs found along the way, the DSCSA
-funnel work (follow-up emails + landing page), the annual-billing
-default (2 months free, pre-selected, activated live in Stripe), the
-overage-visibility fix + dashboard tile, and SMS quiet hours all
-shipped and (where they don't need an authenticated session to see)
-verified live.
+main @ c404f69f  ·  no open PRs. #150-#164 all merged and deployed this
+session -- the price raise, both bugs found along the way, the DSCSA
+funnel work, the annual-billing default (activated live), the
+overage-visibility fix, SMS quiet hours, a real production mail-
+delivery bug found and fixed, the compliance-officer waitlist, and
+opt-in all-clear SMS. Everything's shipped and either verified live
+directly, or (for the two admin-only /alerts toggles) covered by
+tests since checking them live needs a signed-in session.
 
 Local on main:
-  bin/rails test           585 runs, 0 failures
+  bin/rails test           604 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_04_000011  (migrations 001-011)
@@ -207,6 +208,56 @@ don't enter passwords myself, even in dev; 12 new DOM/behavior-
 asserting tests are the verification instead. Worth a look next
 session once someone's signed in anyway.
 
+SILENT MAIL DELIVERY FAILURES FOUND AND FIXED (PR #162, merged) --
+the real reason Brett's two test DSCSA emails never arrived. Traced
+in the actual installed actionmailer/mail gem source, not guessed:
+production sets raise_delivery_errors = false on purpose (see that
+file's own comment -- it's what made a past real M365 SMTP timeout
+invisible until User#send_devise_notification got an explicit
+rescue+log). That flag is checked inside Mail::Message#do_delivery,
+which is what the *plain* deliver_now (not deliver_now!) Rails' own
+ActionMailer::MailDeliveryJob calls for every .deliver_later. So an
+SMTP failure during ANY background mail send vanished completely: no
+exception, no SolidQueue::FailedExecution, no log line. Devise's fix
+only covered its own synchronous mail -- every other mailer (dunning,
+card-expiry, excursion alerts, DSCSA follow-ups, call-request leads,
+2FA) had zero failure visibility this whole time. Fix: new
+ApplicationMailDeliveryJob, wired in app-wide via
+config.action_mailer.delivery_job, uses deliver_now! (no internal
+rescue, so a failure actually reaches it) and logs failures itself
+without re-raising -- same "a mail outage shouldn't fail the job"
+intent, now with the log line the flag alone never produced. Whether
+this explains the two missing DSCSA emails specifically is still
+technically unconfirmed -- check Render's logs for an
+"[ApplicationMailDeliveryJob] ... failed to send" line around either
+submission time if it comes up again.
+
+COMPLIANCE OFFICER RETAINER: REAL CAPPED HERO OFFER + WAITLIST (PR
+#163, merged, revenue-plan item #4): capped at 5 active clients,
+decision made this session. New RetainerCapacity reads the real count
+from COMPLIANCE_OFFICER_ACTIVE_CLIENTS (an env var, not a DB row --
+no self-serve billing for this service, Brett takes clients on by
+hand). Unset defaults to 0 active / every slot open -- the honest
+default; never fabricate scarcity. BRETT NEEDS TO SET THE REAL COUNT
+on Render or the page overclaims openness. /compliance-officer shows
+a real "N retainer slots open" badge and swaps every CTA to "Join the
+waitlist" once full, pointing at a new compliance_officer_waitlist
+CallRequest topic (reuses CallRequest/CallRequestMailer, not a new
+model -- Brett gets the same lead-notification email he already gets
+for every other inquiry). Verified live in both states in a local dev
+server.
+
+OPT-IN "ALL CLEAR" SMS ON EXCURSION RESOLUTION (PR #164, merged):
+decision made this session. New SmsExcursionResolvedJob (sibling of
+SmsExcursionAlertJob, same reasoning as SmsTestJob being its own job).
+ExcursionNotifier.enqueue_sms is now enqueue_sms(event, job_class) so
+.alert and .resolved share the same quiet-hours-aware logic -- an
+all-clear text respects quiet hours exactly like the original alert.
+New "All-clear texts" toggle on /alerts (admin-only), off by default,
+independent of the original SMS opt-in. MIGRATION 000012 -- one
+additive column. NOT VISUALLY VERIFIED LIVE, same reason as quiet
+hours.
+
 ====================================================================
 MERGED THIS SESSION (35 PRs)
 ====================================================================
@@ -345,6 +396,13 @@ Rev-12 follow-up-list work (all merged):
   #159  Overage-summary visibility fix + Dashboard tile -- see
         "OVERAGE VISIBILITY FIX" above. No migration.
   #160  SMS quiet hours -- see "SMS QUIET HOURS" above. MIGRATION 000011.
+  #161  Update PROGRESS.txt to rev 24.
+  #162  Fix silent background mail-delivery failures -- see "SILENT
+        MAIL DELIVERY FAILURES" above. No migration.
+  #163  Compliance officer waitlist -- see "COMPLIANCE OFFICER
+        RETAINER" above. No migration.
+  #164  Opt-in all-clear SMS -- see "OPT-IN ALL CLEAR SMS" above.
+        MIGRATION 000012.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -361,11 +419,17 @@ DEPLOY / GO-LIVE NOTES
   clear_solid_queue_finished_jobs (hourly) + dunning_sweep (daily 9am) +
   purge_old_webhook_deliveries (daily 4am) + card_expiry_check (daily 8am).
 - Webhooks, dunning email, SMS jobs, packet generation all ride Solid Queue.
-- Migrations 000006-000011 all additive (webhook subscribed_events;
+- Migrations 000006-000012 all additive (webhook subscribed_events;
   webhook_deliveries table; organizations.overage_billing_enabled +
   packet_overages table; organizations.card_expiry_notified_for;
   email_suppressions table; organizations.time_zone +
-  organizations.sms_quiet_hours_enabled). No downtime, no data backfill.
+  organizations.sms_quiet_hours_enabled;
+  organizations.all_clear_sms_enabled). No downtime, no data backfill.
+- NEEDS A RENDER ENV VAR SET: COMPLIANCE_OFFICER_ACTIVE_CLIENTS, the
+  real current headcount on the fractional-compliance-officer
+  retainer (see #163 above). Unset reads as 0, i.e. all 5 slots open
+  -- set it to the truth before /compliance-officer gets real traffic,
+  or it overclaims availability.
 - Enterprise tier (#138): its Stripe Product + monthly/annual Prices were
   synced to production on 2026-09-01. If SubscriptionPlan::ENTERPRISE is
   ever re-priced, re-run `bin/rails stripe:sync_subscription_plans` and
