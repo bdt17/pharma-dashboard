@@ -61,6 +61,33 @@
         <p class="text-[12px] text-ink-faint">Only an organization admin can change this.</p>
       <% end %>
     </div>
+
+    <div class="card p-5 mb-4 flex flex-col gap-3">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex flex-col gap-1">
+          <span class="font-semibold text-[14px]">All-clear texts</span>
+          <p class="text-[13px] text-ink-soft max-w-[52ch]">
+            Also send a text when an excursion resolves, not just when it starts &mdash; for
+            recipients who&rsquo;d rather know it&rsquo;s over than wonder. Off by default: getting
+            the alert doesn&rsquo;t mean you also want a second text closing it out.
+          </p>
+        </div>
+        <span class="badge <%= current_organization.all_clear_sms_enabled? ? "badge-accent" : "" %> shrink-0">
+          <%= current_organization.all_clear_sms_enabled? ? "On" : "Off" %>
+        </span>
+      </div>
+      <% if current_user.admin? %>
+        <div>
+          <% if current_organization.all_clear_sms_enabled? %>
+            <%= button_to "Turn off all-clear texts", alert_all_clear_path(enabled: false), method: :patch, class: "btn btn-secondary btn-sm" %>
+          <% else %>
+            <%= button_to "Turn on all-clear texts", alert_all_clear_path(enabled: true), method: :patch, class: "btn btn-primary btn-sm" %>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-[12px] text-ink-faint">Only an organization admin can change this.</p>
+      <% end %>
+    </div>
   <% end %>
 
   <% if @sms_available || @recipients.any? %>

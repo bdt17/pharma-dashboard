@@ -182,4 +182,28 @@ class AlertSettingsControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_match "is not included in the list", response.body
   end
+
+  test "an admin can turn all-clear texts on and off" do
+    enable_sms
+    sign_in @admin
+
+    patch alert_all_clear_url(enabled: true)
+    assert @organization.reload.all_clear_sms_enabled?
+    assert_redirected_to alert_settings_path
+    follow_redirect!
+    assert_match "All-clear texts are on", response.body
+
+    patch alert_all_clear_url(enabled: false)
+    assert_not @organization.reload.all_clear_sms_enabled?
+  end
+
+  test "a non-admin cannot change all-clear texts" do
+    enable_sms
+    sign_in @dispatcher
+
+    patch alert_all_clear_url(enabled: true)
+
+    assert_not @organization.reload.all_clear_sms_enabled?
+    assert_redirected_to alert_settings_path
+  end
 end

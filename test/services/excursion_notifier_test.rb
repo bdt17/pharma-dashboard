@@ -83,15 +83,48 @@ class ExcursionNotifierTest < ActiveSupport::TestCase
     end
   end
 
-  test "resolved emails only -- never SMS" do
+  test "resolved emails only -- no all-clear SMS unless the org opted in" do
     subscribe("pro")
     @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
 
     assert_enqueued_emails 1 do
-      assert_no_enqueued_jobs only: SmsExcursionAlertJob do
+      assert_no_enqueued_jobs only: SmsExcursionResolvedJob do
         ExcursionNotifier.resolved(@event)
       end
     end
+  end
+
+  test "resolved sends an all-clear SMS once the org opts in" do
+    subscribe("pro")
+    @organization.update!(all_clear_sms_enabled: true)
+    @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
+    @organization.alert_recipients.create!(label: "Backup", phone: "+14155550101")
+
+    assert_enqueued_jobs 2, only: SmsExcursionResolvedJob do
+      ExcursionNotifier.resolved(@event)
+    end
+  end
+
+  test "the all-clear opt-in still requires an SMS-eligible plan" do
+    @organization.update!(all_clear_sms_enabled: true) # no subscription at all
+    @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
+
+    assert_no_enqueued_jobs only: SmsExcursionResolvedJob do
+      ExcursionNotifier.resolved(@event)
+    end
+  end
+
+  test "quiet hours delay the all-clear text the same way they delay the original alert" do
+    subscribe("pro")
+    @organization.update!(all_clear_sms_enabled: true, time_zone: "UTC", sms_quiet_hours_enabled: true)
+    @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
+
+    travel_to Time.utc(2026, 1, 1, 2, 0) do # inside the quiet window
+      ExcursionNotifier.resolved(@event)
+    end
+
+    job = enqueued_jobs.find { |j| j["job_class"] == "SmsExcursionResolvedJob" }
+    assert_equal Time.utc(2026, 1, 1, 7, 0).to_i, job["scheduled_at"].to_time.to_i
   end
 
   test "publishes excursion.started / .resolved webhooks on the Compliance plan" do
