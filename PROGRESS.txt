@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-03 (rev 22)
+Last updated: 2026-09-03 (rev 23)
 
 ====================================================================
 STATUS
@@ -7,12 +7,14 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ 3fd9ef1e  ·  no open PRs. #150-#155 all merged and deployed this
-session; the price raise, both bugs found along the way, and the DSCSA
-funnel work (follow-up emails + landing page) all verified live.
+main @ 51dd57e7  ·  no open PRs. #150-#157 all merged and deployed this
+session; the price raise, both bugs found along the way, the DSCSA
+funnel work (follow-up emails + landing page), and the annual-billing
+default (2 months free, pre-selected) all verified live -- including
+the actual Stripe activation for the annual pricing, not just the code.
 
 Local on main:
-  bin/rails test           567 runs, 0 failures
+  bin/rails test           568 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_04_000010  (migrations 001-010)
@@ -141,9 +143,38 @@ engineering half nobody had built yet.
     descriptions, char-counted, extensions + negatives) as an Artifact
     -- see "DOCUMENTS PRODUCED" below. Not yet live in an actual Ads
     account; that's Brett's step.
-  - NOT YET VERIFIED: the follow-up email sequence has unit-test
-    coverage but no one has watched a real send happen end-to-end in
-    production. See NEXT_STEPS.txt for how to check it next session.
+  - VERIFIED LIVE (later this session): submitted a real assessment
+    against production with a public test-inbox address
+    (ptdscsatest0904@mailinator.com, chosen specifically so no real
+    person's mailbox was involved). Confirmed via SolidQueue::Job /
+    SolidQueue::FailedExecution that the immediate result email's
+    delivery job finished cleanly (5 seconds, no errors) and that both
+    follow-ups scheduled for exactly the right future timestamps (+3d,
+    +7d). The one thing NOT confirmed: the test email never showed up
+    in that Mailinator inbox after ~2 minutes of waiting -- most likely
+    explanation is the mail provider suppressing sends to a known
+    disposable domain (protects sender reputation, common and
+    expected), not a bug, but final real-inbox deliverability is still
+    unconfirmed. A real address would settle it for good.
+
+ANNUAL BILLING DEFAULTED TO "2 MONTHS FREE," PRE-SELECTED (PR #157,
+merged, revenue-plan item #3): was a 10% discount and one of two
+same-weight options on the Billing page. Now priced at 10 months for
+12 (StripeAnnualPriceSync::ANNUAL_FREE_MONTHS = 2, replacing the old
+ANNUAL_DISCOUNT percentage), and annual renders first with the primary
+button + "2 months free" label; monthly is second, secondary-styled,
+captioned "or pay monthly." The founding-customer offer (still monthly-
+only) is unaffected. ACTIVATED LIVE THE SAME SESSION: archived the 4
+old 10%-off annual Prices by exact id (no dashboard hunting needed this
+time -- the ids were already known) and re-ran
+stripe:sync_annual_prices. One side effect caught and cleaned up: the
+sync also gave the still-lingering dead "Pharma Transport Pro" orphan
+Price (see below) a stray new annual variant, since it's still an
+active monthly Price the sync's product-agnostic Price.list scan picks
+up; archived that one too. Verified end-to-end on the live Billing
+page: Starter/Pro/Compliance each show the new $1,290 / $2,990 / $5,990
+annual amounts as the primary button, correct monthly amounts secondary,
+Enterprise untouched.
 
 ====================================================================
 MERGED THIS SESSION (35 PRs)
@@ -276,6 +307,9 @@ Rev-12 follow-up-list work (all merged):
         WORK" above. MIGRATION 000010.
   #155  DSCSA 2026 paid-search landing page -- see "DSCSA FUNNEL WORK"
         above. No migration.
+  #156  Update PROGRESS.txt to rev 22.
+  #157  Default annual billing to 2 months free, pre-selected -- see
+        "ANNUAL BILLING DEFAULTED" above. No migration.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -362,8 +396,8 @@ DSCSA deadline -- engineering half done this session (follow-up emails,
 landing page, ad copy draft); Brett's half (actually running the Ads
 campaign, the state-association call) still open; (2) raise prices +
 add a tier above Compliance -- DONE, see above; (3) push annual prepay
-(2 months free, default it) -- not started, needs Brett's call on
-"2 months free" vs. the current 10% off before building; (4) make the
+(2 months free, default it) -- DONE, see "ANNUAL BILLING DEFAULTED"
+above; (4) make the
 fractional compliance officer the hero offer for the anxious segment --
 /dscsa-2026 partially serves this (splits traffic toward the retainer
 for process-gap visitors) but a true dedicated hero-offer funnel with
