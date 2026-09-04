@@ -136,6 +136,39 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_match "$298.00", response.body
   end
 
+  test "overage charges accrued before a mid-month upgrade still show, even off a capped plan" do
+    # Was on Starter (capped), racked up an overage, then upgraded to
+    # Compliance (unlimited) -- the charge is still real and still owed,
+    # so it must not disappear just because @overage_eligible is now false.
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "compliance")
+    @organization.update!(stripe_customer_id: "cus_1")
+    vehicle = Vehicle.create!(name: "T", organization: @organization)
+    batch = Batch.create!(lot_number: "LOT-1", temperature_celsius: 5, vehicle: vehicle, organization: @organization)
+    report = ComplianceReport.create_next_version!(batch: batch, generated_by: @user, content_hash: SecureRandom.hex(32), pdf_data: "%PDF-x")
+    PacketOverage.create!(organization: @organization, compliance_report: report, stripe_invoice_item_id: "ii_1", amount_cents: 14_900)
+    sign_in @user
+
+    StripeBilling.stub :available_plans, [] do
+      get billing_url
+    end
+    assert_match "Overage charges this month", response.body
+    assert_match "1 extra packet", response.body
+    assert_match "$149.00", response.body
+    refute_match "Turn off overage billing", response.body # not eligible -- no toggle, just the charge
+    refute_match "Turn on overage billing", response.body
+  end
+
+  test "no stray overage card when there's nothing accrued and the plan isn't overage-eligible" do
+    Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "compliance")
+    sign_in @user
+
+    StripeBilling.stub :available_plans, [] do
+      get billing_url
+    end
+    refute_match "Overage charges this month", response.body
+    refute_match "Overage billing", response.body
+  end
+
   test "the Enterprise tier is not a self-serve Subscribe button, just a contact link" do
     plans = [
       { id: "price_s", product_name: "Starter", amount: 99.0, currency: "usd", interval: "month", tier: "starter" },

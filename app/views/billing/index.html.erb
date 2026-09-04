@@ -44,13 +44,7 @@
           </span>
         </div>
         <% if @overages_this_month.any? %>
-          <% overage_cents = @overages_this_month.sum(:amount_cents) %>
-          <div class="rounded-sm border border-line bg-paper px-3 py-2 text-[13px] text-ink-soft">
-            <span class="font-medium text-ink"><%= pluralize(@overages_this_month.count, "extra packet") %></span>
-            this month —
-            <span class="mono"><%= number_to_currency(overage_cents / 100.0) %></span>
-            will be added to your next invoice.
-          </div>
+          <%= render "overage_summary" %>
         <% end %>
         <% if current_user.admin? %>
           <div>
@@ -63,6 +57,15 @@
         <% else %>
           <p class="text-[12px] text-ink-faint">Only an organization admin can change this.</p>
         <% end %>
+      </div>
+    <% elsif @overages_this_month.any? %>
+      <%# The org upgraded off a capped plan mid-month (or an admin turned
+          overage billing off) but still owes charges accrued before that
+          -- @overage_eligible alone would hide this section entirely,
+          and those charges are real regardless of the current plan. %>
+      <div class="card p-6 mt-4 flex flex-col gap-3">
+        <span class="font-semibold text-[14px]">Overage charges this month</span>
+        <%= render "overage_summary" %>
       </div>
     <% end %>
   <% else %>

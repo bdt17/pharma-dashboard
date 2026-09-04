@@ -99,6 +99,27 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_no_match "The card on file is about to expire", response.body
   end
 
+  test "shows an extra-packets tile mirroring the Billing page's overage summary" do
+    batch = Batch.create!(lot_number: "LOT-1", temperature_celsius: 5, vehicle: @vehicle, organization: @organization)
+    report = ComplianceReport.create_next_version!(batch: batch, generated_by: @user, content_hash: SecureRandom.hex(32), pdf_data: "%PDF-x")
+    PacketOverage.create!(organization: @organization, compliance_report: report, stripe_invoice_item_id: "ii_1", amount_cents: 14_900)
+
+    sign_in @user
+    get dashboard_url
+
+    assert_response :success
+    assert_match "Extra packets this month", response.body
+    assert_match "$149.00", response.body
+  end
+
+  test "no extra-packets tile when nothing has been accrued this month" do
+    sign_in @user
+    get dashboard_url
+
+    assert_response :success
+    assert_no_match "Extra packets this month", response.body
+  end
+
   test "a recent custody event links to its batch's custody history" do
     batch = Batch.create!(lot_number: "LOT-1", temperature_celsius: 5, vehicle: @vehicle, organization: @organization)
     batch.custody_logs.create!(action_type: "pickup", handler_name: "Jane Doe", location: "Phoenix, AZ")
