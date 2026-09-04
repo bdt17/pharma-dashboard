@@ -37,6 +37,44 @@ class ExcursionNotifierTest < ActiveSupport::TestCase
     end
   end
 
+  test "quiet hours delay the SMS to the end of the window, in the org's own timezone" do
+    subscribe("pro")
+    @organization.update!(time_zone: "UTC", sms_quiet_hours_enabled: true)
+    @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
+
+    travel_to Time.utc(2026, 1, 1, 2, 0) do # 2am UTC -- inside the quiet window
+      ExcursionNotifier.alert(@event)
+    end
+
+    job = enqueued_jobs.find { |j| j["job_class"] == "SmsExcursionAlertJob" }
+    assert_equal Time.utc(2026, 1, 1, 7, 0).to_i, job["scheduled_at"].to_time.to_i
+  end
+
+  test "quiet hours off (default) never delays the SMS, even at 2am" do
+    subscribe("pro")
+    @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
+
+    travel_to Time.utc(2026, 1, 1, 2, 0) do
+      ExcursionNotifier.alert(@event)
+    end
+
+    job = enqueued_jobs.find { |j| j["job_class"] == "SmsExcursionAlertJob" }
+    assert_nil job["scheduled_at"]
+  end
+
+  test "quiet hours enabled but outside the window sends immediately" do
+    subscribe("pro")
+    @organization.update!(time_zone: "UTC", sms_quiet_hours_enabled: true)
+    @organization.alert_recipients.create!(label: "On call", phone: "+14155550100")
+
+    travel_to Time.utc(2026, 1, 1, 12, 0) do # noon -- outside the window
+      ExcursionNotifier.alert(@event)
+    end
+
+    job = enqueued_jobs.find { |j| j["job_class"] == "SmsExcursionAlertJob" }
+    assert_nil job["scheduled_at"]
+  end
+
   test "alert enqueues no SMS on a Pro plan with no recipients" do
     subscribe("pro")
 

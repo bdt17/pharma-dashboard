@@ -77,6 +77,7 @@ Rails.application.routes.draw do
   post   "/alerts/recipients", to: "alert_settings#create", as: :alert_recipients
   delete "/alerts/recipients/:id", to: "alert_settings#destroy", as: :alert_recipient
   post   "/alerts/recipients/:id/test", to: "alert_settings#test", as: :test_alert_recipient
+  patch  "/alerts/quiet_hours", to: "alert_settings#quiet_hours", as: :alert_quiet_hours
 
   # Outbound event webhooks (Compliance tier)
   get    "/webhooks", to: "webhook_endpoints#index", as: :webhook_endpoints

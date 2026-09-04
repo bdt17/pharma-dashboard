@@ -23,8 +23,18 @@ class ExcursionNotifier
     organization = event.batch.organization
     return unless organization.alert_sms_available?
 
+    # Quiet hours only ever delays the text, never drops it -- and only
+    # the text. Email and the webhook are both immediate regardless (see
+    # .alert above), by design: SMS is the one channel someone can be
+    # woken up by, the other two are read whenever they're read.
+    send_at = organization.sms_quiet_hours_active? ? organization.sms_quiet_hours_end_at : nil
+
     organization.alert_recipients.active.find_each do |recipient|
-      SmsExcursionAlertJob.perform_later(event.id, recipient.phone)
+      if send_at
+        SmsExcursionAlertJob.set(wait_until: send_at).perform_later(event.id, recipient.phone)
+      else
+        SmsExcursionAlertJob.perform_later(event.id, recipient.phone)
+      end
     end
   end
   private_class_method :enqueue_sms
