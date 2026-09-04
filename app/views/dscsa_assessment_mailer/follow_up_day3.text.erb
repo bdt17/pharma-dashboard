@@ -1,0 +1,24 @@
+A few days ago you scored <%= @assessment.score %>/100 on the DSCSA readiness
+check. One gap worth looking at first:
+
+<%= @gap[:category] %>
+<%= @gap[:gap] %>
+
+<% if @platform_solved %>
+See how Pharma Transport closes it: <%= pricing_url %>
+Live GPS tracking, an immutable chain-of-custody log, and continuous
+cold-chain monitoring are the whole product, not an add-on tier.
+<% else %>
+This one's a process gap, not something software alone fixes -- it's exactly
+what the fractional compliance officer retainer is for: <%= compliance_officer_url %>
+A named professional who writes the SOPs and owns the answer, instead of it
+landing on you.
+<% end %>
+
+The small-dispenser exemption ends November 27, 2026. A 14-day free trial is
+enough to see whether this closes the gap for your pharmacy -- start one:
+<%= new_user_registration_url %>
+
+--
+You're getting this because you requested a DSCSA readiness score.
+Unsubscribe from this follow-up: <%= @unsubscribe_url %>

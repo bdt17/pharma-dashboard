@@ -1,0 +1,33 @@
+<% if @assessment.pharmacy_name.present? %>
+Here's <%= @assessment.pharmacy_name %>'s DSCSA readiness score, as requested.
+<% else %>
+Here's your DSCSA readiness score, as requested.
+<% end %>
+
+<%= @assessment.score %> / 100 -- <%= @assessment.band_label %>
+
+<% if @assessment.gaps.any? %>
+<%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work before the
+small-dispenser exemption ends on November 27, 2026:
+<% @assessment.gaps.first(3).each do |g| %>
+- <%= g[:category] %>
+<% end %>
+<% else %>
+You answered every question "yes" -- on paper, you're ready for the enhanced
+requirements. Worth double-checking the full breakdown below in case anything
+was a guess rather than a certainty.
+<% end %>
+
+See the full breakdown: <%= dscsa_assessment_result_url(@assessment.token) %>
+
+<% if Time.current <= StripeBilling.founding_offer_cutoff %>
+Founding customer offer: subscribe to any monthly plan before
+<%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %> and get 25% off your first six months.
+<% end %>
+
+Pharma Transport closes the chain-of-custody, cold-chain, and recordkeeping
+gaps directly, with a 14-day free trial -- start one: <%= new_user_registration_url %>
+
+--
+You're getting this because you requested your DSCSA readiness score.
+Unsubscribe from this follow-up: <%= @unsubscribe_url %>

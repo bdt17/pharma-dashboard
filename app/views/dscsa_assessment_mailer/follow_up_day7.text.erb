@@ -1,0 +1,29 @@
+A week ago you took the DSCSA readiness check and scored
+<%= @assessment.score %>/100 (<%= @assessment.band_label.downcase %>).
+<% if @assessment.gaps.any? %>
+Still <%= @assessment.gaps.size %> <%= @assessment.gaps.size == 1 ? "gap" : "gaps" %> between you and
+the enhanced requirements that take effect when the small-dispenser exemption ends.
+<% end %>
+
+November 27, 2026 isn't a soft deadline -- it's when the exemption most small
+pharmacies have been operating under simply stops applying. Whatever gets
+built or put in place needs to be live before then, not started then.
+
+Pharma Transport is the whole record in one place: live GPS tracking, an
+immutable hash-chained chain-of-custody log, proof-of-delivery signatures,
+and an audit trail -- plus a fractional compliance officer retainer if the
+gap is process and paperwork rather than software. Every plan starts with a
+14-day free trial; nothing is charged until it ends.
+
+<% if Time.current <= StripeBilling.founding_offer_cutoff %>
+Founding customer offer ends <%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %>:
+25% off your first six months on any monthly plan.
+<% end %>
+
+Start a free trial: <%= new_user_registration_url %>
+See your full readiness breakdown: <%= dscsa_assessment_result_url(@assessment.token) %>
+Talk to someone first: <%= request_a_call_url(topic: "dscsa_assessment") %>
+
+--
+You're getting this because you requested a DSCSA readiness score. This is
+the last scheduled follow-up email. Unsubscribe any time: <%= @unsubscribe_url %>

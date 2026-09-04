@@ -1,0 +1,50 @@
+<p style="font-size:14px;">
+  <% if @assessment.pharmacy_name.present? %>
+    Here's <strong><%= @assessment.pharmacy_name %></strong>'s DSCSA readiness score, as requested.
+  <% else %>
+    Here's your DSCSA readiness score, as requested.
+  <% end %>
+</p>
+
+<p style="font-size:32px; margin: 20px 0 4px;">
+  <strong><%= @assessment.score %></strong><span style="font-size:16px; color:#666;"> / 100 &mdash; <%= @assessment.band_label %></span>
+</p>
+
+<% if @assessment.gaps.any? %>
+  <p style="font-size:14px;">
+    <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work before the
+    small-dispenser exemption ends on <strong>November 27, 2026</strong>:
+  </p>
+  <ul style="font-size:14px;">
+    <% @assessment.gaps.first(3).each do |g| %>
+      <li><%= g[:category] %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p style="font-size:14px;">
+    You answered every question "yes" &mdash; on paper, you're ready for the enhanced
+    requirements. Worth double-checking the full breakdown below in case anything was
+    a guess rather than a certainty.
+  </p>
+<% end %>
+
+<p style="font-size:14px;">
+  <%= link_to "See the full breakdown", dscsa_assessment_result_url(@assessment.token) %>
+</p>
+
+<% if Time.current <= StripeBilling.founding_offer_cutoff %>
+  <p style="font-size:13px; background:#fbf1e4; border:1px solid #ecd3ac; color:#5c4420; padding:10px 14px; border-radius:4px;">
+    <strong>Founding customer offer:</strong> subscribe to any monthly plan before
+    <%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %> and get 25% off your first six months.
+  </p>
+<% end %>
+
+<p style="font-size:14px;">
+  Pharma Transport closes the chain-of-custody, cold-chain, and recordkeeping gaps directly,
+  with a 14-day free trial &mdash; <%= link_to "start one", new_user_registration_url %>.
+</p>
+
+<p style="font-size:12px; color:#666; margin-top:28px;">
+  You're getting this because you requested your DSCSA readiness score.
+  <%= link_to "Unsubscribe", @unsubscribe_url %> from this follow-up.
+</p>

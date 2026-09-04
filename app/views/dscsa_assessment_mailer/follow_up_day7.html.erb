@@ -1,0 +1,42 @@
+
+<p style="font-size:14px;">
+  A week ago you took the DSCSA readiness check and scored
+  <strong><%= @assessment.score %>/100</strong> (<%= @assessment.band_label.downcase %>).
+  <% if @assessment.gaps.any? %>
+    Still <%= @assessment.gaps.size %> <%= @assessment.gaps.size == 1 ? "gap" : "gaps" %> between you and
+    the enhanced requirements that take effect when the small-dispenser exemption ends.
+  <% end %>
+</p>
+
+<p style="font-size:14px;">
+  <strong>November 27, 2026</strong> isn't a soft deadline -- it's when the exemption most
+  small pharmacies have been operating under simply stops applying. Whatever gets built or
+  put in place needs to be live before then, not started then.
+</p>
+
+<p style="font-size:14px;">
+  Pharma Transport is the whole record in one place: live GPS tracking, an immutable
+  hash-chained chain-of-custody log, proof-of-delivery signatures, and an audit trail --
+  plus a fractional compliance officer retainer if the gap is process and paperwork rather
+  than software. Every plan starts with a 14-day free trial; nothing is charged until it ends.
+</p>
+
+<% if Time.current <= StripeBilling.founding_offer_cutoff %>
+  <p style="font-size:13px; background:#fbf1e4; border:1px solid #ecd3ac; color:#5c4420; padding:10px 14px; border-radius:4px;">
+    <strong>Founding customer offer</strong> ends
+    <%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %>: 25% off your first six months
+    on any monthly plan.
+  </p>
+<% end %>
+
+<p style="font-size:14px;">
+  <%= link_to "Start a free trial", new_user_registration_url %> &middot;
+  <%= link_to "See your full readiness breakdown", dscsa_assessment_result_url(@assessment.token) %> &middot;
+  <%= link_to "Talk to someone first", request_a_call_url(topic: "dscsa_assessment") %>
+</p>
+
+<p style="font-size:12px; color:#666; margin-top:28px;">
+  You're getting this because you requested a DSCSA readiness score. This is the last
+  scheduled follow-up email.
+  <%= link_to "Unsubscribe", @unsubscribe_url %> any time.
+</p>
