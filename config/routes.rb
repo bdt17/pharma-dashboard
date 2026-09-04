@@ -26,6 +26,12 @@ Rails.application.routes.draw do
   get "/about", to: "pages#about", as: :about
   get "/security", to: "pages#security", as: :security
   get "/compliance-officer", to: "pages#compliance_officer", as: :compliance_officer
+
+  # Dedicated paid-search / content landing page for "small pharmacy DSCSA
+  # 2026" and similar terms -- message-matched to the ad copy, so it's a
+  # separate page from the general marketing pricing page rather than
+  # sending that traffic to /pricing directly. See PagesController#dscsa_2026.
+  get "/dscsa-2026", to: "pages#dscsa_2026", as: :dscsa_2026
   get "/verify/:token", to: "verifications#show", as: :verification
   # Embeddable SVG version of the badge -- a pharmacy drops this on its own
   # site (see the snippet on the Billing page), and every embed links back

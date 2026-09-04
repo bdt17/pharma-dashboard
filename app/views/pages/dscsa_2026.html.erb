@@ -1,0 +1,128 @@
+<% content_for :full_bleed, "1" %>
+<% content_for :title, "Small Pharmacy DSCSA 2026 Deadline — Pharma Transport" %>
+<% content_for :meta_description, "The DSCSA small-dispenser exemption ends November 27, 2026. Free 2-minute readiness check, plus the platform and compliance-officer retainer that close the gaps it finds." %>
+
+<%
+  assessment_link = dscsa_assessment_path
+  call_link = request_a_call_path(topic: "dscsa_assessment")
+%>
+
+<section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
+  <div class="mx-auto max-w-6xl px-6 py-[76px]">
+    <div class="flex flex-col gap-5 max-w-[56ch]">
+      <span class="eyebrow">Small-dispenser exemption ends November 27, 2026</span>
+      <h1 class="text-[30px] sm:text-[44px] leading-[1.1]">Is your pharmacy ready for the DSCSA deadline?</h1>
+      <p class="text-[17px] text-ink-soft">
+        If you employ 25 or fewer full-time pharmacists and technicians, you&rsquo;ve been
+        exempt from the enhanced drug distribution security requirements &mdash; package-level
+        verification, electronic transaction data, a documented suspect-product process. That
+        exemption ends this year. Most small pharmacies haven&rsquo;t started.
+      </p>
+      <div class="flex flex-wrap gap-3 pt-1">
+        <a class="btn btn-primary" href="<%= assessment_link %>">Take the free 2-minute readiness check</a>
+        <a class="btn btn-secondary" href="#whats-changing">What&rsquo;s changing</a>
+      </div>
+      <p class="text-[12.5px] text-ink-faint">No account needed. Answer 8 questions, get a score and a plain-English gap list.</p>
+    </div>
+  </div>
+</section>
+
+<%# What's changing %>
+<section id="whats-changing" class="mx-auto max-w-6xl px-6 py-[72px]">
+  <div class="flex flex-col gap-3 max-w-[50ch] mb-10">
+    <span class="eyebrow">What&rsquo;s changing</span>
+    <h2 class="text-[26px] sm:text-[28px]">The exemption isn&rsquo;t being extended again.</h2>
+  </div>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <% [
+      ["Package-level verification", "Scan a 2D barcode and trace an individual package, not just a lot number."],
+      ["Electronic transaction data", "Receive and retain EPCIS-style transaction data from every wholesaler you buy from."],
+      ["24-hour incident response", "A documented process for suspect or illegitimate product, with FDA and trading-partner notification."],
+      ["Six-year recordkeeping", "Full shipment history retrievable on request, not reconstructed after the fact."],
+    ].each do |title, body| %>
+      <div class="card p-6 flex flex-col gap-2">
+        <h3 class="font-sans text-[14.5px] font-semibold"><%= title %></h3>
+        <p class="text-[13.5px] text-ink-soft"><%= body %></p>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<%# How this closes the gap %>
+<section class="bg-surface border-y border-line">
+  <div class="mx-auto max-w-6xl px-6 py-[76px]">
+    <div class="flex flex-col gap-3 max-w-[52ch] mb-10">
+      <span class="eyebrow">Two ways to close the gap</span>
+      <h2 class="text-[26px] sm:text-[28px]">Software for what&rsquo;s software. A person for what isn&rsquo;t.</h2>
+    </div>
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="card p-7 flex flex-col gap-4">
+        <span class="badge badge-accent w-fit">The platform</span>
+        <h3 class="font-sans text-[17px] font-semibold">Chain of custody, cold chain, records</h3>
+        <p class="text-[14px] text-ink-soft">
+          Live GPS fleet tracking, an immutable hash-chained custody log, proof-of-delivery
+          signatures, continuous temperature monitoring, and an audit trail &mdash; generated as
+          you ship, not reconstructed for an inspector. Every plan is the whole product,
+          starting at $<%= @starter_monthly %>/month with a 14-day free trial.
+        </p>
+        <a class="btn btn-secondary w-fit" href="<%= pricing_path %>">See pricing</a>
+      </div>
+      <div class="card p-7 flex flex-col gap-4">
+        <span class="badge w-fit" style="color:#b45309;border-color:#ecd3ac;background-color:#fbf1e4;">The retainer</span>
+        <h3 class="font-sans text-[17px] font-semibold">SOPs, verification process, trading-partner checks</h3>
+        <p class="text-[14px] text-ink-soft">
+          The gaps that are process and paperwork, not software &mdash; written procedures,
+          product verification workflow, confirming your trading partners are authorized &mdash;
+          go to a named fractional compliance officer who owns the answer instead of it landing
+          on you.
+        </p>
+        <a class="btn btn-secondary w-fit" href="<%= compliance_officer_path %>">See the retainer</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% if Time.current <= StripeBilling.founding_offer_cutoff %>
+  <section class="mx-auto max-w-6xl px-6 pt-14">
+    <div class="rounded-sm border px-5 py-4 text-[14px] text-center" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
+      <strong>Founding customer offer.</strong> Subscribe to any monthly plan before
+      <%= StripeBilling.founding_offer_cutoff.strftime("%B %-d, %Y") %> and get 25% off your first
+      six months &mdash; applied automatically, no code needed.
+    </div>
+  </section>
+<% end %>
+
+<%# FAQ %>
+<section class="mx-auto max-w-6xl px-6 py-[76px]">
+  <div class="flex flex-col gap-2 mb-8">
+    <span class="eyebrow">Questions</span>
+    <h2 class="text-[26px]">Before you start the check</h2>
+  </div>
+  <div class="grid gap-6 md:grid-cols-2 md:gap-x-10">
+    <% [
+      ["How do I know if the exemption even applies to us?",
+       "It applied if, as of November 27, 2024, your pharmacy employed 25 or fewer full-time licensed pharmacists and technicians across all locations. The readiness check asks this first &mdash; if it doesn&rsquo;t apply, the full requirements are already in force for you today, not pending."],
+      ["Is this just a sales pitch disguised as a quiz?",
+       "The check scores all 8 requirement areas and shows every gap in plain English whether or not you ever talk to us. Where the platform or the retainer closes a specific gap, it says so &mdash; and where neither does, it says that too."],
+      ["We&rsquo;re not sure if we need software or a person.",
+       "Most pharmacies need some of both. Custody, cold chain, and records are software problems; SOPs and verification process are usually not. The check&rsquo;s result page breaks down which is which for your specific answers."],
+      ["How fast can we actually be ready?",
+       "The platform side is live the day you start a trial &mdash; GPS, custody logging, and packet generation from your first shipment. The process side depends on what&rsquo;s missing; a 20-minute call is enough to scope it."],
+    ].each do |q, a| %>
+      <div class="flex flex-col gap-1.5">
+        <h3 class="font-sans text-[15px] font-semibold"><%== q %></h3>
+        <p class="text-[13.5px] text-ink-soft"><%== a %></p>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<section class="bg-brand-700 text-white">
+  <div class="mx-auto max-w-6xl px-6 py-[68px] flex flex-wrap items-center justify-between gap-6">
+    <h2 class="text-[24px] sm:text-[26px] text-white max-w-[28ch]">Two minutes now, or a finding at your next inspection.</h2>
+    <div class="flex gap-3">
+      <a class="btn" style="background:#fff;color:#1f3a53;" href="<%= assessment_link %>">Take the readiness check</a>
+      <a class="btn btn-secondary" style="border-color:rgba(255,255,255,0.3);color:#fff;background:transparent;" href="<%= call_link %>">Talk to someone first</a>
+    </div>
+  </div>
+</section>

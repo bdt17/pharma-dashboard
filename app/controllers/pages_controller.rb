@@ -11,6 +11,20 @@ class PagesController < ApplicationController
     @plans = StripeBilling.available_plans
   end
 
+  # Paid-search / content landing page for "small pharmacy DSCSA 2026" and
+  # similar terms. Deliberately separate from #pricing: a cold visitor
+  # from an ad has none of the context a pricing page assumes, and the
+  # highest-converting first step for that traffic is the free readiness
+  # check, not a plan comparison.
+  def dscsa_2026
+    # Same "read Stripe, don't hardcode" rule as #pricing -- a stale
+    # hardcoded number on an ad landing page is exactly the kind of thing
+    # that quietly drifts wrong after a price change and undersells (or
+    # oversells) the offer the ad promised.
+    starter_price = StripeBilling.available_plans.find { |p| p[:tier] == "starter" && p[:interval] == "month" }
+    @starter_monthly = starter_price ? starter_price[:amount].to_i : SubscriptionPlan::STARTER.monthly_dollars
+  end
+
   def about
   end
 
