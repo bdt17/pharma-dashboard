@@ -21,10 +21,10 @@ class StripeAnnualPriceSyncTest < ActiveSupport::TestCase
     )
   end
 
-  test "creates an annual price at 10% off 12 months when none exists yet" do
+  test "creates an annual price at 2 months free (10 months' worth) when none exists yet" do
     monthly_list = Stripe::ListObject.construct_from(data: [ monthly_price ])
     empty_list = Stripe::ListObject.construct_from(data: [])
-    created_price = Stripe::Price.construct_from(id: "price_year", unit_amount: 106_920, currency: "usd")
+    created_price = Stripe::Price.construct_from(id: "price_year", unit_amount: 99_000, currency: "usd")
 
     creation_params = nil
     Stripe::Price.stub :list, ->(params) { params[:recurring][:interval] == "month" ? monthly_list : empty_list } do
@@ -35,8 +35,8 @@ class StripeAnnualPriceSyncTest < ActiveSupport::TestCase
     end
 
     assert_equal "prod_123", creation_params[:product]
-    # $99/month * 12 * 0.9 = $1069.20 -> 106920 cents
-    assert_equal 106_920, creation_params[:unit_amount]
+    # $99/month * 10 months (2 free) = $990.00 -> 99000 cents
+    assert_equal 99_000, creation_params[:unit_amount]
     assert_equal({ interval: "year" }, creation_params[:recurring])
     assert_equal({ "tier" => "starter" }, creation_params[:metadata])
   end
