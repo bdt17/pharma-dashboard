@@ -23,7 +23,7 @@ class StripeAnnualPriceSync
   private
 
   def monthly_prices
-    Stripe::Price.list(active: true, recurring: { interval: "month" }, expand: [ "data.product" ]).data
+    Stripe::Price.list(active: true, limit: 100, recurring: { interval: "month" }, expand: [ "data.product" ]).data
   end
 
   # Skips a Product that already has an active annual Price rather than
@@ -46,6 +46,6 @@ class StripeAnnualPriceSync
   end
 
   def annual_price_exists?(product_id)
-    Stripe::Price.list(active: true, product: product_id, recurring: { interval: "year" }).data.any?
+    Stripe::Price.list(active: true, limit: 100, product: product_id, recurring: { interval: "year" }).data.any?
   end
 end

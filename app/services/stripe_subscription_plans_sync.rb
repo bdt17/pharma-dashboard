@@ -65,10 +65,10 @@ class StripeSubscriptionPlansSync
   end
 
   def active_products
-    @active_products ||= Stripe::Product.list(active: true).data
+    @active_products ||= Stripe::Product.list(active: true, limit: 100).data
   end
 
   def active_prices
-    @active_prices ||= Stripe::Price.list(active: true).data
+    @active_prices ||= Stripe::Price.list(active: true, limit: 100).data
   end
 end

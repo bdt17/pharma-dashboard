@@ -45,7 +45,7 @@ class StripeBilling
   def self.available_plans
     return [] unless configured?
 
-    Stripe::Price.list(active: true, expand: [ "data.product" ]).data
+    Stripe::Price.list(active: true, limit: 100, expand: [ "data.product" ]).data
       .select(&:recurring)
       .map do |price|
         {
@@ -67,7 +67,7 @@ class StripeBilling
   def self.available_addons
     return [] unless configured?
 
-    Stripe::Price.list(active: true, expand: [ "data.product" ]).data
+    Stripe::Price.list(active: true, limit: 100, expand: [ "data.product" ]).data
       .reject(&:recurring)
       .map { |price| { id: price.id, product_name: price.product.name, amount: price.unit_amount / 100.0, currency: price.currency } }
   end
@@ -157,7 +157,7 @@ class StripeBilling
   # The active one-time Price for a single extra Compliance Packet,
   # matched by product name the same way StripeAddonPriceSync finds it.
   def self.single_packet_price
-    Stripe::Price.list(active: true, expand: [ "data.product" ]).data
+    Stripe::Price.list(active: true, limit: 100, expand: [ "data.product" ]).data
       .find { |price| !price.recurring && price.product.name == StripeAddonPriceSync::PRODUCT_NAME } ||
       raise(NotConfigured, "no '#{StripeAddonPriceSync::PRODUCT_NAME}' Price in Stripe -- run stripe:sync_addon_prices")
   end

@@ -25,12 +25,12 @@ class StripeBulkAddonPriceSync
   private
 
   def existing_price
-    @existing_price ||= Stripe::Price.list(active: true, expand: [ "data.product" ]).data
+    @existing_price ||= Stripe::Price.list(active: true, limit: 100, expand: [ "data.product" ]).data
       .find { |price| !price.recurring && price.product.name == PRODUCT_NAME }
   end
 
   def product
-    Stripe::Product.list(active: true).data.find { |p| p.name == PRODUCT_NAME } ||
+    Stripe::Product.list(active: true, limit: 100).data.find { |p| p.name == PRODUCT_NAME } ||
       Stripe::Product.create(
         name: PRODUCT_NAME,
         description: "10 additional formal Compliance Packet generations, outside any subscription plan -- 20% off buying them one at a time."
