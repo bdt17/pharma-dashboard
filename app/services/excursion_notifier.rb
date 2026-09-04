@@ -8,32 +8,38 @@
 class ExcursionNotifier
   def self.alert(event)
     ExcursionMailer.alert(event).deliver_later
-    enqueue_sms(event)
+    enqueue_sms(event, SmsExcursionAlertJob)
     publish_webhook(event, "excursion.started")
   end
 
   def self.resolved(event)
-    # Email only for the human channels: the "resolved" message is
-    # reassurance, not something worth a text (and an SMS bill) at 3am.
+    # Email is always on. SMS here is a second opt-in on top of
+    # alert_sms_available? (Organization#all_clear_sms_enabled?, off by
+    # default) -- a "resolved" text is reassurance, not urgency, and
+    # nobody should get billed for a text they didn't ask for just
+    # because they wanted the actual alert.
     ExcursionMailer.resolved(event).deliver_later
+    enqueue_sms(event, SmsExcursionResolvedJob) if event.batch.organization.all_clear_sms_enabled?
     publish_webhook(event, "excursion.resolved")
   end
 
-  def self.enqueue_sms(event)
+  def self.enqueue_sms(event, job_class)
     organization = event.batch.organization
     return unless organization.alert_sms_available?
 
     # Quiet hours only ever delays the text, never drops it -- and only
-    # the text. Email and the webhook are both immediate regardless (see
-    # .alert above), by design: SMS is the one channel someone can be
-    # woken up by, the other two are read whenever they're read.
+    # the text. Email and the webhook are both immediate regardless, by
+    # design: SMS is the one channel someone can be woken up by, the
+    # other two are read whenever they're read. Applies the same way to
+    # the "all clear" text as to the original alert -- if quiet hours
+    # are worth respecting for one, they're worth respecting for both.
     send_at = organization.sms_quiet_hours_active? ? organization.sms_quiet_hours_end_at : nil
 
     organization.alert_recipients.active.find_each do |recipient|
       if send_at
-        SmsExcursionAlertJob.set(wait_until: send_at).perform_later(event.id, recipient.phone)
+        job_class.set(wait_until: send_at).perform_later(event.id, recipient.phone)
       else
-        SmsExcursionAlertJob.perform_later(event.id, recipient.phone)
+        job_class.perform_later(event.id, recipient.phone)
       end
     end
   end

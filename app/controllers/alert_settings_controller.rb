@@ -4,7 +4,7 @@
 # the opt-in SMS layer, which is a Pro/Compliance-tier feature.
 class AlertSettingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_admin, only: %i[create destroy test quiet_hours]
+  before_action :require_admin, only: %i[create destroy test quiet_hours all_clear]
 
   def index
     @sms_available = current_organization&.alert_sms_available? || false
@@ -64,6 +64,19 @@ class AlertSettingsController < ApplicationController
     else
       redirect_to alert_settings_path, alert: current_organization.errors.full_messages.to_sentence
     end
+  end
+
+  # Turns the "all clear" SMS on excursion resolution on/off -- see
+  # Organization#all_clear_sms_enabled? and ExcursionNotifier.resolved.
+  # A second, independent opt-in on top of alert_sms_available?: getting
+  # the original alert doesn't mean someone also wants a text when it's
+  # over.
+  def all_clear
+    enabled = ActiveModel::Type::Boolean.new.cast(params[:enabled])
+    current_organization.update!(all_clear_sms_enabled: enabled)
+    redirect_to alert_settings_path,
+      notice: enabled ? "All-clear texts are on. Resolving an excursion now also sends a text, same recipients." :
+                         "All-clear texts are off. Only the original alert goes out by SMS."
   end
 
   private
