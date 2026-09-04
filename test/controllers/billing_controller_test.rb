@@ -45,7 +45,7 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "lists available plans from Stripe when there's no active subscription" do
-    plans = [ { id: "price_123", product_name: "Starter", amount: 99.0, currency: "usd", interval: "month" } ]
+    plans = [ { id: "price_123", product_name: "Starter", amount: 99.0, currency: "usd", interval: "month", tier: "starter" } ]
 
     sign_in @user
     StripeBilling.stub :available_plans, plans do
@@ -129,8 +129,31 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", request_a_call_path(topic: "enterprise")
   end
 
+  # Regression test for a real production incident (2026-09-03): a
+  # leftover Stripe Price from an abandoned experiment, untagged and
+  # unrelated to any current SubscriptionPlan tier, rendered as a live
+  # Subscribe button on the actual Billing page once the account had more
+  # than one stray active Price lying around. @plans must allow-list by
+  # recognized self-serve tier, not just render whatever Stripe returns.
+  test "an untagged or unrecognized Stripe price never renders as a Subscribe button" do
+    plans = [
+      { id: "price_s", product_name: "Starter", amount: 129.0, currency: "usd", interval: "month", tier: "starter" },
+      { id: "price_orphan", product_name: "Pharma Transport Pro", amount: 200.0, currency: "usd", interval: "month", tier: nil }
+    ]
+
+    sign_in @user
+    StripeBilling.stub :available_plans, plans do
+      get billing_url
+    end
+
+    assert_response :success
+    assert_select "form[action=?]", billing_checkout_path(price_id: "price_s")
+    assert_select "form[action=?]", billing_checkout_path(price_id: "price_orphan"), count: 0
+    assert_no_match "Pharma Transport Pro", response.body
+  end
+
   test "shows the founding-customer offer banner before the cutoff, not after" do
-    plans = [ { id: "price_123", product_name: "Starter", amount: 200.0, currency: "usd", interval: "month" } ]
+    plans = [ { id: "price_123", product_name: "Starter", amount: 200.0, currency: "usd", interval: "month", tier: "starter" } ]
     sign_in @user
 
     StripeBilling.stub :available_plans, plans do

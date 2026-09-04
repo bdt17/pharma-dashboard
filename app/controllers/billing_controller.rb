@@ -8,11 +8,16 @@ class BillingController < ApplicationController
   def index
     @subscription = current_organization&.subscriptions&.order(created_at: :desc)&.first
     unlimited = @subscription&.active_or_trialing?
-    # Contact-sales tiers (Enterprise) have a live Stripe Price so a
-    # subscription can be created for them by hand, but they're not
-    # offered as a self-serve Subscribe button -- the page links to the
-    # "talk to us" form instead.
-    @plans = unlimited ? [] : StripeBilling.available_plans.reject { |plan| SubscriptionPlan.find(plan[:tier])&.contact_sales? }
+    # Allow-list against SubscriptionPlan.self_serve rather than rejecting
+    # contact-sales tiers by name: Stripe is a shared account, and any
+    # active recurring Price that isn't ours (an abandoned experiment, a
+    # duplicate created by hand, anything untagged) would otherwise render
+    # as a real Subscribe button on the actual money page. Only a Price
+    # tagged with a tier this app recognizes as self-serve ever shows here
+    # -- Enterprise's Price stays out even if its `tier` metadata is ever
+    # missing or wrong, not just when it's correctly tagged "enterprise".
+    self_serve_tiers = SubscriptionPlan.self_serve.map(&:tier)
+    @plans = unlimited ? [] : StripeBilling.available_plans.select { |plan| self_serve_tiers.include?(plan[:tier]) }
     @addons = unlimited ? [] : StripeBilling.available_addons
     @available_credits = current_organization&.report_credits&.available&.count || 0
     # The overage toggle only makes sense on a capped paid plan -- an

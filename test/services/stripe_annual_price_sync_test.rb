@@ -10,13 +10,14 @@ class StripeAnnualPriceSyncTest < ActiveSupport::TestCase
     Stripe.api_key = @previous_key
   end
 
-  def monthly_price(product_id: "prod_123", unit_amount: 9900)
+  def monthly_price(product_id: "prod_123", unit_amount: 9900, tier: "starter")
     Stripe::Price.construct_from(
       id: "price_month",
       unit_amount: unit_amount,
       currency: "usd",
       recurring: { interval: "month" },
-      product: { id: product_id, name: "Starter" }
+      product: { id: product_id, name: "Starter" },
+      metadata: tier ? { "tier" => tier } : {}
     )
   end
 
@@ -37,6 +38,22 @@ class StripeAnnualPriceSyncTest < ActiveSupport::TestCase
     # $99/month * 12 * 0.9 = $1069.20 -> 106920 cents
     assert_equal 106_920, creation_params[:unit_amount]
     assert_equal({ interval: "year" }, creation_params[:recurring])
+    assert_equal({ "tier" => "starter" }, creation_params[:metadata])
+  end
+
+  test "leaves the annual price untagged when the monthly price has no tier" do
+    monthly_list = Stripe::ListObject.construct_from(data: [ monthly_price(tier: nil) ])
+    empty_list = Stripe::ListObject.construct_from(data: [])
+    created_price = Stripe::Price.construct_from(id: "price_year")
+
+    creation_params = nil
+    Stripe::Price.stub :list, ->(params) { params[:recurring][:interval] == "month" ? monthly_list : empty_list } do
+      Stripe::Price.stub :create, ->(params) { creation_params = params; created_price } do
+        StripeAnnualPriceSync.call
+      end
+    end
+
+    assert_equal({}, creation_params[:metadata])
   end
 
   test "does not create a duplicate annual price when one already exists for the product" do

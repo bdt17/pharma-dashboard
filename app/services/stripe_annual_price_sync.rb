@@ -37,8 +37,23 @@ class StripeAnnualPriceSync
       product: product_id,
       unit_amount: annual_amount_for(monthly_price),
       currency: monthly_price.currency,
-      recurring: { interval: "year" }
+      recurring: { interval: "year" },
+      metadata: annual_metadata_for(monthly_price)
     )
+  end
+
+  # Carries the monthly Price's tier tag over to its annual variant.
+  # BillingController now allow-lists @plans by tier (so an untagged
+  # Price -- an abandoned experiment, a duplicate, Enterprise -- never
+  # renders as a self-serve Subscribe button); every annual Price created
+  # before this method existed had no tier at all, which under that
+  # allow-list would have hidden the real annual plans too, not just the
+  # ones that should stay hidden. Omitted (not sent as "") when the
+  # monthly Price itself has no tier, rather than writing an empty
+  # metadata value.
+  def annual_metadata_for(monthly_price)
+    tier = (monthly_price[:metadata] || {})["tier"]
+    tier.present? ? { "tier" => tier } : {}
   end
 
   def annual_amount_for(monthly_price)
