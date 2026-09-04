@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-03 (rev 20)
+Last updated: 2026-09-03 (rev 21)
 
 ====================================================================
 STATUS
@@ -7,11 +7,11 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ 883df10c  ·  PR #150 open (Stripe .list() pagination fix,
-awaiting CI, to be squash-merged once green).
+main @ 508cdcbe  ·  no open PRs. #150, #151, #152 all merged and
+deployed this session; verified live on the Billing page (see below).
 
 Local on main:
-  bin/rails test           540 runs, 0 failures
+  bin/rails test           542 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_01_000009  (migrations 001-009)
@@ -75,7 +75,7 @@ see the pagination bug below for why that distinction mattered):
   Enterprise  price_1UBkRiCDVKifSEscwhOwlrnI   $1,499/mo (unchanged)
               price_1UB53bCDVKifSEscCQUFOXCx   $16,189.20/yr (unchanged)
 
-BUG FOUND ALONG THE WAY (PR #150, open): every Stripe*Sync service and
+BUG FOUND ALONG THE WAY (PR #150, merged): every Stripe*Sync service and
 StripeBilling.available_plans / available_addons / single_packet_price
 called Stripe::Price.list / Stripe::Product.list with no limit, so
 Stripe silently capped results at its default page size of 10. The
@@ -89,6 +89,31 @@ so overage billing for any opted-in org was actually broken in
 production, not just a missing upsell button. Fix: limit: 100 on every
 Price/Product .list() call (Stripe's own per-page max, comfortably
 above current scale). 540 tests still green, rubocop clean.
+
+SECOND BUG, FOUND BY ACTUALLY CLICKING THROUGH THE BILLING PAGE AFTER
+#150 DEPLOYED (PR #152, merged): fixing the pagination bug made a
+previously-hidden-by-accident problem visible instead of invisible.
+BillingController's plan list only rejected Prices explicitly tagged
+tier=<a contact-sales tier> -- anything untagged passed through by
+default. Two things were untagged: the abandoned "Pharma Transport Pro"
+experiment (rendered as a real $200/mo Subscribe button on the actual
+Billing page) and, more seriously, Enterprise's annual Price (Stripe
+Price.create for an annual variant never carried metadata over from its
+monthly sibling), which meant Enterprise -- deliberately contact-sales
+only, see #138 -- was self-serve subscribable via annual billing,
+bypassing the sales conversation entirely. Fix: BillingController now
+allow-lists @plans against SubscriptionPlan.self_serve tiers instead of
+rejecting by name, and StripeAnnualPriceSync copies the monthly Price's
+tier tag onto the annual Price it creates. Mitigated live the same day
+via the Stripe API (no deploy needed for the immediate fix): tagged
+Enterprise's annual Price, then once the code deploy revealed the same
+gap for Starter/Pro/Compliance's own (pre-existing, untagged) annual
+Prices, tagged those three too. Verified end-to-end on the live Billing
+page afterward: Starter/Pro/Compliance show monthly + annual Subscribe,
+Enterprise shows only "Talk to us," the orphan is gone, and all three
+addons (White-Glove, 10-pack, single packet) render. 542 tests green
+(2 new: annual-tier-copy behavior, and a regression test reproducing
+the exact leaked-Subscribe-button bug), rubocop clean.
 
 ====================================================================
 MERGED THIS SESSION (35 PRs)
