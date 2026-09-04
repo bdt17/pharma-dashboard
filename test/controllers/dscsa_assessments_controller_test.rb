@@ -1,6 +1,9 @@
 require "test_helper"
 
 class DscsaAssessmentsControllerTest < ActionDispatch::IntegrationTest
+  include ActiveJob::TestHelper
+  include ActionMailer::TestHelper
+
   def full_answers(default: "yes", **overrides)
     DscsaAssessment::ALL_KEYS.index_with { |k| overrides[k.to_sym] || default }
   end
@@ -42,5 +45,24 @@ class DscsaAssessmentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_select "input[name=?][value=?]", "call_request[email]", "lead@example.com"
     assert_select "input[name=?][value=?]", "call_request[pharmacy_name]", "Lead Rx"
+  end
+
+  test "an email on the assessment sends the result now and schedules the day3/day7 follow-ups" do
+    assert_enqueued_emails 1 do
+      assert_enqueued_jobs 2, only: DscsaAssessmentFollowUpJob do
+        post dscsa_assessment_url, params: full_answers(default: "no").merge(email: "lead@example.com")
+      end
+    end
+
+    steps = enqueued_jobs.select { |j| j["job_class"] == "DscsaAssessmentFollowUpJob" }.map { |j| j["arguments"].last }
+    assert_equal %w[day3 day7], steps.sort
+  end
+
+  test "no email on the assessment sends nothing and schedules nothing" do
+    assert_no_enqueued_emails do
+      assert_no_enqueued_jobs(only: DscsaAssessmentFollowUpJob) do
+        post dscsa_assessment_url, params: full_answers(default: "no")
+      end
+    end
   end
 end

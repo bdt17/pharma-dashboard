@@ -1,0 +1,18 @@
+<% content_for :title, "Unsubscribe — Pharma Transport" %>
+
+<section class="mx-auto max-w-lg px-6 py-24 text-center flex flex-col items-center gap-4">
+  <% if @invalid %>
+    <h1 class="text-[22px]">That link didn&rsquo;t work</h1>
+    <p class="text-[14px] text-ink-soft max-w-[50ch]">
+      This unsubscribe link is invalid or has expired. If you&rsquo;re still getting email
+      you&rsquo;d rather not, <%= link_to "let us know", request_a_call_path %> and we&rsquo;ll take care of it by hand.
+    </p>
+  <% else %>
+    <h1 class="text-[22px]">You&rsquo;re unsubscribed</h1>
+    <p class="text-[14px] text-ink-soft max-w-[50ch]">
+      <span class="mono"><%= @email %></span> won&rsquo;t get any more DSCSA readiness follow-up email
+      from us. This doesn&rsquo;t affect account or billing email if you&rsquo;re already a Pharma
+      Transport customer under a different address.
+    </p>
+  <% end %>
+</section>

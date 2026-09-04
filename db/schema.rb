@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_000009) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_04_000010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -112,6 +112,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_000009) do
     t.string "token", null: false
     t.datetime "updated_at", null: false
     t.index ["token"], name: "index_dscsa_assessments_on_token", unique: true
+  end
+
+  create_table "email_suppressions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_email_suppressions_on_email", unique: true
   end
 
   create_table "excursion_events", force: :cascade do |t|

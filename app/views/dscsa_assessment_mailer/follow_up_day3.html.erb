@@ -1,0 +1,32 @@
+<p style="font-size:14px;">
+  A few days ago you scored <strong><%= @assessment.score %>/100</strong> on the DSCSA readiness
+  check. One gap worth looking at first:
+</p>
+
+<p style="font-size:15px; font-weight:bold; margin: 16px 0 4px;"><%= @gap[:category] %></p>
+<p style="font-size:14px; color:#444;"><%= @gap[:gap] %></p>
+
+<% if @platform_solved %>
+  <p style="font-size:14px;">
+    <%= link_to "See how Pharma Transport closes it", pricing_url %> &mdash; live GPS tracking,
+    an immutable chain-of-custody log, and continuous cold-chain monitoring are the whole
+    product, not an add-on tier.
+  </p>
+<% else %>
+  <p style="font-size:14px;">
+    This one's a process gap, not something software alone fixes &mdash; it's exactly what the
+    <%= link_to "fractional compliance officer", compliance_officer_url %> retainer is for: a named
+    professional who writes the SOPs and owns the answer, instead of it landing on you.
+  </p>
+<% end %>
+
+<p style="font-size:14px;">
+  The small-dispenser exemption ends <strong>November 27, 2026</strong>. A 14-day free trial
+  is enough to see whether this closes the gap for your pharmacy &mdash;
+  <%= link_to "start one", new_user_registration_url %>.
+</p>
+
+<p style="font-size:12px; color:#666; margin-top:28px;">
+  You're getting this because you requested a DSCSA readiness score.
+  <%= link_to "Unsubscribe", @unsubscribe_url %> from this follow-up.
+</p>
