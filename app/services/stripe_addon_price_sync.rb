@@ -34,12 +34,12 @@ class StripeAddonPriceSync
   # rather than silently drifting an existing one out from under anyone
   # who already has its id cached (e.g. a Checkout Session in progress).
   def existing_price
-    @existing_price ||= Stripe::Price.list(active: true, expand: [ "data.product" ]).data
+    @existing_price ||= Stripe::Price.list(active: true, limit: 100, expand: [ "data.product" ]).data
       .find { |price| !price.recurring && price.product.name == PRODUCT_NAME }
   end
 
   def product
-    Stripe::Product.list(active: true).data.find { |p| p.name == PRODUCT_NAME } ||
+    Stripe::Product.list(active: true, limit: 100).data.find { |p| p.name == PRODUCT_NAME } ||
       Stripe::Product.create(
         name: PRODUCT_NAME,
         description: "One additional formal Compliance Packet generation, outside any subscription plan."
