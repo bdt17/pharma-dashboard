@@ -28,6 +28,13 @@ module PharmaDashboard
     # 301 dashboard.<domain> -> the canonical host. See the middleware file.
     config.middleware.use DashboardSubdomainRedirect
 
+    # Every `SomeMailer.foo.deliver_later` in the app goes through this
+    # instead of the Rails default -- see ApplicationMailDeliveryJob for
+    # why: production's raise_delivery_errors = false means an SMTP
+    # failure during a background send otherwise vanishes completely,
+    # with no exception, no failed job, and no log line.
+    config.action_mailer.delivery_job = "ApplicationMailDeliveryJob"
+
     # ActiveRecord Encryption for User#otp_secret, Vehicle#api_token, and
     # anything else marked `encrypts` later. This app keeps no Rails
     # credentials file, so the keys come from env vars in real environments
