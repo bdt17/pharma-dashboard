@@ -17,5 +17,11 @@ class DashboardController < ApplicationController
 
     @recent_audit_logs = current_organization ? AuditLog.where(user: current_organization.users).order(created_at: :desc).limit(10) : AuditLog.none
     @recent_custody_logs = CustodyLog.joins(:batch).merge(batches).order(timestamp: :desc).limit(10)
+
+    # Mirrors the Billing page's own overage summary -- see
+    # BillingController#index and its _overage_summary partial. Shown here
+    # too so an org doesn't have to visit Billing just to notice they're
+    # accruing extra charges this month.
+    @overages_this_month = current_organization&.packet_overages&.this_month || PacketOverage.none
   end
 end

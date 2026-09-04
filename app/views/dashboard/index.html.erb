@@ -13,7 +13,7 @@
     <% end %>
   </div>
 
-  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+  <div class="grid grid-cols-2 <%= @overages_this_month.any? ? "md:grid-cols-5" : "md:grid-cols-4" %> gap-4 mb-8">
     <div class="card p-4 flex flex-col gap-0.5">
       <div class="text-[11px] uppercase tracking-wide text-ink-faint">Batches</div>
       <div class="mono text-[26px] font-medium"><%= @batch_count %></div>
@@ -29,6 +29,13 @@
       <div class="mono text-[26px] font-medium"><%= @vehicle_count %></div>
       <div class="text-[11px] text-ink-faint"><%= @vehicles_online_count %> pinged in last 15 min</div>
     </div>
+    <% if @overages_this_month.any? %>
+      <div class="card p-4 flex flex-col gap-0.5">
+        <div class="text-[11px] uppercase tracking-wide text-ink-faint">Extra packets this month</div>
+        <div class="mono text-[26px] font-medium"><%= @overages_this_month.count %></div>
+        <div class="text-[11px] text-ink-faint"><%= number_to_currency(@overages_this_month.sum(:amount_cents) / 100.0) %> next invoice</div>
+      </div>
+    <% end %>
     <div class="card p-4 flex flex-col gap-1">
       <div class="text-[11px] uppercase tracking-wide text-ink-faint">Fleet view</div>
       <%= link_to "Live positions →", gps_path, class: "text-[13px] font-medium mt-1" %>

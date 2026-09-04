@@ -1,0 +1,12 @@
+<%# Shared by both places the Billing page shows this month's already-
+    accrued overage charges: nested inside the "Overage billing" card for
+    an org still on a capped plan, and in its own small card for an org
+    that upgraded to an unlimited plan mid-month but still owes overage
+    charges from before the upgrade -- see index.html.erb. %>
+<% overage_cents = @overages_this_month.sum(:amount_cents) %>
+<div class="rounded-sm border border-line bg-paper px-3 py-2 text-[13px] text-ink-soft">
+  <span class="font-medium text-ink"><%= pluralize(@overages_this_month.count, "extra packet") %></span>
+  this month —
+  <span class="mono"><%= number_to_currency(overage_cents / 100.0) %></span>
+  will be added to your next invoice.
+</div>
