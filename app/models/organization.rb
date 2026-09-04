@@ -11,9 +11,16 @@ class Organization < ApplicationRecord
   has_many :referrals_made, class_name: "Referral", foreign_key: :referrer_organization_id, inverse_of: :referrer_organization, dependent: :destroy
   has_one :referral_received, class_name: "Referral", foreign_key: :referred_organization_id, inverse_of: :referred_organization, dependent: :destroy
 
+  # 9pm-7am local, fixed rather than per-org-configurable -- see
+  # sms_quiet_hours_active? / sms_quiet_hours_end_at. Revisit if a
+  # customer actually asks for a different window; nobody has yet.
+  SMS_QUIET_HOURS_START = 21
+  SMS_QUIET_HOURS_END = 7
+
   validates :name, presence: true
   validates :referral_code, uniqueness: true, allow_nil: true
   validates :verification_token, uniqueness: true, allow_nil: true
+  validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }, allow_blank: true
 
   before_validation :assign_referral_code, on: :create
   before_validation :assign_verification_token, on: :create
@@ -79,6 +86,40 @@ class Organization < ApplicationRecord
     Date.new(year, month, 1).end_of_month <= CardExpiryCheckJob::LEAD_TIME.from_now.to_date
   rescue ArgumentError
     false
+  end
+
+  # The organization's timezone, or UTC as the honest default for one
+  # that's never set it -- the app ran entirely on UTC before this
+  # feature existed, so "unset" has always meant UTC in practice, not
+  # "unknown."
+  def time_zone_or_utc
+    ActiveSupport::TimeZone[time_zone.presence || "UTC"] || ActiveSupport::TimeZone["UTC"]
+  end
+
+  # Whether `time` (default now) falls inside this org's local quiet
+  # window (SMS_QUIET_HOURS_START through SMS_QUIET_HOURS_END, wrapping
+  # midnight) -- always false if the org hasn't opted in. Used by
+  # ExcursionNotifier to decide whether an excursion text goes out now or
+  # waits; email and webhooks never check this, only SMS.
+  def sms_quiet_hours_active?(time = Time.current)
+    return false unless sms_quiet_hours_enabled?
+
+    local_hour = time.in_time_zone(time_zone_or_utc).hour
+    local_hour >= SMS_QUIET_HOURS_START || local_hour < SMS_QUIET_HOURS_END
+  end
+
+  # The next moment this org's local quiet window ends, relative to
+  # `time` -- today's SMS_QUIET_HOURS_END if `time` is already past
+  # midnight but still before it (the small-hours part of the window),
+  # otherwise tomorrow's (the evening part of the window, before
+  # midnight). Only meaningful to call when sms_quiet_hours_active? is
+  # true; callers don't need to branch on which side of midnight `time`
+  # falls on themselves.
+  def sms_quiet_hours_end_at(time = Time.current)
+    local = time.in_time_zone(time_zone_or_utc)
+    end_of_window = local.change(hour: SMS_QUIET_HOURS_END, min: 0, sec: 0)
+    end_of_window += 1.day if end_of_window <= local
+    end_of_window
   end
 
   private

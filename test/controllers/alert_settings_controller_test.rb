@@ -135,4 +135,51 @@ class AlertSettingsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to alert_settings_path
   end
+
+  test "an admin can turn quiet hours on and set the timezone together" do
+    enable_sms
+    sign_in @admin
+
+    patch alert_quiet_hours_url, params: { organization: { sms_quiet_hours_enabled: "1", time_zone: "Pacific Time (US & Canada)" } }
+
+    assert_redirected_to alert_settings_path
+    @organization.reload
+    assert @organization.sms_quiet_hours_enabled?
+    assert_equal "Pacific Time (US & Canada)", @organization.time_zone
+    follow_redirect!
+    assert_match "Quiet hours are on", response.body
+  end
+
+  test "turning quiet hours off doesn't require or clear the timezone" do
+    enable_sms
+    @organization.update!(sms_quiet_hours_enabled: true, time_zone: "Pacific Time (US & Canada)")
+    sign_in @admin
+
+    patch alert_quiet_hours_url, params: { organization: { sms_quiet_hours_enabled: "0" } }
+
+    @organization.reload
+    assert_not @organization.sms_quiet_hours_enabled?
+    assert_equal "Pacific Time (US & Canada)", @organization.time_zone # untouched
+  end
+
+  test "a non-admin cannot change quiet hours" do
+    enable_sms
+    sign_in @dispatcher
+
+    patch alert_quiet_hours_url, params: { organization: { sms_quiet_hours_enabled: "1" } }
+
+    assert_not @organization.reload.sms_quiet_hours_enabled?
+    assert_redirected_to alert_settings_path
+  end
+
+  test "an invalid timezone is rejected with a clear error, not silently dropped" do
+    enable_sms
+    sign_in @admin
+
+    patch alert_quiet_hours_url, params: { organization: { sms_quiet_hours_enabled: "1", time_zone: "Not/AZone" } }
+
+    assert_not @organization.reload.sms_quiet_hours_enabled?
+    follow_redirect!
+    assert_match "is not included in the list", response.body
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_04_000010) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_04_000011) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -144,9 +144,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_04_000010) do
     t.boolean "overage_billing_enabled", default: false, null: false
     t.string "plan"
     t.string "referral_code"
+    t.boolean "sms_quiet_hours_enabled", default: false, null: false
     t.string "status"
     t.string "stripe_customer_id"
     t.string "subdomain"
+    t.string "time_zone"
     t.datetime "updated_at", null: false
     t.string "verification_token"
     t.index ["referral_code"], name: "index_organizations_on_referral_code", unique: true

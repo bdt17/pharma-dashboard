@@ -129,4 +129,49 @@ class OrganizationTest < ActiveSupport::TestCase
     Subscription.create!(organization: org, status: "active", stripe_subscription_id: "sub_legacy", tier: nil)
     assert org.alert_sms_available?
   end
+
+  test "time_zone_or_utc falls back to UTC when unset" do
+    org = Organization.create!(name: "Acme Pharma")
+    assert_equal "UTC", org.time_zone_or_utc.name
+
+    org.update!(time_zone: "Pacific Time (US & Canada)")
+    assert_equal "Pacific Time (US & Canada)", org.time_zone_or_utc.name
+  end
+
+  test "rejects a time_zone that isn't a real ActiveSupport::TimeZone name" do
+    org = Organization.new(name: "Acme Pharma", time_zone: "Mars/Olympus_Mons")
+    assert_not org.valid?
+    assert_includes org.errors[:time_zone], "is not included in the list"
+  end
+
+  test "sms_quiet_hours_active? is always false unless the org opted in" do
+    org = Organization.create!(name: "Acme Pharma", time_zone: "UTC")
+    assert_not org.sms_quiet_hours_active?(Time.utc(2026, 1, 1, 2, 0)) # 2am UTC, would be quiet if enabled
+  end
+
+  test "sms_quiet_hours_active? covers both sides of the midnight wrap, in the org's own timezone" do
+    org = Organization.create!(name: "Acme Pharma", time_zone: "UTC", sms_quiet_hours_enabled: true)
+
+    assert org.sms_quiet_hours_active?(Time.utc(2026, 1, 1, 22, 0))   # 10pm -- evening side
+    assert org.sms_quiet_hours_active?(Time.utc(2026, 1, 1, 3, 0))    # 3am -- small-hours side
+    assert_not org.sms_quiet_hours_active?(Time.utc(2026, 1, 1, 12, 0)) # noon
+    assert_not org.sms_quiet_hours_active?(Time.utc(2026, 1, 1, 7, 0))  # exactly the end boundary
+    assert org.sms_quiet_hours_active?(Time.utc(2026, 1, 1, 21, 0))     # exactly the start boundary
+  end
+
+  test "sms_quiet_hours_active? respects a non-UTC timezone, not just wall-clock UTC hour" do
+    # 9pm UTC = 1pm Pacific (UTC-8 in January) -- broad daylight there,
+    # so quiet hours must not trigger off the raw UTC hour.
+    org = Organization.create!(name: "Acme Pharma", time_zone: "Pacific Time (US & Canada)", sms_quiet_hours_enabled: true)
+    assert_not org.sms_quiet_hours_active?(Time.utc(2026, 1, 1, 21, 0))
+  end
+
+  test "sms_quiet_hours_end_at picks tonight's or tomorrow's end depending on which side of midnight" do
+    org = Organization.create!(name: "Acme Pharma", time_zone: "UTC", sms_quiet_hours_enabled: true)
+
+    # 10pm on the 1st -> still-tonight's window ends the *next* morning.
+    assert_equal Time.utc(2026, 1, 2, 7, 0), org.sms_quiet_hours_end_at(Time.utc(2026, 1, 1, 22, 0))
+    # 3am on the 1st -> the window that started last night ends *this* morning.
+    assert_equal Time.utc(2026, 1, 1, 7, 0), org.sms_quiet_hours_end_at(Time.utc(2026, 1, 1, 3, 0))
+  end
 end

@@ -30,6 +30,39 @@
     </div>
   <% end %>
 
+  <% if @sms_available %>
+    <div class="card p-5 mb-4 flex flex-col gap-3">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex flex-col gap-1">
+          <span class="font-semibold text-[14px]">Quiet hours</span>
+          <p class="text-[13px] text-ink-soft max-w-[52ch]">
+            Delay excursion texts between <%= Organization::SMS_QUIET_HOURS_START % 12 %>pm and
+            <%= Organization::SMS_QUIET_HOURS_END %>am local time until the window ends, instead of
+            sending them right away. Email and webhooks are never delayed — this is SMS only.
+          </p>
+        </div>
+        <span class="badge <%= current_organization.sms_quiet_hours_enabled? ? "badge-accent" : "" %> shrink-0">
+          <%= current_organization.sms_quiet_hours_enabled? ? "On" : "Off" %>
+        </span>
+      </div>
+      <% if current_user.admin? %>
+        <%= form_with url: alert_quiet_hours_path, method: :patch, model: current_organization,
+              class: "flex flex-wrap items-center gap-3" do |f| %>
+          <label class="flex items-center gap-2 text-[13px]">
+            <%= f.check_box :sms_quiet_hours_enabled, class: "rounded" %>
+            Enabled
+          </label>
+          <%= f.time_zone_select :time_zone, nil,
+                { default: current_organization.time_zone_or_utc.name },
+                class: "border border-line rounded px-2 py-1.5 text-[13px]" %>
+          <%= f.submit "Save", class: "btn btn-primary btn-sm" %>
+        <% end %>
+      <% else %>
+        <p class="text-[12px] text-ink-faint">Only an organization admin can change this.</p>
+      <% end %>
+    </div>
+  <% end %>
+
   <% if @sms_available || @recipients.any? %>
     <div class="card overflow-hidden mb-4">
       <% if @recipients.any? %>
