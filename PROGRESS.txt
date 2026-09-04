@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-03 (rev 21)
+Last updated: 2026-09-03 (rev 22)
 
 ====================================================================
 STATUS
@@ -7,14 +7,15 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ 508cdcbe  ·  no open PRs. #150, #151, #152 all merged and
-deployed this session; verified live on the Billing page (see below).
+main @ 3fd9ef1e  ·  no open PRs. #150-#155 all merged and deployed this
+session; the price raise, both bugs found along the way, and the DSCSA
+funnel work (follow-up emails + landing page) all verified live.
 
 Local on main:
-  bin/rails test           542 runs, 0 failures
+  bin/rails test           567 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
-  schema version           2026_09_01_000009  (migrations 001-009)
+  schema version           2026_09_04_000010  (migrations 001-010)
   config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep,
                            purge_old_webhook_deliveries, card_expiry_check
 
@@ -114,6 +115,35 @@ Enterprise shows only "Talk to us," the orphan is gone, and all three
 addons (White-Glove, 10-pack, single packet) render. 542 tests green
 (2 new: annual-tier-copy behavior, and a regression test reproducing
 the exact leaked-Subscribe-button bug), rubocop clean.
+
+DSCSA FUNNEL WORK (PR #154 + #155, merged): the revenue plan's #2
+priority, "point the funnel at the Nov 27 2026 deadline," had an
+engineering half nobody had built yet.
+  - #154: the DSCSA readiness assessment has captured an email since it
+    shipped, but nothing ever followed up. Built a 3-email sequence
+    (immediate result, +3 days, +7 days) scheduled via ActiveJob wait:
+    at submission time. The day-3 email leads with one specific gap --
+    a platform-solved one (custody/cold-chain/records) points at a
+    trial, a process one (SOPs, verification, trading partners) points
+    at the fractional compliance officer retainer instead. This is the
+    first marketing (not transactional) email in the app, so it needed
+    a real opt-out: EmailSuppression (keyed by email) + a signed
+    EmailUnsubscribeToken + public GET /unsubscribe. MIGRATION 000010
+    -- new email_suppressions table only.
+  - #155: GET /dscsa-2026, a landing page purpose-built for "small
+    pharmacy DSCSA 2026" paid-search traffic -- separate from /pricing
+    because a cold ad visitor has none of the context that page
+    assumes. Leads with the free readiness check, splits into "the
+    platform" vs. "the retainer" depending on what a visitor's gap
+    turns out to be. Reads the live Starter price from Stripe rather
+    than hardcoding it (same rule /pricing follows).
+  - Also drafted: the actual Google Ads copy (3 ad groups, headlines +
+    descriptions, char-counted, extensions + negatives) as an Artifact
+    -- see "DOCUMENTS PRODUCED" below. Not yet live in an actual Ads
+    account; that's Brett's step.
+  - NOT YET VERIFIED: the follow-up email sequence has unit-test
+    coverage but no one has watched a real send happen end-to-end in
+    production. See NEXT_STEPS.txt for how to check it next session.
 
 ====================================================================
 MERGED THIS SESSION (35 PRs)
@@ -236,6 +266,16 @@ Rev-12 follow-up-list work (all merged):
         their old Price = grandfathered.
   #148  Untrack NEXT_STEPS.txt (local reboot scratch swept into #147 by a
         stray git add -A) + gitignore it.
+  #150  Fix Stripe::Price.list / Stripe::Product.list pagination -- see
+        "BUG FOUND ALONG THE WAY" above.
+  #151  Update PROGRESS.txt to rev 20.
+  #152  Allow-list Billing page plans by self-serve tier -- see "SECOND
+        BUG" above.
+  #153  Update PROGRESS.txt to rev 21.
+  #154  DSCSA assessment follow-up email sequence -- see "DSCSA FUNNEL
+        WORK" above. MIGRATION 000010.
+  #155  DSCSA 2026 paid-search landing page -- see "DSCSA FUNNEL WORK"
+        above. No migration.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -314,11 +354,20 @@ Internal:
                             claude.ai/code/artifact/8696d100-4385-43d2-a513-c58a60882d95
   Tracker Build Guide (Blues Notecard bench build)
                             claude.ai/code/artifact/f5ab96a3-e120-4a89-8ab2-e31dc32ba755
+  DSCSA 2026 Ad Copy (Google Ads, 3 ad groups, ready to paste in)
+                            claude.ai/code/artifact/ead34c6b-dc84-467d-bb61-48ed69147e21
 
 Revenue-plan top priorities: (1) point the funnel at the Nov 27 2026
-DSCSA deadline; (2) raise prices + add a tier above Compliance; (3) push
-annual prepay (2 months free, default it); (4) make the fractional
-compliance officer the hero offer for the anxious segment.
+DSCSA deadline -- engineering half done this session (follow-up emails,
+landing page, ad copy draft); Brett's half (actually running the Ads
+campaign, the state-association call) still open; (2) raise prices +
+add a tier above Compliance -- DONE, see above; (3) push annual prepay
+(2 months free, default it) -- not started, needs Brett's call on
+"2 months free" vs. the current 10% off before building; (4) make the
+fractional compliance officer the hero offer for the anxious segment --
+/dscsa-2026 partially serves this (splits traffic toward the retainer
+for process-gap visitors) but a true dedicated hero-offer funnel with
+capped intake is still undone.
 
 ====================================================================
 DEV ENVIRONMENT CHANGES (local only, never committed)
@@ -328,8 +377,11 @@ DEV ENVIRONMENT CHANGES (local only, never committed)
 - admin@example.com dev password set to ClaudeDemo123!
 - dev DB has all migrations through ...000009; demo org reset at points
   (demo:reset).
-- Pre-existing dev server on pid 9233 / port 3111 left running;
-  tmp/pids/server.pid restored to point at it.
+- The pid 9233 / port 3111 dev server noted in earlier revs of this
+  file was no longer running as of this session (checked, nothing on
+  3111). A throwaway server was booted with -P tmp/pids/claude_check.pid
+  for one visual check of #155 and killed afterward -- nothing left
+  running at session end.
 - Step 0 of the Tracker Build Guide, if run, creates a PT-BENCH-01
   vehicle in PRODUCTION data -- delete it from the app afterward.
 
