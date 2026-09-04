@@ -5,7 +5,7 @@
 # existing monthly Price by product, and never mutates a Price that's
 # already live (retire and recreate instead). Run via
 # `bin/rails stripe:sync_subscription_plans`. StripeAnnualPriceSync then
-# fills in the 10%-off annual Price for each.
+# fills in the "2 months free" annual Price for each.
 class StripeSubscriptionPlansSync
   Result = Struct.new(:created, :existing, keyword_init: true)
 

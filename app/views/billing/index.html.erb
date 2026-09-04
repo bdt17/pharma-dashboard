@@ -102,16 +102,22 @@
           <div class="card p-4">
             <div class="font-semibold mb-2 text-[14px]"><%= product_name %></div>
             <div class="flex flex-col gap-2">
-              <% [ monthly, annual, *others ].compact.each do |plan| %>
+              <%# Annual leads -- the default path is 2 months free, not
+                  monthly, so it's the primary button and shown first
+                  rather than one of two same-weight rows. %>
+              <% [ annual, monthly, *others ].compact.each do |plan| %>
                 <div class="flex items-center justify-between">
                   <div class="text-[13px] text-ink-soft">
                     <span class="mono"><%= number_to_currency(plan[:amount]) %></span><% if plan[:interval] %> / <%= plan[:interval] %><% end %>
                     <% if plan == annual && monthly %>
-                      <span class="text-accent-700 font-medium">— save 10% vs. monthly</span>
+                      <span class="text-accent-700 font-medium">— 2 months free</span>
+                    <% elsif plan == monthly && annual %>
+                      <span class="text-ink-faint">or pay monthly</span>
                     <% end %>
                   </div>
                   <% if current_user.admin? %>
-                    <%= button_to "Subscribe", billing_checkout_path(price_id: plan[:id]), method: :post, class: "btn btn-primary btn-sm" %>
+                    <%= button_to "Subscribe", billing_checkout_path(price_id: plan[:id]), method: :post,
+                          class: "btn btn-sm #{plan == annual ? "btn-primary" : "btn-secondary"}" %>
                   <% end %>
                 </div>
               <% end %>

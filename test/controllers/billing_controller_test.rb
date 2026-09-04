@@ -57,6 +57,30 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_match "$99.00", response.body
   end
 
+  test "annual is the primary, pre-selected Subscribe button; monthly is secondary" do
+    plans = [
+      { id: "price_m", product_name: "Starter", amount: 129.0, currency: "usd", interval: "month", tier: "starter" },
+      { id: "price_y", product_name: "Starter", amount: 1290.0, currency: "usd", interval: "year", tier: "starter" }
+    ]
+
+    sign_in @user
+    StripeBilling.stub :available_plans, plans do
+      get billing_url
+    end
+
+    assert_response :success
+    assert_match "2 months free", response.body
+    assert_match "or pay monthly", response.body
+
+    doc = Nokogiri::HTML::Document.parse(response.body)
+    annual_form = doc.at_css("form[action='#{billing_checkout_path(price_id: 'price_y')}']")
+    monthly_form = doc.at_css("form[action='#{billing_checkout_path(price_id: 'price_m')}']")
+    assert_match "btn-primary", annual_form.at_css("button")["class"]
+    assert_match "btn-secondary", monthly_form.at_css("button")["class"]
+    # Annual's row renders before monthly's in the response body.
+    assert_operator response.body.index("price_y"), :<, response.body.index("price_m")
+  end
+
   test "an admin on a capped plan can toggle overage billing" do
     Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_s", tier: "starter")
     sign_in @user

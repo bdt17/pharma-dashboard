@@ -1,13 +1,15 @@
 # One-time-per-plan-change setup step (not something a request path calls):
 # given the recurring monthly Prices already configured in Stripe for each
-# Product, ensures a matching annual Price exists on the same Product at a
-# 10% discount off 12 months. Same "pricing lives in Stripe, not this app"
-# rule StripeBilling.available_plans already follows -- this just keeps a
-# monthly Product's annual variant in sync there too, instead of someone
-# having to hand-create it correctly in the Stripe dashboard. Run via
-# `bin/rails stripe:sync_annual_prices` after adding or changing a plan.
+# Product, ensures a matching annual Price exists on the same Product priced
+# at ANNUAL_FREE_MONTHS fewer months than 12 -- "2 months free," not a
+# percentage discount (was 10% off until this pricing decision). Same
+# "pricing lives in Stripe, not this app" rule StripeBilling.available_plans
+# already follows -- this just keeps a monthly Product's annual variant in
+# sync there too, instead of someone having to hand-create it correctly in
+# the Stripe dashboard. Run via `bin/rails stripe:sync_annual_prices` after
+# adding or changing a plan.
 class StripeAnnualPriceSync
-  ANNUAL_DISCOUNT = 0.10
+  ANNUAL_FREE_MONTHS = 2
 
   Result = Struct.new(:created, keyword_init: true)
 
@@ -57,7 +59,7 @@ class StripeAnnualPriceSync
   end
 
   def annual_amount_for(monthly_price)
-    (monthly_price.unit_amount * 12 * (1 - ANNUAL_DISCOUNT)).round
+    monthly_price.unit_amount * (12 - ANNUAL_FREE_MONTHS)
   end
 
   def annual_price_exists?(product_id)
