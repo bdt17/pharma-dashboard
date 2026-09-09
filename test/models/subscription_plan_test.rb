@@ -31,4 +31,18 @@ class SubscriptionPlanTest < ActiveSupport::TestCase
     assert_equal 129, SubscriptionPlan::STARTER.monthly_dollars
     assert_equal 1_499, SubscriptionPlan::ENTERPRISE.monthly_dollars
   end
+
+  # Regression test: the Enterprise feature list used to list "Single
+  # sign-on (SAML)" as included, with no SSO code anywhere in the app --
+  # a marketed-but-not-built claim on the actual pricing page. Removed
+  # rather than built, since nothing self-serve backs it; SSO stays
+  # something discussed on the Enterprise sales call (see billing/index
+  # and call_requests/new's own copy), not a bullet implying it's ready
+  # today. This just guards against the bullet quietly coming back.
+  test "the enterprise feature list does not claim SSO/SAML is included" do
+    SubscriptionPlan::ALL.each do |plan|
+      assert_not plan.features.any? { |f| f.match?(/single sign-on|\bSSO\b|\bSAML\b/i) },
+        "#{plan.name} features list an SSO/SAML claim, but no SSO is implemented anywhere in the app"
+    end
+  end
 end
