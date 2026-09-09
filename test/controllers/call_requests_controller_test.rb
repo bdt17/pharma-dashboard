@@ -62,4 +62,15 @@ class CallRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to call_request_thanks_path
     assert_equal "general", CallRequest.last.topic
   end
+
+  test "utm attribution from an earlier landing page hit carries to the call request" do
+    get dscsa_2026_url(utm_source: "google", utm_campaign: "dscsa-nov")
+    post request_a_call_url, params: { call_request: {
+      name: "Dana Rx", email: "dana@example.com", topic: "general"
+    } }
+
+    call_request = CallRequest.last
+    assert_equal "google", call_request.utm_source
+    assert_equal "dscsa-nov", call_request.utm_campaign
+  end
 end

@@ -10,6 +10,8 @@ class CallRequestsController < ApplicationController
   def create
     @call_request = CallRequest.new(call_request_params)
     @call_request.topic = resolved_topic(@call_request.topic)
+    @call_request.utm_source = utm_source
+    @call_request.utm_campaign = utm_campaign
 
     if @call_request.save
       CallRequestMailer.notify(@call_request).deliver_later

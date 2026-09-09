@@ -16,7 +16,7 @@ module Users
       build_resource(sign_up_params)
       resource.role = "admin"
       resource.requires_email_confirmation = true
-      resource.build_organization(name: organization_name)
+      resource.build_organization(name: organization_name, utm_source: utm_source, utm_campaign: utm_campaign)
 
       resource.save
       yield resource if block_given?
