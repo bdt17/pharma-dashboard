@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-08 (rev 27)
+Last updated: 2026-09-08 (rev 28)
 
 ====================================================================
 STATUS
@@ -7,32 +7,36 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ d9c1f97f  ·  no open PRs. #150-#170 all merged and deployed this
+main @ f2b9ac66  ·  no open PRs. #150-#172 all merged and deployed this
 stretch -- the price raise, both bugs found along the way, the DSCSA
 funnel work, the annual-billing default (activated live), the
 overage-visibility fix, SMS quiet hours, a real production mail-
 delivery bug found and fixed, the compliance-officer waitlist, opt-in
 all-clear SMS, first-touch UTM attribution across the acquisition
-funnel, and (this session) self-serve vehicle registration -- the
-first real feature gap found while scoping trial-activation nudges.
-This session also drove the app in a real browser (throwaway system
-tests, never committed) to confirm every previously-"not visually
-verified live" item actually renders and works: the quiet-hours and
-all-clear-texts cards on /alerts, the compliance-officer waitlist
-badge, the /dscsa-2026 landing page, the overage-billing dashboard
-tile + Billing cards in both their capped-plan and post-upgrade
-states, and the new vehicle-registration flow end to end. No bugs
-found. Also merged two routine Dependabot bumps (#166 actions/checkout
-v5->v7, #167 stripe gem 19.5->19.6.1) -- both green on CI, zero
-app-code changes needed.
+funnel, self-serve vehicle registration, and (this session) self-serve
+batch (shipment) registration -- the second real feature gap found
+while scoping trial-activation nudges, plus three related correctness
+bugs (required-vehicle validation, lot_number uniqueness, and a
+batch's status never advancing to "delivered") found and fixed along
+the way. This session also drove the app in a real browser (throwaway
+system tests, never committed) to confirm every previously-"not
+visually verified live" item actually renders and works: the quiet-
+hours and all-clear-texts cards on /alerts, the compliance-officer
+waitlist badge, the /dscsa-2026 landing page, the overage-billing
+dashboard tile + Billing cards in both their capped-plan and post-
+upgrade states, and both the vehicle- and batch-registration flows end
+to end -- the batch form's own visual check is what caught a fourth
+bug (a stale DB default pre-filling the lot number field with a real
+value). Also merged two routine Dependabot bumps (#166
+actions/checkout v5->v7, #167 stripe gem 19.5->19.6.1) -- both green
+on CI, zero app-code changes needed.
 
 Local on main:
-  bin/rails test           625 runs, 0 failures
+  bin/rails test           645 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
-  schema version           2026_09_09_014419  (13 migrations since
-                           the 2026-08-31 reset, see DEPLOY notes --
-                           unchanged this rev, #170 needed no migration)
+  schema version           2026_09_09_033455  (14 migrations since
+                           the 2026-08-31 reset, see DEPLOY notes)
   config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep,
                            purge_old_webhook_deliveries, card_expiry_check
 
@@ -347,8 +351,60 @@ still unbuilt -- it needs the batch-creation gap closed first, since
 two of its three milestones (log a batch, generate a packet) are
 still unreachable self-serve.
 
+SELF-SERVE BATCH (SHIPMENT) REGISTRATION (PR #172, merged): the
+follow-up scoping question #170 deliberately left open. Same
+BatchPolicy-already-written-and-unused pattern as vehicles. Scoping it
+properly (same deliberate approach as #170, not just wiring a form)
+turned up three real correctness gaps, all fixed in this PR:
+  - Batch#belongs_to :vehicle said optional: true; the DB column is
+    NOT NULL. Never detected because nothing but hand-built records
+    ever exercised it -- a real form would have raised a raw
+    ActiveRecord::NotNullViolation instead of a validation error.
+  - lot_number had no application-level uniqueness check, only a DB
+    unique index (global, not per-organization -- a scoping decision
+    made this session: kept global rather than migrating to a
+    compound [organization_id, lot_number] index, since nobody's
+    actually hit that collision yet with few real customers).
+  - Nothing anywhere ever advanced a batch's status to "delivered" --
+    Vehicle#current_batch depends on status != "delivered" to know a
+    truck is still out on a run, so every batch, including brand new
+    self-serve ones, would have stayed "active" forever regardless of
+    what custody history actually recorded. Fixed in
+    CustodyLogsController#create: a "delivered" custody log now flips
+    the batch's own status too.
+New BatchesController new/create/edit/update (index still redirects to
+/dashboard, unchanged -- there's no batch list/detail page in the app
+at all, so create/update land in the batch's custody history, the
+closest thing to one). Dashboard gets a "+ New batch" button.
+vehicle_id/driver_id are resolved against the signed-in user's own
+organization server-side, not mass-assigned from the raw param, so a
+tampered id can't attach a batch to another organization's vehicle or
+driver. A FOURTH bug was found only by actually looking at the new
+form in a real browser rather than reasoning about the code:
+Batch.new pre-filled lot_number with a stale DB default
+("LOT-UNASSIGNED") left over from before the uniqueness index existed
+-- the text field rendered a real value, not a placeholder, and since
+lot_number is unique, only the first customer to leave it untouched
+would even succeed; every batch after that would fail with a
+confusing "has already been taken" for a value they never typed.
+MIGRATION -- drops that default (the presence validation, previously
+dead code since the column could never actually arrive blank, now
+does real work). Also caught and fixed this session: while writing
+this PR, an existing (unrelated) test file, test/controllers/
+batches_controller_test.rb, was accidentally overwritten by a Write
+call that skipped reading it first -- caught via `git status` showing
+M instead of the expected A, and repaired by merging its four
+pre-existing chain_of_custody tests back in with the twelve new ones.
+Worth remembering for next time: always Read a file before Write, even
+when fairly confident it's new.
+
+Batch creation is now unblocked, but the Dashboard activation
+checklist itself is STILL not built -- that was always a distinct,
+separate piece of work these two PRs only cleared the path for. See
+FOLLOW-UP WORK below.
+
 ====================================================================
-MERGED THIS SESSION (41 PRs)
+MERGED THIS SESSION (43 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -500,6 +556,10 @@ Rev-12 follow-up-list work (all merged):
   #169  Update PROGRESS.txt to rev 26.
   #170  Self-serve vehicle registration -- see "SELF-SERVE VEHICLE
         REGISTRATION" above. No migration.
+  #171  Update PROGRESS.txt to rev 27.
+  #172  Self-serve batch (shipment) registration -- see "SELF-SERVE
+        BATCH (SHIPMENT) REGISTRATION" above. MIGRATION -- drops the
+        stale lot_number DB default.
 
   Also merged, not written up individually (routine, zero app-code
   changes): #166 Bump actions/checkout from 5 to 7; #167 Bump stripe
@@ -528,6 +588,11 @@ DEPLOY / GO-LIVE NOTES
   organizations.all_clear_sms_enabled; utm_source + utm_campaign on
   dscsa_assessments, call_requests, and organizations). No downtime,
   no data backfill.
+- Migration 20260909033455 (#172) is the one exception to "all
+  additive": it drops batches.lot_number's stale default value
+  ("LOT-UNASSIGNED"). Column stays NOT NULL; no existing row's value
+  changes, only what a brand-new unsaved record starts with. No
+  downtime, no data backfill here either.
 - NEEDS A RENDER ENV VAR SET: COMPLIANCE_OFFICER_ACTIVE_CLIENTS, the
   real current headcount on the fractional-compliance-officer
   retainer (see #163 above). Unset reads as 0, i.e. all 5 slots open
@@ -564,18 +629,17 @@ FOLLOW-UP WORK (product)
   likelihood, deferred.
 - Split the Solid Queue worker into its own Render service if job volume
   grows (drop the puma plugin line, run bin/jobs).
-- SELF-SERVE BATCH CREATION -- the natural next step after #170. No
-  controller anywhere creates a Batch; every one in the system today
-  was created by hand. Bigger scoping question than vehicles was: lot
-  numbers, driver/vehicle assignment, temperature thresholds all need
-  a real form design, not just a policy that already exists. Worth
-  scoping properly (product decisions on required fields) before
-  building, the same way #170 got scoped before writing code.
+- SELF-SERVE BATCH CREATION -- DONE, see #172 above.
 - DASHBOARD ACTIVATION CHECKLIST -- the actual "trial activation
-  nudges" ask that #170 was scoped out of. Now unblockable for its
-  "add a vehicle" milestone; still blocked on "log a batch" and
-  "generate a packet" until self-serve batch creation exists. Revisit
-  once that's shipped.
+  nudges" ask that #170/#172 were both scoped out of, in favor of
+  shipping the self-serve vehicle/batch features it depends on first.
+  Both of its prerequisites (add a vehicle, log a batch) now exist;
+  "generate a packet" already did. Nothing about the checklist itself
+  is built yet -- still just the v1 scope agreed on when this was
+  first discussed: a Dashboard-only card (no email nudges), and check
+  real trial volume via /ops or Stripe before investing further than
+  that. This is now the most natural next session's engineering
+  thread.
 
 Note: the "quick win" backlog from the revenue plan is now drained --
 overage billing (#140), card-expiry (#141, #143), and the Enterprise tier
@@ -648,7 +712,15 @@ PRE-EXISTING ISSUES FOUND & FIXED THIS SESSION
   4. GPS ingest had no way to timestamp a buffered reading   -> #129
   5. POST /api/v1/gps was only covered by the per-IP backstop, wrong
      for a carrier-NAT'd fleet                               -> #131
-  6. No self-serve way to add a vehicle (or log a batch) existed
+  6. No self-serve way to add a vehicle or log a batch existed
      anywhere in the app -- found while scoping trial-activation
-     nudges -> #170 fixed vehicles; batch creation still open, see
-     FOLLOW-UP WORK above.
+     nudges -> #170 fixed vehicles, #172 fixed batches.
+  7. Batch#belongs_to :vehicle said optional: true against a NOT NULL
+     DB column                                                 -> #172
+  8. Batch#lot_number had no app-level uniqueness check, only a DB
+     index -- and its stale DB default pre-filled every new batch's
+     lot number with a real (wrong) value instead of leaving it
+     blank                                                     -> #172
+  9. Nothing anywhere ever advanced a batch's status to "delivered",
+     so Vehicle#current_batch was silently wrong for any real
+     customer's completed deliveries                           -> #172
