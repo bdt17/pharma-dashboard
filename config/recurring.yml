@@ -29,3 +29,9 @@ production:
   card_expiry_check:
     class: CardExpiryCheckJob
     schedule: every day at 8am
+
+  # Liveness check-in to Sentry Cron Monitors. If this stops arriving,
+  # the app or the job queue is down. No-op until SENTRY_DSN is set.
+  heartbeat:
+    class: HeartbeatJob
+    schedule: every 5 minutes
