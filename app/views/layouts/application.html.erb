@@ -45,6 +45,11 @@
       app/assets/builds/tailwind.css automatically as part of
       assets:precompile. Design tokens and component classes live there. %>
   <%= stylesheet_link_tag "tailwind" %>
+
+  <%# Google Ads conversion tracking -- renders nothing until
+      GOOGLE_ADS_CONVERSION_ID is set (see ConversionTrackingHelper). The
+      per-page conversion events live in the three thank-you templates. %>
+  <%= google_ads_base_tag %>
 </head>
 <body class="min-h-screen bg-paper text-ink antialiased">
   <% if content_for?(:bare_layout) %>
