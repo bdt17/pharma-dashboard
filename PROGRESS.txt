@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-09 (rev 31)
+Last updated: 2026-09-09 (rev 32)
 
 ====================================================================
 STATUS
@@ -7,7 +7,7 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ 77e1dbc3  ·  no open PRs. #150-#178 all merged and deployed this
+main @ faababfe  ·  no open PRs. #150-#180 all merged and deployed this
 stretch -- the price raise, both bugs found along the way, the DSCSA
 funnel work, the annual-billing default (activated live), the
 overage-visibility fix, SMS quiet hours, a real production mail-
@@ -111,8 +111,18 @@ integration's diagnostic pattern. No performance/APM tracing
 deliberately cheap, and this app handles pharmacy-operator PII an
 error report shouldn't carry along with it.
 
+Second "get as pro as possible" item tackled (PR #180): the other
+concrete gap flagged in that same pass, Enterprise's pricing card
+listing "Single sign-on (SAML)" as included with zero SSO code
+anywhere in the app. Fixed the claim rather than building the
+feature (Brett's choice when asked) -- removed the bullet; /billing
+and the Enterprise call-request page already framed SSO honestly as
+something scoped on a sales call, not a ready toggle, so those stay
+as-is. New regression test guards against the bullet quietly coming
+back on any tier. No migration.
+
 Local on main:
-  bin/rails test           655 runs, 0 failures
+  bin/rails test           656 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_09_033455  (14 migrations since
@@ -513,7 +523,7 @@ own actions (see STILL OPEN) or genuinely new strategic ground (see
 NEXT PHASES) -- nothing queued and unstarted.
 
 ====================================================================
-MERGED THIS SESSION (49 PRs)
+MERGED THIS SESSION (51 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -679,6 +689,10 @@ Rev-12 follow-up-list work (all merged):
   #177  Update PROGRESS.txt to rev 30.
   #178  Add error tracking (Sentry) -- see the "get as pro as
         possible" write-up above. No migration.
+  #179  Update PROGRESS.txt to rev 31.
+  #180  Remove the unbuilt SSO/SAML claim from Enterprise's feature
+        list -- see the "get as pro as possible" write-up above.
+        No migration.
 
   Also merged, not written up individually (routine, zero app-code
   changes): #166 Bump actions/checkout from 5 to 7; #167 Bump stripe
