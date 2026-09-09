@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-08 (rev 26)
+Last updated: 2026-09-08 (rev 27)
 
 ====================================================================
 STATUS
@@ -7,26 +7,32 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ 7c7655bb  ·  no open PRs. #150-#168 all merged and deployed this
+main @ d9c1f97f  ·  no open PRs. #150-#170 all merged and deployed this
 stretch -- the price raise, both bugs found along the way, the DSCSA
 funnel work, the annual-billing default (activated live), the
 overage-visibility fix, SMS quiet hours, a real production mail-
 delivery bug found and fixed, the compliance-officer waitlist, opt-in
-all-clear SMS, and (this session) first-touch UTM attribution across
-the acquisition funnel. This session also drove the app in a real
-browser (throwaway system tests, never committed) to confirm every
-previously-"not visually verified live" item actually renders and
-works: the quiet-hours and all-clear-texts cards on /alerts, the
-compliance-officer waitlist badge, the /dscsa-2026 landing page, and
-the overage-billing dashboard tile + Billing cards in both their
-capped-plan and post-upgrade states. No bugs found.
+all-clear SMS, first-touch UTM attribution across the acquisition
+funnel, and (this session) self-serve vehicle registration -- the
+first real feature gap found while scoping trial-activation nudges.
+This session also drove the app in a real browser (throwaway system
+tests, never committed) to confirm every previously-"not visually
+verified live" item actually renders and works: the quiet-hours and
+all-clear-texts cards on /alerts, the compliance-officer waitlist
+badge, the /dscsa-2026 landing page, the overage-billing dashboard
+tile + Billing cards in both their capped-plan and post-upgrade
+states, and the new vehicle-registration flow end to end. No bugs
+found. Also merged two routine Dependabot bumps (#166 actions/checkout
+v5->v7, #167 stripe gem 19.5->19.6.1) -- both green on CI, zero
+app-code changes needed.
 
 Local on main:
-  bin/rails test           611 runs, 0 failures
+  bin/rails test           625 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_09_014419  (13 migrations since
-                           the 2026-08-31 reset, see DEPLOY notes)
+                           the 2026-08-31 reset, see DEPLOY notes --
+                           unchanged this rev, #170 needed no migration)
   config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep,
                            purge_old_webhook_deliveries, card_expiry_check
 
@@ -308,8 +314,41 @@ nullable string columns total, no backfill). /ops gets a new
 the last week's DSCSA assessments by source/campaign -- the read to
 check once the Ads campaign Brett still needs to launch is live.
 
+SELF-SERVE VEHICLE REGISTRATION (PR #170, merged): asked to scope
+"trial activation nudges" (NEXT_STEPS.txt's next "NEXT PHASES" item --
+a Dashboard checklist nudging a new trial toward adding a vehicle,
+logging a batch, generating a Compliance Packet), the codebase itself
+answered first: there was no self-serve way to add a vehicle OR log a
+batch anywhere in this app. `resources :vehicles` only ever exposed
+index/show (the read-only JSON API), no controller anywhere created a
+Batch, and the paid White-Glove Setup add-on's own code comment gives
+it away -- "a human personally helps a new pharmacy import their
+existing batch/vehicle records instead of them doing it themselves" --
+implying a self-serve path was assumed to exist as the default, never
+built. Every vehicle in the system to date was created by hand
+(console/seeds). A checklist telling a trial to "add a vehicle" would
+have pointed at a button that didn't exist, so this ships that button
+first rather than the checklist. New VehiclesController
+(new/create/edit/update) using VehiclePolicy, which already existed
+fully written but completely unused. On create, the vehicle's
+api_token is shown exactly once (same pattern as 2FA backup codes),
+with instructions for pointing a tracker device at /api/v1/gps. /gps
+gets an "Add a vehicle" button (replacing the dead-end "No vehicles
+yet." empty state) and a "Manage" link per row. imei is optional at
+creation -- fillable later via edit -- since a customer may not have
+the physical tracker in hand yet. Vehicle gained two small
+validations the form needed (name required; imei format-checked to 15
+digits when present); one RackAttackTest fixture with a 16-digit imei
+had to be fixed. No migration. Batch creation has the identical gap
+but is a bigger, separate scoping question (lot numbers, driver/
+vehicle assignment, temperature thresholds) -- deliberately left open,
+see FOLLOW-UP WORK below. The Dashboard activation checklist itself is
+still unbuilt -- it needs the batch-creation gap closed first, since
+two of its three milestones (log a batch, generate a packet) are
+still unreachable self-serve.
+
 ====================================================================
-MERGED THIS SESSION (37 PRs)
+MERGED THIS SESSION (41 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -458,6 +497,13 @@ Rev-12 follow-up-list work (all merged):
         see "UTM ATTRIBUTION ACROSS THE ACQUISITION FUNNEL" above.
         New migration, six additive nullable string columns across
         dscsa_assessments, call_requests, and organizations.
+  #169  Update PROGRESS.txt to rev 26.
+  #170  Self-serve vehicle registration -- see "SELF-SERVE VEHICLE
+        REGISTRATION" above. No migration.
+
+  Also merged, not written up individually (routine, zero app-code
+  changes): #166 Bump actions/checkout from 5 to 7; #167 Bump stripe
+  from 19.5.0 to 19.6.1.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -518,6 +564,18 @@ FOLLOW-UP WORK (product)
   likelihood, deferred.
 - Split the Solid Queue worker into its own Render service if job volume
   grows (drop the puma plugin line, run bin/jobs).
+- SELF-SERVE BATCH CREATION -- the natural next step after #170. No
+  controller anywhere creates a Batch; every one in the system today
+  was created by hand. Bigger scoping question than vehicles was: lot
+  numbers, driver/vehicle assignment, temperature thresholds all need
+  a real form design, not just a policy that already exists. Worth
+  scoping properly (product decisions on required fields) before
+  building, the same way #170 got scoped before writing code.
+- DASHBOARD ACTIVATION CHECKLIST -- the actual "trial activation
+  nudges" ask that #170 was scoped out of. Now unblockable for its
+  "add a vehicle" milestone; still blocked on "log a batch" and
+  "generate a packet" until self-serve batch creation exists. Revisit
+  once that's shipped.
 
 Note: the "quick win" backlog from the revenue plan is now drained --
 overage billing (#140), card-expiry (#141, #143), and the Enterprise tier
@@ -590,3 +648,7 @@ PRE-EXISTING ISSUES FOUND & FIXED THIS SESSION
   4. GPS ingest had no way to timestamp a buffered reading   -> #129
   5. POST /api/v1/gps was only covered by the per-IP backstop, wrong
      for a carrier-NAT'd fleet                               -> #131
+  6. No self-serve way to add a vehicle (or log a batch) existed
+     anywhere in the app -- found while scoping trial-activation
+     nudges -> #170 fixed vehicles; batch creation still open, see
+     FOLLOW-UP WORK above.
