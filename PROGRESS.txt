@@ -966,6 +966,10 @@ Internal:
                             claude.ai/code/artifact/f5ab96a3-e120-4a89-8ab2-e31dc32ba755
   DSCSA 2026 Ad Copy (Google Ads, 3 ad groups, ready to paste in)
                             claude.ai/code/artifact/ead34c6b-dc84-467d-bb61-48ed69147e21
+  The Deadline Window (growth contemplation, rev 35 -- five phases
+  sequenced around the Nov 27 deadline; product is built, distribution
+  is the whole problem)
+                            claude.ai/code/artifact/20bd6521-5b4a-4bde-afe4-b3ff1f58e314
 
 Revenue-plan top priorities: (1) point the funnel at the Nov 27 2026
 DSCSA deadline -- engineering half done this session (follow-up emails,
