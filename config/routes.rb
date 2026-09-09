@@ -57,6 +57,7 @@ Rails.application.routes.draw do
   # OPERATOR_EMAILS allowlist (see OpsController).
   get  "/ops", to: "ops#index", as: :ops
   post "/ops/test-email", to: "ops#test_email", as: :ops_test_email
+  post "/ops/check-postmark", to: "ops#check_postmark", as: :ops_check_postmark
 
   # Authenticated application pages
   get "/dashboard", to: "dashboard#index", as: :dashboard
