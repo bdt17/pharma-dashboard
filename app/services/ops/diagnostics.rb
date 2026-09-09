@@ -177,6 +177,8 @@ module Ops
       end
 
       sentry_configured = ENV["SENTRY_DSN"].present?
+      ads_id = ENV["GOOGLE_ADS_CONVERSION_ID"].present?
+      ads_labels = ConversionTrackingHelper::CONVERSION_EVENTS.count { |_, var| ENV[var].present? }
 
       Group.new(name: "Application", checks: [
         Check.new(label: "Environment", status: :ok, detail: Rails.env),
@@ -188,7 +190,10 @@ module Ops
         Check.new(label: "Server time", status: :ok, detail: Time.current.iso8601),
         Check.new(label: "Error tracking (SENTRY_DSN)",
                   status: sentry_configured ? :ok : :warn,
-                  detail: sentry_configured ? "configured" : "unset -- unhandled exceptions and rescued failures aren't reported anywhere")
+                  detail: sentry_configured ? "configured" : "unset -- unhandled exceptions and rescued failures aren't reported anywhere"),
+        Check.new(label: "Google Ads conversion tracking (GOOGLE_ADS_CONVERSION_ID)",
+                  status: ads_id ? :ok : :warn,
+                  detail: ads_id ? "configured -- #{ads_labels}/#{ConversionTrackingHelper::CONVERSION_EVENTS.size} conversion events labelled" : "unset -- paid campaigns can't measure sign-ups")
       ])
     end
 
