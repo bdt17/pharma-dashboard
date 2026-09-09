@@ -29,6 +29,15 @@ class OpsController < ApplicationController
     redirect_to ops_path, alert: "Test email failed: #{e.class}: #{e.message}"
   end
 
+  # On-demand only -- calls the live Postmark API, so it can't live in
+  # Ops::Diagnostics (which must stay side-effect-free for every page
+  # load). Verifies the API token actually works and shows recent
+  # delivery counts. See Ops::PostmarkCheck.
+  def check_postmark
+    result = Ops::PostmarkCheck.call
+    redirect_to ops_path, (result.ok ? :notice : :alert) => result.message
+  end
+
   private
 
   def require_operator

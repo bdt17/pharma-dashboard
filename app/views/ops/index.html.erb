@@ -18,7 +18,12 @@
       <h1 class="text-[24px]">Ops diagnostics</h1>
       <span class="text-[13px] text-ink-faint">Integration and configuration health. Read-only.</span>
     </div>
-    <%= button_to "Send myself a test email", ops_test_email_path, method: :post, class: "btn btn-secondary btn-sm" %>
+    <div class="flex items-center gap-2">
+      <% if ENV["POSTMARK_API_TOKEN"].present? %>
+        <%= button_to "Check Postmark", ops_check_postmark_path, method: :post, class: "btn btn-secondary btn-sm" %>
+      <% end %>
+      <%= button_to "Send myself a test email", ops_test_email_path, method: :post, class: "btn btn-secondary btn-sm" %>
+    </div>
   </div>
 
   <div class="flex flex-col gap-5">

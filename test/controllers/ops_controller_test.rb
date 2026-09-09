@@ -59,6 +59,53 @@ class OpsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "the Check Postmark button only shows when POSTMARK_API_TOKEN is set" do
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+
+      get ops_url
+      assert_select "form[action=?]", ops_check_postmark_path, count: 0
+
+      with_env("POSTMARK_API_TOKEN" => "pm-token") do
+        get ops_url
+        assert_select "form[action=?]", ops_check_postmark_path, count: 1
+      end
+    end
+  end
+
+  test "check_postmark redirects with an alert when Postmark isn't configured" do
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+      with_env("POSTMARK_API_TOKEN" => nil) do
+        post ops_check_postmark_url
+      end
+      assert_redirected_to ops_path
+      follow_redirect!
+      assert_match "not set", response.body
+    end
+  end
+
+  test "check_postmark redirects with the probe result" do
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+      ok = Ops::PostmarkCheck::Result.new(ok: true, message: "Postmark OK -- token valid for server \"X\".")
+      Ops::PostmarkCheck.stub(:call, ok) do
+        post ops_check_postmark_url
+      end
+      assert_redirected_to ops_path
+      follow_redirect!
+      assert_match "Postmark OK", response.body
+    end
+  end
+
+  def with_env(overrides)
+    original = ENV.to_h
+    overrides.each { |k, v| v.nil? ? ENV.delete(k) : ENV[k] = v }
+    yield
+  ensure
+    ENV.replace(original)
+  end
+
   # Regression test for a real bug found this session: the action used to
   # call plain deliver_now, whose internal rescue honors production's
   # raise_delivery_errors = false and swallows an SMTP failure without
