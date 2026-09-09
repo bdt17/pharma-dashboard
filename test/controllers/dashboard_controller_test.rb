@@ -130,4 +130,54 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "a[href=?]", batch_custody_logs_path(batch), text: "LOT-1"
   end
+
+  test "shows the getting-started checklist for a not-yet-fully-activated organization" do
+    sign_in @user
+    get dashboard_url
+
+    assert_response :success
+    assert_match "Getting started", response.body
+    # setup already created a vehicle, so that step is done; batch and
+    # packet are not.
+    assert_select "a[href=?]", new_batch_path, text: "Add a batch →"
+  end
+
+  test "the vehicle step shows a CTA, not Done, for an organization with no vehicle yet" do
+    org = Organization.create!(name: "No Vehicle Yet Pharmacy")
+    user = User.create!(email: "dispatch2@example.com", password: "password123!", organization: org, role: "dispatcher")
+
+    sign_in user
+    get dashboard_url
+
+    assert_response :success
+    assert_match "Getting started", response.body
+    assert_select "a[href=?]", new_vehicle_path, text: "Add a vehicle →"
+  end
+
+  test "the packet step links to the most recent batch's custody history once a batch exists" do
+    batch = Batch.create!(lot_number: "LOT-1", vehicle: @vehicle, organization: @organization)
+
+    sign_in @user
+    get dashboard_url
+
+    assert_select "a[href=?]", batch_custody_logs_path(batch), text: "Record a delivery →"
+  end
+
+  test "the packet step has no link when there's no batch yet to record a delivery on" do
+    sign_in @user
+    get dashboard_url
+
+    assert_match "Log a batch first", response.body
+  end
+
+  test "hides the getting-started checklist once the organization is fully activated" do
+    batch = Batch.create!(lot_number: "LOT-1", vehicle: @vehicle, organization: @organization)
+    ComplianceReport.create_next_version!(batch: batch, generated_by: @user, content_hash: SecureRandom.hex(32), pdf_data: "%PDF-x")
+
+    sign_in @user
+    get dashboard_url
+
+    assert_response :success
+    assert_no_match "Getting started", response.body
+  end
 end

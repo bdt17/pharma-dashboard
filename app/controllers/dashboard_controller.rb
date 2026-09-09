@@ -23,5 +23,13 @@ class DashboardController < ApplicationController
     # too so an org doesn't have to visit Billing just to notice they're
     # accruing extra charges this month.
     @overages_this_month = current_organization&.packet_overages&.this_month || PacketOverage.none
+
+    # "Getting started" checklist -- hides itself for good once all three
+    # steps are done, rather than being dismissible; there's nothing to
+    # dismiss once it's simply no longer true. @most_recent_batch gives
+    # the "generate a packet" step something to link to (recording a
+    # delivery is what triggers one) once a batch actually exists.
+    @show_activation_checklist = current_organization.present? && !current_organization.fully_activated?
+    @most_recent_batch = current_organization&.batches&.order(created_at: :desc)&.first if @show_activation_checklist
   end
 end

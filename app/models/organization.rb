@@ -88,6 +88,29 @@ class Organization < ApplicationRecord
     false
   end
 
+  # The three concrete steps that add up to actually using the product,
+  # not just having an account -- see the Dashboard's "Getting started"
+  # checklist. All three are self-serve as of #172 (added_a_vehicle? and
+  # logged_a_batch? had no self-serve path at all before #170/#172;
+  # generated_a_packet? already did, since a "delivered" custody event
+  # auto-generates one). Org-wide, not scoped to whichever user happens
+  # to be looking -- activation is a property of the organization.
+  def added_a_vehicle?
+    vehicles.exists?
+  end
+
+  def logged_a_batch?
+    batches.exists?
+  end
+
+  def generated_a_packet?
+    compliance_reports.exists?
+  end
+
+  def fully_activated?
+    added_a_vehicle? && logged_a_batch? && generated_a_packet?
+  end
+
   # The organization's timezone, or UTC as the honest default for one
   # that's never set it -- the app ran entirely on UTC before this
   # feature existed, so "unset" has always meant UTC in practice, not
