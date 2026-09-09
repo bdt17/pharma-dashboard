@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-04 (rev 25)
+Last updated: 2026-09-08 (rev 26)
 
 ====================================================================
 STATUS
@@ -7,20 +7,26 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ c404f69f  ·  no open PRs. #150-#164 all merged and deployed this
-session -- the price raise, both bugs found along the way, the DSCSA
+main @ 7c7655bb  ·  no open PRs. #150-#168 all merged and deployed this
+stretch -- the price raise, both bugs found along the way, the DSCSA
 funnel work, the annual-billing default (activated live), the
 overage-visibility fix, SMS quiet hours, a real production mail-
-delivery bug found and fixed, the compliance-officer waitlist, and
-opt-in all-clear SMS. Everything's shipped and either verified live
-directly, or (for the two admin-only /alerts toggles) covered by
-tests since checking them live needs a signed-in session.
+delivery bug found and fixed, the compliance-officer waitlist, opt-in
+all-clear SMS, and (this session) first-touch UTM attribution across
+the acquisition funnel. This session also drove the app in a real
+browser (throwaway system tests, never committed) to confirm every
+previously-"not visually verified live" item actually renders and
+works: the quiet-hours and all-clear-texts cards on /alerts, the
+compliance-officer waitlist badge, the /dscsa-2026 landing page, and
+the overage-billing dashboard tile + Billing cards in both their
+capped-plan and post-upgrade states. No bugs found.
 
 Local on main:
-  bin/rails test           604 runs, 0 failures
+  bin/rails test           611 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
-  schema version           2026_09_04_000011  (migrations 001-011)
+  schema version           2026_09_09_014419  (13 migrations since
+                           the 2026-08-31 reset, see DEPLOY notes)
   config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep,
                            purge_old_webhook_deliveries, card_expiry_check
 
@@ -203,10 +209,11 @@ wait_until: instead of immediately when quiet hours are active. New
 enabled checkbox saved together in one form, deliberately not two
 separate controls (toggling on without a timezone set would silently
 compute against UTC). MIGRATION 000011 -- two additive columns.
-NOT VISUALLY VERIFIED LIVE -- needs an authenticated session and I
-don't enter passwords myself, even in dev; 12 new DOM/behavior-
-asserting tests are the verification instead. Worth a look next
-session once someone's signed in anyway.
+VISUALLY VERIFIED LIVE 2026-09-08: a throwaway Capybara system test
+(headless Chrome, real login + real TOTP code, deleted after use --
+never committed, nothing left running) drove an actual admin session
+and screenshotted the card before/after toggling it on. Renders and
+behaves exactly as coded.
 
 SILENT MAIL DELIVERY FAILURES FOUND AND FIXED (PR #162, merged) --
 the real reason Brett's two test DSCSA emails never arrived. Traced
@@ -255,11 +262,54 @@ ExcursionNotifier.enqueue_sms is now enqueue_sms(event, job_class) so
 all-clear text respects quiet hours exactly like the original alert.
 New "All-clear texts" toggle on /alerts (admin-only), off by default,
 independent of the original SMS opt-in. MIGRATION 000012 -- one
-additive column. NOT VISUALLY VERIFIED LIVE, same reason as quiet
-hours.
+additive column. VISUALLY VERIFIED LIVE 2026-09-08, same way as quiet
+hours above.
 
 ====================================================================
-MERGED THIS SESSION (35 PRs)
+SESSION 2026-09-08: LIVE VERIFICATION SWEEP + UTM ATTRIBUTION
+====================================================================
+Every item earlier revs of this file flagged "not visually verified
+live" or "worth checking whether it actually works" got checked for
+real this session, by driving the app in a genuine browser (headless
+Chrome via the project's existing system-test rig, real logins, real
+2FA TOTP codes computed from the enrolled secret) instead of just
+reading the code or trusting the request-spec coverage. Every test
+file was a throwaway -- written, run, screenshots inspected, then
+deleted -- so none of this touched the committed test suite. No bugs
+found anywhere: /alerts' quiet-hours and all-clear-texts cards both
+render and toggle correctly for an admin and correctly show "Only an
+organization admin can change this" for everyone else;
+/compliance-officer's "5 retainer slots open" badge is real;
+/dscsa-2026 renders with the Nov 27 2026 framing; the overage-billing
+Dashboard tile and Billing-page cards (#159) both render exactly
+right in the capped-plan case (nested card, on/off toggle) and the
+post-mid-month-upgrade case (standalone card, no toggle); /ops's
+existing "Overage billing" adoption line reads correctly too.
+
+UTM ATTRIBUTION ACROSS THE ACQUISITION FUNNEL (PR #168, merged): the
+first engineering gap NEXT_STEPS.txt's "NEXT PHASES" section called
+out -- there was no way to know whether ad spend against /dscsa-2026
+was bringing anyone in at all, flagged as worth doing before spending
+much on Google Ads, not after. New UtmTracking controller concern
+(included app-wide in ApplicationController): the first page hit
+carrying ?utm_source=...&utm_campaign=... in the URL is remembered in
+an encrypted, 30-day cookie -- first-touch, never overwritten by a
+later hit in the same window, so the campaign that actually brought
+the visitor in gets the credit. DscsaAssessmentsController,
+CallRequestsController, and Users::RegistrationsController all read
+it back and stamp it on the DscsaAssessment / CallRequest /
+Organization they create. No view or link changes needed anywhere --
+capture and attribution both happen server-side, so it survives
+however many plain internal links sit between the ad click and the
+eventual conversion. New utm_source/utm_campaign columns on
+dscsa_assessments, call_requests, and organizations (six additive
+nullable string columns total, no backfill). /ops gets a new
+"Acquisition sources (7d)" line under Recent activity, breaking down
+the last week's DSCSA assessments by source/campaign -- the read to
+check once the Ads campaign Brett still needs to launch is live.
+
+====================================================================
+MERGED THIS SESSION (37 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -403,6 +453,11 @@ Rev-12 follow-up-list work (all merged):
         RETAINER" above. No migration.
   #164  Opt-in all-clear SMS -- see "OPT-IN ALL CLEAR SMS" above.
         MIGRATION 000012.
+  #165  Update PROGRESS.txt to rev 25.
+  #168  First-touch UTM attribution across the acquisition funnel --
+        see "UTM ATTRIBUTION ACROSS THE ACQUISITION FUNNEL" above.
+        New migration, six additive nullable string columns across
+        dscsa_assessments, call_requests, and organizations.
 
 ====================================================================
 DEPLOY / GO-LIVE NOTES
@@ -419,12 +474,14 @@ DEPLOY / GO-LIVE NOTES
   clear_solid_queue_finished_jobs (hourly) + dunning_sweep (daily 9am) +
   purge_old_webhook_deliveries (daily 4am) + card_expiry_check (daily 8am).
 - Webhooks, dunning email, SMS jobs, packet generation all ride Solid Queue.
-- Migrations 000006-000012 all additive (webhook subscribed_events;
-  webhook_deliveries table; organizations.overage_billing_enabled +
-  packet_overages table; organizations.card_expiry_notified_for;
-  email_suppressions table; organizations.time_zone +
-  organizations.sms_quiet_hours_enabled;
-  organizations.all_clear_sms_enabled). No downtime, no data backfill.
+- Migrations 000006-20260909014419 all additive (webhook
+  subscribed_events; webhook_deliveries table;
+  organizations.overage_billing_enabled + packet_overages table;
+  organizations.card_expiry_notified_for; email_suppressions table;
+  organizations.time_zone + organizations.sms_quiet_hours_enabled;
+  organizations.all_clear_sms_enabled; utm_source + utm_campaign on
+  dscsa_assessments, call_requests, and organizations). No downtime,
+  no data backfill.
 - NEEDS A RENDER ENV VAR SET: COMPLIANCE_OFFICER_ACTIVE_CLIENTS, the
   real current headcount on the fractional-compliance-officer
   retainer (see #163 above). Unset reads as 0, i.e. all 5 slots open
@@ -506,13 +563,17 @@ DEV ENVIRONMENT CHANGES (local only, never committed)
 - dispatch@demo.test / ClaudeDemo123!  -- a dispatcher on the demo org
   for quick UI checks (not 2FA-gated, unlike admins).
 - admin@example.com dev password set to ClaudeDemo123!
-- dev DB has all migrations through ...000009; demo org reset at points
-  (demo:reset).
-- The pid 9233 / port 3111 dev server noted in earlier revs of this
-  file was no longer running as of this session (checked, nothing on
-  3111). A throwaway server was booted with -P tmp/pids/claude_check.pid
-  for one visual check of #155 and killed afterward -- nothing left
-  running at session end.
+- dev DB has all migrations through 20260909014419; demo org reset at
+  points (demo:reset).
+- A dev server was briefly booted on port 3111 early in the session
+  for a couple of curl checks, then killed -- nothing left running at
+  session end (checked). Every actual visual check this session (see
+  "SESSION 2026-09-08" above) used throwaway Capybara system-test
+  files against the RAILS_ENV=test DB instead of the dev server/DB --
+  written, run, screenshotted, deleted, nothing committed. Same
+  pattern is worth reusing next time something needs a real-browser
+  check with a real login: faster than booting a dev server and
+  safer than typing a password into one by hand.
 - Step 0 of the Tracker Build Guide, if run, creates a PT-BENCH-01
   vehicle in PRODUCTION data -- delete it from the app afterward.
 
