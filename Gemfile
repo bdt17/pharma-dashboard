@@ -80,6 +80,15 @@ gem "rqrcode", "~> 3.2"
 # here. No live credentials ship in this repo.
 gem "twilio-ruby", "~> 7.4"
 
+# Error tracking. config/initializers/sentry.rb only calls Sentry.init when
+# SENTRY_DSN is set -- same "safe until configured" pattern as Stripe,
+# SMTP, and Twilio above. Added after a real production mail-delivery
+# outage (an M365 SMTP timeout) was only found by manually clicking a
+# button on /ops; every real bug found this stretch was found the same
+# manual way, nothing the app itself ever surfaced on its own.
+gem "sentry-ruby", "~> 7.0"
+gem "sentry-rails", "~> 7.0"
+
 group :development, :test do
   # Static analysis, linting, and dependency-vulnerability scanning used by CI
   # (.github/workflows/ci.yml). These match what that workflow actually invokes.

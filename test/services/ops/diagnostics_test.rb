@@ -98,6 +98,18 @@ module Ops
       assert_equal :warn, webhooks_check("Auto-disabled (failed #{WebhookEndpoint::AUTO_DISABLE_AFTER}x)").status
     end
 
+    test "application group warns when SENTRY_DSN is unset and is ok when it's set" do
+      with_env("SENTRY_DSN" => nil) do
+        check = app_check("Error tracking (SENTRY_DSN)")
+        assert_equal :warn, check.status
+        assert_match "unset", check.detail
+      end
+
+      with_env("SENTRY_DSN" => "https://key@o0.ingest.sentry.io/0") do
+        assert_equal :ok, app_check("Error tracking (SENTRY_DSN)").status
+      end
+    end
+
     private
 
     def group(name) = Ops::Diagnostics.call.find { |g| g.name == name }
@@ -105,6 +117,7 @@ module Ops
     def billing_check(label) = group("Billing (Stripe)").checks.find { |c| c.label == label }
     def sms_check(label) = group("SMS alerts (Twilio)").checks.find { |c| c.label == label }
     def webhooks_check(label) = group("Outbound webhooks").checks.find { |c| c.label == label }
+    def app_check(label) = group("Application").checks.find { |c| c.label == label }
     def activity_check(label) = group("Recent activity").checks.find { |c| c.label == label }
 
     def with_env(overrides)

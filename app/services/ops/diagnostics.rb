@@ -169,6 +169,8 @@ module Ops
         true
       end
 
+      sentry_configured = ENV["SENTRY_DSN"].present?
+
       Group.new(name: "Application", checks: [
         Check.new(label: "Environment", status: :ok, detail: Rails.env),
         Check.new(label: "Deployed revision",
@@ -176,7 +178,10 @@ module Ops
                   detail: (ENV["RENDER_GIT_COMMIT"] || ENV["GIT_COMMIT"]).to_s[0, 12].presence || "unknown"),
         Check.new(label: "Ruby / Rails", status: :ok, detail: "#{RUBY_VERSION} / #{Rails.version}"),
         Check.new(label: "Pending migrations", status: pending ? :error : :ok, detail: pending ? "yes -- deploy is out of sync" : "none"),
-        Check.new(label: "Server time", status: :ok, detail: Time.current.iso8601)
+        Check.new(label: "Server time", status: :ok, detail: Time.current.iso8601),
+        Check.new(label: "Error tracking (SENTRY_DSN)",
+                  status: sentry_configured ? :ok : :warn,
+                  detail: sentry_configured ? "configured" : "unset -- unhandled exceptions and rescued failures aren't reported anywhere")
       ])
     end
 

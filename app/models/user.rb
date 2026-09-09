@@ -74,5 +74,8 @@ class User < ApplicationRecord
     Rails.logger.error(
       "[DeviseMailer] Failed to send '#{notification}' to #{email.inspect}: #{e.class}: #{e.message}"
     )
+    # See ApplicationMailDeliveryJob for why this exists -- a no-op unless
+    # SENTRY_DSN is set.
+    Sentry.capture_exception(e)
   end
 end

@@ -40,10 +40,13 @@ class ApplicationMailDeliveryJobTest < ActiveJob::TestCase
     end
 
     log_output = nil
-    CallRequestMailer.stub :notify, failing_delivery do
-      log_output = capture_log do
-        assert_nothing_raised do
-          ApplicationMailDeliveryJob.new.perform("CallRequestMailer", "notify", "deliver_now", args: [ call_request ])
+    reported = nil
+    Sentry.stub :capture_exception, ->(e) { reported = e } do
+      CallRequestMailer.stub :notify, failing_delivery do
+        log_output = capture_log do
+          assert_nothing_raised do
+            ApplicationMailDeliveryJob.new.perform("CallRequestMailer", "notify", "deliver_now", args: [ call_request ])
+          end
         end
       end
     end
@@ -51,6 +54,7 @@ class ApplicationMailDeliveryJobTest < ActiveJob::TestCase
     assert_match "[ApplicationMailDeliveryJob] CallRequestMailer#notify failed to send", log_output
     assert_match "Net::SMTPAuthenticationError", log_output
     assert_match "535 authentication failed", log_output
+    assert_instance_of Net::SMTPAuthenticationError, reported
   end
 
   test "an error building the message (not sending it) still propagates normally" do

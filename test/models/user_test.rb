@@ -67,4 +67,37 @@ class UserTest < ActiveSupport::TestCase
     user.unlock_access!
     assert_not user.access_locked?
   end
+
+  test "a failed devise notification send is logged and reported, not raised" do
+    user = build_user
+    user.save!
+
+    # send_devise_notification's super (Devise::Models::Authenticatable)
+    # calls devise_mailer.send(notification, self, *args).deliver_now --
+    # a plain double standing in for the real Mail::Message/MessageDelivery
+    # Delegator, same reasoning as ApplicationMailDeliveryJobTest.
+    failing_delivery = Object.new
+    def failing_delivery.deliver_now
+      raise Net::SMTPAuthenticationError, "535 authentication failed"
+    end
+
+    reported = nil
+    log_output = StringIO.new
+    previous_logger = Rails.logger
+    Rails.logger = Logger.new(log_output)
+
+    begin
+      Sentry.stub :capture_exception, ->(e) { reported = e } do
+        Devise::Mailer.stub :reset_password_instructions, failing_delivery do
+          assert_nothing_raised { user.send(:send_devise_notification, :reset_password_instructions, "token") }
+        end
+      end
+    ensure
+      Rails.logger = previous_logger
+    end
+
+    assert_match "[DeviseMailer] Failed to send 'reset_password_instructions'", log_output.string
+    assert_match "535 authentication failed", log_output.string
+    assert_instance_of Net::SMTPAuthenticationError, reported
+  end
 end
