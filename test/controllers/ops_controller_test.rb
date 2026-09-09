@@ -58,4 +58,33 @@ class OpsControllerTest < ActionDispatch::IntegrationTest
       assert_equal [ "ops@example.com" ], ActionMailer::Base.deliveries.last.to
     end
   end
+
+  # Regression test for a real bug found this session: the action used to
+  # call plain deliver_now, whose internal rescue honors production's
+  # raise_delivery_errors = false and swallows an SMTP failure without
+  # re-raising -- the same failure mode ApplicationMailDeliveryJob was
+  # built to fix, but this synchronous controller action was never
+  # touched by that fix. Uses the same plain-double stubbing technique as
+  # ApplicationMailDeliveryJobTest (stubbing deliver_now!/deliver_now
+  # directly on the real MessageDelivery Delegator doesn't reliably land
+  # on the right object).
+  test "a delivery failure surfaces as a real error, not a false success" do
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+
+      failing_delivery = Object.new
+      def failing_delivery.deliver_now!
+        raise Net::SMTPAuthenticationError, "535 authentication failed"
+      end
+
+      OpsMailer.stub :test_message, failing_delivery do
+        post ops_test_email_url
+      end
+
+      assert_redirected_to ops_path
+      follow_redirect!
+      assert_match "Test email failed", response.body
+      assert_match "SMTPAuthenticationError", response.body
+    end
+  end
 end
