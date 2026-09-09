@@ -96,6 +96,11 @@ Rails.application.routes.draw do
 
   # Application endpoints
   get "/batches.pdf", to: "batches#index", as: :batches_pdf
+  # Self-serve batch (shipment) registration -- see BatchesController.
+  # index/show deliberately excluded: there's no batch list/detail page
+  # in the app at all (see BatchesController#index's own comment); create
+  # and update both land in the batch's custody history instead.
+  resources :batches, only: %i[new create edit update]
   post "/stripe/webhooks", to: "stripe_webhooks#create"
 
   # Chain of custody

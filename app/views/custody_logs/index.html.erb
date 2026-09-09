@@ -16,6 +16,10 @@
     <%= link_to "Chain-of-custody PDF", batch_chain_of_custody_pdf_path(@batch), class: "font-medium" %>
     <span class="text-ink-faint mx-1">·</span>
     <%= link_to "Compliance packets", batch_compliance_reports_path(@batch), class: "font-medium" %>
+    <% if policy(@batch).update? %>
+      <span class="text-ink-faint mx-1">·</span>
+      <%= link_to "Edit batch", edit_batch_path(@batch), class: "font-medium" %>
+    <% end %>
   </p>
 
   <div class="card overflow-hidden">

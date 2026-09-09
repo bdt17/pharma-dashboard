@@ -109,6 +109,27 @@ class CustodyLogsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "recording a delivery advances the batch's own status to delivered" do
+    sign_in @driver
+    assert_equal "active", @batch.reload.status
+
+    post batch_custody_logs_url(@batch), params: {
+      custody_log: { action_type: "delivered", handler_name: "Jane Doe", location: "Phoenix, AZ", signature_data: signature_params }
+    }
+
+    assert_equal "delivered", @batch.reload.status
+  end
+
+  test "a non-delivery custody event leaves the batch's status alone" do
+    sign_in @driver
+
+    post batch_custody_logs_url(@batch), params: {
+      custody_log: { action_type: "pickup", handler_name: "Jane Doe", location: "Phoenix, AZ" }
+    }
+
+    assert_equal "active", @batch.reload.status
+  end
+
   test "recording a custody event fires the custody.recorded webhook on the Compliance plan" do
     Subscription.create!(organization: @organization, status: "active", stripe_subscription_id: "sub_c", tier: "compliance")
     @organization.webhook_endpoints.create!(url: "https://8.8.8.8/hook")

@@ -10,6 +10,39 @@ class BatchTest < ActiveSupport::TestCase
     Batch.create!(lot_number: "LOT-#{SecureRandom.hex(4)}", temperature_celsius: temperature_celsius, vehicle: @vehicle, organization: @organization)
   end
 
+  test "a new batch has no lot_number pre-filled -- the stale DB default is gone" do
+    assert_nil Batch.new.lot_number
+  end
+
+  test "requires a lot_number now that the DB default no longer masks a blank one" do
+    batch = Batch.new(vehicle: @vehicle, organization: @organization, lot_number: "")
+    assert_not batch.valid?
+    assert_includes batch.errors[:lot_number], "can't be blank"
+  end
+
+  test "requires a vehicle" do
+    batch = Batch.new(lot_number: "LOT-1", organization: @organization)
+    assert_not batch.valid?
+    assert_includes batch.errors[:vehicle], "must exist"
+  end
+
+  test "a new batch defaults to active status" do
+    assert_equal "active", build_batch.status
+  end
+
+  test "an explicit status passed at creation is not overridden" do
+    batch = Batch.create!(lot_number: "LOT-#{SecureRandom.hex(4)}", vehicle: @vehicle, organization: @organization, status: "delivered")
+    assert_equal "delivered", batch.status
+  end
+
+  test "lot_number must be unique" do
+    Batch.create!(lot_number: "LOT-DUPE", vehicle: @vehicle, organization: @organization)
+    dupe = Batch.new(lot_number: "LOT-DUPE", vehicle: @vehicle, organization: @organization)
+
+    assert_not dupe.valid?
+    assert_includes dupe.errors[:lot_number], "has already been taken"
+  end
+
   test "compliance_status is unknown with no temperature recorded, compliant/non-compliant otherwise" do
     assert_equal "unknown", build_batch(temperature_celsius: nil).compliance_status
     assert_equal "compliant", build_batch(temperature_celsius: 5).compliance_status

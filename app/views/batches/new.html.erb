@@ -1,0 +1,56 @@
+<% content_for :title, "Add a batch — Pharma Transport" %>
+<% content_for :crumb, "Add a batch" %>
+
+<div class="p-7 max-w-lg">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Add a batch</h1>
+    <span class="text-[13px] text-ink-faint">
+      Register a shipment so its custody events, temperature history, and Compliance Packet have somewhere to live.
+    </span>
+  </div>
+
+  <%= form_with model: @batch, url: batches_path, method: :post, class: "card p-5 flex flex-col gap-3" do |f| %>
+    <% if @batch.errors.any? %>
+      <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
+        <%= @batch.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.label :lot_number, class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :lot_number, placeholder: "LOT-2026-0142", class: "field-input mono" %>
+    </div>
+
+    <div>
+      <%= f.label :name, "Product (optional)", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :name, placeholder: "Insulin glargine", class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.label :vehicle_id, "Vehicle", class: "block text-[12px] text-ink-faint mb-1" %>
+      <% if current_organization.vehicles.any? %>
+        <%= f.select :vehicle_id, current_organization.vehicles.order(:name).map { |v| [ v.name.presence || v.identifier, v.id ] },
+              { include_blank: "Select a vehicle" }, class: "field-input" %>
+      <% else %>
+        <p class="text-[13px] text-ink-soft">
+          No vehicles yet — <%= link_to "add one first", new_vehicle_path, class: "font-medium underline" %>.
+        </p>
+      <% end %>
+    </div>
+
+    <div>
+      <%= f.label :driver_id, "Driver (optional)", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.select :driver_id, current_organization.users.driver.order(:email).map { |u| [ u.name.presence || u.email, u.id ] },
+            { include_blank: "Unassigned" }, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.label :expiry, "Expiry date (optional)", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.date_field :expiry, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.submit "Add batch", class: "btn btn-primary btn-sm" %>
+    </div>
+  <% end %>
+</div>

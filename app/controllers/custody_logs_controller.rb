@@ -31,10 +31,17 @@ class CustodyLogsController < ApplicationController
         data: { action_type: @custody_log.action_type, location: @custody_log.location }
       )
 
-      # A recorded delivery is the trigger for the shipment's formal
-      # Compliance Packet -- generated in the background so a slow PDF
-      # render never holds up the signature-capture request.
       if @custody_log.action_type == "delivered"
+        # Nothing else in the app ever advances a batch's own status --
+        # Vehicle#current_batch depends on it being something other than
+        # "delivered" to know a truck is still out on a run, so without
+        # this every batch would stay "active" forever regardless of
+        # what custody history says actually happened to it.
+        @batch.update!(status: "delivered")
+
+        # The trigger for the shipment's formal Compliance Packet --
+        # generated in the background so a slow PDF render never holds
+        # up the signature-capture request.
         GenerateDeliveryPacketJob.perform_later(@custody_log.id, current_user.id)
       end
 
