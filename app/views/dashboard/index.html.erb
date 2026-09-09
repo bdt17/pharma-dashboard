@@ -18,6 +18,43 @@
     </div>
   </div>
 
+  <% if @show_activation_checklist %>
+    <div class="card p-5 mb-8 flex flex-col gap-3">
+      <div class="flex flex-col gap-1">
+        <span class="font-semibold text-[14px]">Getting started</span>
+        <p class="text-[13px] text-ink-soft">Three steps to your first real Compliance Packet.</p>
+      </div>
+      <ul class="flex flex-col">
+        <li class="flex items-center justify-between gap-3 py-2.5 border-t border-line-soft first:border-t-0 text-[13px]">
+          <span>Add a vehicle</span>
+          <% if current_organization.added_a_vehicle? %>
+            <span class="badge badge-accent">Done</span>
+          <% else %>
+            <%= link_to "Add a vehicle →", new_vehicle_path, class: "font-medium text-accent-600 hover:text-accent-700" %>
+          <% end %>
+        </li>
+        <li class="flex items-center justify-between gap-3 py-2.5 border-t border-line-soft first:border-t-0 text-[13px]">
+          <span>Log a batch</span>
+          <% if current_organization.logged_a_batch? %>
+            <span class="badge badge-accent">Done</span>
+          <% else %>
+            <%= link_to "Add a batch →", new_batch_path, class: "font-medium text-accent-600 hover:text-accent-700" %>
+          <% end %>
+        </li>
+        <li class="flex items-center justify-between gap-3 py-2.5 border-t border-line-soft first:border-t-0 text-[13px]">
+          <span>Generate a Compliance Packet</span>
+          <% if current_organization.generated_a_packet? %>
+            <span class="badge badge-accent">Done</span>
+          <% elsif @most_recent_batch %>
+            <%= link_to "Record a delivery →", batch_custody_logs_path(@most_recent_batch), class: "font-medium text-accent-600 hover:text-accent-700" %>
+          <% else %>
+            <span class="text-ink-faint">Log a batch first</span>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="grid grid-cols-2 <%= @overages_this_month.any? ? "md:grid-cols-5" : "md:grid-cols-4" %> gap-4 mb-8">
     <div class="card p-4 flex flex-col gap-0.5">
       <div class="text-[11px] uppercase tracking-wide text-ink-faint">Batches</div>

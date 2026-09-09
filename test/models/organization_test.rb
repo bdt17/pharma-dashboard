@@ -174,4 +174,29 @@ class OrganizationTest < ActiveSupport::TestCase
     # 3am on the 1st -> the window that started last night ends *this* morning.
     assert_equal Time.utc(2026, 1, 1, 7, 0), org.sms_quiet_hours_end_at(Time.utc(2026, 1, 1, 3, 0))
   end
+
+  test "activation predicates and fully_activated? are false for a brand-new organization" do
+    org = Organization.create!(name: "Acme Pharma")
+
+    assert_not org.added_a_vehicle?
+    assert_not org.logged_a_batch?
+    assert_not org.generated_a_packet?
+    assert_not org.fully_activated?
+  end
+
+  test "fully_activated? is only true once a vehicle, a batch, and a packet all exist" do
+    org = Organization.create!(name: "Acme Pharma")
+    admin = User.create!(email: "admin@example.com", password: "password123!", organization: org, role: "admin")
+    vehicle = Vehicle.create!(name: "Truck 1", organization: org)
+    assert org.added_a_vehicle?
+    assert_not org.fully_activated?
+
+    batch = Batch.create!(lot_number: "LOT-1", vehicle: vehicle, organization: org)
+    assert org.logged_a_batch?
+    assert_not org.fully_activated?
+
+    ComplianceReport.create_next_version!(batch: batch, generated_by: admin, content_hash: SecureRandom.hex(32), pdf_data: "%PDF-x")
+    assert org.generated_a_packet?
+    assert org.fully_activated?
+  end
 end
