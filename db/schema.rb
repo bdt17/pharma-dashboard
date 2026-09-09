@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_04_000012) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_09_014419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -70,6 +70,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_04_000012) do
     t.string "phone"
     t.string "topic", null: false
     t.datetime "updated_at", null: false
+    t.string "utm_campaign"
+    t.string "utm_source"
     t.index ["created_at"], name: "index_call_requests_on_created_at"
   end
 
@@ -111,6 +113,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_04_000012) do
     t.integer "score", default: 0, null: false
     t.string "token", null: false
     t.datetime "updated_at", null: false
+    t.string "utm_campaign"
+    t.string "utm_source"
     t.index ["token"], name: "index_dscsa_assessments_on_token", unique: true
   end
 
@@ -151,6 +155,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_04_000012) do
     t.string "subdomain"
     t.string "time_zone"
     t.datetime "updated_at", null: false
+    t.string "utm_campaign"
+    t.string "utm_source"
     t.string "verification_token"
     t.index ["referral_code"], name: "index_organizations_on_referral_code", unique: true
     t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true

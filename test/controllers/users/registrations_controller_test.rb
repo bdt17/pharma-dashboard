@@ -105,4 +105,16 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
       }
     end
   end
+
+  test "signing up after a utm-tagged landing page hit attributes the new organization" do
+    get dscsa_2026_url(utm_source: "google", utm_campaign: "dscsa-nov")
+    post user_registration_path, params: {
+      user: { organization_name: "Acme Pharma", email: "founder@example.com",
+              password: "password123!", password_confirmation: "password123!", terms_accepted: "1" }
+    }
+
+    org = User.find_by(email: "founder@example.com").organization
+    assert_equal "google", org.utm_source
+    assert_equal "dscsa-nov", org.utm_campaign
+  end
 end

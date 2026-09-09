@@ -74,6 +74,20 @@ module Ops
       assert_equal :warn, billing_check("Cards expiring soon").status
     end
 
+    test "activity group summarizes acquisition sources for the last 7 days" do
+      2.times { DscsaAssessment.create!(answers: {}, score: 50, band: "progressing", utm_source: "google", utm_campaign: "dscsa-nov") }
+      DscsaAssessment.create!(answers: {}, score: 50, band: "progressing")
+
+      detail = activity_check("Acquisition sources (7d)").detail
+      assert_match "3 total", detail
+      assert_match "google/dscsa-nov: 2", detail
+      assert_match "direct/unknown: 1", detail
+    end
+
+    test "activity group reports no assessments yet when there's none in the window" do
+      assert_equal "no assessments yet", activity_check("Acquisition sources (7d)").detail
+    end
+
     test "webhooks group flags auto-disabled endpoints" do
       org = Organization.create!(name: "Acme")
       org.webhook_endpoints.create!(url: "https://8.8.8.8/ok")
@@ -91,6 +105,7 @@ module Ops
     def billing_check(label) = group("Billing (Stripe)").checks.find { |c| c.label == label }
     def sms_check(label) = group("SMS alerts (Twilio)").checks.find { |c| c.label == label }
     def webhooks_check(label) = group("Outbound webhooks").checks.find { |c| c.label == label }
+    def activity_check(label) = group("Recent activity").checks.find { |c| c.label == label }
 
     def with_env(overrides)
       original = ENV.to_h

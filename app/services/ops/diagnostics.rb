@@ -187,9 +187,28 @@ module Ops
                   detail: CallRequest.unhandled.count.to_s),
         Check.new(label: "DSCSA assessments (7d)", status: :ok,
                   detail: DscsaAssessment.where(created_at: 7.days.ago..).count.to_s),
+        Check.new(label: "Acquisition sources (7d)", status: :ok, detail: acquisition_detail),
         Check.new(label: "Compliance packets (30d)", status: :ok,
                   detail: ComplianceReport.where(created_at: 30.days.ago..).count.to_s)
       ])
+    end
+
+    # Breaks down the last 7 days of DSCSA assessments (the funnel Ads
+    # money is meant to point at) by first-touch UTM source/campaign --
+    # see UtmTracking. The point is a cheap read on whether a given
+    # campaign is bringing anyone in at all before spending more on it,
+    # not a full analytics view.
+    def acquisition_detail
+      assessments = DscsaAssessment.where(created_at: 7.days.ago..)
+      return "no assessments yet" if assessments.none?
+
+      top = assessments.group(:utm_source, :utm_campaign).count.sort_by { |_, count| -count }.first(3)
+      summary = top.map { |(source, campaign), count| "#{acquisition_label(source, campaign)}: #{count}" }.join(", ")
+      "#{assessments.count} total -- #{summary}"
+    end
+
+    def acquisition_label(source, campaign)
+      [ source, campaign ].compact.presence&.join("/") || "direct/unknown"
     end
 
     def safe_plans

@@ -10,6 +10,8 @@ class DscsaAssessmentsController < ApplicationController
 
   def create
     @assessment = DscsaAssessment.build_from(params)
+    @assessment.utm_source = utm_source
+    @assessment.utm_campaign = utm_campaign
 
     if @assessment.save
       schedule_follow_up_sequence(@assessment) if @assessment.email.present?

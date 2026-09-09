@@ -65,4 +65,28 @@ class DscsaAssessmentsControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test "a first-touch utm_source/campaign from the landing page is captured on the assessment" do
+    get dscsa_2026_url(utm_source: "google", utm_campaign: "dscsa-nov")
+    post dscsa_assessment_url, params: full_answers(default: "no")
+
+    assessment = DscsaAssessment.last
+    assert_equal "google", assessment.utm_source
+    assert_equal "dscsa-nov", assessment.utm_campaign
+  end
+
+  test "utm attribution is first-touch -- a second utm on the assessment page itself doesn't override it" do
+    get dscsa_2026_url(utm_source: "google", utm_campaign: "dscsa-nov")
+    post dscsa_assessment_url(utm_source: "facebook", utm_campaign: "retarget"), params: full_answers(default: "no")
+
+    assert_equal "google", DscsaAssessment.last.utm_source
+  end
+
+  test "no prior utm hit leaves the assessment unattributed, not erroring" do
+    post dscsa_assessment_url, params: full_answers(default: "no")
+
+    assessment = DscsaAssessment.last
+    assert_nil assessment.utm_source
+    assert_nil assessment.utm_campaign
+  end
 end
