@@ -30,6 +30,21 @@ class VehicleTest < ActiveSupport::TestCase
     assert other.valid?
   end
 
+  test "requires a name" do
+    vehicle = Vehicle.new(organization: @organization)
+
+    assert_not vehicle.valid?
+    assert_includes vehicle.errors[:name], "can't be blank"
+  end
+
+  test "imei must be exactly 15 digits when present" do
+    %w[12345 abcdefghijklmno 1234567890123456].each do |bad_imei|
+      vehicle = Vehicle.new(name: "Truck", organization: @organization, imei: bad_imei)
+      assert_not vehicle.valid?, "expected #{bad_imei.inspect} to be invalid"
+      assert_includes vehicle.errors[:imei], "must be 15 digits"
+    end
+  end
+
   test "current_batch is the most recent batch that hasn't been delivered" do
     vehicle = Vehicle.create!(name: "Truck 1", organization: @organization)
     assert_nil vehicle.current_batch

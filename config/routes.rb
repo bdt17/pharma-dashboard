@@ -62,6 +62,10 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index", as: :dashboard
   get "/enterprise/dashboard", to: "dashboard#index"
   get "/gps", to: "home#gps"
+  # Self-serve vehicle registration -- see VehiclesController. index/show
+  # deliberately excluded: /gps already lists the fleet, and the JSON
+  # index/show live under api/v1 below.
+  resources :vehicles, only: %i[new create edit update]
   get "/billing", to: "billing#index", as: :billing
   post "/billing/checkout", to: "billing#checkout", as: :billing_checkout
   post "/billing/addon_checkout", to: "billing#addon_checkout", as: :billing_addon_checkout

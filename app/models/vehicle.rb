@@ -13,7 +13,11 @@ class Vehicle < ApplicationRecord
   # migrates them.
   encrypts :api_token
 
-  validates :imei, uniqueness: true, allow_nil: true
+  validates :name, presence: true
+  # A real IMEI is 15 digits. Format-checked only when present -- imei
+  # stays optional (allow_blank) since a vehicle can be registered before
+  # its tracker is in hand and the IMEI added later via #update.
+  validates :imei, uniqueness: true, format: { with: /\A\d{15}\z/, message: "must be 15 digits" }, allow_blank: true
 
   before_create :generate_api_token
 

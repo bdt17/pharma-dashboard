@@ -1,0 +1,52 @@
+<% content_for :title, "#{@vehicle.name} — Pharma Transport" %>
+<% content_for :crumb, @vehicle.name %>
+
+<div class="p-7 max-w-lg">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]"><%= @vehicle.name %></h1>
+    <span class="text-[13px] text-ink-faint">Vehicle settings</span>
+  </div>
+
+  <% if flash[:api_token].present? %>
+    <div class="card p-5 mb-6 flex flex-col gap-3 bg-surface">
+      <div class="text-[13px] font-semibold">Device token</div>
+      <p class="text-[13px] text-ink-soft">
+        Configure the tracker to POST to <span class="mono">/api/v1/gps</span> with this
+        IMEI and an <span class="mono">X-Device-Token</span> header set to the token below.
+        This is shown <strong>once</strong> — it's encrypted at rest and won't be
+        displayed again, so copy it now.
+      </p>
+      <code class="bg-paper border border-line rounded px-3 py-2 mono text-[13px] break-all"><%= flash[:api_token] %></code>
+    </div>
+  <% end %>
+
+  <%= form_with model: @vehicle, url: vehicle_path(@vehicle), method: :patch, class: "card p-5 flex flex-col gap-3" do |f| %>
+    <% if @vehicle.errors.any? %>
+      <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
+        <%= @vehicle.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.label :name, class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :name, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.label :imei, "Tracker IMEI", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :imei, placeholder: "860000000000004", class: "field-input mono" %>
+      <p class="text-[12px] text-ink-faint mt-1">15 digits, printed on the tracker device.</p>
+    </div>
+
+    <div>
+      <%= f.label :plate, "License plate", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :plate, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.submit "Save", class: "btn btn-primary btn-sm" %>
+    </div>
+  <% end %>
+
+  <p class="mt-4 text-[13px]"><%= link_to "← Back to fleet", gps_path %></p>
+</div>
