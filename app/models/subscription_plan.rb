@@ -80,7 +80,6 @@ module SubscriptionPlan
       "A named compliance officer on retainer, included",
       "Priority audit support",
       "Custom SOP authoring for your operation",
-      "Single sign-on (SAML)",
       "A dedicated account contact",
       "Onboarding and data migration handled for you"
     ]
