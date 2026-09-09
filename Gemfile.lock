@@ -213,6 +213,11 @@ GEM
     pg (1.6.3-x86_64-darwin)
     pg (1.6.3-x86_64-linux)
     pg (1.6.3-x86_64-linux-musl)
+    postmark (1.25.1)
+      json
+    postmark-rails (0.22.1)
+      actionmailer (>= 3.0.0)
+      postmark (>= 1.21.3, < 2.0)
     pp (0.6.4)
       prettyprint
     prawn (2.5.0)
@@ -417,6 +422,7 @@ DEPENDENCIES
   minitest-mock (~> 5.27)
   pdf-reader (~> 2.12)
   pg (~> 1.5)
+  postmark-rails (~> 0.22)
   prawn (~> 2.5)
   prawn-table (~> 0.2)
   propshaft
@@ -523,6 +529,8 @@ CHECKSUMS
   pg (1.6.3-x86_64-darwin) sha256=ee2e04a17c0627225054ffeb43e31a95be9d7e93abda2737ea3ce4a62f2729d6
   pg (1.6.3-x86_64-linux) sha256=5d9e188c8f7a0295d162b7b88a768d8452a899977d44f3274d1946d67920ae8d
   pg (1.6.3-x86_64-linux-musl) sha256=9c9c90d98c72f78eb04c0f55e9618fe55d1512128e411035fe229ff427864009
+  postmark (1.25.1) sha256=2ac110fa1b4f85a62996fdc63167922eea1c4284a9a7ceb9e007f2758d9e17be
+  postmark-rails (0.22.1) sha256=fcea27dda4f7418123d7723622ec5447df4dacacc10a20a40add0f6789135d8f
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
   prawn (2.5.0) sha256=f4e20e3b4f30bf5b9ae37dad15eb421831594553aa930b2391b0fa0a99c43cb6
   prawn-table (0.2.2) sha256=336d46e39e003f77bf973337a958af6a68300b941c85cb22288872dc2b36addb

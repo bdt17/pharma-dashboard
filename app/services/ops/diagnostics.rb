@@ -64,15 +64,22 @@ module Ops
     end
 
     def email_group
+      postmark = ENV["POSTMARK_API_TOKEN"].present?
       smtp = ENV["SMTP_ADDRESS"].present?
       host = ENV["APP_HOST"].presence
       sender = ENV["MAILER_SENDER"].presence
 
+      delivery_detail =
+        if postmark then "Postmark API"
+        elsif smtp then "SMTP via #{ENV['SMTP_ADDRESS']}"
+        else "No POSTMARK_API_TOKEN or SMTP_ADDRESS -- mail is silently discarded (:test delivery)"
+        end
+
       Group.new(name: "Email", checks: [
         Check.new(
           label: "Delivery method",
-          status: smtp ? :ok : :error,
-          detail: smtp ? "SMTP via #{ENV['SMTP_ADDRESS']}" : "No SMTP_ADDRESS -- mail is silently discarded (:test delivery)"
+          status: (postmark || smtp) ? :ok : :error,
+          detail: delivery_detail
         ),
         Check.new(
           label: "Sender address (MAILER_SENDER)",

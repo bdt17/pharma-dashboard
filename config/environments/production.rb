@@ -35,14 +35,25 @@ Rails.application.configure do
   # APP_HOST to the real production domain in the deploy environment.
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "example.com"), protocol: "https" }
 
-  # No real delivery method was ever configured here -- Rails' unconfigured
-  # default (:smtp with no smtp_settings) raises on every send attempt, so
-  # password-reset/unlock emails have never actually gone out in production,
-  # and self-service signup's confirmation email (see
-  # Users::RegistrationsController) would fail the same way. Falls back to
-  # a safe no-op until real SMTP credentials are set as Render env vars,
-  # rather than crashing every request that tries to send mail.
-  if ENV["SMTP_ADDRESS"].present?
+  # Mail delivery, in preference order, each activating only when its own
+  # env vars are set -- the "safe until configured" pattern used across
+  # this app. No delivery method was ever configured here originally, and
+  # Rails' unconfigured default (:smtp with no smtp_settings) raises on
+  # every send, so mail simply never went out; the :test fallback below
+  # keeps an unconfigured deploy from crashing every request that sends.
+  #
+  #   1. POSTMARK_API_TOKEN -> Postmark's HTTP API. Preferred: it is not
+  #      subject to the Net::ReadTimeout SMTP hangs that took mail down
+  #      twice on the relayed M365 mailbox (see raise_delivery_errors
+  #      below and Gemfile). A failed send raises a real Postmark::Error
+  #      that ApplicationMailDeliveryJob / OpsController#test_email catch.
+  #   2. SMTP_ADDRESS -> raw SMTP. The previous transport, kept as a
+  #      fallback so nothing breaks if Postmark is ever unset again.
+  #   3. neither -> :test (mail is built but discarded, no error).
+  if ENV["POSTMARK_API_TOKEN"].present?
+    config.action_mailer.delivery_method = :postmark
+    config.action_mailer.postmark_settings = { api_token: ENV.fetch("POSTMARK_API_TOKEN") }
+  elsif ENV["SMTP_ADDRESS"].present?
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
       address: ENV.fetch("SMTP_ADDRESS"),

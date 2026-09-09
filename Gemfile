@@ -94,6 +94,19 @@ gem "twilio-ruby", "~> 7.4"
 gem "sentry-ruby", "~> 7.0"
 gem "sentry-rails", "~> 7.0"
 
+# Transactional email delivery. config/environments/production.rb prefers
+# Postmark's HTTP API (delivery_method :postmark) when POSTMARK_API_TOKEN
+# is set, falls back to raw SMTP when only SMTP_ADDRESS is set, and to
+# :test when neither is -- the same "safe until configured" pattern as
+# Stripe/Twilio/Sentry above. Added after a second production mail outage
+# (config/environments/production.rb documents the first): both were
+# Net::ReadTimeout talking to a relayed M365 mailbox over SMTP. The API
+# transport removes that failure mode -- a Postmark send raises a real,
+# catchable error (Postmark::TimeoutError, Postmark::InvalidApiKeyError,
+# ...) instead of hanging, which ApplicationMailDeliveryJob and the /ops
+# test-email button already rescue-and-log. No live credentials ship here.
+gem "postmark-rails", "~> 0.22"
+
 group :development, :test do
   # Static analysis, linting, and dependency-vulnerability scanning used by CI
   # (.github/workflows/ci.yml). These match what that workflow actually invokes.
