@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-08 (rev 28)
+Last updated: 2026-09-09 (rev 29)
 
 ====================================================================
 STATUS
@@ -7,36 +7,40 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ f2b9ac66  ·  no open PRs. #150-#172 all merged and deployed this
+main @ f8ae0c55  ·  no open PRs. #150-#174 all merged and deployed this
 stretch -- the price raise, both bugs found along the way, the DSCSA
 funnel work, the annual-billing default (activated live), the
 overage-visibility fix, SMS quiet hours, a real production mail-
 delivery bug found and fixed, the compliance-officer waitlist, opt-in
 all-clear SMS, first-touch UTM attribution across the acquisition
-funnel, self-serve vehicle registration, and (this session) self-serve
-batch (shipment) registration -- the second real feature gap found
-while scoping trial-activation nudges, plus three related correctness
-bugs (required-vehicle validation, lot_number uniqueness, and a
-batch's status never advancing to "delivered") found and fixed along
-the way. This session also drove the app in a real browser (throwaway
-system tests, never committed) to confirm every previously-"not
-visually verified live" item actually renders and works: the quiet-
-hours and all-clear-texts cards on /alerts, the compliance-officer
-waitlist badge, the /dscsa-2026 landing page, the overage-billing
-dashboard tile + Billing cards in both their capped-plan and post-
-upgrade states, and both the vehicle- and batch-registration flows end
-to end -- the batch form's own visual check is what caught a fourth
-bug (a stale DB default pre-filling the lot number field with a real
-value). Also merged two routine Dependabot bumps (#166
-actions/checkout v5->v7, #167 stripe gem 19.5->19.6.1) -- both green
-on CI, zero app-code changes needed.
+funnel, self-serve vehicle registration, self-serve batch (shipment)
+registration, and (this session) the Dashboard "Getting started"
+activation checklist -- the actual "trial activation nudges" ask
+itself, now shipped once its two prerequisites were. Scoping the
+batch-registration half turned up three related correctness bugs
+(required-vehicle validation, lot_number uniqueness, and a batch's
+status never advancing to "delivered"), found and fixed along the
+way; a fourth (a stale DB default pre-filling the lot number field)
+was caught only by looking at the finished form in a real browser.
+This session also drove the app in a real browser (throwaway system
+tests, never committed) to confirm every previously-"not visually
+verified live" item actually renders and works: the quiet-hours and
+all-clear-texts cards on /alerts, the compliance-officer waitlist
+badge, the /dscsa-2026 landing page, the overage-billing dashboard
+tile + Billing cards in both their capped-plan and post-upgrade
+states, the vehicle- and batch-registration flows end to end, and the
+activation checklist tracking real progress live through all three
+steps before disappearing on completion. Also merged two routine
+Dependabot bumps (#166 actions/checkout v5->v7, #167 stripe gem
+19.5->19.6.1) -- both green on CI, zero app-code changes needed.
 
 Local on main:
-  bin/rails test           645 runs, 0 failures
+  bin/rails test           652 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_09_033455  (14 migrations since
-                           the 2026-08-31 reset, see DEPLOY notes)
+                           the 2026-08-31 reset, see DEPLOY notes --
+                           unchanged this rev, #174 needed no migration)
   config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep,
                            purge_old_webhook_deliveries, card_expiry_check
 
@@ -403,8 +407,36 @@ checklist itself is STILL not built -- that was always a distinct,
 separate piece of work these two PRs only cleared the path for. See
 FOLLOW-UP WORK below.
 
+DASHBOARD "GETTING STARTED" ACTIVATION CHECKLIST (PR #174, merged):
+the actual "trial activation nudges" ask, shipped now that both its
+prerequisites (#170, #172) are. New Organization#added_a_vehicle? /
+#logged_a_batch? / #generated_a_packet? / #fully_activated? (org-wide,
+not scoped to whichever user happens to be looking). The Dashboard
+shows a "Getting started" card for any organization that isn't fully
+activated, with a CTA for whichever step is next -- an unreached step
+(e.g. "generate a packet" before a batch exists) shows plain text
+("Log a batch first") instead of a premature or broken link. The card
+disappears for good once all three are done; no dismiss button, since
+there's nothing left to dismiss once it's simply no longer true.
+v1 scope only, per the decision made when this was first discussed:
+Dashboard card, no email nudges -- trial volume was never confirmed,
+so an email cadence isn't worth building infrastructure for yet (see
+FOLLOW-UP WORK below for what would need checking first). No
+migration. Verified live in a real browser (throwaway system test,
+deleted after use): watched the checklist track real progress through
+all three steps, then confirmed it disappears cleanly on completion.
+
+With this, all four items from the "NEXT PHASES" list this stretch
+started with are shipped or explicitly decided: (1) point the funnel
+at the DSCSA deadline -- done; (2) raise prices -- done; (3) push
+annual prepay -- done; (4) fractional compliance officer as hero offer
+-- done; plus the two items added mid-stretch, UTM attribution and
+the activation checklist -- both done. What's left is either Brett's
+own actions (see STILL OPEN) or genuinely new strategic ground (see
+NEXT PHASES) -- nothing queued and unstarted.
+
 ====================================================================
-MERGED THIS SESSION (43 PRs)
+MERGED THIS SESSION (45 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -560,6 +592,10 @@ Rev-12 follow-up-list work (all merged):
   #172  Self-serve batch (shipment) registration -- see "SELF-SERVE
         BATCH (SHIPMENT) REGISTRATION" above. MIGRATION -- drops the
         stale lot_number DB default.
+  #173  Update PROGRESS.txt to rev 28.
+  #174  Dashboard "Getting started" activation checklist -- see
+        "DASHBOARD 'GETTING STARTED' ACTIVATION CHECKLIST" above.
+        No migration.
 
   Also merged, not written up individually (routine, zero app-code
   changes): #166 Bump actions/checkout from 5 to 7; #167 Bump stripe
@@ -630,16 +666,13 @@ FOLLOW-UP WORK (product)
 - Split the Solid Queue worker into its own Render service if job volume
   grows (drop the puma plugin line, run bin/jobs).
 - SELF-SERVE BATCH CREATION -- DONE, see #172 above.
-- DASHBOARD ACTIVATION CHECKLIST -- the actual "trial activation
-  nudges" ask that #170/#172 were both scoped out of, in favor of
-  shipping the self-serve vehicle/batch features it depends on first.
-  Both of its prerequisites (add a vehicle, log a batch) now exist;
-  "generate a packet" already did. Nothing about the checklist itself
-  is built yet -- still just the v1 scope agreed on when this was
-  first discussed: a Dashboard-only card (no email nudges), and check
-  real trial volume via /ops or Stripe before investing further than
-  that. This is now the most natural next session's engineering
-  thread.
+- DASHBOARD ACTIVATION CHECKLIST -- DONE, see #174 above. Shipped as
+  the agreed v1 scope: a Dashboard-only card, no email nudges yet.
+  EMAIL NUDGES ARE THE NATURAL v2, IF EVER -- but still gated on the
+  same open question as before: real trial volume was never confirmed
+  (check /ops on production, or Stripe, for how many orgs are
+  currently `trialing`). Don't build a day-3 email cadence for an
+  audience that isn't there yet.
 
 Note: the "quick win" backlog from the revenue plan is now drained --
 overage billing (#140), card-expiry (#141, #143), and the Enterprise tier
