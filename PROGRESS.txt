@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-09 (rev 32)
+Last updated: 2026-09-09 (rev 34)
 
 ====================================================================
 STATUS
@@ -7,7 +7,7 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ faababfe  ·  no open PRs. #150-#180 all merged and deployed this
+main @ 3febde63  ·  no open PRs. #150-#186 all merged and deployed this
 stretch -- the price raise, both bugs found along the way, the DSCSA
 funnel work, the annual-billing default (activated live), the
 overage-visibility fix, SMS quiet hours, a real production mail-
@@ -74,6 +74,11 @@ test email" button on live prod:
      Resend/SendGrid) instead of relaying through a personal M365
      mailbox long-term. See STILL OPEN below -- this is now the
      highest-priority item, ahead of Ads.
+     RESOLVED IN CODE (rev 34, Phase A): #184 makes Postmark the
+     preferred transport, so the fix is no longer "get GoDaddy to
+     enable SMTP AUTH" -- it is "create a Postmark account and set
+     POSTMARK_API_TOKEN on Render." Still needs that one action from
+     Brett before mail actually flows; see STILL OPEN #1.
 
 Brett confirmed live that the mail delivery bug is CONFIRMED STILL
 BROKEN even after the GoDaddy forward was turned off -- identical
@@ -85,8 +90,11 @@ directly -- signing into admin.microsoft.com redirects to GoDaddy's
 own simplified mailbox settings (no Authenticated SMTP toggle, no
 mail-flow rules; real admin features need "the main account holder,"
 a separate GoDaddy login). The standard M365 admin-center fix doesn't
-directly apply; contacting GoDaddy support to enable SMTP AUTH on the
-mailbox is the concrete next step. Still unresolved as of this rev.
+directly apply. As of rev 34 the plan is no longer to fix SMTP at all
+-- #184 (Phase A) cuts the preferred transport over to Postmark's HTTP
+API, which sidesteps the SMTP layer entirely. Concrete next step:
+create a Postmark account, verify the domain, set POSTMARK_API_TOKEN
+on Render. Still unresolved (nothing sends) until that token is set.
 
 Given that, Brett asked to "contemplate advanced phases" and "get as
 pro as possible." Grepped the actual codebase for real maturity gaps
@@ -121,15 +129,91 @@ something scoped on a sales call, not a ready toggle, so those stay
 as-is. New regression test guards against the bullet quietly coming
 back on any tier. No migration.
 
+Third "get as pro as possible" item tackled (PR #182): AuditLog
+existed and displayed inline (Dashboard's last 10, Compliance's last
+25) with no way to see the rest or export it. New AuditLogsController
++ AuditLogPolicy (read-only, open to any org member -- same access
+the two inline slices already had), a real "Audit log" nav item,
+newest 200 shown on screen, CSV export (GET /audit_logs.csv) always
+has everything -- same "cap the screen, export covers the rest" call
+already made for the webhook delivery log. AuditLog.to_csv follows
+the same self.to_csv-on-a-relation pattern Batch.to_csv already had
+sitting completely unused (found along the way -- still true, left
+alone). Small DRY-up: the identical org-scoping query that existed
+inline in both DashboardController and ComplianceController is now
+centralized in AuditLogPolicy::Scope, now that a third caller needed
+it; both got a "View full log" link so they're not dead ends. Also
+pinned the csv gem explicitly (Gemfile) -- still stdlib on this app's
+Ruby 3.3.5, but Ruby 3.4 drops it from the default gems, and this
+feature was what first actually exercised require "csv" in the test
+suite. No migration.
+
+With this, all three concrete gaps flagged in the "get as pro as
+possible" pass are done (Sentry #178, the SSO claim #180, audit-log
+export #182). What's left from that pass -- a team invite/multi-seat
+flow, a public API docs/key-management page -- are real, separately-
+scoped feature projects, not quick follow-ups; see FOLLOW-UP WORK.
+
+SESSION 2026-09-09 (later): PHASE A -- DELIVERABILITY & OBSERVABILITY
+HARDENING. Asked "what are my next steps -- contemplate new phases,"
+the answer was a full strategic map (folded into NEXT_STEPS.txt's
+"NEXT PHASES" section): the product is mature and the bottleneck is
+traffic + the still-broken mail delivery, not features. Of the phases
+contemplated, the only one that is pure engineering with no decision
+or traffic data needed -- and that kills an active production outage
+class -- is deliverability/observability hardening. Started it, three
+PRs, all green, all shipping dormant on the same "safe until
+configured" pattern as every other integration:
+
+  #184  Postmark as the preferred transactional-email transport.
+        production.rb now picks a delivery method in preference order
+        -- POSTMARK_API_TOKEN -> :postmark (HTTP API), else
+        SMTP_ADDRESS -> :smtp (kept as a fallback), else :test. Mail
+        went down in prod twice with Net::ReadTimeout over SMTP to the
+        GoDaddy-relayed M365 mailbox (see the investigation write-up
+        above and production.rb's raise_delivery_errors comment); the
+        HTTP API transport is not subject to that hang -- a failed
+        send raises a real Postmark::Error that
+        ApplicationMailDeliveryJob and OpsController#test_email
+        already rescue-and-log (and now report to Sentry). Dormant
+        until Brett sets POSTMARK_API_TOKEN on Render. No migration.
+  #185  On-demand "Check Postmark" probe on /ops. The env check from
+        #184 only sees whether the token is set, not whether it works.
+        Ops::PostmarkCheck calls the live Postmark API (server_info
+        validates the token; get_stats_totals pulls the last 24h of
+        sent/bounced/spam counts). Makes external HTTP calls, so it is
+        NOT in Ops::Diagnostics (which must stay safe for every page
+        load) -- it runs only from a new "Check Postmark" button,
+        shown when POSTMARK_API_TOKEN is set, next to the test-email
+        button. No migration.
+  #186  Sentry Cron Monitors heartbeat. HeartbeatJob checks in with
+        Sentry every 5 minutes (config/recurring.yml). Sentry error
+        tracking (#178) catches exceptions in code that still runs; it
+        cannot catch a whole-app or whole-queue outage (failed deploy,
+        crash loop, wedged Solid Queue) because nothing is running to
+        report it. If the check-ins stop, Sentry alerts after the
+        grace period -- no other watcher required. No-op until
+        SENTRY_DSN is set. No migration.
+
+Phase A's engineering is done. What is left is Brett's: create a
+Postmark account + verify the pharmatransport.org domain (SPF/DKIM) or
+a sender signature + set POSTMARK_API_TOKEN on Render; create a Sentry
+account + set SENTRY_DSN on Render (already pending from #178). Both
+activate dormant code -- see STILL OPEN. Next phase to pick up:
+Phase B (multi-seat / team onboarding, the real product ceiling) or
+Phase C (the Nov 27 DSCSA-deadline funnel pivot) -- see NEXT PHASES.
+
 Local on main:
-  bin/rails test           656 runs, 0 failures
+  bin/rails test           676 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_09_033455  (14 migrations since
                            the 2026-08-31 reset, see DEPLOY notes --
-                           unchanged this rev, #174 needed no migration)
+                           unchanged this rev, Phase A needed no
+                           migration)
   config/recurring.yml     clear_solid_queue_finished_jobs, dunning_sweep,
-                           purge_old_webhook_deliveries, card_expiry_check
+                           purge_old_webhook_deliveries, card_expiry_check,
+                           heartbeat (#186)
 
 Production: Render auto-deploys main on push. Latest deploy verified --
 the CI and Smoke (live public-surface) workflows both passed, and the
@@ -523,7 +607,7 @@ own actions (see STILL OPEN) or genuinely new strategic ground (see
 NEXT PHASES) -- nothing queued and unstarted.
 
 ====================================================================
-MERGED THIS SESSION (51 PRs)
+MERGED THIS SESSION (56 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -693,6 +777,13 @@ Rev-12 follow-up-list work (all merged):
   #180  Remove the unbuilt SSO/SAML claim from Enterprise's feature
         list -- see the "get as pro as possible" write-up above.
         No migration.
+  #181  Update PROGRESS.txt to rev 32.
+  #182  Full audit-log page + CSV export -- see the "get as pro as
+        possible" write-up above. No migration.
+  #184  Postmark as the preferred transactional-email transport --
+        see the Phase A write-up above. No migration.
+  #185  On-demand "Check Postmark" probe on /ops -- Phase A. No migration.
+  #186  Sentry Cron Monitors heartbeat job -- Phase A. No migration.
 
   Also merged, not written up individually (routine, zero app-code
   changes): #166 Bump actions/checkout from 5 to 7; #167 Bump stripe
@@ -711,7 +802,9 @@ DEPLOY / GO-LIVE NOTES
   worker runs inside Puma (plugin :solid_queue), no separate service.
   The scheduler runs config/recurring.yml (production key only):
   clear_solid_queue_finished_jobs (hourly) + dunning_sweep (daily 9am) +
-  purge_old_webhook_deliveries (daily 4am) + card_expiry_check (daily 8am).
+  purge_old_webhook_deliveries (daily 4am) + card_expiry_check (daily 8am)
+  + heartbeat (every 5 min, #186 -- Sentry cron check-in, no-op until
+  SENTRY_DSN is set).
 - Webhooks, dunning email, SMS jobs, packet generation all ride Solid Queue.
 - Migrations 000006-20260909014419 all additive (webhook
   subscribed_events; webhook_deliveries table;
@@ -734,7 +827,15 @@ DEPLOY / GO-LIVE NOTES
 - NEEDS A RENDER ENV VAR SET (new, #178): SENTRY_DSN, once Brett
   creates a Sentry account -- the agent cannot create third-party
   accounts. Ships dormant until then; /ops's "Error tracking
-  (SENTRY_DSN)" line shows unset/configured.
+  (SENTRY_DSN)" line shows unset/configured. Also activates the #186
+  heartbeat cron monitor.
+- NEEDS A RENDER ENV VAR SET (new, #184 -- Phase A, and the fix for
+  the mail outage): POSTMARK_API_TOKEN. Create a Postmark account,
+  verify the pharmatransport.org domain (SPF/DKIM) or at least a
+  sender signature for MAILER_SENDER, then set the Server API token.
+  Until it is set, delivery falls back to SMTP (still broken) then
+  :test (discarded). Verify: /ops Email group green, "Check Postmark"
+  button reports OK, "Send myself a test email" actually arrives.
 - Enterprise tier (#138): its Stripe Product + monthly/annual Prices were
   synced to production on 2026-09-01. If SubscriptionPlan::ENTERPRISE is
   ever re-priced, re-run `bin/rails stripe:sync_subscription_plans` and
