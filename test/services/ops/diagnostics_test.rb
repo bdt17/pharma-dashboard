@@ -13,8 +13,8 @@ module Ops
       assert groups.flat_map(&:checks).all? { |c| %i[ok warn error].include?(c.status) }
     end
 
-    test "email group flags a missing SMTP_ADDRESS as an error" do
-      with_env("SMTP_ADDRESS" => nil) do
+    test "email group flags a missing delivery method as an error" do
+      with_env("POSTMARK_API_TOKEN" => nil, "SMTP_ADDRESS" => nil) do
         check = email_check("Delivery method")
         assert_equal :error, check.status
         assert_match "discarded", check.detail
@@ -22,9 +22,25 @@ module Ops
     end
 
     test "email group is ok when SMTP_ADDRESS and a real APP_HOST are set" do
-      with_env("SMTP_ADDRESS" => "smtp.resend.com", "APP_HOST" => "pharmatransport.org") do
+      with_env("POSTMARK_API_TOKEN" => nil, "SMTP_ADDRESS" => "smtp.resend.com", "APP_HOST" => "pharmatransport.org") do
         assert_equal :ok, email_check("Delivery method").status
+        assert_match "SMTP via smtp.resend.com", email_check("Delivery method").detail
         assert_equal :ok, email_check("Mail link host (APP_HOST)").status
+      end
+    end
+
+    test "email group reports Postmark, and prefers it over SMTP, when POSTMARK_API_TOKEN is set" do
+      with_env("POSTMARK_API_TOKEN" => "pm_secret_token", "SMTP_ADDRESS" => "smtp.office365.com") do
+        check = email_check("Delivery method")
+        assert_equal :ok, check.status
+        assert_equal "Postmark API", check.detail
+      end
+    end
+
+    test "email group never prints the Postmark token, only whether it's set" do
+      with_env("POSTMARK_API_TOKEN" => "pm_secret_token") do
+        details = group("Email").checks.map(&:detail).join(" ")
+        assert_not_includes details, "pm_secret_token"
       end
     end
 
