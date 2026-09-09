@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_09_014419) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_09_033455) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,7 +46,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_09_014419) do
     t.bigint "driver_id"
     t.date "expiry"
     t.string "lot"
-    t.string "lot_number", default: "LOT-UNASSIGNED", null: false
+    t.string "lot_number", null: false
     t.string "name"
     t.bigint "organization_id"
     t.string "status"

@@ -1,0 +1,50 @@
+<% content_for :title, "Lot #{@batch.lot_number} — Pharma Transport" %>
+<% content_for :crumb, @batch.lot_number %>
+
+<div class="p-7 max-w-lg">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Lot <span class="mono"><%= @batch.lot_number %></span></h1>
+    <span class="text-[13px] text-ink-faint">Batch settings</span>
+  </div>
+
+  <%= form_with model: @batch, url: batch_path(@batch), method: :patch, class: "card p-5 flex flex-col gap-3" do |f| %>
+    <% if @batch.errors.any? %>
+      <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
+        <%= @batch.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.label :lot_number, class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :lot_number, class: "field-input mono" %>
+    </div>
+
+    <div>
+      <%= f.label :name, "Product", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :name, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.label :vehicle_id, "Vehicle", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.select :vehicle_id, current_organization.vehicles.order(:name).map { |v| [ v.name.presence || v.identifier, v.id ] },
+            {}, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.label :driver_id, "Driver", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.select :driver_id, current_organization.users.driver.order(:email).map { |u| [ u.name.presence || u.email, u.id ] },
+            { include_blank: "Unassigned" }, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.label :expiry, "Expiry date", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.date_field :expiry, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.submit "Save", class: "btn btn-primary btn-sm" %>
+    </div>
+  <% end %>
+
+  <p class="mt-4 text-[13px]"><%= link_to "← Back to custody history", batch_custody_logs_path(@batch) %></p>
+</div>
