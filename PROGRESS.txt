@@ -1,5 +1,5 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-09 (rev 32)
+Last updated: 2026-09-09 (rev 33)
 
 ====================================================================
 STATUS
@@ -7,7 +7,7 @@ STATUS
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
-main @ faababfe  ·  no open PRs. #150-#180 all merged and deployed this
+main @ f1c937ed  ·  no open PRs. #150-#182 all merged and deployed this
 stretch -- the price raise, both bugs found along the way, the DSCSA
 funnel work, the annual-billing default (activated live), the
 overage-visibility fix, SMS quiet hours, a real production mail-
@@ -121,8 +121,33 @@ something scoped on a sales call, not a ready toggle, so those stay
 as-is. New regression test guards against the bullet quietly coming
 back on any tier. No migration.
 
+Third "get as pro as possible" item tackled (PR #182): AuditLog
+existed and displayed inline (Dashboard's last 10, Compliance's last
+25) with no way to see the rest or export it. New AuditLogsController
++ AuditLogPolicy (read-only, open to any org member -- same access
+the two inline slices already had), a real "Audit log" nav item,
+newest 200 shown on screen, CSV export (GET /audit_logs.csv) always
+has everything -- same "cap the screen, export covers the rest" call
+already made for the webhook delivery log. AuditLog.to_csv follows
+the same self.to_csv-on-a-relation pattern Batch.to_csv already had
+sitting completely unused (found along the way -- still true, left
+alone). Small DRY-up: the identical org-scoping query that existed
+inline in both DashboardController and ComplianceController is now
+centralized in AuditLogPolicy::Scope, now that a third caller needed
+it; both got a "View full log" link so they're not dead ends. Also
+pinned the csv gem explicitly (Gemfile) -- still stdlib on this app's
+Ruby 3.3.5, but Ruby 3.4 drops it from the default gems, and this
+feature was what first actually exercised require "csv" in the test
+suite. No migration.
+
+With this, all three concrete gaps flagged in the "get as pro as
+possible" pass are done (Sentry #178, the SSO claim #180, audit-log
+export #182). What's left from that pass -- a team invite/multi-seat
+flow, a public API docs/key-management page -- are real, separately-
+scoped feature projects, not quick follow-ups; see FOLLOW-UP WORK.
+
 Local on main:
-  bin/rails test           656 runs, 0 failures
+  bin/rails test           665 runs, 0 failures
   bin/rails test:system      7 runs, 0 failures
   rubocop / brakeman / bundler-audit / db:seed:replant   clean
   schema version           2026_09_09_033455  (14 migrations since
@@ -523,7 +548,7 @@ own actions (see STILL OPEN) or genuinely new strategic ground (see
 NEXT PHASES) -- nothing queued and unstarted.
 
 ====================================================================
-MERGED THIS SESSION (51 PRs)
+MERGED THIS SESSION (53 PRs)
 ====================================================================
 
 Roadmap + core:
@@ -693,6 +718,9 @@ Rev-12 follow-up-list work (all merged):
   #180  Remove the unbuilt SSO/SAML claim from Enterprise's feature
         list -- see the "get as pro as possible" write-up above.
         No migration.
+  #181  Update PROGRESS.txt to rev 32.
+  #182  Full audit-log page + CSV export -- see the "get as pro as
+        possible" write-up above. No migration.
 
   Also merged, not written up individually (routine, zero app-code
   changes): #166 Bump actions/checkout from 5 to 7; #167 Bump stripe
