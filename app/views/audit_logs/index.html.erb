@@ -1,0 +1,54 @@
+<% content_for :title, "Audit log — Pharma Transport" %>
+<% content_for :crumb, "Audit log" %>
+
+<div class="p-7 max-w-4xl">
+  <div class="flex items-start justify-between gap-4 mb-6">
+    <div class="flex flex-col gap-1">
+      <h1 class="text-[24px]">Audit log</h1>
+      <span class="text-[13px] text-ink-faint">
+        Every audited event for <%= current_organization&.name %> —
+        newest <%= AuditLogsController::ON_SCREEN_LIMIT %> shown here, the CSV export has everything.
+      </span>
+    </div>
+    <%= link_to "Download CSV", audit_logs_csv_path, class: "btn btn-primary btn-sm shrink-0" %>
+  </div>
+
+  <div class="card overflow-hidden">
+    <% if @audit_logs.empty? %>
+      <p class="px-4 py-4 text-ink-faint text-[13px]">No audited events yet.</p>
+    <% else %>
+      <table class="w-full text-[13px]">
+        <thead>
+          <tr class="bg-surface text-[11px] uppercase tracking-wide text-ink-faint">
+            <th class="text-left font-medium px-4 py-2">Time</th>
+            <th class="text-left font-medium px-4 py-2">Event</th>
+            <th class="text-left font-medium px-4 py-2">User</th>
+            <th class="text-left font-medium px-4 py-2">Batch</th>
+            <th class="text-left font-medium px-4 py-2">IP address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @audit_logs.each do |log| %>
+            <tr class="border-t border-line-soft">
+              <td class="px-4 py-2.5 mono text-ink-soft"><%= log.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td class="px-4 py-2.5 mono"><%= log.event %></td>
+              <td class="px-4 py-2.5 text-ink-soft"><%= log.user.email %></td>
+              <td class="px-4 py-2.5 mono text-ink-soft">
+                <% if log.batch %>
+                  <%= link_to log.batch.lot_number, batch_custody_logs_path(log.batch) %>
+                <% else %>
+                  —
+                <% end %>
+              </td>
+              <td class="px-4 py-2.5 mono text-ink-faint"><%= log.ip_address || "—" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+
+  <p class="text-[12px] text-ink-faint mt-6 max-w-[80ch]">
+    This is a record of the data held at the time of viewing. It is not, on its own, a certification of regulatory compliance.
+  </p>
+</div>

@@ -8,6 +8,6 @@ class ComplianceController < ApplicationController
     @non_compliant_batches = batches.non_compliant.order(updated_at: :desc)
     @compliant_count = batches.compliant.count
     @unknown_count = batches.where(temperature_celsius: nil).count
-    @audit_logs = current_organization ? AuditLog.where(user: current_organization.users).order(created_at: :desc).limit(25) : AuditLog.none
+    @audit_logs = policy_scope(AuditLog).order(created_at: :desc).limit(25)
   end
 end

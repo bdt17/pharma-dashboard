@@ -76,6 +76,12 @@ Rails.application.routes.draw do
   get "/compliance", to: "compliance#index", as: :compliance
   get "/subscribe", to: redirect("/billing")
 
+  # Full audit trail + CSV export -- see AuditLogsController. Same
+  # explicit-format-suffix style as /batches.pdf below, rather than
+  # relying on implicit format-suffix routing.
+  get "/audit_logs", to: "audit_logs#index", as: :audit_logs
+  get "/audit_logs.csv", to: "audit_logs#index", defaults: { format: "csv" }, as: :audit_logs_csv
+
   # SMS temperature-excursion alert recipients (Pro/Compliance tiers)
   get    "/alerts", to: "alert_settings#index", as: :alert_settings
   post   "/alerts/recipients", to: "alert_settings#create", as: :alert_recipients
