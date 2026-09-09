@@ -13,8 +13,16 @@ class OpsController < ApplicationController
     @groups = Ops::Diagnostics.call
   end
 
+  # deliver_now! (bang), not deliver_now -- see ApplicationMailDeliveryJob
+  # for the full story, confirmed live in this session: production sets
+  # raise_delivery_errors = false, which plain deliver_now's internal
+  # rescue honors by swallowing an SMTP failure without re-raising. That
+  # made this very rescue block dead code for the one failure mode it
+  # exists to report -- this diagnostic page's own test button could
+  # claim success on a send that never left the server. deliver_now! has
+  # no internal rescue, so a real failure now actually reaches here.
   def test_email
-    OpsMailer.test_message(to: current_user.email).deliver_now
+    OpsMailer.test_message(to: current_user.email).deliver_now!
     redirect_to ops_path, notice: "Test email sent to #{current_user.email}. Check your inbox (and spam)."
   rescue StandardError => e
     Rails.logger.error("OpsController#test_email failed: #{e.class}: #{e.message}")
