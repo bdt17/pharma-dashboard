@@ -164,7 +164,10 @@
     </div>
 
     <div class="card overflow-hidden">
-      <div class="px-4 py-3 border-b border-line-soft text-[13px] font-semibold">Recent activity</div>
+      <div class="px-4 py-3 border-b border-line-soft text-[13px] font-semibold flex items-center justify-between">
+        Recent activity
+        <%= link_to "View full log →", audit_logs_path, class: "text-[12px] font-medium text-accent-600 hover:text-accent-700" %>
+      </div>
       <% if @recent_audit_logs.empty? %>
         <p class="px-4 py-4 text-ink-faint text-[13px]">None recorded yet.</p>
       <% else %>

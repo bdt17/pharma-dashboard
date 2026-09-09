@@ -35,4 +35,32 @@ class AuditLogTest < ActiveSupport::TestCase
     assert_equal "127.0.0.1", log.ip_address
     assert_equal({ "foo" => "bar" }, log.data)
   end
+
+  test "to_csv includes a header row and one row per log, with the raw data as JSON" do
+    vehicle = Vehicle.create!(name: "Truck 1", organization: @organization)
+    batch = Batch.create!(lot_number: "LOT-1", temperature_celsius: 5, vehicle: vehicle, organization: @organization)
+    AuditLog.record!(event: "batch_created", user: @user, batch: batch, ip_address: "127.0.0.1", data: { foo: "bar" })
+    AuditLog.record!(event: "user_signed_in", user: @user)
+
+    rows = CSV.parse(AuditLog.to_csv, headers: true)
+
+    assert_equal [ "Time", "Event", "User", "IP address", "Batch lot number", "Data" ], rows.headers
+    assert_equal 2, rows.size
+    batch_row = rows.find { |r| r["Event"] == "batch_created" }
+    assert_equal "auditor@example.com", batch_row["User"]
+    assert_equal "127.0.0.1", batch_row["IP address"]
+    assert_equal "LOT-1", batch_row["Batch lot number"]
+    assert_equal({ "foo" => "bar" }, JSON.parse(batch_row["Data"]))
+  end
+
+  test "to_csv called on a scoped relation only includes that scope" do
+    other_org = Organization.create!(name: "Other Pharma")
+    other_user = User.create!(email: "other@example.com", password: "password123!", organization: other_org, role: "admin")
+    AuditLog.record!(event: "mine", user: @user)
+    AuditLog.record!(event: "theirs", user: other_user)
+
+    rows = CSV.parse(AuditLog.where(user: @organization.users).to_csv, headers: true)
+
+    assert_equal [ "mine" ], rows.map { |r| r["Event"] }
+  end
 end

@@ -50,6 +50,11 @@ gem "solid_queue", "~> 1.4"
 # PostgreSQL adapter — used in every environment (development, test, production).
 gem "pg", "~> 1.5"
 
+# CSV export (Batch.to_csv, AuditLog.to_csv). Ruby's own stdlib until 3.4,
+# which drops it from the default gems -- pinned explicitly now so nothing
+# breaks silently on a future Ruby upgrade, still pinned at 3.3.5 here.
+gem "csv", "~> 3.3"
+
 # Chain-of-custody PDF generation. app/services/pdf_chain_of_custody_generator.rb
 # already called Prawn::Document -- it was just never added to the Gemfile, so
 # that service has never actually run. Pure-Ruby, no external binary needed

@@ -15,7 +15,7 @@ class DashboardController < ApplicationController
     @vehicle_count = vehicles.count
     @vehicles_online_count = vehicles.where("last_ping_at > ?", 15.minutes.ago).count
 
-    @recent_audit_logs = current_organization ? AuditLog.where(user: current_organization.users).order(created_at: :desc).limit(10) : AuditLog.none
+    @recent_audit_logs = policy_scope(AuditLog).order(created_at: :desc).limit(10)
     @recent_custody_logs = CustodyLog.joins(:batch).merge(batches).order(timestamp: :desc).limit(10)
 
     # Mirrors the Billing page's own overage summary -- see
