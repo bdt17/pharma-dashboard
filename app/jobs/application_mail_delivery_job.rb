@@ -43,6 +43,14 @@ class ApplicationMailDeliveryJob < ActionMailer::MailDeliveryJob
       message.deliver_now!
     rescue StandardError => e
       Rails.logger.error("[ApplicationMailDeliveryJob] #{mailer}##{mail_method} failed to send: #{e.class}: #{e.message}")
+      # Sentry.capture_exception is a documented no-op when Sentry.init was
+      # never called (SENTRY_DSN unset -- see config/initializers/sentry.rb),
+      # so this is safe either way. The whole reason this reporting exists:
+      # a mail outage exactly like this one was found only by manually
+      # clicking a button on /ops, not by anything the app itself
+      # surfaced. Rescued, not re-raised, same as the log line above -- a
+      # mail-provider outage still shouldn't retry-storm or fail the job.
+      Sentry.capture_exception(e)
     end
   end
 end
