@@ -85,7 +85,7 @@ class RackAttackTest < ActionDispatch::IntegrationTest
       # Well past the 300-in-5-min general backstop, spread across vehicles
       # that (as on a carrier NAT) all present the same IP.
       20.times do |n|
-        vehicle = Vehicle.create!(name: "Truck #{n}", organization: org, imei: "10000000000000#{n}")
+        vehicle = Vehicle.create!(name: "Truck #{n}", organization: org, imei: "860000000000%03d" % n)
         20.times do
           post api_v1_gps_path,
             params: { imei: vehicle.imei, lat: 33.4, lng: -112.0 },

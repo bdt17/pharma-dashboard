@@ -1,0 +1,42 @@
+<% content_for :title, "Add a vehicle — Pharma Transport" %>
+<% content_for :crumb, "Add a vehicle" %>
+
+<div class="p-7 max-w-lg">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Add a vehicle</h1>
+    <span class="text-[13px] text-ink-faint">
+      Register a truck or van so its GPS/temperature tracker can start reporting.
+    </span>
+  </div>
+
+  <%= form_with model: @vehicle, url: vehicles_path, method: :post, class: "card p-5 flex flex-col gap-3" do |f| %>
+    <% if @vehicle.errors.any? %>
+      <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
+        <%= @vehicle.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.label :name, class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :name, placeholder: "Truck 4", class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.label :imei, "Tracker IMEI (optional)", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :imei, placeholder: "860000000000004", class: "field-input mono" %>
+      <p class="text-[12px] text-ink-faint mt-1">
+        15 digits, printed on the tracker device. Don't have it in hand yet? Leave this
+        blank and add it later — you'll get a device token either way.
+      </p>
+    </div>
+
+    <div>
+      <%= f.label :plate, "License plate (optional)", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :plate, class: "field-input" %>
+    </div>
+
+    <div>
+      <%= f.submit "Add vehicle", class: "btn btn-primary btn-sm" %>
+    </div>
+  <% end %>
+</div>

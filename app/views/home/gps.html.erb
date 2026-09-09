@@ -2,13 +2,23 @@
 <% content_for :crumb, "Fleet GPS" %>
 
 <div class="p-7 max-w-5xl">
-  <div class="flex flex-col gap-1 mb-6">
-    <h1 class="text-[24px]">Live fleet</h1>
-    <span class="text-[13px] text-ink-faint"><%= current_organization&.name %></span>
+  <div class="flex items-end justify-between mb-6">
+    <div class="flex flex-col gap-1">
+      <h1 class="text-[24px]">Live fleet</h1>
+      <span class="text-[13px] text-ink-faint"><%= current_organization&.name %></span>
+    </div>
+    <% if policy(Vehicle.new).create? %>
+      <%= link_to "+ Add a vehicle", new_vehicle_path, class: "btn btn-primary btn-sm" %>
+    <% end %>
   </div>
 
   <% if @vehicles.empty? %>
-    <div class="card p-8 text-center text-ink-faint text-[14px]">No vehicles yet.</div>
+    <div class="card p-8 text-center text-ink-faint text-[14px] flex flex-col items-center gap-3">
+      <span>No vehicles yet.</span>
+      <% if policy(Vehicle.new).create? %>
+        <%= link_to "Add your first vehicle", new_vehicle_path, class: "btn btn-primary btn-sm" %>
+      <% end %>
+    </div>
   <% else %>
     <div class="card overflow-hidden">
       <table class="w-full text-[13px]">
@@ -19,6 +29,7 @@
             <th class="text-left font-medium px-4 py-2.5">Position</th>
             <th class="text-left font-medium px-4 py-2.5">Speed</th>
             <th class="text-left font-medium px-4 py-2.5">Last ping</th>
+            <th class="px-4 py-2.5"></th>
           </tr>
         </thead>
         <tbody>
@@ -35,6 +46,11 @@
               </td>
               <td class="px-4 py-2.5 mono"><%= vehicle.speed ? "#{vehicle.speed.round(1)} mph" : "—" %></td>
               <td class="px-4 py-2.5 mono text-ink-soft"><%= vehicle.last_ping_at&.strftime("%Y-%m-%d %H:%M") || "never" %></td>
+              <td class="px-4 py-2.5 text-right">
+                <% if policy(vehicle).update? %>
+                  <%= link_to "Manage", edit_vehicle_path(vehicle), class: "text-[12px] text-accent-600 hover:text-accent-700" %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>
