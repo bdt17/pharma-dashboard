@@ -83,7 +83,7 @@ gem "rqrcode", "~> 3.2"
 # TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN / TWILIO_MESSAGING_FROM are set as
 # env vars, the same "safe until configured" pattern as Stripe and SMTP
 # here. No live credentials ship in this repo.
-gem "twilio-ruby", "~> 7.4"
+gem "twilio-ruby", "~> 7.11"
 
 # Error tracking. config/initializers/sentry.rb only calls Sentry.init when
 # SENTRY_DSN is set -- same "safe until configured" pattern as Stripe,
