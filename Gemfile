@@ -91,7 +91,7 @@ gem "twilio-ruby", "~> 7.4"
 # outage (an M365 SMTP timeout) was only found by manually clicking a
 # button on /ops; every real bug found this stretch was found the same
 # manual way, nothing the app itself ever surfaced on its own.
-gem "sentry-ruby", "~> 7.0"
+gem "sentry-ruby", "~> 7.1"
 gem "sentry-rails", "~> 7.0"
 
 # Transactional email delivery. config/environments/production.rb prefers
