@@ -48,7 +48,7 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "solid_queue", "~> 1.4"
 
 # PostgreSQL adapter — used in every environment (development, test, production).
-gem "pg", "~> 1.5"
+gem "pg", "~> 1.7"
 
 # CSV export (Batch.to_csv, AuditLog.to_csv). Ruby's own stdlib until 3.4,
 # which drops it from the default gems -- pinned explicitly now so nothing
