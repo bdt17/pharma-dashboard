@@ -125,7 +125,7 @@ group :test do
   # Manager -- no separate chromedriver to install. Chrome itself is
   # pre-installed on the GitHub ubuntu runners.
   gem "capybara", "~> 3.40"
-  gem "selenium-webdriver", "~> 4.27"
+  gem "selenium-webdriver", "~> 4.51"
 
   # minitest 6 extracted Minitest::Mock / Object#stub into this separate
   # gem. Needed to stub Stripe API calls in tests without a real Stripe
