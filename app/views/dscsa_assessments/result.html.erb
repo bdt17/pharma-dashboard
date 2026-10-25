@@ -9,8 +9,6 @@
     "well_positioned"  => "#0f766e"
   }.fetch(@assessment.band, "#47566a")
 
-  # Which gaps the platform closes directly vs. what the retainer handles.
-  platform_keys = %w[custody coldchain records].freeze
 %>
 
 <section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
@@ -24,6 +22,9 @@
       <span class="badge text-[13px] px-3 py-1.5" style="color: <%= band_color %>; border-color: <%= band_color %>33; background-color: <%= band_color %>14;">
         <%= @assessment.band_label %>
       </span>
+    </div>
+    <div class="mt-5">
+      <%= link_to "Download your action plan (PDF)", dscsa_assessment_report_path(@assessment), class: "btn btn-secondary btn-sm", data: { turbo: false } %>
     </div>
     <p class="text-[15px] text-ink-soft mt-4 max-w-[60ch]">
       <% unless @assessment.still_exempt? %>
@@ -62,7 +63,7 @@
             </div>
             <p class="text-[13.5px] text-ink-soft"><%= q[:gap] %></p>
             <p class="text-[13px] text-accent-700">
-              <% if platform_keys.include?(q[:key]) %>
+              <% if DscsaAssessment.closed_by_platform?(q) %>
                 Pharma Transport closes this directly &mdash; it&rsquo;s core to the platform.
               <% else %>
                 Your fractional compliance officer owns this: written, maintained, and monitored.

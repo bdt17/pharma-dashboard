@@ -42,6 +42,24 @@ class DscsaAssessment < ApplicationRecord
       gap: "A temperature excursion with no documented response is a finding waiting to happen." }
   ].freeze
 
+  # A concrete first action per gap, for the downloadable readiness report
+  # (DscsaReadinessReport) -- the result page explains what's missing, the
+  # report is what a pharmacist prints and works through.
+  NEXT_STEPS = {
+    "transaction_data" => "Ask each wholesaler and distributor how they send package-level transaction data, and confirm you have a system (or their portal) that receives and keeps it for every product you receive.",
+    "verification" => "Confirm your scanners read the 2D DataMatrix barcode, and write down how staff verify a product identifier when a trading partner or the FDA asks.",
+    "exceptions" => "Write a one-page suspect-product procedure: quarantine, investigate, and notify the FDA (Form FDA 3911) and affected trading partners within 24 hours of determining a product is illegitimate.",
+    "partners" => "List every wholesaler, distributor, and carrier you use, check each one's license, keep a dated record of the check, and put a recurring re-check on the calendar.",
+    "records" => "Pick one recent shipment and time how long it takes to pull its full history. Set retention for transaction and custody records to at least six years.",
+    "sops" => "Write or update SOPs for receiving, quarantine, recalls, and temperature excursions, and have every staff member sign that they've read them.",
+    "custody" => "Record every handoff in transit — who, when, and where — with a signature at delivery, captured at the time rather than written up afterwards.",
+    "coldchain" => "Monitor refrigerated shipments continuously, and write down what staff do when a reading leaves 2–8 °C: who is alerted, what happens to the product, and how it's documented."
+  }.freeze
+
+  # Gaps the platform closes directly; the rest are process and paperwork
+  # for the compliance-officer retainer.
+  PLATFORM_KEYS = %w[custody coldchain records].freeze
+
   # Asked for context, not scored: a "no" here means the exemption never
   # applied and the full requirements are already in force.
   CONTEXT_QUESTION = {
@@ -110,6 +128,14 @@ class DscsaAssessment < ApplicationRecord
 
   def strengths
     QUESTIONS.select { |q| answers[q[:key]] == "yes" }
+  end
+
+  def self.next_step_for(question)
+    NEXT_STEPS.fetch(question[:key])
+  end
+
+  def self.closed_by_platform?(question)
+    PLATFORM_KEYS.include?(question[:key])
   end
 
   # False = the exemption never applied, so the full requirements are
