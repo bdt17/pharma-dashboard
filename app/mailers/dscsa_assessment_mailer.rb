@@ -20,7 +20,7 @@ class DscsaAssessmentMailer < ApplicationMailer
   def follow_up_day3(assessment)
     @assessment = assessment
     @gap = priority_gap(assessment)
-    @platform_solved = PLATFORM_SOLVED_KEYS.include?(@gap[:key])
+    @platform_solved = DscsaAssessment.closed_by_platform?(@gap)
     @unsubscribe_url = unsubscribe_url_for(assessment.email)
 
     mail(to: assessment.email, subject: "Closing the #{@gap[:category].downcase} gap#{' before Nov 27' unless DscsaDeadline.passed?}")
@@ -43,10 +43,8 @@ class DscsaAssessmentMailer < ApplicationMailer
   # itself closes (a trial converts directly) over one that needs a
   # written process or the compliance-officer retainer. Falls back to
   # whatever gap is first if every gap is platform-solvable or none are.
-  PLATFORM_SOLVED_KEYS = %w[custody coldchain records].freeze
-
   def priority_gap(assessment)
     gaps = assessment.gaps
-    gaps.find { |g| PLATFORM_SOLVED_KEYS.include?(g[:key]) } || gaps.first
+    gaps.find { |g| DscsaAssessment.closed_by_platform?(g) } || gaps.first
   end
 end

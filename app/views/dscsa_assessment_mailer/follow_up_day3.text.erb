@@ -4,6 +4,8 @@ check. One gap worth looking at first:
 <%= @gap[:category] %>
 <%= @gap[:gap] %>
 
+A first step you can take this week: <%= DscsaAssessment.next_step_for(@gap) %>
+
 <% if @platform_solved %>
 See how Pharma Transport closes it: <%= pricing_url %>
 Live GPS tracking, an immutable chain-of-custody log, and continuous
@@ -21,6 +23,9 @@ The small-dispenser exemption ended November 27, 2026, so this applies now. A
 The small-dispenser exemption ends November 27, 2026. A 14-day free trial is
 enough<% end %> to see whether this closes the gap for your pharmacy -- start one:
 <%= new_user_registration_url %>
+
+Your full action plan -- every gap, with a first step and a place to assign
+an owner -- as a PDF: <%= dscsa_assessment_report_url(@assessment.token) %>
 
 --
 You're getting this because you requested a DSCSA readiness score.

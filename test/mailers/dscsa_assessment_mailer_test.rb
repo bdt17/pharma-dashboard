@@ -49,6 +49,19 @@ class DscsaAssessmentMailerTest < ActionMailer::TestCase
     end
   end
 
+  test "follow_up_day3 gives the gap's first step and links the PDF action plan" do
+    assessment = build_assessment(default: "yes", custody: "no")
+
+    mail = DscsaAssessmentMailer.follow_up_day3(assessment)
+
+    [ mail.html_part, mail.text_part ].each do |part|
+      body = part.body.to_s
+      assert_match "A first step you can take this week", body
+      assert_match "Record every handoff in transit", body
+      assert_match "/dscsa-assessment/#{assessment.token}/report.pdf", body
+    end
+  end
+
   test "follow_up_day7 mentions the deadline and doesn't require any gaps" do
     assessment = build_assessment(default: "yes")
 
