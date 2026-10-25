@@ -1,6 +1,9 @@
 require "test_helper"
 
 class ConversionTrackingHelperTest < ActionView::TestCase
+  # A real request supplies this (see config/initializers/content_security_policy.rb).
+  def content_security_policy_nonce = "test-nonce"
+
   def with_env(overrides)
     original = ENV.to_h
     overrides.each { |k, v| v.nil? ? ENV.delete(k) : ENV[k] = v }
@@ -21,6 +24,7 @@ class ConversionTrackingHelperTest < ActionView::TestCase
       assert_includes html, "https://www.googletagmanager.com/gtag/js?id=AW-123456789"
       assert_includes html, %(gtag('config', "AW-123456789"))
       assert_includes html, "async"
+      assert_includes html, %(nonce="test-nonce"), "inline gtag setup must carry the CSP nonce"
     end
   end
 
