@@ -49,6 +49,7 @@ class BotProtectionTest < ActionDispatch::IntegrationTest
       end
     end
     assert_redirected_to call_request_thanks_path
+    assert_equal [ "call_requests", "honeypot" ], BotBlock.last.slice(:form, :reason).values
   end
 
   test "a submission faster than a person could type is re-shown, not saved" do

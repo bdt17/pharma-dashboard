@@ -1,5 +1,9 @@
 class Organization < ApplicationRecord
   has_many :users, dependent: :restrict_with_error
+
+  # `internal` marks the operator's own test/demo orgs (toggled from /ops)
+  # so the customer counts there aren't inflated by them.
+  scope :customers, -> { where(internal: false) }
   has_many :vehicles, dependent: :restrict_with_error
   has_many :batches, dependent: :restrict_with_error
   has_many :subscriptions, dependent: :destroy

@@ -58,6 +58,8 @@ Rails.application.routes.draw do
   get  "/ops", to: "ops#index", as: :ops
   post "/ops/test-email", to: "ops#test_email", as: :ops_test_email
   post "/ops/check-postmark", to: "ops#check_postmark", as: :ops_check_postmark
+  post "/ops/call-requests/:id/handle", to: "ops#handle_call_request", as: :ops_handle_call_request
+  post "/ops/organizations/:id/internal", to: "ops#set_internal", as: :ops_set_internal
 
   # Authenticated application pages
   get "/dashboard", to: "dashboard#index", as: :dashboard

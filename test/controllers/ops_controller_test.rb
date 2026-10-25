@@ -134,4 +134,63 @@ class OpsControllerTest < ActionDispatch::IntegrationTest
       assert_match "SMTPAuthenticationError", response.body
     end
   end
+
+  test "the lead inbox lists unhandled call requests and marks one handled" do
+    lead = CallRequest.create!(name: "Dana Rx", email: "dana@example.com", pharmacy_name: "Dana Pharmacy", topic: "general", message: "Call me")
+    CallRequest.create!(name: "Old Lead", email: "old@example.com", topic: "general", handled_at: 1.day.ago)
+
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+      get ops_url
+      assert_select "#leads", text: /Dana Rx/
+      assert_select "#leads", text: /Old Lead/, count: 0
+
+      post ops_handle_call_request_url(lead)
+      assert_redirected_to ops_url(anchor: "leads")
+    end
+    assert lead.reload.handled_at
+  end
+
+  test "lead inbox actions are operator-only" do
+    lead = CallRequest.create!(name: "Dana Rx", email: "dana@example.com", topic: "general")
+
+    with_operator_emails("ops@example.com") do
+      sign_in @other_admin
+      post ops_handle_call_request_url(lead)
+      assert_response :not_found
+      post ops_set_internal_url(@org, internal: true)
+      assert_response :not_found
+    end
+    assert_nil lead.reload.handled_at
+    assert_not @org.reload.internal?
+  end
+
+  test "marking an org internal drops it and its subscriptions out of the customer counts" do
+    test_org = Organization.create!(name: "Monetize Check")
+    test_org.subscriptions.create!(stripe_subscription_id: "sub_test", status: "active")
+
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+      post ops_set_internal_url(test_org, internal: true)
+      assert_redirected_to ops_url(anchor: "organizations")
+
+      get ops_url
+      assert_match "(+1 internal org hidden)", response.body
+      assert_match "(+1 on internal orgs)", response.body
+
+      post ops_set_internal_url(test_org, internal: false)
+    end
+    assert_not test_org.reload.internal?
+  end
+
+  test "blocked bot submissions are counted on the page" do
+    BotBlock.record!(form: "call_requests", reason: "honeypot")
+    BotBlock.record!(form: "users/registrations", reason: "too_fast")
+
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+      get ops_url
+    end
+    assert_match "2 -- call_requests: 1, signup: 1", response.body
+  end
 end
