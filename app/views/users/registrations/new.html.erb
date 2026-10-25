@@ -5,6 +5,7 @@
 <p class="text-[13px] text-ink-faint mb-6">Creates a new organization with you as its admin.</p>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "flex flex-col gap-4" }) do |f| %>
+  <%= bot_protection_fields %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="flex flex-col gap-1.5">
