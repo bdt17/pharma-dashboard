@@ -16,7 +16,7 @@
   <div class="flex items-start justify-between mb-6">
     <div class="flex flex-col gap-1">
       <h1 class="text-[24px]">Ops diagnostics</h1>
-      <span class="text-[13px] text-ink-faint">Integration and configuration health. Read-only.</span>
+      <span class="text-[13px] text-ink-faint">Integration and configuration health, leads, and organizations.</span>
     </div>
     <div class="flex items-center gap-2">
       <% if ENV["POSTMARK_API_TOKEN"].present? %>
@@ -46,6 +46,79 @@
         </table>
       </div>
     <% end %>
+  </div>
+
+  <div id="leads" class="card overflow-hidden mt-5">
+    <div class="px-4 py-3 border-b border-line-soft flex items-center gap-2.5">
+      <span class="font-sans text-[13px] font-semibold">Lead inbox</span>
+      <%= status_badge.(@call_requests.any? ? :warn : :ok) %>
+      <span class="text-[12px] text-ink-faint"><%= pluralize(@call_requests.size, "unhandled call request") %></span>
+    </div>
+    <% if @call_requests.any? %>
+      <table class="w-full text-[13px]">
+        <tbody>
+          <% @call_requests.each do |request| %>
+            <tr class="border-t border-line-soft first:border-t-0 align-top">
+              <td class="px-4 py-2.5 w-[130px] mono text-[12px] text-ink-faint"><%= request.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td class="px-4 py-2.5">
+                <div class="font-medium"><%= request.name %> <span class="text-ink-faint font-normal">· <%= request.pharmacy_name.presence || "no pharmacy given" %></span></div>
+                <div class="mono text-[12px]"><%= mail_to request.email %><% if request.phone.present? %> · <%= request.phone %><% end %></div>
+                <div class="text-[12px] text-ink-faint">Topic: <%= request.topic %><% if request.utm_source.present? %> · via <%= [ request.utm_source, request.utm_campaign ].compact.join("/") %><% end %></div>
+                <% if request.message.present? %><div class="text-[12.5px] mt-1 whitespace-pre-line"><%= request.message %></div><% end %>
+              </td>
+              <td class="px-4 py-2.5 w-[120px] text-right">
+                <%= button_to "Mark handled", ops_handle_call_request_path(request), method: :post, class: "btn btn-secondary btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <div class="px-4 py-3 border-t border-line-soft font-sans text-[13px] font-semibold">Latest DSCSA assessments with an email</div>
+    <% if @assessments.any? %>
+      <table class="w-full text-[13px]">
+        <tbody>
+          <% @assessments.each do |assessment| %>
+            <tr class="border-t border-line-soft">
+              <td class="px-4 py-2 w-[130px] mono text-[12px] text-ink-faint"><%= assessment.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td class="px-4 py-2 mono text-[12px]"><%= mail_to assessment.email %></td>
+              <td class="px-4 py-2"><%= assessment.pharmacy_name %></td>
+              <td class="px-4 py-2 mono text-[12px]"><%= assessment.score %> · <%= assessment.band %></td>
+              <td class="px-4 py-2 text-[12px] text-ink-faint"><%= [ assessment.utm_source, assessment.utm_campaign ].compact.join("/").presence || "direct" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="px-4 pb-3 text-[12.5px] text-ink-faint">None yet.</p>
+    <% end %>
+  </div>
+
+  <div id="organizations" class="card overflow-hidden mt-5">
+    <div class="px-4 py-3 border-b border-line-soft flex items-center gap-2.5">
+      <span class="font-sans text-[13px] font-semibold">Organizations</span>
+      <span class="text-[12px] text-ink-faint">Mark your own test orgs internal so they drop out of the customer counts.</span>
+    </div>
+    <table class="w-full text-[13px]">
+      <tbody>
+        <% @organizations.each do |organization| %>
+          <% subscription = organization.subscriptions.max_by(&:created_at) %>
+          <tr class="border-t border-line-soft first:border-t-0 align-top <%= 'text-ink-faint' if organization.internal? %>">
+            <td class="px-4 py-2 w-[90px] mono text-[12px]"><%= organization.created_at.strftime("%Y-%m-%d") %></td>
+            <td class="px-4 py-2">
+              <div class="font-medium"><%= organization.name %><% if organization.internal? %> <span class="badge">internal</span><% end %></div>
+              <div class="mono text-[12px]"><%= organization.users.map(&:email).join(", ").presence || "no users" %></div>
+            </td>
+            <td class="px-4 py-2 w-[110px] text-[12px]"><%= subscription ? "#{subscription.status}#{" · #{subscription.tier}" if subscription.tier}" : "no subscription" %></td>
+            <td class="px-4 py-2 w-[130px] text-right">
+              <%= button_to organization.internal? ? "Mark customer" : "Mark internal",
+                    ops_set_internal_path(organization, internal: !organization.internal?), method: :post, class: "btn btn-secondary btn-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 
   <p class="text-[12px] text-ink-faint mt-6">

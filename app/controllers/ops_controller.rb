@@ -11,6 +11,26 @@ class OpsController < ApplicationController
 
   def index
     @groups = Ops::Diagnostics.call
+    @call_requests = CallRequest.unhandled.order(created_at: :desc)
+    @assessments = DscsaAssessment.where.not(email: [ nil, "" ]).order(created_at: :desc).limit(20)
+    @organizations = Organization.includes(:users, :subscriptions).order(created_at: :desc)
+  end
+
+  # The lead inbox: replaces marking a call request handled from a
+  # production console.
+  def handle_call_request
+    call_request = CallRequest.find(params[:id])
+    call_request.update!(handled_at: Time.current)
+    redirect_to ops_path(anchor: "leads"), notice: "Marked #{call_request.name}'s request handled."
+  end
+
+  # Flags the operator's own test/demo orgs so they drop out of the
+  # customer counts above (see Organization.customers).
+  def set_internal
+    organization = Organization.find(params[:id])
+    organization.update!(internal: ActiveModel::Type::Boolean.new.cast(params[:internal]))
+    redirect_to ops_path(anchor: "organizations"),
+                notice: "#{organization.name} is now #{organization.internal? ? 'internal (excluded from customer counts)' : 'a customer org'}."
   end
 
   # deliver_now! (bang), not deliver_now -- see ApplicationMailDeliveryJob

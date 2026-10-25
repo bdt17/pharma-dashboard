@@ -65,6 +65,7 @@ module BotProtection
     return unless verdict
 
     Rails.logger.info("[BotProtection] blocked #{controller_path}##{action_name} (#{verdict}) from #{request.remote_ip}")
+    BotBlock.record!(form: controller_path, reason: verdict)
     verdict == :honeypot ? pretend_bot_submission_succeeded : ask_to_resubmit_form
   end
 end

@@ -114,9 +114,9 @@ module Ops
         Check.new(label: "Subscription plans published",
                   status: tiers.sort == SubscriptionPlan.tiers.sort ? :ok : (key ? :warn : :error),
                   detail: key ? "tiers found: #{tiers.presence&.join(', ') || 'none'} (run stripe:sync_subscription_plans)" : "n/a until the key is set"),
-        Check.new(label: "Subscriptions on file",
+        Check.new(label: "Subscriptions on file (customers)",
                   status: :ok,
-                  detail: Subscription.group(:status).count.map { |s, n| "#{n} #{s}" }.join(", ").presence || "none yet"),
+                  detail: subscriptions_detail),
         Check.new(label: "Last subscription sync",
                   status: :ok,
                   detail: last_sub ? "#{last_sub.updated_at.iso8601} (#{last_sub.tier || 'no tier'})" : "never"),
@@ -127,6 +127,16 @@ module Ops
                   status: cards_expiring.zero? ? :ok : :warn,
                   detail: "#{cards_expiring} organization#{'s' unless cards_expiring == 1} flagged")
       ])
+    end
+
+    # Customer orgs only -- the operator's internal test orgs (which hold
+    # real-looking "active" subscriptions from checkout testing) are
+    # counted separately so they can't pass for revenue.
+    def subscriptions_detail
+      customer = Subscription.where(organization: Organization.customers).group(:status).count
+      internal = Subscription.where.not(organization: Organization.customers).count
+      summary = customer.map { |s, n| "#{n} #{s}" }.join(", ").presence || "none yet"
+      internal.positive? ? "#{summary} (+#{internal} on internal orgs)" : summary
     end
 
     def overage_detail
@@ -199,15 +209,31 @@ module Ops
 
     def activity_group
       Group.new(name: "Recent activity", checks: [
-        Check.new(label: "Organizations / users", status: :ok, detail: "#{Organization.count} / #{User.count}"),
+        Check.new(label: "Customer orgs / users", status: :ok, detail: customer_counts_detail),
         Check.new(label: "Unhandled call requests", status: CallRequest.unhandled.any? ? :warn : :ok,
                   detail: CallRequest.unhandled.count.to_s),
+        Check.new(label: "Bot submissions blocked (7d)", status: :ok, detail: bot_blocks_detail),
         Check.new(label: "DSCSA assessments (7d)", status: :ok,
                   detail: DscsaAssessment.where(created_at: 7.days.ago..).count.to_s),
         Check.new(label: "Acquisition sources (7d)", status: :ok, detail: acquisition_detail),
         Check.new(label: "Compliance packets (30d)", status: :ok,
                   detail: ComplianceReport.where(created_at: 30.days.ago..).count.to_s)
       ])
+    end
+
+    def customer_counts_detail
+      customers = Organization.customers
+      internal = Organization.count - customers.count
+      detail = "#{customers.count} / #{User.where(organization: customers).count}"
+      internal.positive? ? "#{detail} (+#{internal} internal org#{'s' unless internal == 1} hidden)" : detail
+    end
+
+    def bot_blocks_detail
+      blocks = BotBlock.where(created_at: 7.days.ago..)
+      return "none" if blocks.none?
+
+      by_form = blocks.group(:form).count.sort_by { |form, n| [ -n, form ] }.map { |form, n| "#{form.sub('users/registrations', 'signup')}: #{n}" }.join(", ")
+      "#{blocks.count} -- #{by_form}"
     end
 
     # Breaks down the last 7 days of DSCSA assessments (the funnel Ads
