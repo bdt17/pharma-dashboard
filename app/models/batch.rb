@@ -60,7 +60,7 @@ class Batch < ApplicationRecord
     attributes = %w[id lot_number vehicle_id temperature_celsius status created_at]
     CSV.generate(headers: true) do |csv|
       all.each do |batch|
-        csv << batch.attributes.values_at(*attributes)
+        csv << CsvSafe.row(batch.attributes.values_at(*attributes))
       end
     end
   end

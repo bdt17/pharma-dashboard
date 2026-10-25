@@ -23,14 +23,14 @@ class AuditLog < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << [ "Time", "Event", "User", "IP address", "Batch lot number", "Data" ]
       all.each do |log|
-        csv << [
+        csv << CsvSafe.row([
           log.created_at.iso8601,
           log.event,
           log.user.email,
           log.ip_address,
           log.batch&.lot_number,
           log.data.presence&.to_json
-        ]
+        ])
       end
     end
   end
