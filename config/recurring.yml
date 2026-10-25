@@ -30,6 +30,12 @@ production:
     class: CardExpiryCheckJob
     schedule: every day at 8am
 
+  # Monday operator email: the week's leads, checks, signups, trials, and
+  # anything waiting (see Ops::WeeklyDigest). Phoenix time -- no DST.
+  weekly_ops_digest:
+    class: WeeklyOpsDigestJob
+    schedule: every monday at 8am America/Phoenix
+
   # Liveness check-in to Sentry Cron Monitors. If this stops arriving,
   # the app or the job queue is down. No-op until SENTRY_DSN is set.
   heartbeat:
