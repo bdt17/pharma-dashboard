@@ -20,6 +20,16 @@
 # (e.g. many subscriptions renewing around the same time) rather than
 # stopping abuse.
 class Rack::Attack
+  # The real client address, resolved by ActionDispatch::RemoteIp (which runs
+  # earlier in the stack) through the trusted Cloudflare ranges -- see
+  # config/initializers/cloudflare_proxies.rb. Plain req.ip would be the
+  # Cloudflare edge, shared by every visitor routed through it.
+  class Request < ::Rack::Request
+    def ip
+      get_header("action_dispatch.remote_ip")&.to_s.presence || super
+    end
+  end
+
   # The router matches "/users/sign_in/", "//users/sign_in" and
   # "/users/sign_in.json" to the same action as "/users/sign_in", so every
   # throttle compares against the path normalized the same way -- an exact

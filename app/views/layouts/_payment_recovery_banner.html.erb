@@ -13,7 +13,7 @@
         <span class="font-semibold">Your last payment didn't go through.</span>
         Update your card to keep GPS tracking, Compliance Packets, and your DSCSA verification badge active.
       </span>
-      <%= button_to "Update payment method", billing_portal_path, method: :post,
+      <%= button_to "Update payment method", billing_portal_path, method: :post, form: { data: { turbo: false } },
             class: "btn btn-secondary btn-sm shrink-0 whitespace-nowrap" %>
     </div>
   </div>

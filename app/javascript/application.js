@@ -8,7 +8,14 @@
 import "@hotwired/turbo-rails"
 
 import { Application } from "@hotwired/stimulus"
-import { registerControllersFrom } from "@hotwired/stimulus-loading"
+// eagerLoadControllersFrom is what stimulus-loading actually exports. The
+// import here used to name `registerControllersFrom`, which doesn't exist --
+// and in an ES module a missing named export is a link-time SyntaxError, so
+// this whole file (Turbo included) never executed in any browser. The
+// signature pad never mounted, which made recording a "delivered" custody
+// event impossible from the UI. test/system/javascript_boot_test.rb guards it.
+import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 
 const application = Application.start()
-registerControllersFrom("controllers", application)
+window.Stimulus = application
+eagerLoadControllersFrom("controllers", application)

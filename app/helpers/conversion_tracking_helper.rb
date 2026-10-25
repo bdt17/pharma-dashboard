@@ -33,7 +33,7 @@ module ConversionTrackingHelper
 
     safe_join([
       javascript_include_tag("https://www.googletagmanager.com/gtag/js?id=#{ERB::Util.url_encode(id)}", async: true),
-      javascript_tag(<<~JS.strip)
+      javascript_tag(<<~JS.strip, nonce: true)
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -47,6 +47,6 @@ module ConversionTrackingHelper
     label = ENV[CONVERSION_EVENTS.fetch(event)].presence
     return unless id && label
 
-    javascript_tag("gtag('event', 'conversion', {send_to: #{"#{id}/#{label}".to_json}});")
+    javascript_tag("gtag('event', 'conversion', {send_to: #{"#{id}/#{label}".to_json}});", nonce: true)
   end
 end

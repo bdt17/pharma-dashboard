@@ -5,7 +5,7 @@
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-[24px]">Billing</h1>
     <% if @subscription %>
-      <%= button_to "Manage billing", billing_portal_path, method: :post, class: "btn btn-secondary btn-sm" %>
+      <%= button_to "Manage billing", billing_portal_path, method: :post, form: { data: { turbo: false } }, class: "btn btn-secondary btn-sm" %>
     <% end %>
   </div>
 
@@ -120,7 +120,7 @@
                     <% end %>
                   </div>
                   <% if current_user.admin? %>
-                    <%= button_to "Subscribe", billing_checkout_path(price_id: plan[:id]), method: :post,
+                    <%= button_to "Subscribe", billing_checkout_path(price_id: plan[:id]), method: :post, form: { data: { turbo: false } },
                           class: "btn btn-sm #{plan == annual ? "btn-primary" : "btn-secondary"}" %>
                   <% end %>
                 </div>
@@ -164,7 +164,7 @@
               <div class="text-[13px] text-ink-faint"><span class="mono"><%= number_to_currency(addon[:amount]) %></span> one-time</div>
             </div>
             <% if current_user.admin? %>
-              <%= button_to "Buy", billing_addon_checkout_path(price_id: addon[:id]), method: :post, class: "btn btn-secondary btn-sm" %>
+              <%= button_to "Buy", billing_addon_checkout_path(price_id: addon[:id]), method: :post, form: { data: { turbo: false } }, class: "btn btn-secondary btn-sm" %>
             <% end %>
           </div>
         <% end %>
@@ -196,7 +196,7 @@
         <img src="<%= verification_badge_path(current_organization.verification_token) %>" alt="DSCSA compliance verified via Pharma Transport" height="20">
         <span class="text-[13px] text-ink-faint">— embed it on your site:</span>
       </div>
-      <textarea readonly rows="2" class="mt-1 w-full bg-paper border border-line rounded px-3 py-1.5 mono text-[12px] break-all" onclick="this.select()"><%= badge_snippet %></textarea>
+      <textarea readonly rows="2" class="mt-1 w-full bg-paper border border-line rounded px-3 py-1.5 mono text-[12px] break-all" data-controller="select-on-click" data-action="click->select-on-click#select"><%= badge_snippet %></textarea>
     </div>
   </div>
 </div>
