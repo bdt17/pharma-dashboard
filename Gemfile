@@ -92,7 +92,7 @@ gem "twilio-ruby", "~> 7.4"
 # button on /ops; every real bug found this stretch was found the same
 # manual way, nothing the app itself ever surfaced on its own.
 gem "sentry-ruby", "~> 7.0"
-gem "sentry-rails", "~> 7.0"
+gem "sentry-rails", "~> 7.1"
 
 # Transactional email delivery. config/environments/production.rb prefers
 # Postmark's HTTP API (delivery_method :postmark) when POSTMARK_API_TOKEN
