@@ -67,14 +67,58 @@ class TwoFactorEnforcementTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_two_factor_challenge_path
   end
 
-  test "JSON API requests are not redirected by the HTML two-factor gate" do
-    user = create_user(role: "admin") # required role, not enrolled -> would be redirected on HTML
+  test "a JSON API request before the second factor gets a 401, not a redirect or data" do
+    user = create_user(role: "admin") # required role, not enrolled
     Vehicle.create!(name: "Truck 1", organization: @organization)
 
     log_in user
     get "/api/v1/vehicles", headers: { "Accept" => "application/json" }
 
-    assert_response :success
+    assert_response :unauthorized
     assert_equal "application/json", response.media_type
+  end
+
+  test "the JSON API still works for an opt-in user who hasn't enrolled" do
+    log_in create_user(role: "dispatcher")
+    get "/api/v1/vehicles", headers: { "Accept" => "application/json" }
+
+    assert_response :success
+  end
+
+  test "an Accept: application/json header doesn't skip the gate on an HTML route" do
+    user = create_user(role: "dispatcher")
+    user.generate_otp_secret!
+    user.enable_two_factor!
+
+    log_in user
+    assert_no_difference -> { @organization.vehicles.count } do
+      post vehicles_path, params: { vehicle: { name: "Sneaky" } }, headers: { "Accept" => "application/json" }
+    end
+    assert_response :unauthorized
+  end
+
+  test "account settings (Devise registrations) are behind the gate" do
+    user = create_user(role: "dispatcher")
+    user.generate_otp_secret!
+    user.enable_two_factor!
+
+    log_in user
+    get edit_user_registration_path
+    assert_redirected_to new_two_factor_challenge_path
+
+    assert_no_difference -> { User.count } do
+      delete user_registration_path
+    end
+  end
+
+  test "sign-out still works before the second factor" do
+    user = create_user(role: "dispatcher")
+    user.generate_otp_secret!
+    user.enable_two_factor!
+
+    log_in user
+    delete destroy_user_session_path
+    get dashboard_path
+    assert_redirected_to new_user_session_path
   end
 end

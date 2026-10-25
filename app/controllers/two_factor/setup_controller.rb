@@ -32,7 +32,7 @@ module TwoFactor
       elsif current_user.verify_second_factor(params[:otp_code])
         current_user.disable_two_factor!
         redirect_to dashboard_path, notice: "Two-factor authentication has been turned off."
-      else
+      elsif !locked_out_after_failed_code?
         flash.now[:alert] = "That code didn't match, so two-factor authentication is still on."
         render :show, status: :unprocessable_content
       end

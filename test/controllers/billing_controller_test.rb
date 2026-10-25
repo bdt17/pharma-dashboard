@@ -267,11 +267,30 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
   test "checkout redirects to the real Stripe URL for an admin" do
     sign_in @user
 
-    StripeBilling.stub :start_checkout!, "https://checkout.stripe.com/fake-session" do
-      post billing_checkout_url, params: { price_id: "price_123" }
+    StripeBilling.stub :available_plans, [ { id: "price_123", tier: "starter" } ] do
+      StripeBilling.stub :start_checkout!, "https://checkout.stripe.com/fake-session" do
+        post billing_checkout_url, params: { price_id: "price_123" }
+      end
     end
 
     assert_redirected_to "https://checkout.stripe.com/fake-session"
+  end
+
+  test "checkout refuses a price the plans page doesn't offer" do
+    sign_in @user
+    plans = [ { id: "price_s", tier: "starter" }, { id: "price_e", tier: "enterprise" }, { id: "price_orphan", tier: nil } ]
+
+    StripeBilling.stub :configured?, true do
+      StripeBilling.stub :available_plans, plans do
+        StripeBilling.stub :start_checkout!, ->(*) { raise "should not be called" } do
+          %w[price_e price_orphan price_unknown].each do |price_id|
+            post billing_checkout_url, params: { price_id: price_id }
+            assert_redirected_to billing_url
+          end
+        end
+      end
+    end
+    assert_equal "That plan isn't available for self-serve signup.", flash[:alert]
   end
 
   test "checkout is forbidden for a non-admin" do
@@ -302,11 +321,28 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
   test "addon_checkout redirects to the real Stripe URL for an admin" do
     sign_in @user
 
-    StripeBilling.stub :start_addon_checkout!, "https://checkout.stripe.com/fake-addon-session" do
-      post billing_addon_checkout_url, params: { price_id: "price_addon" }
+    StripeBilling.stub :available_addons, [ { id: "price_addon" } ] do
+      StripeBilling.stub :start_addon_checkout!, "https://checkout.stripe.com/fake-addon-session" do
+        post billing_addon_checkout_url, params: { price_id: "price_addon" }
+      end
     end
 
     assert_redirected_to "https://checkout.stripe.com/fake-addon-session"
+  end
+
+  test "addon_checkout refuses a price that isn't an offered add-on" do
+    sign_in @user
+
+    StripeBilling.stub :configured?, true do
+      StripeBilling.stub :available_addons, [ { id: "price_addon" } ] do
+        StripeBilling.stub :start_addon_checkout!, ->(*) { raise "should not be called" } do
+          post billing_addon_checkout_url, params: { price_id: "price_recurring_plan" }
+        end
+      end
+    end
+
+    assert_redirected_to billing_url
+    assert_equal "That add-on isn't available.", flash[:alert]
   end
 
   test "addon_checkout is forbidden for a non-admin" do

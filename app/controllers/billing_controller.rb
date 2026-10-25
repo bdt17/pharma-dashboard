@@ -8,16 +8,7 @@ class BillingController < ApplicationController
   def index
     @subscription = current_organization&.subscriptions&.order(created_at: :desc)&.first
     unlimited = @subscription&.active_or_trialing?
-    # Allow-list against SubscriptionPlan.self_serve rather than rejecting
-    # contact-sales tiers by name: Stripe is a shared account, and any
-    # active recurring Price that isn't ours (an abandoned experiment, a
-    # duplicate created by hand, anything untagged) would otherwise render
-    # as a real Subscribe button on the actual money page. Only a Price
-    # tagged with a tier this app recognizes as self-serve ever shows here
-    # -- Enterprise's Price stays out even if its `tier` metadata is ever
-    # missing or wrong, not just when it's correctly tagged "enterprise".
-    self_serve_tiers = SubscriptionPlan.self_serve.map(&:tier)
-    @plans = unlimited ? [] : StripeBilling.available_plans.select { |plan| self_serve_tiers.include?(plan[:tier]) }
+    @plans = unlimited ? [] : self_serve_plans
     @addons = unlimited ? [] : StripeBilling.available_addons
     @available_credits = current_organization&.report_credits&.available&.count || 0
     # The overage toggle only makes sense on a capped paid plan -- an
@@ -32,9 +23,21 @@ class BillingController < ApplicationController
     authorize_billing_admin!
     return if performed?
 
+    price_id = params.require(:price_id)
+    # The form only ever offers self_serve_plans, but price_id is just a
+    # request param -- without this check an admin could post any recurring
+    # Price in the shared Stripe account (Enterprise, an untagged
+    # experiment) and self-serve a plan this page never offers.
+    unless self_serve_plans.any? { |plan| plan[:id] == price_id }
+      raise StripeBilling::NotConfigured unless StripeBilling.configured?
+
+      redirect_to billing_path, alert: "That plan isn't available for self-serve signup."
+      return
+    end
+
     url = StripeBilling.start_checkout!(
       organization: current_organization,
-      price_id: params.require(:price_id),
+      price_id: price_id,
       success_url: billing_success_url,
       cancel_url: billing_url
     )
@@ -47,9 +50,17 @@ class BillingController < ApplicationController
     authorize_billing_admin!
     return if performed?
 
+    price_id = params.require(:price_id)
+    unless StripeBilling.available_addons.any? { |addon| addon[:id] == price_id }
+      raise StripeBilling::NotConfigured unless StripeBilling.configured?
+
+      redirect_to billing_path, alert: "That add-on isn't available."
+      return
+    end
+
     url = StripeBilling.start_addon_checkout!(
       organization: current_organization,
-      price_id: params.require(:price_id),
+      price_id: price_id,
       success_url: billing_success_url,
       cancel_url: billing_url
     )
@@ -99,6 +110,20 @@ class BillingController < ApplicationController
   end
 
   private
+
+  # Allow-list against SubscriptionPlan.self_serve rather than rejecting
+  # contact-sales tiers by name: Stripe is a shared account, and any
+  # active recurring Price that isn't ours (an abandoned experiment, a
+  # duplicate created by hand, anything untagged) would otherwise render
+  # as a real Subscribe button on the actual money page. Only a Price
+  # tagged with a tier this app recognizes as self-serve ever shows here
+  # -- Enterprise's Price stays out even if its `tier` metadata is ever
+  # missing or wrong, not just when it's correctly tagged "enterprise".
+  # Also what #checkout validates the submitted price_id against.
+  def self_serve_plans
+    self_serve_tiers = SubscriptionPlan.self_serve.map(&:tier)
+    StripeBilling.available_plans.select { |plan| self_serve_tiers.include?(plan[:tier]) }
+  end
 
   def authorize_billing_admin!
     return if current_user.admin?

@@ -30,16 +30,26 @@ class ApplicationController < ActionController::Base
 
   def enforce_two_factor
     return unless user_signed_in?
-    # The JSON API is browser-session authenticated today; a 302 to an HTML
-    # page would be a useless response there. Leave it on password-session
-    # auth -- token auth with its own second factor is a separate change.
-    return if request.format.json? || request.path.start_with?("/api/")
-    return if devise_controller?
+    return if devise_controller? && !is_a?(Devise::RegistrationsController)
     return if two_factor_satisfied?
+    return unless current_user.otp_enabled? || current_user.two_factor_required?
+
+    # Never skip the gate by request format: Accept: application/json alone
+    # makes request.format.json? true on any route, and most actions do the
+    # same work whatever format was asked for. A non-HTML caller (the
+    # session-authenticated JSON API, a .pdf download) gets a plain 401
+    # instead of a redirect it can't follow. Device-authenticated endpoints
+    # (GPS ingest, health) don't use the user session and skip this filter.
+    # RegistrationsController stays gated: edit/update/destroy change the
+    # account's password, email, or delete it outright.
+    unless request.format.html? || request.format == Mime::ALL
+      render json: { error: "two-factor authentication required" }, status: :unauthorized
+      return
+    end
 
     if current_user.otp_enabled?
       redirect_to new_two_factor_challenge_path
-    elsif current_user.two_factor_required?
+    else
       redirect_to two_factor_setup_path,
         alert: "Two-factor authentication is required for your role. Set it up to continue."
     end

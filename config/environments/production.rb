@@ -27,8 +27,18 @@ Rails.application.configure do
   # (see the Start Command fix in Render's dashboard).
   config.logger = ActiveSupport::TaggedLogging.logger($stdout)
 
-  # Render terminates TLS before traffic reaches Puma.
-  config.force_ssl = false
+  # Render terminates TLS before traffic reaches Puma (and already
+  # redirects plain http:// at its edge), so assume_ssl tells Rails every
+  # request it sees arrived over HTTPS. That alone never redirects --
+  # Render's internal health check reaches Puma over plain HTTP and must
+  # keep getting a 200 -- but force_ssl on top of it marks the session and
+  # remember-me cookies Secure and sends HSTS, neither of which happened
+  # with force_ssl off. HSTS stays on this host only (no includeSubDomains)
+  # so it can't affect other pharmatransport.org subdomains this app
+  # doesn't serve.
+  config.assume_ssl = true
+  config.force_ssl = true
+  config.ssl_options = { hsts: { subdomains: false } }
 
   # Required so Action Mailer (used by Devise for password-reset, account
   # -unlock, and signup-confirmation emails) can build absolute URLs. Set

@@ -111,4 +111,12 @@ class RackAttackTest < ActionDispatch::IntegrationTest
 
     assert_response :too_many_requests
   end
+
+  test "a trailing slash or format extension doesn't dodge the login throttle" do
+    %w[/users/sign_in/ /users/sign_in.json //users/sign_in].each_with_index do |path, round|
+      Rack::Attack.reset! if round.positive?
+      11.times { post path, params: { user: { email: "nobody@example.com", password: "wrong" } } }
+      assert_response :too_many_requests, "#{path} was not throttled"
+    end
+  end
 end

@@ -34,14 +34,15 @@ class WebhookDeliveryJob < ApplicationJob
 
     delivery.increment!(:attempts)
 
-    unless WebhookEndpoint.public_https_url?(endpoint.url)
+    address = WebhookEndpoint.public_address_for(endpoint.url)
+    unless address
       finish_failed(delivery, endpoint, "URL no longer resolves to a public HTTPS address")
       return
     end
 
     body = delivery.payload.to_json
     started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-    response = deliver(endpoint, delivery.event, body)
+    response = deliver(endpoint, address, delivery.event, body)
     duration_ms = ((Process.clock_gettime(Process::CLOCK_MONOTONIC) - started) * 1000).round
     code = response.code.to_i
     delivery.update!(response_status: code, duration_ms: duration_ms)
@@ -64,9 +65,13 @@ class WebhookDeliveryJob < ApplicationJob
     endpoint.record_failure!(message)
   end
 
-  def deliver(endpoint, event, body)
+  # Connects to the already-vetted address (see
+  # WebhookEndpoint.public_address_for), while TLS SNI, certificate
+  # verification and the Host header still use the URL's hostname.
+  def deliver(endpoint, address, event, body)
     uri = URI.parse(endpoint.url)
     http = Net::HTTP.new(uri.host, uri.port)
+    http.ipaddr = address
     http.use_ssl = true
     http.open_timeout = TIMEOUT
     http.read_timeout = TIMEOUT

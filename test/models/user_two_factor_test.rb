@@ -115,4 +115,12 @@ class UserTwoFactorTest < ActiveSupport::TestCase
     assert_nil @user.otp_consumed_timestep
     assert_equal 0, @user.backup_codes_remaining
   end
+
+  test "to_json never includes second-factor material" do
+    @user.enable_two_factor!
+    json = JSON.parse(@user.to_json)
+
+    assert_equal @user.email, json["email"]
+    %w[otp_secret otp_backup_codes otp_consumed_timestep].each { |attr| assert_not json.key?(attr), attr }
+  end
 end

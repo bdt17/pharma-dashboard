@@ -14,7 +14,7 @@ class WebhookDeliveryJobTest < ActiveJob::TestCase
   # Stand-in for Net::HTTP: records the request it's handed, returns a
   # response with the code the test wants.
   class FakeHTTP
-    attr_accessor :use_ssl, :open_timeout, :read_timeout
+    attr_accessor :use_ssl, :open_timeout, :read_timeout, :ipaddr
     attr_reader :last_request
 
     def initialize(code) = (@code = code)
@@ -49,6 +49,16 @@ class WebhookDeliveryJobTest < ActiveJob::TestCase
     assert_not_nil @delivery.duration_ms
     assert @endpoint.reload.last_success_at
     assert_equal 0, @endpoint.consecutive_failures
+  end
+
+  test "connects to the address that passed the public-IP check, not a fresh lookup" do
+    Resolv.stub(:getaddresses, ->(_host) { [ "93.184.216.34" ] }) do
+      @endpoint.update_column(:url, "https://hooks.example.com/pt")
+      with_http(200) do |http|
+        WebhookDeliveryJob.perform_now(@delivery.id)
+        assert_equal "93.184.216.34", http.ipaddr
+      end
+    end
   end
 
   test "a 4xx response marks the delivery failed and does not raise (no retry)" do
