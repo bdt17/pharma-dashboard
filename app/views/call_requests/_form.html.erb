@@ -2,6 +2,7 @@
     (with topic and optional context already set) and an optional
     `heading` / `blurb`. %>
 <%= form_with model: call_request, url: request_a_call_path, method: :post, class: "flex flex-col gap-4" do |f| %>
+  <%= bot_protection_fields %>
   <% if call_request.errors.any? %>
     <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-[13px]">
       <ul class="list-disc pl-5">

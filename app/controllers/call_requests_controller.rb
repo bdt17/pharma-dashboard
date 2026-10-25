@@ -3,6 +3,9 @@
 # general entry point. No account required. POST /request-a-call is
 # throttled in config/initializers/rack_attack.rb.
 class CallRequestsController < ApplicationController
+  include BotProtection
+  protect_from_bots only: :create
+
   def new
     @call_request = CallRequest.new(topic: resolved_topic, context: params[:context].to_s.first(4000).presence)
   end
@@ -25,6 +28,16 @@ class CallRequestsController < ApplicationController
   end
 
   private
+
+  def pretend_bot_submission_succeeded
+    redirect_to call_request_thanks_path
+  end
+
+  def ask_to_resubmit_form
+    @call_request = CallRequest.new(call_request_params)
+    flash.now[:alert] = BotProtection::RESUBMIT_NOTICE
+    render :new, status: :unprocessable_content
+  end
 
   def call_request_params
     params.require(:call_request).permit(:name, :email, :pharmacy_name, :phone, :topic, :message, :context)

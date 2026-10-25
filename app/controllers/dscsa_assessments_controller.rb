@@ -5,6 +5,9 @@
 # closes it. An acquisition funnel -- no account required.
 # POST /dscsa-assessment is throttled in config/initializers/rack_attack.rb.
 class DscsaAssessmentsController < ApplicationController
+  include BotProtection
+  protect_from_bots only: :create
+
   def new
   end
 
@@ -26,6 +29,17 @@ class DscsaAssessmentsController < ApplicationController
   end
 
   private
+
+  # There is no result page without a saved assessment, so a bot is sent
+  # back to a blank form -- indistinguishable from a validation bounce.
+  def pretend_bot_submission_succeeded
+    redirect_to dscsa_assessment_path
+  end
+
+  def ask_to_resubmit_form
+    flash.now[:alert] = BotProtection::RESUBMIT_NOTICE
+    render :new, status: :unprocessable_content
+  end
 
   # DscsaAssessmentFollowUpJob re-checks EmailSuppression and conversion
   # status itself at send time (days from now), so it's safe to schedule

@@ -12,6 +12,9 @@
 # that doesn't exist yet either.
 module Users
   class RegistrationsController < Devise::RegistrationsController
+    include BotProtection
+    protect_from_bots only: :create
+
     def create
       build_resource(sign_up_params)
       resource.role = "admin"
@@ -48,6 +51,21 @@ module Users
     end
 
     private
+
+    # Same response a real signup gets when confirmation is pending (see
+    # #create above), so a bot can't tell it was dropped.
+    def pretend_bot_submission_succeeded
+      set_flash_message! :notice, :signed_up_but_unconfirmed
+      redirect_to after_inactive_sign_up_path_for(build_resource(sign_up_params))
+    end
+
+    def ask_to_resubmit_form
+      build_resource(sign_up_params)
+      clean_up_passwords resource
+      set_minimum_password_length
+      flash.now[:alert] = BotProtection::RESUBMIT_NOTICE
+      render :new, status: :unprocessable_content
+    end
 
     def organization_name
       params.dig(:user, :organization_name)
