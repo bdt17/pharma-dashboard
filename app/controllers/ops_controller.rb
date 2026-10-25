@@ -14,6 +14,15 @@ class OpsController < ApplicationController
     @call_requests = CallRequest.unhandled.order(created_at: :desc)
     @assessments = DscsaAssessment.where.not(email: [ nil, "" ]).order(created_at: :desc).limit(20)
     @organizations = Organization.includes(:users, :subscriptions).order(created_at: :desc)
+    @free_setups_owed = Organization.includes(:users).where.not(free_setup_owed_at: nil)
+                                    .where(free_setup_completed_at: nil).order(:free_setup_owed_at)
+  end
+
+  # Closes out a free White-Glove Setup owed under DeadlineOffer.
+  def complete_free_setup
+    organization = Organization.find(params[:id])
+    organization.update!(free_setup_completed_at: Time.current)
+    redirect_to ops_path(anchor: "free-setups"), notice: "Marked #{organization.name}'s free setup done."
   end
 
   # The lead inbox: replaces marking a call request handled from a

@@ -23,7 +23,7 @@ class DscsaAssessmentMailer < ApplicationMailer
     @platform_solved = PLATFORM_SOLVED_KEYS.include?(@gap[:key])
     @unsubscribe_url = unsubscribe_url_for(assessment.email)
 
-    mail(to: assessment.email, subject: "Closing the #{@gap[:category].downcase} gap before Nov 27")
+    mail(to: assessment.email, subject: "Closing the #{@gap[:category].downcase} gap#{' before Nov 27' unless DscsaDeadline.passed?}")
   end
 
   def follow_up_day7(assessment)

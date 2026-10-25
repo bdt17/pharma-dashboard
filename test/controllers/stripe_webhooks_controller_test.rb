@@ -295,4 +295,21 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  test "a trialing subscription before the deadline earns the free setup and emails the operator" do
+    DeadlineOffer.stub(:active?, true) do
+      assert_enqueued_email_with FreeSetupMailer, :owed, args: [ @organization ] do
+        post_event(subscription_event_payload(status: "trialing", tier: "starter"))
+      end
+    end
+    assert @organization.reload.free_setup_owed_at
+  end
+
+  test "no free setup once the deadline offer has ended" do
+    DeadlineOffer.stub(:active?, false) do
+      post_event(subscription_event_payload(status: "active", tier: "starter"))
+    end
+    assert_response :success
+    assert_nil @organization.reload.free_setup_owed_at
+  end
 end

@@ -12,8 +12,13 @@
 
 <% if @assessment.gaps.any? %>
   <p style="font-size:14px;">
-    <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work before the
-    small-dispenser exemption ends on <strong>November 27, 2026</strong>:
+    <% if DscsaDeadline.passed? %>
+      <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work now that the
+      small-dispenser exemption has ended (<strong>November 27, 2026</strong>):
+    <% else %>
+      <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work before the
+      small-dispenser exemption ends on <strong>November 27, 2026</strong>:
+    <% end %>
   </p>
   <ul style="font-size:14px;">
     <% @assessment.gaps.first(3).each do |g| %>

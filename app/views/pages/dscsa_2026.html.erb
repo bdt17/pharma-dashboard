@@ -10,19 +10,32 @@
 <section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
   <div class="mx-auto max-w-6xl px-6 py-[76px]">
     <div class="flex flex-col gap-5 max-w-[56ch]">
-      <span class="eyebrow">Small-dispenser exemption ends November 27, 2026</span>
-      <h1 class="text-[30px] sm:text-[44px] leading-[1.1]">Is your pharmacy ready for the DSCSA deadline?</h1>
-      <p class="text-[17px] text-ink-soft">
-        If you employ 25 or fewer full-time pharmacists and technicians, you&rsquo;ve been
-        exempt from the enhanced drug distribution security requirements &mdash; package-level
-        verification, electronic transaction data, a documented suspect-product process. That
-        exemption ends this year. Most small pharmacies haven&rsquo;t started.
-      </p>
+      <% if DscsaDeadline.passed? %>
+        <span class="eyebrow">Small-dispenser exemption ended <%= DscsaDeadline.label %></span>
+        <h1 class="text-[30px] sm:text-[44px] leading-[1.1]">The DSCSA exemption has ended. Is your pharmacy compliant?</h1>
+        <p class="text-[17px] text-ink-soft">
+          If you employ 25 or fewer full-time pharmacists and technicians, you were exempt
+          from the enhanced drug distribution security requirements &mdash; package-level
+          verification, electronic transaction data, a documented suspect-product process.
+          That exemption ended on <%= DscsaDeadline.label %>, and the requirements apply now.
+          Most small pharmacies are still catching up.
+        </p>
+      <% else %>
+        <span class="eyebrow">Small-dispenser exemption ends <%= DscsaDeadline.label %></span>
+        <h1 class="text-[30px] sm:text-[44px] leading-[1.1]">Is your pharmacy ready for the DSCSA deadline?</h1>
+        <p class="text-[17px] text-ink-soft">
+          If you employ 25 or fewer full-time pharmacists and technicians, you&rsquo;ve been
+          exempt from the enhanced drug distribution security requirements &mdash; package-level
+          verification, electronic transaction data, a documented suspect-product process. That
+          exemption ends this year. Most small pharmacies haven&rsquo;t started.
+        </p>
+      <% end %>
       <div class="flex flex-wrap gap-3 pt-1">
         <a class="btn btn-primary" href="<%= assessment_link %>">Take the free 2-minute readiness check</a>
         <a class="btn btn-secondary" href="#whats-changing">What&rsquo;s changing</a>
       </div>
       <p class="text-[12.5px] text-ink-faint">No account needed. Answer 8 questions, get a score and a plain-English gap list.</p>
+      <%= render "shared/deadline_offer" %>
     </div>
   </div>
 </section>
@@ -31,7 +44,7 @@
 <section id="whats-changing" class="mx-auto max-w-6xl px-6 py-[72px]">
   <div class="flex flex-col gap-3 max-w-[50ch] mb-10">
     <span class="eyebrow">What&rsquo;s changing</span>
-    <h2 class="text-[26px] sm:text-[28px]">The exemption isn&rsquo;t being extended again.</h2>
+    <h2 class="text-[26px] sm:text-[28px]"><% if DscsaDeadline.passed? %>The exemption wasn&rsquo;t extended.<% else %>The exemption isn&rsquo;t being extended again.<% end %></h2>
   </div>
   <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
     <% [

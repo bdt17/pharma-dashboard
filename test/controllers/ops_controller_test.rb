@@ -193,4 +193,21 @@ class OpsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_match "2 -- call_requests: 1, signup: 1", response.body
   end
+
+  test "free setups owed are listed until marked done" do
+    owed = Organization.create!(name: "Dana Pharmacy", free_setup_owed_at: 1.hour.ago)
+    User.create!(email: "dana@example.com", password: "password123!", organization: owed, role: "admin")
+
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+      get ops_url
+      assert_select "#free-setups", text: /Dana Pharmacy/
+
+      post ops_complete_free_setup_url(owed)
+      assert_redirected_to ops_url(anchor: "free-setups")
+      get ops_url
+      assert_select "#free-setups", text: /Nobody waiting/
+    end
+    assert owed.reload.free_setup_completed_at
+  end
 end

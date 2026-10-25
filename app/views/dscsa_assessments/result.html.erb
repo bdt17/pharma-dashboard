@@ -30,12 +30,23 @@
         You indicated the small-dispenser exemption may not apply to you &mdash; in that case
         the enhanced requirements below are <strong>already in force</strong>, not pending.
       <% else %>
-        Based on your answers, here&rsquo;s where you stand against the requirements that take
-        effect when the exemption ends on November&nbsp;27,&nbsp;2026.
+        <% if DscsaDeadline.passed? %>
+          Based on your answers, here&rsquo;s where you stand against the requirements that took
+          effect when the exemption ended on November&nbsp;27,&nbsp;2026.
+        <% else %>
+          Based on your answers, here&rsquo;s where you stand against the requirements that take
+          effect when the exemption ends on November&nbsp;27,&nbsp;2026.
+        <% end %>
       <% end %>
     </p>
   </div>
 </section>
+
+<% if DeadlineOffer.active? %>
+  <section class="mx-auto max-w-3xl px-6 pt-6">
+    <%= render "shared/deadline_offer" %>
+  </section>
+<% end %>
 
 <section class="mx-auto max-w-3xl px-6 py-14 flex flex-col gap-12">
   <% if @assessment.gaps.any? %>

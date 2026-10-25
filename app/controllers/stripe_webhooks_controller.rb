@@ -70,6 +70,11 @@ class StripeWebhooksController < ApplicationController
     # trial. ReferralReward itself is the idempotency guard: it's a no-op
     # once a referral's already been rewarded.
     ReferralReward.grant_for!(organization: organization) if stripe_subscription.status == "active"
+
+    # Trialing counts here, unlike the referral reward above: the offer is
+    # "start before the deadline", and the setup call is what makes the
+    # trial convert. DeadlineOffer.claim! is idempotent and date-gated.
+    DeadlineOffer.claim!(organization) if %w[active trialing].include?(stripe_subscription.status)
   end
 
   def cancel_subscription(stripe_subscription)

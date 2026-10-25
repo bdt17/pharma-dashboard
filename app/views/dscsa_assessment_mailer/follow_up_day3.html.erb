@@ -21,7 +21,11 @@
 <% end %>
 
 <p style="font-size:14px;">
-  The small-dispenser exemption ends <strong>November 27, 2026</strong>. A 14-day free trial
+  <% if DscsaDeadline.passed? %>
+    The small-dispenser exemption ended <strong>November 27, 2026</strong>, so this applies now. A 14-day free trial
+  <% else %>
+    The small-dispenser exemption ends <strong>November 27, 2026</strong>. A 14-day free trial
+  <% end %>
   is enough to see whether this closes the gap for your pharmacy &mdash;
   <%= link_to "start one", new_user_registration_url %>.
 </p>
