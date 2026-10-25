@@ -126,6 +126,30 @@ module Ops
       end
     end
 
+    test "application group warns when Google Ads conversion tracking is unset and reports labelled events when set" do
+      label = "Google Ads conversion tracking (GOOGLE_ADS_CONVERSION_ID)"
+
+      with_env("GOOGLE_ADS_CONVERSION_ID" => nil) do
+        assert_equal :warn, app_check(label).status
+        assert_match "unset", app_check(label).detail
+      end
+
+      with_env("GOOGLE_ADS_CONVERSION_ID" => "AW-123456789",
+               "GOOGLE_ADS_LABEL_ASSESSMENT" => "abc", "GOOGLE_ADS_LABEL_TRIAL" => "def",
+               "GOOGLE_ADS_LABEL_CALL" => nil) do
+        assert_equal :ok, app_check(label).status
+        assert_match "2/3 conversion events labelled", app_check(label).detail
+      end
+    end
+
+    test "application group never prints the Google Ads ids, only whether they're set" do
+      with_env("GOOGLE_ADS_CONVERSION_ID" => "AW-secretaccount", "GOOGLE_ADS_LABEL_TRIAL" => "secretlabel") do
+        details = group("Application").checks.map(&:detail).join(" ")
+        assert_not_includes details, "AW-secretaccount"
+        assert_not_includes details, "secretlabel"
+      end
+    end
+
     private
 
     def group(name) = Ops::Diagnostics.call.find { |g| g.name == name }
