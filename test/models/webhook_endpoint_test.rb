@@ -30,6 +30,10 @@ class WebhookEndpointTest < ActiveSupport::TestCase
       https://172.16.5.5/x
       https://169.254.169.254/latest/meta-data
       https://[::1]/x
+      https://100.64.0.1/x
+      https://198.18.0.1/x
+      https://[64:ff9b::a9fe:a9fe]/x
+      https://[::ffff:127.0.0.1]/x
     ].each do |bad|
       assert_not @organization.webhook_endpoints.build(url: bad).valid?, "#{bad} should be rejected"
     end

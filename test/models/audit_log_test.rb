@@ -63,4 +63,15 @@ class AuditLogTest < ActiveSupport::TestCase
 
     assert_equal [ "mine" ], rows.map { |r| r["Event"] }
   end
+
+  test "to_csv neutralizes spreadsheet formulas in user-supplied cells" do
+    vehicle = Vehicle.create!(name: "Truck 1", organization: @organization)
+    batch = Batch.create!(lot_number: "=HYPERLINK(\"http://evil.example\")", temperature_celsius: 5, vehicle: vehicle, organization: @organization)
+    AuditLog.record!(event: "batch_created", user: @user, batch: batch)
+
+    require "csv"
+    row = CSV.parse(AuditLog.to_csv, headers: true).first
+
+    assert_equal "'=HYPERLINK(\"http://evil.example\")", row["Batch lot number"]
+  end
 end

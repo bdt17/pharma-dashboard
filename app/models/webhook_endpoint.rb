@@ -75,22 +75,37 @@ class WebhookEndpoint < ApplicationRecord
   # metadata endpoint (169.254.169.254). Re-checked at delivery time too,
   # since DNS can change after the endpoint is saved.
   def self.public_https_url?(candidate)
-    uri = URI.parse(candidate.to_s)
-    return false unless uri.is_a?(URI::HTTPS) && uri.host.present?
+    public_address_for(candidate).present?
+  end
 
-    addresses = Resolv.getaddresses(uri.host)
-    addresses.any? && addresses.none? { |address| blocked_ip?(address) }
+  # The vetted address to actually connect to, or nil if the URL isn't
+  # HTTPS or any address it resolves to is blocked. WebhookDeliveryJob
+  # connects to exactly this IP rather than letting Net::HTTP resolve the
+  # hostname a second time -- otherwise a DNS server answering with a
+  # zero TTL could hand the check a public address and the connection a
+  # private one (DNS rebinding).
+  def self.public_address_for(candidate)
+    uri = URI.parse(candidate.to_s)
+    return nil unless uri.is_a?(URI::HTTPS) && uri.host.present?
+
+    addresses = Resolv.getaddresses(uri.hostname)
+    return nil if addresses.empty? || addresses.any? { |address| blocked_ip?(address) }
+
+    addresses.first
   rescue URI::InvalidURIError, Resolv::ResolvError
-    false
+    nil
   end
 
   # IPv4/IPv6 ranges an outbound webhook must never reach: loopback,
   # RFC1918 / ULA private space, link-local (incl. the 169.254.169.254
-  # cloud metadata address), "this network", and multicast.
+  # cloud metadata address), "this network", carrier-grade NAT, benchmark
+  # and IETF-reserved space, multicast, the IPv6 unspecified address, and
+  # NAT64 (which maps straight onto IPv4, private ranges included).
   BLOCKED_RANGES = [
     "0.0.0.0/8", "127.0.0.0/8", "169.254.0.0/16",
     "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16",
-    "224.0.0.0/4", "::1/128", "fc00::/7", "fe80::/10"
+    "100.64.0.0/10", "192.0.0.0/24", "198.18.0.0/15", "240.0.0.0/4",
+    "224.0.0.0/4", "::/128", "::1/128", "fc00::/7", "fe80::/10", "ff00::/8", "64:ff9b::/96"
   ].map { |cidr| IPAddr.new(cidr) }.freeze
 
   def self.blocked_ip?(address)

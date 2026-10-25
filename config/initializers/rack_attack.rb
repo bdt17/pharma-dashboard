@@ -20,23 +20,32 @@
 # (e.g. many subscriptions renewing around the same time) rather than
 # stopping abuse.
 class Rack::Attack
+  # The router matches "/users/sign_in/", "//users/sign_in" and
+  # "/users/sign_in.json" to the same action as "/users/sign_in", so every
+  # throttle compares against the path normalized the same way -- an exact
+  # req.path comparison let a trailing slash or a format extension step
+  # around each limit below.
+  def self.normalized_path(req)
+    ActionDispatch::Journey::Router::Utils.normalize_path(req.path).sub(/\.[^\/.]+\z/, "")
+  end
+
   throttle("logins/ip", limit: 10, period: 20.seconds) do |req|
-    req.ip if req.path == "/users/sign_in" && req.post?
+    req.ip if normalized_path(req) == "/users/sign_in" && req.post?
   end
 
   throttle("signups/ip", limit: 5, period: 1.hour) do |req|
-    req.ip if req.path == "/users" && req.post?
+    req.ip if normalized_path(req) == "/users" && req.post?
   end
 
   throttle("password_resets/ip", limit: 5, period: 1.hour) do |req|
-    req.ip if req.path == "/users/password" && req.post?
+    req.ip if normalized_path(req) == "/users/password" && req.post?
   end
 
   # The second-factor challenge is the one place a correct password still
   # isn't enough -- without this, the 6-digit code could be brute-forced at
   # full request speed. Same shape as the login throttle above.
   throttle("two_factor/ip", limit: 10, period: 20.seconds) do |req|
-    req.ip if req.path == "/two_factor_challenge" && req.post?
+    req.ip if normalized_path(req) == "/two_factor_challenge" && req.post?
   end
 
   # The enrollment (POST) and disable (DELETE) forms also verify a 6-digit
@@ -44,7 +53,7 @@ class Rack::Attack
   # can't brute-force the code to enroll a device they control or to turn
   # two-factor off.
   throttle("two_factor_setup/ip", limit: 10, period: 20.seconds) do |req|
-    req.ip if req.path == "/two_factor_setup" && %w[POST DELETE].include?(req.request_method)
+    req.ip if normalized_path(req) == "/two_factor_setup" && %w[POST DELETE].include?(req.request_method)
   end
 
   # Device telemetry ingest (POST /api/v1/gps). Real trackers in a fleet
@@ -56,7 +65,7 @@ class Rack::Attack
   # can't flood us while a whole fleet reporting normally never notices.
   # Requests with no token fall through to the stricter anon throttle.
   throttle("gps_ingest/token", limit: 120, period: 1.minute) do |req|
-    if req.path == "/api/v1/gps" && req.post?
+    if normalized_path(req) == "/api/v1/gps" && req.post?
       req.get_header("HTTP_X_DEVICE_TOKEN").presence || req.ip
     end
   end
@@ -65,14 +74,22 @@ class Rack::Attack
   # misconfigured device or something probing for valid IMEIs. Keep those
   # on a tight per-IP leash regardless of the fleet-friendly limit above.
   throttle("gps_ingest/anon", limit: 20, period: 1.minute) do |req|
-    req.ip if req.path == "/api/v1/gps" && req.post? && req.get_header("HTTP_X_DEVICE_TOKEN").blank?
+    req.ip if normalized_path(req) == "/api/v1/gps" && req.post? && req.get_header("HTTP_X_DEVICE_TOKEN").blank?
+  end
+
+  # Per-token throttling above is keyed on a client-supplied header, so a
+  # random token per request would get a fresh bucket every time. Cap the
+  # whole endpoint per IP too, set high enough that a NAT'd fleet
+  # reporting normally (one shared carrier IP) never gets near it.
+  throttle("gps_ingest/ip", limit: 3000, period: 1.minute) do |req|
+    req.ip if normalized_path(req) == "/api/v1/gps" && req.post?
   end
 
   # Public lead forms (request-a-call, DSCSA assessment). Same reasoning as
   # the signup throttle: a burst of spam submissions both fills the leads
   # inbox and can flag the sending Gmail account for abuse.
   throttle("lead_forms/ip", limit: 10, period: 1.hour) do |req|
-    req.ip if %w[/request-a-call /dscsa-assessment].include?(req.path) && req.post?
+    req.ip if %w[/request-a-call /dscsa-assessment].include?(normalized_path(req)) && req.post?
   end
 
   # General backstop against basic flooding of any endpoint, independent of
@@ -80,7 +97,7 @@ class Rack::Attack
   # has its own per-token and anon throttles (see gps_ingest/*), and a
   # NAT'd fleet's combined volume would otherwise trip this per-IP limit.
   throttle("requests/ip", limit: 300, period: 5.minutes) do |req|
-    req.ip unless req.path == "/api/v1/gps" && req.post?
+    req.ip unless normalized_path(req) == "/api/v1/gps" && req.post?
   end
 
   self.throttled_responder = lambda do |request|

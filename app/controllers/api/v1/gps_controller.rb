@@ -3,6 +3,7 @@
 # device has no Devise session. See Vehicle#api_token / #api_token_matches?.
 class Api::V1::GpsController < ApplicationController
   skip_before_action :verify_authenticity_token
+  skip_before_action :enforce_two_factor
 
   # A device that buffered readings through a dead zone reports the time
   # each was actually taken. We trust `captured_at` only within a sane

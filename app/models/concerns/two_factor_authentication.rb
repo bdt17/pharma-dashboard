@@ -33,6 +33,18 @@ module TwoFactorAuthentication
 
   BACKUP_CODE_COUNT = 10
 
+  # Never serialize second-factor material. Devise already strips
+  # encrypted_password and friends from to_json / as_json; without this
+  # the decrypted otp_secret and the backup-code digests would go out with
+  # any future `render json: user` or error-tracker context dump.
+  SERIALIZATION_EXCLUDED_ATTRIBUTES = %w[otp_secret otp_backup_codes otp_consumed_timestep].freeze
+
+  def serializable_hash(options = nil)
+    options = options&.dup || {}
+    options[:except] = Array(options[:except]) + SERIALIZATION_EXCLUDED_ATTRIBUTES
+    super(options)
+  end
+
   # Clock-skew allowance (in seconds) on either side of the current
   # 30-second step, so a user whose phone clock is a little off still works.
   # 30 gives roughly a 90-second window, matching what most services allow.
@@ -140,9 +152,25 @@ module TwoFactorAuthentication
   end
 
   # Accepts either a current TOTP or an unused backup code -- what the
-  # post-password challenge screen submits.
+  # post-password challenge screen submits. Row-locked so two concurrent
+  # submissions of the same code can't both read the unconsumed state and
+  # both pass (the TOTP replay guard and backup-code removal are each a
+  # read-then-write). A success clears the failed-attempt counter below.
   def verify_second_factor(code)
-    verify_and_consume_otp!(code) || invalidate_backup_code!(code)
+    verified = with_lock { verify_and_consume_otp!(code) || invalidate_backup_code!(code) }
+    reset_failed_attempts! if verified
+    verified
+  end
+
+  # A wrong second-factor code counts toward the same Devise :lockable
+  # counter a wrong password does. The per-IP throttle alone let an
+  # attacker holding the password spread guesses across many IPs; this caps
+  # guesses per account no matter where they come from. Returns true once
+  # the account is locked, so the caller can end the session.
+  def record_failed_second_factor!
+    increment_failed_attempts
+    lock_access! if failed_attempts >= self.class.maximum_attempts && !access_locked?
+    access_locked?
   end
 
   private

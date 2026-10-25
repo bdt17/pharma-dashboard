@@ -47,4 +47,26 @@ class TwoFactor::ChallengeControllerTest < ActionDispatch::IntegrationTest
     get dashboard_path
     assert_redirected_to new_two_factor_challenge_path
   end
+
+  test "too many wrong codes lock the account and end the session" do
+    Devise.maximum_attempts.times { post two_factor_challenge_path, params: { otp_code: "000000" } }
+
+    assert_redirected_to new_user_session_path
+    assert @user.reload.access_locked?
+    get dashboard_path
+    assert_redirected_to new_user_session_path
+
+    # A correct password no longer gets back in while the lock lasts.
+    post user_session_path, params: { user: { email: @user.email, password: "password123!" } }
+    get dashboard_path
+    assert_redirected_to new_user_session_path
+  end
+
+  test "a correct code resets the wrong-code count" do
+    (Devise.maximum_attempts - 1).times { post two_factor_challenge_path, params: { otp_code: "000000" } }
+    post two_factor_challenge_path, params: { otp_code: @totp.now }
+
+    assert_redirected_to dashboard_path
+    assert_equal 0, @user.reload.failed_attempts
+  end
 end
