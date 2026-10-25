@@ -6,6 +6,13 @@
   <h1>Small Pharmacy DSCSA Exemption Ends November 27, 2026 — What Changes</h1>
   <p class="text-[13px] text-ink-faint">Last updated: <%= Date.current.strftime("%B %-d, %Y") %></p>
 
+  <% if DscsaDeadline.passed? %>
+    <p class="rounded border p-3 text-[14px]" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
+      Update: this date has now passed. The exemption ended on <strong><%= DscsaDeadline.label %></strong>,
+      and the requirements below apply to small dispensers today.
+      <%= link_to "Check where your pharmacy stands →", dscsa_assessment_path, class: "underline" %>
+    </p>
+  <% end %>
   <p>
     If your pharmacy has been operating under the FDA's small dispenser exemption from the
     Drug Supply Chain Security Act (DSCSA), the clock on that exemption runs out on

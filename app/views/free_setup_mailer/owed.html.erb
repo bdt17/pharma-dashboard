@@ -1,0 +1,13 @@
+<p style="font-size:14px;">
+  <strong><%= @organization.name %></strong> just started a subscription before the DSCSA deadline,
+  so they get White-Glove Setup free (<%= DeadlineOffer.value_label %> value).
+</p>
+<p style="font-size:14px;">Reach out and book the setup call:</p>
+<ul style="font-size:14px;">
+  <% @users.each do |user| %>
+    <li><%= mail_to user.email %> (<%= user.role %>)</li>
+  <% end %>
+</ul>
+<p style="font-size:14px;">
+  Mark it done on <%= link_to "/ops", ops_url(anchor: "free-setups") %> once the setup is finished.
+</p>

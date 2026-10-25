@@ -60,6 +60,7 @@ Rails.application.routes.draw do
   post "/ops/check-postmark", to: "ops#check_postmark", as: :ops_check_postmark
   post "/ops/call-requests/:id/handle", to: "ops#handle_call_request", as: :ops_handle_call_request
   post "/ops/organizations/:id/internal", to: "ops#set_internal", as: :ops_set_internal
+  post "/ops/organizations/:id/free-setup-done", to: "ops#complete_free_setup", as: :ops_complete_free_setup
 
   # Authenticated application pages
   get "/dashboard", to: "dashboard#index", as: :dashboard

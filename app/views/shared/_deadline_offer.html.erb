@@ -1,0 +1,11 @@
+<%# The pre-deadline free-setup offer (see DeadlineOffer). Renders nothing
+    once the DSCSA deadline has passed, so no page needs its own date check. %>
+<% if DeadlineOffer.active? %>
+  <div class="text-[13px] font-medium rounded-sm border p-3 <%= local_assigns[:class] %>" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
+    DSCSA deadline offer: start your free trial before <%= DscsaDeadline.label %> and we&rsquo;ll set up
+    your account with you &mdash; vehicles, shipments, and your first compliance packet &mdash; free
+    (<%= DeadlineOffer.value_label %> value).
+    <% days = DscsaDeadline.days_left %>
+    <span class="whitespace-nowrap"><%= days.zero? ? "Last day." : "#{pluralize(days, 'day')} left." %></span>
+  </div>
+<% end %>

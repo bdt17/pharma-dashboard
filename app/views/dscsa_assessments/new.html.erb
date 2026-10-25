@@ -9,8 +9,13 @@
       <h1 class="text-[28px] sm:text-[36px] leading-[1.15]">Where does your pharmacy actually stand?</h1>
       <p class="text-[16px] text-ink-soft">
         Eight questions, about two minutes. You&rsquo;ll get a readiness score and a plain
-        breakdown of the gaps that matter before the small-dispenser exemption ends on
-        <strong>November&nbsp;27,&nbsp;2026</strong>. No account, and nothing is shared.
+        <% if DscsaDeadline.passed? %>
+          breakdown of the gaps that matter now that the small-dispenser exemption has ended
+          (<strong>November&nbsp;27,&nbsp;2026</strong>). No account, and nothing is shared.
+        <% else %>
+          breakdown of the gaps that matter before the small-dispenser exemption ends on
+          <strong>November&nbsp;27,&nbsp;2026</strong>. No account, and nothing is shared.
+        <% end %>
       </p>
     </div>
   </div>

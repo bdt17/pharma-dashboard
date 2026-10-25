@@ -1,0 +1,9 @@
+<%= @organization.name %> just started a subscription before the DSCSA deadline, so they get White-Glove Setup free (<%= DeadlineOffer.value_label %> value).
+
+Reach out and book the setup call:
+<% @users.each do |user| %>
+- <%= user.email %> (<%= user.role %>)
+<% end %>
+
+Mark it done on /ops once the setup is finished:
+<%= ops_url(anchor: "free-setups") %>

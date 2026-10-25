@@ -4,14 +4,20 @@
   <strong><%= @assessment.score %>/100</strong> (<%= @assessment.band_label.downcase %>).
   <% if @assessment.gaps.any? %>
     Still <%= @assessment.gaps.size %> <%= @assessment.gaps.size == 1 ? "gap" : "gaps" %> between you and
-    the enhanced requirements that take effect when the small-dispenser exemption ends.
+    the enhanced requirements that <%= DscsaDeadline.passed? ? "took effect when the small-dispenser exemption ended" : "take effect when the small-dispenser exemption ends" %>.
   <% end %>
 </p>
 
 <p style="font-size:14px;">
-  <strong>November 27, 2026</strong> isn't a soft deadline -- it's when the exemption most
-  small pharmacies have been operating under simply stops applying. Whatever gets built or
-  put in place needs to be live before then, not started then.
+  <% if DscsaDeadline.passed? %>
+    <strong>November 27, 2026</strong> has passed -- the exemption most small pharmacies were
+    operating under no longer applies. Anything still missing is a live compliance gap now,
+    not a future one.
+  <% else %>
+    <strong>November 27, 2026</strong> isn't a soft deadline -- it's when the exemption most
+    small pharmacies have been operating under simply stops applying. Whatever gets built or
+    put in place needs to be live before then, not started then.
+  <% end %>
 </p>
 
 <p style="font-size:14px;">

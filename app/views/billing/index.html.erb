@@ -87,6 +87,7 @@
       <p class="text-[13px] text-ink-faint mb-3">
         Every plan starts with a <%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial — you won't be charged until it ends.
       </p>
+      <%= render "shared/deadline_offer", class: "mb-3" %>
       <% if Time.current <= StripeBilling.founding_offer_cutoff %>
         <p class="text-[13px] font-medium rounded-sm border p-3 mb-3" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
           Founding customer offer: subscribe to the monthly plan before

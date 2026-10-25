@@ -15,8 +15,11 @@ A named professional who writes the SOPs and owns the answer, instead of it
 landing on you.
 <% end %>
 
+<% if DscsaDeadline.passed? %>
+The small-dispenser exemption ended November 27, 2026, so this applies now. A
+14-day free trial is enough<% else %>
 The small-dispenser exemption ends November 27, 2026. A 14-day free trial is
-enough to see whether this closes the gap for your pharmacy -- start one:
+enough<% end %> to see whether this closes the gap for your pharmacy -- start one:
 <%= new_user_registration_url %>
 
 --

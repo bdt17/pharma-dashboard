@@ -48,6 +48,36 @@
     <% end %>
   </div>
 
+  <div id="free-setups" class="card overflow-hidden mt-5">
+    <div class="px-4 py-3 border-b border-line-soft flex items-center gap-2.5">
+      <span class="font-sans text-[13px] font-semibold">Free setups owed</span>
+      <%= status_badge.(@free_setups_owed.any? ? :warn : :ok) %>
+      <span class="text-[12px] text-ink-faint">
+        Deadline offer <%= DeadlineOffer.active? ? "running -- #{pluralize(DscsaDeadline.days_left, 'day')} left" : "ended" %>
+      </span>
+    </div>
+    <% if @free_setups_owed.any? %>
+      <table class="w-full text-[13px]">
+        <tbody>
+          <% @free_setups_owed.each do |organization| %>
+            <tr class="border-t border-line-soft first:border-t-0 align-top">
+              <td class="px-4 py-2.5 w-[130px] mono text-[12px] text-ink-faint"><%= organization.free_setup_owed_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <td class="px-4 py-2.5">
+                <div class="font-medium"><%= organization.name %></div>
+                <div class="mono text-[12px]"><%= safe_join(organization.users.map { |u| mail_to(u.email) }, ", ") %></div>
+              </td>
+              <td class="px-4 py-2.5 w-[140px] text-right">
+                <%= button_to "Mark setup done", ops_complete_free_setup_path(organization), method: :post, class: "btn btn-secondary btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="px-4 py-3 text-[12.5px] text-ink-faint">Nobody waiting on a setup call.</p>
+    <% end %>
+  </div>
+
   <div id="leads" class="card overflow-hidden mt-5">
     <div class="px-4 py-3 border-b border-line-soft flex items-center gap-2.5">
       <span class="font-sans text-[13px] font-semibold">Lead inbox</span>

@@ -7,8 +7,13 @@ Here's your DSCSA readiness score, as requested.
 <%= @assessment.score %> / 100 -- <%= @assessment.band_label %>
 
 <% if @assessment.gaps.any? %>
+<% if DscsaDeadline.passed? %>
+<%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work now that the
+small-dispenser exemption has ended (November 27, 2026):
+<% else %>
 <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work before the
 small-dispenser exemption ends on November 27, 2026:
+<% end %>
 <% @assessment.gaps.first(3).each do |g| %>
 - <%= g[:category] %>
 <% end %>

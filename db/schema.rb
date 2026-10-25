@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_25_193813) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_25_195444) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -166,6 +166,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_193813) do
     t.string "utm_source"
     t.string "utm_campaign"
     t.boolean "internal", default: false, null: false
+    t.datetime "free_setup_owed_at"
+    t.datetime "free_setup_completed_at"
     t.index ["referral_code"], name: "index_organizations_on_referral_code", unique: true
     t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true
     t.index ["verification_token"], name: "index_organizations_on_verification_token", unique: true
