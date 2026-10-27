@@ -47,7 +47,9 @@
       <%= f.hidden_field :latitude, data: { geolocate_target: "latitude" } %>
       <%= f.hidden_field :longitude, data: { geolocate_target: "longitude" } %>
       <%= f.hidden_field :location_accuracy_m, data: { geolocate_target: "accuracy" } %>
-      <p class="text-[12px] text-ink-faint mt-1" aria-live="polite">
+      <%# Fixed two-line height: the status text changes as the GPS lookup
+          resolves, and the form below (the signature pad) must not move. %>
+      <p class="text-[12px] leading-[18px] text-ink-faint mt-1 h-[36px] overflow-hidden" aria-live="polite">
         <span data-geolocate-target="status">GPS is attached automatically on a phone.</span>
         <button type="button" hidden data-geolocate-target="retry" data-action="geolocate#locate" class="text-accent-600 hover:text-accent-700 ml-1">Retry</button>
       </p>

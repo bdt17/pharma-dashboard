@@ -5,6 +5,14 @@ require "application_system_test_case"
 # any browser -- while every other system test stayed green, because none of
 # them needed JavaScript.
 class JavascriptBootTest < ApplicationSystemTestCase
+  # The custody form asks for the device location on load; give the browser
+  # a fixed fix so the lookup resolves at once instead of hanging on a
+  # permission prompt headless Chrome never answers.
+  def fake_gps
+    page.driver.browser.execute_cdp("Browser.grantPermissions", permissions: [ "geolocation" ])
+    page.driver.browser.execute_cdp("Emulation.setGeolocationOverride", latitude: 33.448376, longitude: -112.074036, accuracy: 10)
+  end
+
   test "Turbo and Stimulus boot on a page" do
     visit root_path
 
@@ -25,7 +33,9 @@ class JavascriptBootTest < ApplicationSystemTestCase
     click_on "Sign in"
     assert_selector "h1", text: "Dashboard"
 
+    fake_gps
     visit new_batch_custody_log_path(batch)
+    assert_text "Location attached"
     find("label", text: "Delivered").click
     fill_in "Handler name", with: "Jane Doe"
     fill_in "Location", with: "Phoenix, AZ"
@@ -52,6 +62,7 @@ class JavascriptBootTest < ApplicationSystemTestCase
     batch = Batch.create!(lot_number: "LOT-DRV-1", name: "Insulin glargine", vehicle: vehicle, organization: organization, driver: driver)
 
     page.driver.browser.manage.window.resize_to(390, 844)
+    fake_gps
     visit new_user_session_path
     fill_in "Email", with: "driver@example.com"
     fill_in "Password", with: password
@@ -62,6 +73,7 @@ class JavascriptBootTest < ApplicationSystemTestCase
     click_on "Record pickup"
 
     assert_selector "h1", text: "Record a custody event"
+    assert_text "Location attached"
     fill_in "Location", with: "Northwind Pharmacy, 12 Main St"
     fill_in "Product temperature °C (optional)", with: "4.4"
     click_on "Record event"
@@ -71,6 +83,7 @@ class JavascriptBootTest < ApplicationSystemTestCase
     assert_equal "pickup", log.action_type
     assert_equal driver, log.recorded_by
     assert_equal BigDecimal("4.4"), log.temperature_celsius
+    assert_equal BigDecimal("33.448376"), log.latitude
   ensure
     page.driver.browser.manage.window.resize_to(1400, 1400)
   end
