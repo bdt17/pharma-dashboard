@@ -24,6 +24,7 @@ was a guess rather than a certainty.
 <% end %>
 
 See the full breakdown: <%= dscsa_assessment_result_url(@assessment.token) %>
+Download your action plan (PDF): <%= dscsa_assessment_report_url(@assessment.token) %>
 
 <% if Time.current <= StripeBilling.founding_offer_cutoff %>
 Founding customer offer: subscribe to any monthly plan before

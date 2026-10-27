@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   get  "/dscsa-assessment", to: "dscsa_assessments#new", as: :dscsa_assessment
   post "/dscsa-assessment", to: "dscsa_assessments#create"
   get  "/dscsa-assessment/:token", to: "dscsa_assessments#result", as: :dscsa_assessment_result
+  get  "/dscsa-assessment/:token/report.pdf", to: "dscsa_assessments#report", as: :dscsa_assessment_report, format: false
 
   # Inbound "request a call" leads from the marketing pages
   get  "/request-a-call", to: "call_requests#new", as: :request_a_call

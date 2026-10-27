@@ -28,6 +28,15 @@ class DscsaAssessmentsController < ApplicationController
     @assessment = DscsaAssessment.find_by!(token: params[:token])
   end
 
+  # The printable readiness report -- same unguessable token as the result
+  # page, so anyone with the result link can download it.
+  def report
+    assessment = DscsaAssessment.find_by!(token: params[:token])
+    report = DscsaReadinessReport.new(assessment, result_url: dscsa_assessment_result_url(assessment))
+
+    send_data report.generate, filename: report.filename, type: "application/pdf", disposition: "attachment"
+  end
+
   private
 
   # There is no result page without a saved assessment, so a bot is sent

@@ -39,6 +39,24 @@ class DscsaAssessmentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "the result page links to a downloadable PDF action plan" do
+    post dscsa_assessment_url, params: full_answers(default: "yes", custody: "no").merge(pharmacy_name: "Lead Rx")
+    assessment = DscsaAssessment.last
+    follow_redirect!
+    assert_select "a[href=?]", dscsa_assessment_report_path(assessment.token), text: /action plan/
+
+    get dscsa_assessment_report_url(assessment.token)
+    assert_response :success
+    assert_equal "application/pdf", response.media_type
+    assert_match(/attachment; filename="dscsa-readiness-lead-rx-/, response.headers["Content-Disposition"])
+    assert response.body.start_with?("%PDF")
+  end
+
+  test "the PDF report 404s on an unknown token" do
+    get dscsa_assessment_report_url("does-not-exist")
+    assert_response :not_found
+  end
+
   test "email captured on the assessment prefills the call form" do
     post dscsa_assessment_url, params: full_answers(default: "no").merge(email: "lead@example.com", pharmacy_name: "Lead Rx")
     follow_redirect!
