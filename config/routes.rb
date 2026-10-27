@@ -70,6 +70,8 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index", as: :dashboard
   get "/enterprise/dashboard", to: "dashboard#index"
   get "/gps", to: "home#gps"
+  # Driver mode home: shipments still out, one tap to record pickup/delivery.
+  get "/deliveries", to: "deliveries#index", as: :deliveries
   # Self-serve vehicle registration -- see VehiclesController. index/show
   # deliberately excluded: /gps already lists the fleet, and the JSON
   # index/show live under api/v1 below.

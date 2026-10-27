@@ -16,8 +16,13 @@ class HomeController < ApplicationController
   # Tailwind, no importmap/Stimulus, no nav, and critically no "Sign up"
   # link, only "Sign in". Rendering the real template instead fixes all of
   # that for free.
+  # Where Devise sends everyone after sign-in. A driver's job is the
+  # shipments in their hands, so they land on those, not the fleet dashboard.
   def index
-    redirect_to dashboard_path if user_signed_in?
+    return unless user_signed_in?
+
+    flash.keep # a sign-in or welcome notice survives this extra hop
+    redirect_to(current_user.driver? ? deliveries_path : dashboard_path)
   end
 
   def login

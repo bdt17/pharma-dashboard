@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_27_182346) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_27_183158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -108,7 +108,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_182346) do
     t.jsonb "signature_data"
     t.datetime "timestamp"
     t.datetime "updated_at", null: false
+    t.bigint "recorded_by_id"
+    t.decimal "latitude", precision: 9, scale: 6
+    t.decimal "longitude", precision: 9, scale: 6
+    t.integer "location_accuracy_m"
+    t.decimal "temperature_celsius", precision: 4, scale: 1
     t.index ["batch_id"], name: "index_custody_logs_on_batch_id"
+    t.index ["recorded_by_id"], name: "index_custody_logs_on_recorded_by_id"
   end
 
   create_table "dscsa_assessments", force: :cascade do |t|
@@ -503,6 +509,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_182346) do
   add_foreign_key "compliance_reports", "organizations"
   add_foreign_key "compliance_reports", "users", column: "generated_by_id"
   add_foreign_key "custody_logs", "batches"
+  add_foreign_key "custody_logs", "users", column: "recorded_by_id"
   add_foreign_key "excursion_events", "batches"
   add_foreign_key "excursion_events", "vehicles"
   add_foreign_key "invitations", "organizations"

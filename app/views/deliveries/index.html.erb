@@ -1,0 +1,50 @@
+<% content_for :title, "Deliveries — Pharma Transport" %>
+<% content_for :crumb, "Deliveries" %>
+
+<div class="p-4 md:p-7 max-w-2xl">
+  <div class="flex flex-col gap-1 mb-5">
+    <h1 class="text-[24px]"><%= current_user.driver? ? "My deliveries" : "Out for delivery" %></h1>
+    <span class="text-[13px] text-ink-faint">
+      <%= current_user.driver? ? "Shipments assigned to you that aren't delivered yet" : "Every active shipment in #{current_organization.name}" %>
+    </span>
+  </div>
+
+  <% if @batches.empty? %>
+    <div class="card p-6 text-[14px] text-ink-soft">
+      <%= current_user.driver? ? "Nothing assigned to you right now. Your dispatcher assigns shipments to you when they create them." : "No active shipments." %>
+    </div>
+  <% else %>
+    <ul class="flex flex-col gap-3">
+      <% @batches.each do |batch| %>
+        <% last = batch.custody_logs.last %>
+        <% picked_up = batch.custody_logs.any? { |log| log.action_type == "pickup" } %>
+        <li class="card p-4 flex flex-col gap-3">
+          <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
+              <div class="font-semibold text-[15px] truncate"><%= batch.name.presence || "Lot #{batch.lot_number}" %></div>
+              <div class="text-[12.5px] text-ink-faint">
+                Lot <span class="mono"><%= batch.lot_number %></span> · <%= batch.vehicle.name %>
+                <% unless current_user.driver? %>· <%= batch.driver ? (batch.driver.name.presence || batch.driver.email) : "unassigned" %><% end %>
+              </div>
+            </div>
+            <span class="badge shrink-0"><%= last ? last.action_type.humanize : "Not picked up" %></span>
+          </div>
+          <% if last %>
+            <div class="text-[12px] text-ink-faint">Last: <%= last.action_type.humanize.downcase %> at <%= last.location %>, <%= time_ago_in_words(last.timestamp) %> ago</div>
+          <% end %>
+          <% if policy(batch).record_custody? %>
+            <div class="flex flex-wrap gap-2">
+              <% if picked_up %>
+                <%= link_to "Record delivery", new_batch_custody_log_path(batch, action_type: "delivered"), class: "btn btn-primary flex-1 text-center" %>
+                <%= link_to "Other event", new_batch_custody_log_path(batch, action_type: "handoff"), class: "btn btn-secondary" %>
+              <% else %>
+                <%= link_to "Record pickup", new_batch_custody_log_path(batch, action_type: "pickup"), class: "btn btn-primary flex-1 text-center" %>
+              <% end %>
+              <%= link_to "History", batch_custody_logs_path(batch), class: "btn btn-secondary" %>
+            </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

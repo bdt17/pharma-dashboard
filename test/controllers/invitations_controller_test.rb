@@ -35,7 +35,7 @@ class InvitationsControllerTest < ActionDispatch::IntegrationTest
     assert_difference -> { @organization.users.count }, 1 do
       post invitation_url(token: @token), params: accept_params
     end
-    assert_redirected_to dashboard_path
+    assert_redirected_to root_path
 
     member = User.find_by(email: "new.driver@example.com")
     assert_equal "driver", member.role
@@ -43,7 +43,7 @@ class InvitationsControllerTest < ActionDispatch::IntegrationTest
     assert AuditLog.exists?(event: "team_invitation_accepted", user: member)
 
     follow_redirect!
-    assert_response :success
+    assert_redirected_to deliveries_path
 
     sign_out member
     post invitation_url(token: @token), params: accept_params

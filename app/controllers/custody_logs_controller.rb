@@ -2,6 +2,10 @@ class CustodyLogsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_batch
   before_action :set_custody_log, only: [ :show ]
+  # The one page that may ask for the device's location: driver mode
+  # attaches a GPS fix to the event. Every other page keeps the app-wide
+  # geolocation=() from config/initializers/content_security_policy.rb.
+  after_action :allow_geolocation, only: %i[new create]
 
   def index
     authorize @batch, :show?
@@ -14,12 +18,14 @@ class CustodyLogsController < ApplicationController
 
   def new
     authorize @batch, :record_custody?
-    @custody_log = @batch.custody_logs.build
+    action_type = params[:action_type].presence_in(CustodyLog::ACTION_TYPES) || default_action_type
+    @custody_log = @batch.custody_logs.build(action_type: action_type, handler_name: current_user.name.presence || current_user.email)
   end
 
   def create
     authorize @batch, :record_custody?
     @custody_log = @batch.custody_logs.build(custody_log_params)
+    @custody_log.recorded_by = current_user
     stamp_signature_metadata
 
     if @custody_log.save
@@ -54,6 +60,11 @@ class CustodyLogsController < ApplicationController
           handler_name: @custody_log.handler_name,
           location: @custody_log.location,
           signed: @custody_log.signed?,
+          temperature_celsius: @custody_log.temperature_celsius&.to_f,
+          latitude: @custody_log.latitude&.to_f,
+          longitude: @custody_log.longitude&.to_f,
+          location_accuracy_m: @custody_log.location_accuracy_m,
+          recorded_by: @custody_log.recorded_by&.email,
           recorded_at: @custody_log.timestamp&.iso8601
         }
       )
@@ -77,8 +88,19 @@ class CustodyLogsController < ApplicationController
   def custody_log_params
     params.require(:custody_log).permit(
       :action_type, :handler_name, :location, :condition_notes,
+      :latitude, :longitude, :location_accuracy_m, :temperature_celsius,
       signature_data: [ :image, :signer_name, :signer_role ]
     )
+  end
+
+  # Pickup first, then delivery once something has been picked up --
+  # what a driver opening this page almost always means to record next.
+  def default_action_type
+    @batch.custody_logs.exists?(action_type: "pickup") ? "delivered" : "pickup"
+  end
+
+  def allow_geolocation
+    response.headers["Permissions-Policy"] = response.headers["Permissions-Policy"].to_s.sub("geolocation=()", "geolocation=(self)")
   end
 
   # signed_at/ip_address are recorded server-side, not trusted from the

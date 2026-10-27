@@ -30,7 +30,7 @@ class InvitationsController < ApplicationController
       AuditLog.record!(event: "team_invitation_accepted", user: @user, ip_address: request.remote_ip,
                        data: { email: @user.email, role: @user.role, invited_by: @invitation.invited_by.email })
       sign_in(@user)
-      redirect_to dashboard_path, notice: "Welcome to #{@invitation.organization.name}."
+      redirect_to root_path, notice: "Welcome to #{@invitation.organization.name}."
     else
       @user.password = @user.password_confirmation = nil
       render :show, status: :unprocessable_content
