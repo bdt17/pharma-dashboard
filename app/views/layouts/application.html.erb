@@ -10,6 +10,7 @@
   <meta charset="UTF-8">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <%= yield :head %>
   <%# Open Graph / Twitter Card tags -- without these, any link to the site
       shared in Slack, email, or chat renders as a bare URL with no preview.
       og.svg is a 1200x630 branded card; SVG previews render on Slack,

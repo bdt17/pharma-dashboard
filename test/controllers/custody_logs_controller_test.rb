@@ -202,6 +202,8 @@ class CustodyLogsControllerTest < ActionDispatch::IntegrationTest
     assert_match "geolocation=(self)", response.headers["Permissions-Policy"]
     assert_match "camera=()", response.headers["Permissions-Policy"]
 
+    assert_select "meta[name=turbo-visit-control][content=reload]"
+
     get batch_custody_logs_url(@batch)
     assert_match "geolocation=()", response.headers["Permissions-Policy"]
   end

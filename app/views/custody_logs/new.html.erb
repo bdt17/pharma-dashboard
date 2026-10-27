@@ -1,5 +1,10 @@
 <% content_for :title, "Record a custody event — Pharma Transport" %>
 <% content_for :crumb, "Record a custody event" %>
+<%# Always a full page load, never a Turbo swap: the browser applies this
+    page's Permissions-Policy (geolocation allowed) only when it loads the
+    document itself. Reached by a Turbo link, the previous page's
+    geolocation=() would still be in force and GPS would be blocked. %>
+<% turbo_page_requires_reload %>
 
 <div class="p-4 md:p-7 max-w-lg">
   <div class="flex flex-col gap-1 mb-6">
