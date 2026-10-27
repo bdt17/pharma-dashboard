@@ -62,4 +62,19 @@ class ApplicationMailDeliveryJobTest < ActiveJob::TestCase
       ApplicationMailDeliveryJob.new.perform("CallRequestMailer", "not_a_real_mailer_method", "deliver_now", args: [])
     end
   end
+
+  test "enqueueing a mail never writes its arguments (reset tokens, addresses) to the log" do
+    user = User.create!(email: "reset-me@example.com", password: "password123!", organization: Organization.create!(name: "Log Rx"))
+    io = StringIO.new
+    previous_logger = ActiveJob::Base.logger
+    ActiveJob::Base.logger = ActiveSupport::Logger.new(io)
+
+    Devise::Mailer.reset_password_instructions(user, "RAW-RESET-TOKEN-123").deliver_later
+
+    assert_match "ApplicationMailDeliveryJob", io.string
+    assert_no_match "RAW-RESET-TOKEN-123", io.string
+    assert_no_match "reset-me@example.com", io.string
+  ensure
+    ActiveJob::Base.logger = previous_logger
+  end
 end
