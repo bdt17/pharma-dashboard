@@ -60,9 +60,6 @@ class CustodyLog < ApplicationRecord
     location_accuracy_m ? "#{label} (±#{location_accuracy_m} m)" : label
   end
 
-  def map_url
-    "https://www.openstreetmap.org/?mlat=#{latitude}&mlon=#{longitude}#map=17/#{latitude}/#{longitude}" if gps?
-  end
 
   # 2-8 °C is the refrigerated range nearly all cold-chain product in a
   # pharmacy's deliveries is labelled for; a reading outside it is flagged

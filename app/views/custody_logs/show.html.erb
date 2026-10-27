@@ -26,7 +26,7 @@
       <dt class="text-ink-faint">GPS</dt>
       <dd class="col-span-2 mono text-[13px]">
         <%= @custody_log.gps_label %>
-        <%= link_to "View map", @custody_log.map_url, target: "_blank", rel: "noopener", class: "font-sans ml-1" %>
+        <%= link_to "View map", "https://www.openstreetmap.org/?mlat=#{@custody_log.latitude.to_f}&mlon=#{@custody_log.longitude.to_f}#map=17/#{@custody_log.latitude.to_f}/#{@custody_log.longitude.to_f}", target: "_blank", rel: "noopener", class: "font-sans ml-1" %>
       </dd>
     <% end %>
 

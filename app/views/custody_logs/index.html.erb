@@ -48,7 +48,7 @@
               <td class="px-4 py-2.5 text-ink-soft"><%= log.handler_name %></td>
               <td class="px-4 py-2.5 text-ink-soft">
                 <%= log.location %>
-                <% if log.gps? %><%= link_to "map", log.map_url, target: "_blank", rel: "noopener", class: "text-[12px] ml-1" %><% end %>
+                <% if log.gps? %><%= link_to "map", "https://www.openstreetmap.org/?mlat=#{log.latitude.to_f}&mlon=#{log.longitude.to_f}#map=17/#{log.latitude.to_f}/#{log.longitude.to_f}", target: "_blank", rel: "noopener", class: "text-[12px] ml-1" %><% end %>
               </td>
               <td class="px-4 py-2.5 mono <%= "text-[#b42318] font-semibold" if log.temperature_outside_refrigerated_range? %>">
                 <%= log.temperature_celsius ? "#{log.temperature_celsius} °C" : "—" %>
