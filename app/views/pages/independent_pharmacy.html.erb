@@ -1,0 +1,132 @@
+<% content_for :full_bleed, "1" %>
+<% content_for :title, "For Independent Pharmacies — Pharma Transport" %>
+<% content_for :meta_description, "Mail-order can ship cheaper. It can't hand a refrigerated medication to a patient in person with a signed, temperature-verified record. Pharma Transport makes your local delivery provable." %>
+
+<%# Comparison copy says "mail-order pharmacies", never a brand name --
+    naming a competitor invites trademark complaints and gets paid-search
+    ads disapproved. The Amazon framing lives in 1:1 outreach only. %>
+
+<%
+  assessment_link = dscsa_assessment_path
+  call_link = request_a_call_path(topic: "independent_pharmacy")
+%>
+
+<section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
+  <div class="mx-auto max-w-6xl px-6 py-[76px]">
+    <div class="flex flex-col gap-5 max-w-[58ch]">
+      <span class="eyebrow">For independent pharmacies</span>
+      <h1 class="text-[30px] sm:text-[44px] leading-[1.1]">Compete with mail-order: prove the care they can&rsquo;t.</h1>
+      <p class="text-[17px] text-ink-soft">
+        Mail-order can ship prescriptions cheaper than you. What it can&rsquo;t do is hand a
+        refrigerated medication to a patient in person, with a signed, temperature-verified
+        record of every step. That local handoff is your edge, and
+        <% if DscsaDeadline.passed? %>
+          since the DSCSA small-dispenser exemption ended on <%= DscsaDeadline.label %>, you&rsquo;re
+          required to document it.
+        <% else %>
+          once the DSCSA small-dispenser exemption ends on <%= DscsaDeadline.label %>, you&rsquo;ll be
+          required to document it.
+        <% end %>
+        Pharma Transport does that automatically, starting at $<%= @starter_monthly %>/month.
+      </p>
+      <div class="flex flex-wrap gap-3 pt-1">
+        <%= link_to "Start free trial", new_user_registration_path, class: "btn btn-primary" %>
+        <a class="btn btn-secondary" href="<%= assessment_link %>">Take the free readiness check</a>
+      </div>
+      <p class="text-[12.5px] text-ink-faint"><%= StripeBilling::TRIAL_PERIOD_DAYS %>-day free trial. Priced per compliance packet, not per seat.</p>
+      <%= render "shared/deadline_offer" %>
+    </div>
+  </div>
+</section>
+
+<%# Reasons %>
+<section id="why" class="mx-auto max-w-6xl px-6 py-[72px]">
+  <div class="flex flex-col gap-3 max-w-[52ch] mb-10">
+    <span class="eyebrow">Why local pharmacies run on it</span>
+    <h2 class="text-[26px] sm:text-[28px]">Every reason is something the product does today.</h2>
+  </div>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <% [
+      ["Your local delivery, made provable.",
+       "Mail-order competes on convenience. You win on a human handoff. Every delivery becomes a signed, timestamped custody record &mdash; proof of care a mailbox can&rsquo;t produce.",
+       "Hash-chained custody log &middot; drawn signature"],
+      ["Cold chain is mail-order&rsquo;s weak spot.",
+       "Refrigerated medications sitting in a mailbox worry patients and prescribers. Show that the insulin never got warm, and what you did if a shipment ever left range.",
+       "Continuous 2&ndash;8&nbsp;&deg;C monitoring &middot; SMS excursion alerts"],
+      ["The chains have a compliance department. Now you do too.",
+       "Large chains have teams for DSCSA. You have one stretched pharmacist. Pharma Transport produces the audit-ready paperwork for every shipment, and a fractional compliance officer is there for the rest.",
+       "Compliance packet PDF &middot; optional retainer"],
+      ["Your vendor will never become your competitor.",
+       "We don&rsquo;t run a pharmacy and never will. Your patients, delivery data, and records stay yours.",
+       "Audit log CSV export &middot; packet PDFs &middot; no lock-in"],
+      ["Built for a three-person pharmacy.",
+       "Priced on compliance packets, not per truck or per seat. A free trial, and you talk to the founder &mdash; not a ticket queue.",
+       "Starter $#{@starter_monthly}/mo &middot; #{SubscriptionPlan::STARTER.packet_allowance} packets included"],
+      ["A trust badge for your own website.",
+       "Show patients and trading partners a &ldquo;DSCSA compliance verified&rdquo; badge that links to a live verification page.",
+       "Embeddable badge &middot; public verify page"],
+    ].each do |title, body, proof| %>
+      <div class="card p-6 flex flex-col gap-2">
+        <h3 class="font-sans text-[15px] font-semibold"><%== title %></h3>
+        <p class="text-[13.5px] text-ink-soft"><%== body %></p>
+        <p class="text-[12px] text-ink-faint mt-auto pt-2"><%== proof %></p>
+      </div>
+    <% end %>
+  </div>
+  <p class="text-[13.5px] text-ink-soft mt-8 max-w-[70ch]">
+    <strong>Security that&rsquo;s real, not marketing:</strong> two-factor login is mandatory for
+    pharmacists and admins, login secrets and device keys are encrypted, and every action goes into
+    an audit log an inspector can read. <%= link_to "How it&rsquo;s built".html_safe, security_path, class: "underline" %>.
+  </p>
+</section>
+
+<%# Carrier %>
+<section class="bg-surface border-y border-line">
+  <div class="mx-auto max-w-6xl px-6 py-[64px] grid gap-8 md:grid-cols-[0.9fr_1.1fr] items-start">
+    <div class="flex flex-col gap-3">
+      <span class="eyebrow">Already use a courier?</span>
+      <h2 class="text-[24px] sm:text-[26px]">Tracking scans aren&rsquo;t a custody record.</h2>
+    </div>
+    <p class="text-[15px] text-ink-soft">
+      A general carrier tells you where a package was scanned. It doesn&rsquo;t record who handed it to
+      whom, a signature at the door, the temperature in transit, or a compliance packet an inspector will
+      accept. Use your own driver or any courier &mdash; Pharma Transport is the record that travels with
+      the box.
+    </p>
+  </div>
+</section>
+
+<%# Objections %>
+<section class="mx-auto max-w-6xl px-6 py-[76px]">
+  <div class="flex flex-col gap-2 mb-8">
+    <span class="eyebrow">Questions</span>
+    <h2 class="text-[26px]">What independents ask us</h2>
+  </div>
+  <div class="grid gap-6 md:grid-cols-2 md:gap-x-10">
+    <% [
+      ["We&rsquo;re too small to need this.",
+       "The exemption small pharmacies have been working under was written for pharmacies your size, and #{DscsaDeadline.passed? ? "it ended on #{DscsaDeadline.label}" : "it ends on #{DscsaDeadline.label}"}. Small pharmacies are exactly who this is for."],
+      ["Our wholesaler already has a portal.",
+       "That covers the product until it reaches you. Pharma Transport covers the last mile: custody, temperature, and a signature all the way to the patient&rsquo;s door."],
+      ["What if you go out of business?",
+       "Your audit log exports as CSV and every shipment&rsquo;s compliance packet downloads as a PDF, any time. You&rsquo;re never locked in."],
+      ["We can&rsquo;t afford another subscription.",
+       "One avoided inspection finding, or one refrigerated order that doesn&rsquo;t spoil, covers a long stretch of Starter. The #{StripeBilling::TRIAL_PERIOD_DAYS}-day trial is free."],
+    ].each do |q, a| %>
+      <div class="flex flex-col gap-1.5">
+        <h3 class="font-sans text-[15px] font-semibold"><%== q %></h3>
+        <p class="text-[13.5px] text-ink-soft"><%== a %></p>
+      </div>
+    <% end %>
+  </div>
+</section>
+
+<section class="bg-brand-700 text-white">
+  <div class="mx-auto max-w-6xl px-6 py-[68px] flex flex-wrap items-center justify-between gap-6">
+    <h2 class="text-[24px] sm:text-[26px] text-white max-w-[30ch]">Your delivery is already better. Now make it provable.</h2>
+    <div class="flex flex-wrap gap-3">
+      <%= link_to "Start free trial", new_user_registration_path, class: "btn", style: "background:#fff;color:#1f3a53;" %>
+      <a class="btn btn-secondary" style="border-color:rgba(255,255,255,0.3);color:#fff;background:transparent;" href="<%= call_link %>">Talk to the founder</a>
+    </div>
+  </div>
+</section>

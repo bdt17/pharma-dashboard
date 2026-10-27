@@ -95,4 +95,50 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
 
     assert_match "$#{SubscriptionPlan::STARTER.monthly_dollars}/month", response.body
   end
+
+  test "the independent pharmacy page is public and renders" do
+    get independent_pharmacy_url
+    assert_response :success
+    assert_select "h1", text: /Compete with mail-order/
+    assert_select "a[href=?]", new_user_registration_path, text: /Start free trial/
+    assert_select "a[href=?]", dscsa_assessment_path
+    assert_select "a[href=?]", request_a_call_path(topic: "independent_pharmacy")
+  end
+
+  test "the independent pharmacy page never names a competitor brand" do
+    get independent_pharmacy_url
+    assert_no_match(/amazon/i, response.body)
+  end
+
+  test "the independent pharmacy page shows the live Starter price" do
+    plans = [ { id: "price_s", product_name: "Starter", amount: 250.0, currency: "usd", interval: "month", tier: "starter" } ]
+
+    StripeBilling.stub :available_plans, plans do
+      get independent_pharmacy_url
+    end
+
+    assert_match "$250/month", response.body
+  end
+
+  test "the independent pharmacy page carries the deadline offer only before the deadline" do
+    travel_to Time.utc(2026, 11, 1, 15) do
+      get independent_pharmacy_url
+      assert_match "DSCSA deadline offer", response.body
+      assert_match "exemption ends on", response.body
+    end
+
+    travel_to Time.utc(2026, 12, 1, 15) do
+      get independent_pharmacy_url
+      assert_no_match "DSCSA deadline offer", response.body
+      assert_match "exemption ended on", response.body
+    end
+  end
+
+  test "home, footer, and the DSCSA 2026 page all link to the independent pharmacy page" do
+    get root_url
+    assert_select "a[href=?]", independent_pharmacy_path, minimum: 2
+
+    get dscsa_2026_url
+    assert_select "a[href=?]", independent_pharmacy_path, minimum: 2
+  end
 end

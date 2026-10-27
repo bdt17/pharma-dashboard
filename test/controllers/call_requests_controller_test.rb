@@ -28,6 +28,13 @@ class CallRequestsControllerTest < ActionDispatch::IntegrationTest
     assert_select "input[type=hidden][name=?][value=?]", "call_request[topic]", "compliance_officer"
   end
 
+  test "the independent pharmacy topic keeps its source and its own intro" do
+    get request_a_call_url(topic: "independent_pharmacy")
+    assert_response :success
+    assert_select "input[type=hidden][name=?][value=?]", "call_request[topic]", "independent_pharmacy"
+    assert_select ".eyebrow", text: /For independent pharmacies/
+  end
+
   test "an unknown topic falls back to general" do
     get request_a_call_url(topic: "../etc/passwd")
     assert_response :success

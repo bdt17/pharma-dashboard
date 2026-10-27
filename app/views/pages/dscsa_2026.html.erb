@@ -95,6 +95,23 @@
   </div>
 </section>
 
+<%# Independents %>
+<section class="mx-auto max-w-6xl px-6 pt-[72px]">
+  <div class="card p-7 grid gap-6 md:grid-cols-[1.2fr_0.8fr] items-center">
+    <div class="flex flex-col gap-2">
+      <span class="eyebrow">Why local pharmacies come out ahead</span>
+      <h2 class="text-[22px] sm:text-[24px]">Mail-order can&rsquo;t document a handoff it never makes.</h2>
+      <p class="text-[14px] text-ink-soft">
+        The same records DSCSA asks for &mdash; signed custody, verified cold chain &mdash; are proof of
+        the in-person care mail-order can&rsquo;t offer. Compliance becomes your selling point.
+      </p>
+    </div>
+    <div class="md:justify-self-end">
+      <%= link_to "For independent pharmacies", independent_pharmacy_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</section>
+
 <% if Time.current <= StripeBilling.founding_offer_cutoff %>
   <section class="mx-auto max-w-6xl px-6 pt-14">
     <div class="rounded-sm border px-5 py-4 text-[14px] text-center" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
