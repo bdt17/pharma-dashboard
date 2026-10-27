@@ -1,6 +1,7 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
   def build_user(role: "admin")
     organization = Organization.create!(name: "Acme Pharma")
     User.new(
@@ -68,16 +69,24 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.access_locked?
   end
 
-  test "a failed devise notification send is logged and reported, not raised" do
+  test "devise notifications are delivered in the background, not inside the request" do
     user = build_user
     user.save!
 
-    # send_devise_notification's super (Devise::Models::Authenticatable)
-    # calls devise_mailer.send(notification, self, *args).deliver_now --
-    # a plain double standing in for the real Mail::Message/MessageDelivery
-    # Delegator, same reasoning as ApplicationMailDeliveryJobTest.
+    assert_enqueued_jobs 1 do
+      user.send(:send_devise_notification, :reset_password_instructions, "token")
+    end
+  end
+
+  test "a failure to enqueue a devise notification is logged and reported, not raised" do
+    user = build_user
+    user.save!
+
+    # A plain double standing in for the MessageDelivery, same reasoning as
+    # ApplicationMailDeliveryJobTest. Delivery errors themselves surface in
+    # ApplicationMailDeliveryJob; this covers the enqueue failing.
     failing_delivery = Object.new
-    def failing_delivery.deliver_now
+    def failing_delivery.deliver_later
       raise Net::SMTPAuthenticationError, "535 authentication failed"
     end
 

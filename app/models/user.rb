@@ -68,8 +68,13 @@ class User < ApplicationRecord
   # invisible in production. Rescue explicitly so the failure is always
   # logged, regardless of that global flag, without ever breaking the
   # request that triggered it.
+  #
+  # Delivered in the background: a Postmark round-trip inside the request
+  # both blocked a Puma thread and let response timing reveal whether an
+  # address has an account (paranoid mode only equalizes the message).
+  # ApplicationMailDeliveryJob logs and reports failures from there.
   def send_devise_notification(notification, *args)
-    super
+    devise_mailer.send(notification, self, *args).deliver_later
   rescue StandardError => e
     Rails.logger.error(
       "[DeviseMailer] Failed to send '#{notification}' to #{email.inspect}: #{e.class}: #{e.message}"

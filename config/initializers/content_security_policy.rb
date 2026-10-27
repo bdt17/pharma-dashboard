@@ -10,7 +10,15 @@
 # trade-off. form-action lists Stripe because Chrome applies it to the
 # redirect after the Checkout / Billing Portal form posts.
 Rails.application.configure do
-  google_ads = %w[https://www.googletagmanager.com https://www.googleadservices.com https://www.google.com https://googleads.g.doubleclick.net]
+  # Google's hosts are well-known CSP bypass gadgets (JSONP endpoints, any
+  # GTM container), so they're allowed only once the Ads tag is actually
+  # configured -- until then the policy is just 'self' plus the nonce.
+  google_ads =
+    if ENV["GOOGLE_ADS_CONVERSION_ID"].present?
+      %w[https://www.googletagmanager.com https://www.googleadservices.com https://www.google.com https://googleads.g.doubleclick.net]
+    else
+      []
+    end
 
   config.content_security_policy do |policy|
     policy.default_src :self
@@ -23,7 +31,7 @@ Rails.application.configure do
     policy.font_src    :self, "https://fonts.gstatic.com"
     policy.img_src     :self, :data, :https
     policy.connect_src :self, *google_ads
-    policy.frame_src   "https://www.googletagmanager.com"
+    policy.frame_src   google_ads.any? ? "https://www.googletagmanager.com" : :none
   end
 
   config.content_security_policy_nonce_generator = ->(_request) { SecureRandom.base64(16) }

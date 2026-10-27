@@ -20,11 +20,17 @@ class BatchPolicyTest < ActiveSupport::TestCase
     assert_not BatchPolicy.new(@admin_b, @batch).show?
   end
 
-  test "the assigned driver can always view their own delivery, regardless of organization" do
-    out_of_org_driver = User.create!(email: "driver-b@example.com", password: "password123!", organization: @org_b, role: "driver")
-    @batch.update!(driver: out_of_org_driver)
+  test "the assigned driver can view their own delivery" do
+    assert_equal @driver_a, @batch.driver
+    assert BatchPolicy.new(@driver_a, @batch).show?
+  end
 
-    assert BatchPolicy.new(out_of_org_driver, @batch).show?
+  test "a driver from another organization can't view a batch even if assigned to it" do
+    out_of_org_driver = User.create!(email: "driver-b@example.com", password: "password123!", organization: @org_b, role: "driver")
+    @batch.update_column(:driver_id, out_of_org_driver.id)
+
+    assert_not BatchPolicy.new(out_of_org_driver, @batch.reload).show?
+    assert_not BatchPolicy.new(out_of_org_driver, @batch).record_custody?
   end
 
   test "policy scope only returns batches for the user's own organization" do

@@ -58,4 +58,26 @@ class CloudflareClientIpTest < ActionDispatch::IntegrationTest
     env = Rack::MockRequest.env_for("/", "REMOTE_ADDR" => "10.0.0.5", "action_dispatch.remote_ip" => CLIENT)
     assert_equal CLIENT, Rack::Attack::Request.new(env).ip
   end
+
+  test "Google's script hosts aren't allowed until the Ads tag is configured" do
+    get root_path
+    assert_no_match "googletagmanager", response.headers["Content-Security-Policy"]
+  end
+
+  test "secrets and personal data are filtered from logged parameters" do
+    filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters)
+    filtered = filter.filter(
+      "user" => { "email" => "a@b.co", "password" => "hunter2hunter2", "current_password" => "x" },
+      "otp_code" => "123456", "reset_password_token" => "t", "imei" => "1", "phone" => "+1",
+      "custody_log" => { "signature_data" => { "image" => "data:..." } }, "lot_number" => "LOT-1"
+    )
+    assert_equal "[FILTERED]", filtered["user"]["password"]
+    assert_equal "[FILTERED]", filtered["user"]["current_password"]
+    assert_equal "[FILTERED]", filtered["user"]["email"]
+    assert_equal "[FILTERED]", filtered["otp_code"]
+    assert_equal "[FILTERED]", filtered["reset_password_token"]
+    assert_equal "[FILTERED]", filtered["imei"]
+    assert_equal "[FILTERED]", filtered["custody_log"]["signature_data"]
+    assert_equal "LOT-1", filtered["lot_number"]
+  end
 end

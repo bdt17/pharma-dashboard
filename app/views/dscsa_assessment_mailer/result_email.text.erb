@@ -1,8 +1,4 @@
-<% if @assessment.pharmacy_name.present? %>
-Here's <%= @assessment.pharmacy_name %>'s DSCSA readiness score, as requested.
-<% else %>
 Here's your DSCSA readiness score, as requested.
-<% end %>
 
 <%= @assessment.score %> / 100 -- <%= @assessment.band_label %>
 

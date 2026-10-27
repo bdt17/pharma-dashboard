@@ -199,4 +199,9 @@ class OrganizationTest < ActiveSupport::TestCase
     assert org.generated_a_packet?
     assert org.fully_activated?
   end
+
+  test "find_by_referral_code tolerates a non-string param instead of raising" do
+    assert_nil Organization.find_by_referral_code([ "x" ])
+    assert_nil Organization.find_by_referral_code({ "a" => "b" })
+  end
 end

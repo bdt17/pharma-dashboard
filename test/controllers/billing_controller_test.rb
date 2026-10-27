@@ -370,16 +370,28 @@ class BillingControllerTest < ActionDispatch::IntegrationTest
     assert_match "isn't configured yet", response.body
   end
 
-  test "portal redirects to the real Stripe Billing Portal URL, even for a non-admin" do
+  test "portal redirects an admin to the real Stripe Billing Portal URL" do
     @organization.update!(stripe_customer_id: "cus_123")
-    driver = User.create!(email: "driver@example.com", password: "password123!", organization: @organization, role: "driver")
-    sign_in driver
+    sign_in @user
 
     StripeBilling.stub :billing_portal_url, "https://billing.stripe.com/session/fake" do
       post billing_portal_url
     end
 
     assert_redirected_to "https://billing.stripe.com/session/fake"
+  end
+
+  test "portal is admin-only -- it can cancel the subscription and change the card" do
+    @organization.update!(stripe_customer_id: "cus_123")
+    driver = User.create!(email: "driver@example.com", password: "password123!", organization: @organization, role: "driver")
+    sign_in driver
+
+    StripeBilling.stub :billing_portal_url, ->(*) { raise "should not be called" } do
+      post billing_portal_url
+    end
+
+    assert_redirected_to billing_path
+    assert_equal "Only an organization admin can manage billing.", flash[:alert]
   end
 
   test "portal redirects back to billing with a message when there's no Stripe customer yet" do

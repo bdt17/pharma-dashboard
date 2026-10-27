@@ -1,5 +1,9 @@
 workers 0
-threads 1, 1
+# More than one thread so a slow request (PDF generation, a bcrypt
+# sign-in, a Postmark call) can't stall every other user. Keep at or below
+# the database pool (RAILS_MAX_THREADS, default 5).
+max_threads = ENV.fetch("RAILS_MAX_THREADS", 5).to_i
+threads [ max_threads, 3 ].min, [ max_threads, 3 ].min
 environment "production"
 port ENV.fetch("PORT") { 10000 }
 

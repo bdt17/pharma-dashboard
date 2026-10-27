@@ -7,12 +7,18 @@
       This unsubscribe link is invalid or has expired. If you&rsquo;re still getting email
       you&rsquo;d rather not, <%= link_to "let us know", request_a_call_path %> and we&rsquo;ll take care of it by hand.
     </p>
-  <% else %>
+  <% elsif @done %>
     <h1 class="text-[22px]">You&rsquo;re unsubscribed</h1>
     <p class="text-[14px] text-ink-soft max-w-[50ch]">
       <span class="mono"><%= @email %></span> won&rsquo;t get any more DSCSA readiness follow-up email
       from us. This doesn&rsquo;t affect account or billing email if you&rsquo;re already a Pharma
       Transport customer under a different address.
     </p>
+  <% else %>
+    <h1 class="text-[22px]">Unsubscribe?</h1>
+    <p class="text-[14px] text-ink-soft max-w-[50ch]">
+      Stop DSCSA readiness follow-up email to <span class="mono"><%= @email %></span>.
+    </p>
+    <%= button_to "Unsubscribe", unsubscribe_path(token: @token), method: :post, class: "btn btn-primary" %>
   <% end %>
 </section>

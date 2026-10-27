@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_25_195444) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_27_124813) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -55,7 +55,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_195444) do
     t.bigint "driver_id"
     t.index ["driver_id"], name: "index_batches_on_driver_id"
     t.index ["lot"], name: "index_batches_on_lot", unique: true
-    t.index ["lot_number"], name: "index_batches_on_lot_number", unique: true
+    t.index ["organization_id", "lot_number"], name: "index_batches_on_organization_id_and_lot_number", unique: true
     t.index ["vehicle_id"], name: "index_batches_on_vehicle_id"
   end
 
@@ -412,6 +412,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_25_195444) do
     t.datetime "otp_enabled_at"
     t.text "otp_backup_codes"
     t.integer "otp_consumed_timestep"
+    t.integer "second_factor_failed_attempts", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"

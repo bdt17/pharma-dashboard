@@ -22,9 +22,8 @@
 # browser-session authenticated today and the gate only runs for HTML
 # requests; token auth with its own second-factor story is a separate change.
 #
-# Follow-up: users.otp_secret is stored in plaintext because this app has no
-# ActiveRecord encryption configured (no config/master.key). Wrap it in
-# `encrypts :otp_secret` once credentials exist.
+# users.otp_secret is encrypted at rest (`encrypts :otp_secret` in the
+# concern).
 Warden::Manager.after_authentication do |_user, auth, opts|
   auth.session(opts[:scope]).delete("mfa_passed")
 rescue StandardError

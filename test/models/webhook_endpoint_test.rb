@@ -97,4 +97,11 @@ class WebhookEndpointTest < ActiveSupport::TestCase
     assert_equal 0, endpoint.consecutive_failures
     assert_nil endpoint.last_error
   end
+
+  test "blocks IPv6 forms that route to private or loopback space" do
+    %w[::7f00:1 ::a00:1 fec0::1 64:ff9b:1::a00:1 2002:7f00:1::1 ::ffff:127.0.0.1].each do |address|
+      assert WebhookEndpoint.blocked_ip?(address), address
+    end
+    assert_not WebhookEndpoint.blocked_ip?("2606:4700:4700::1111")
+  end
 end

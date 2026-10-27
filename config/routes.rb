@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   # One-click unsubscribe from marketing-style email (see EmailSuppression).
   # A signed token, not a raw email address -- see UnsubscribesController.
   get "/unsubscribe", to: "unsubscribes#show", as: :unsubscribe
+  post "/unsubscribe", to: "unsubscribes#create"
 
   # Operator diagnostics -- integration health at a glance. Gated to an
   # OPERATOR_EMAILS allowlist (see OpsController).

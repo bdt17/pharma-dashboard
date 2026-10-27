@@ -209,9 +209,18 @@ class PdfChainOfCustodyGenerator
       pdf.move_down 4
 
       image_bytes = decode_signature_image(data["image"])
-      pdf.image StringIO.new(image_bytes), width: 150 if image_bytes
+      signature_image(pdf, image_bytes) if image_bytes
       pdf.move_down 14
     end
+  end
+
+  # Records saved before CustodyLog validated signature images could hold
+  # anything; one bad image must not make the whole report a 500.
+  def signature_image(pdf, bytes)
+    pdf.image StringIO.new(bytes), width: 150
+  rescue StandardError => e
+    Rails.logger.warn("PdfChainOfCustodyGenerator: unreadable signature image (#{e.class})")
+    pdf.text "(signature image unreadable)", size: 8, style: :italic, color: "666666"
   end
 
   def decode_signature_image(data_url)

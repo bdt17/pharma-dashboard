@@ -1,9 +1,8 @@
 <p style="font-size:14px;">
-  <% if @assessment.pharmacy_name.present? %>
-    Here's <strong><%= @assessment.pharmacy_name %></strong>'s DSCSA readiness score, as requested.
-  <% else %>
-    Here's your DSCSA readiness score, as requested.
-  <% end %>
+  <%# No form text (like the pharmacy name) is echoed here: the address
+    is whatever was typed into a public form, so echoing input would let
+    anyone send their own words to anyone from our domain. %>
+<p style="font-size:14px;">Here's your DSCSA readiness score, as requested.</p>
 </p>
 
 <p style="font-size:32px; margin: 20px 0 4px;">
