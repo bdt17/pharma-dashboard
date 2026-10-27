@@ -9,7 +9,8 @@ class JavascriptBootTest < ApplicationSystemTestCase
   # a fixed fix so the lookup resolves at once instead of hanging on a
   # permission prompt headless Chrome never answers.
   def fake_gps
-    page.driver.browser.execute_cdp("Browser.grantPermissions", permissions: [ "geolocation" ])
+    origin = URI.join(current_url, "/").to_s.chomp("/")
+    page.driver.browser.execute_cdp("Browser.grantPermissions", origin: origin, permissions: [ "geolocation" ])
     page.driver.browser.execute_cdp("Emulation.setGeolocationOverride", latitude: 33.448376, longitude: -112.074036, accuracy: 10)
   end
 
@@ -62,7 +63,6 @@ class JavascriptBootTest < ApplicationSystemTestCase
     batch = Batch.create!(lot_number: "LOT-DRV-1", name: "Insulin glargine", vehicle: vehicle, organization: organization, driver: driver)
 
     page.driver.browser.manage.window.resize_to(390, 844)
-    fake_gps
     visit new_user_session_path
     fill_in "Email", with: "driver@example.com"
     fill_in "Password", with: password
@@ -70,6 +70,7 @@ class JavascriptBootTest < ApplicationSystemTestCase
 
     assert_selector "h1", text: "My deliveries"
     assert_text "Insulin glargine"
+    fake_gps
     click_on "Record pickup"
 
     assert_selector "h1", text: "Record a custody event"
