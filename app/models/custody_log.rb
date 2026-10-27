@@ -1,5 +1,8 @@
 class CustodyLog < ApplicationRecord
   belongs_to :batch
+  # The signed-in user who recorded the event. Optional only because rows
+  # from before this was tracked have none.
+  belongs_to :recorded_by, class_name: "User", optional: true
 
   ACTION_TYPES = %w[pickup in_transit handoff delivered exception].freeze
 
@@ -18,9 +21,21 @@ class CustodyLog < ApplicationRecord
   validates :handler_name, presence: true
   validates :location, presence: true
   validate :signature_required_for_delivery
+  # Browser GPS from driver mode: both coordinates or neither.
+  validates :latitude, numericality: { in: -90..90 }, allow_nil: true
+  validates :longitude, numericality: { in: -180..180 }, allow_nil: true
+  validates :latitude, presence: true, if: -> { longitude.present? }
+  validates :longitude, presence: true, if: -> { latitude.present? }
+  validates :location_accuracy_m, numericality: { only_integer: true, in: 0..100_000 }, allow_nil: true
+  # A hand-held probe reading. Wide enough for frozen product and a hot
+  # car, narrow enough to catch a typo like 47 for 4.7.
+  validates :temperature_celsius, numericality: { in: -40..60 }, allow_nil: true
   validate :signature_image_is_a_sane_png, on: :create
 
   before_validation :set_timestamp, on: :create
+  # A driver at a doorstep may not know the street address -- the GPS fix
+  # is a better location record than nothing.
+  before_validation :default_location_to_gps, on: :create
 
   # Chain-of-custody records are meant to be an immutable log of what
   # actually happened -- there is deliberately no update/destroy path here.
@@ -34,10 +49,34 @@ class CustodyLog < ApplicationRecord
     signature_data.present? && signature_data["image"].present? && signature_data["signer_name"].present?
   end
 
+  def gps?
+    latitude.present? && longitude.present?
+  end
+
+  def gps_label
+    return unless gps?
+
+    label = "#{latitude.round(5)}, #{longitude.round(5)}"
+    location_accuracy_m ? "#{label} (±#{location_accuracy_m} m)" : label
+  end
+
+
+  # 2-8 °C is the refrigerated range nearly all cold-chain product in a
+  # pharmacy's deliveries is labelled for; a reading outside it is flagged
+  # on the record, not blocked -- the product might legitimately be frozen
+  # or room temperature.
+  def temperature_outside_refrigerated_range?
+    temperature_celsius.present? && !(2..8).cover?(temperature_celsius)
+  end
+
   private
 
   def set_timestamp
     self.timestamp ||= Time.current
+  end
+
+  def default_location_to_gps
+    self.location = "GPS #{gps_label}" if location.blank? && gps?
   end
 
   # Proof of delivery is the point a signature actually matters -- other

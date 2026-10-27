@@ -2,7 +2,7 @@
 <% content_for :bare_layout, "1" %>
 
 <h1 class="text-[20px] mb-1">Start your organization</h1>
-<p class="text-[13px] text-ink-faint mb-6">Creates a new organization with you as its admin.</p>
+<p class="text-[13px] text-ink-faint mb-6">Creates a new organization with you as its admin. Joining a pharmacy that already uses Pharma Transport? Ask its admin to invite you from their Team page instead.</p>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "flex flex-col gap-4" }) do |f| %>
   <%= bot_protection_fields %>

@@ -1,5 +1,6 @@
 class Organization < ApplicationRecord
   has_many :users, dependent: :restrict_with_error
+  has_many :invitations, dependent: :destroy
 
   # `internal` marks the operator's own test/demo orgs (toggled from /ops)
   # so the customer counts there aren't inflated by them.

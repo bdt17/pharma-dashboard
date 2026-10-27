@@ -70,6 +70,8 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index", as: :dashboard
   get "/enterprise/dashboard", to: "dashboard#index"
   get "/gps", to: "home#gps"
+  # Driver mode home: shipments still out, one tap to record pickup/delivery.
+  get "/deliveries", to: "deliveries#index", as: :deliveries
   # Self-serve vehicle registration -- see VehiclesController. index/show
   # deliberately excluded: /gps already lists the fleet, and the JSON
   # index/show live under api/v1 below.
@@ -83,6 +85,19 @@ Rails.application.routes.draw do
   get "/billing/cancel", to: "billing#cancel", as: :billing_cancel
   get "/compliance", to: "compliance#index", as: :compliance
   get "/subscribe", to: redirect("/billing")
+
+  # Team members and invitations -- see TeamController. Accepting an
+  # invitation is public (the emailed token is the credential); see
+  # InvitationsController.
+  get    "/team", to: "team#index", as: :team
+  post   "/team/invitations", to: "team#invite", as: :team_invitations
+  delete "/team/invitations/:id", to: "team#revoke", as: :team_invitation
+  post   "/team/invitations/:id/resend", to: "team#resend", as: :resend_team_invitation
+  patch  "/team/members/:id", to: "team#update_member", as: :team_member
+  post   "/team/members/:id/deactivate", to: "team#deactivate", as: :deactivate_team_member
+  post   "/team/members/:id/reactivate", to: "team#reactivate", as: :reactivate_team_member
+  get    "/invitations/:token", to: "invitations#show", as: :invitation
+  post   "/invitations/:token", to: "invitations#accept"
 
   # Full audit trail + CSV export -- see AuditLogsController. Same
   # explicit-format-suffix style as /batches.pdf below, rather than

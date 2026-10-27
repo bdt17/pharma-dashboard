@@ -153,4 +153,74 @@ class CustodyLogsControllerTest < ActionDispatch::IntegrationTest
 
     assert_not CustodyLog.last.signed?
   end
+
+  test "driver mode: GPS, temperature, and the signed-in recorder are saved; blank location falls back to GPS" do
+    sign_in @driver
+    post batch_custody_logs_url(@batch), params: {
+      custody_log: { action_type: "pickup", handler_name: "Jane Doe", location: "",
+                     latitude: "33.448376", longitude: "-112.074036", location_accuracy_m: "12", temperature_celsius: "4.6" }
+    }
+
+    log = CustodyLog.last
+    assert_equal @driver, log.recorded_by
+    assert_equal BigDecimal("33.448376"), log.latitude
+    assert_equal BigDecimal("-112.074036"), log.longitude
+    assert_equal 12, log.location_accuracy_m
+    assert_equal BigDecimal("4.6"), log.temperature_celsius
+    assert_equal "GPS 33.44838, -112.07404 (±12 m)", log.location
+
+    get batch_custody_log_url(@batch, log)
+    assert_match "4.6 °C", response.body
+    assert_match "openstreetmap.org", response.body
+  end
+
+  test "the submitted recorder can't be spoofed" do
+    other = User.create!(email: "other@example.com", password: "password123!", organization: @organization, role: "dispatcher")
+    sign_in @driver
+    post batch_custody_logs_url(@batch), params: {
+      custody_log: { action_type: "pickup", handler_name: "Jane", location: "Phoenix", recorded_by_id: other.id }
+    }
+    assert_equal @driver, CustodyLog.last.recorded_by
+  end
+
+  test "an out-of-range temperature or half a coordinate is rejected" do
+    sign_in @driver
+    assert_no_difference -> { CustodyLog.count } do
+      post batch_custody_logs_url(@batch), params: { custody_log: { action_type: "pickup", handler_name: "J", location: "P", temperature_celsius: "470" } }
+    end
+    assert_response :unprocessable_content
+
+    assert_no_difference -> { CustodyLog.count } do
+      post batch_custody_logs_url(@batch), params: { custody_log: { action_type: "pickup", handler_name: "J", location: "P", latitude: "33.4" } }
+    end
+    assert_response :unprocessable_content
+  end
+
+  test "only the record-custody form may ask for the device location" do
+    sign_in @driver
+    get new_batch_custody_log_url(@batch)
+    assert_match "geolocation=(self)", response.headers["Permissions-Policy"]
+    assert_match "camera=()", response.headers["Permissions-Policy"]
+
+    assert_select "meta[name=turbo-visit-control][content=reload]"
+
+    get batch_custody_logs_url(@batch)
+    assert_match "geolocation=()", response.headers["Permissions-Policy"]
+  end
+
+  test "the form defaults to pickup, then delivery once picked up, and honors a preset action" do
+    sign_in @driver
+    get new_batch_custody_log_url(@batch)
+    assert_select "input[type=radio][value=pickup][checked]"
+    assert_select "input[name=?][value=?]", "custody_log[handler_name]", "driver@example.com"
+
+    CustodyLog.create!(batch: @batch, action_type: "pickup", handler_name: "J", location: "P")
+    get new_batch_custody_log_url(@batch)
+    assert_select "input[type=radio][value=delivered][checked]"
+
+    get new_batch_custody_log_url(@batch, action_type: "exception")
+    assert_select "input[type=radio][value=exception][checked]"
+    get new_batch_custody_log_url(@batch, action_type: "bogus")
+    assert_select "input[type=radio][value=delivered][checked]"
+  end
 end

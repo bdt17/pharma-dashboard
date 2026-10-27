@@ -163,17 +163,19 @@ class PdfChainOfCustodyGenerator
     if logs.empty?
       pdf.text "No custody events recorded.", size: 10, style: :italic, color: "666666"
     else
-      rows = [ [ "Time", "Action", "Handler", "Location", "Notes" ] ]
+      rows = [ [ "Time", "Action", "Handler", "Location", "Temp", "Notes" ] ]
       logs.each do |log|
         rows << [
           log.timestamp&.strftime("%Y-%m-%d %H:%M") || "-",
           log.action_type,
-          log.handler_name,
-          log.location,
+          [ log.handler_name, log.recorded_by && "(recorded by #{log.recorded_by.name.presence || log.recorded_by.email})" ].compact.join("\n"),
+          [ log.location, (log.gps? && !log.location.to_s.include?(log.gps_label) ? "GPS #{log.gps_label}" : nil) ].compact.join("\n"),
+          log.temperature_celsius ? "#{log.temperature_celsius}°C" : "-",
           log.condition_notes.presence || "-"
         ]
       end
-      pdf.table(rows, header: true, cell_style: { size: 9, padding: 5 }, width: pdf.bounds.width) do
+      pdf.table(rows, header: true, cell_style: { size: 9, padding: 5 }, width: pdf.bounds.width,
+                           column_widths: { 0 => 70, 1 => 58, 2 => 140, 3 => 140, 4 => 44 }) do
         row(0).background_color = "003366"
         row(0).text_color = "FFFFFF"
         row(0).font_style = :bold

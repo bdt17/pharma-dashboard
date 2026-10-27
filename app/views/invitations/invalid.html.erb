@@ -1,0 +1,9 @@
+<% content_for :title, "Invitation not valid — Pharma Transport" %>
+<% content_for :bare_layout, "1" %>
+
+<h1 class="text-[20px] mb-1">This invitation link isn't valid</h1>
+<p class="text-[13px] text-ink-soft mb-6">
+  It may have expired, already been used, or been replaced by a newer email. Ask whoever invited you
+  to send a new one from their Team page.
+</p>
+<%= link_to "Sign in", new_user_session_path, class: "btn btn-secondary w-full" %>

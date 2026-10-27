@@ -54,6 +54,24 @@ class User < ApplicationRecord
     pharmacist: "pharmacist"
   }, validate: true, default: "dispatcher"
 
+  # Deactivated rather than deleted when someone leaves: their custody
+  # events, signatures and audit entries must stay attributable for the
+  # six-year DSCSA retention period. Devise checks this on every request
+  # (not only at sign-in), so deactivating ends existing sessions too.
+  scope :active, -> { where(deactivated_at: nil) }
+
+  def deactivated?
+    deactivated_at.present?
+  end
+
+  def active_for_authentication?
+    super && !deactivated?
+  end
+
+  def inactive_message
+    deactivated? ? :deactivated : super
+  end
+
   private
 
   def auto_confirm_unless_self_service_signup

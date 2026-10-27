@@ -43,6 +43,19 @@ class PdfChainOfCustodyGeneratorTest < ActiveSupport::TestCase
     refute_includes text, "Position updated"
   end
 
+  test "custody rows carry the probe temperature, GPS fix, and who recorded them" do
+    CustodyLog.create!(batch: @batch, action_type: "pickup", handler_name: "Jane Doe", location: "Store 4",
+                       latitude: 33.448376, longitude: -112.074036, location_accuracy_m: 9,
+                       temperature_celsius: 4.6, recorded_by: @user)
+    text = extracted_text(@batch).gsub(/\s+/, " ")
+
+    assert_match "4.6°C", text
+    assert_match "33.44838, -112.07404", text
+    assert_match "recorded by", text
+    assert_match "handler@example.com", text
+    assert_match "Action", text
+  end
+
   test "includes real audit log entries" do
     AuditLog.record!(event: "chain_of_custody_pdf_generated", user: @user, batch: @batch)
 

@@ -32,7 +32,11 @@
 
     <div>
       <%= f.label :driver_id, "Driver", class: "block text-[12px] text-ink-faint mb-1" %>
-      <%= f.select :driver_id, current_organization.users.driver.order(:email).map { |u| [ u.name.presence || u.email, u.id ] },
+      <%# A driver deactivated since assignment stays selectable, so saving
+          other edits doesn't silently unassign them. %>
+      <% drivers = current_organization.users.active.driver.order(:email).to_a %>
+      <% drivers << @batch.driver if @batch.driver&.deactivated? %>
+      <%= f.select :driver_id, drivers.map { |u| [ "#{u.name.presence || u.email}#{' (deactivated)' if u.deactivated?}", u.id ] },
             { include_blank: "Unassigned" }, class: "field-input" %>
     </div>
 

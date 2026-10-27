@@ -10,6 +10,7 @@
   <meta charset="UTF-8">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+  <%= yield :head %>
   <%# Open Graph / Twitter Card tags -- without these, any link to the site
       shared in Slack, email, or chat renders as a bare URL with no preview.
       og.svg is a 1200x630 branded card; SVG previews render on Slack,
@@ -77,8 +78,18 @@
     <div class="flex min-h-screen">
       <%= render "layouts/app_sidebar" %>
       <div class="flex-1 flex flex-col min-w-0">
-        <div class="border-b border-line flex items-center justify-between px-7 shrink-0" style="height:3.75rem;">
-          <span class="text-[12.5px] text-ink-faint">
+        <div class="relative border-b border-line flex items-center justify-between gap-3 px-4 md:px-7 shrink-0" style="height:3.75rem;">
+          <%# Phones get the sidebar as a drop-down; no JavaScript needed. %>
+          <details class="md:hidden">
+            <summary class="list-none cursor-pointer flex items-center gap-2 text-[13px] font-medium text-ink-soft" aria-label="Menu">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+              Menu
+            </summary>
+            <div class="absolute left-0 right-0 top-full z-50 border-b border-line shadow-lg">
+              <%= render "layouts/app_sidebar", mobile: true %>
+            </div>
+          </details>
+          <span class="text-[12.5px] text-ink-faint truncate">
             <%= current_organization&.name %><%= " / #{yield(:crumb)}" if content_for?(:crumb) %>
           </span>
           <span class="w-7 h-7 rounded-full bg-accent-50 text-accent-700 flex items-center justify-center text-[11px] font-semibold uppercase">
@@ -87,8 +98,8 @@
         </div>
         <%= render "layouts/payment_recovery_banner" %>
         <%= render "layouts/card_expiry_banner" %>
-        <% if notice %><div class="px-7 pt-4"><div class="rounded border border-accent-100 bg-accent-50 text-accent-700 px-4 py-3 text-sm"><%= notice %></div></div><% end %>
-        <% if alert %><div class="px-7 pt-4"><div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm"><%= alert %></div></div><% end %>
+        <% if notice %><div class="px-4 md:px-7 pt-4"><div class="rounded border border-accent-100 bg-accent-50 text-accent-700 px-4 py-3 text-sm"><%= notice %></div></div><% end %>
+        <% if alert %><div class="px-4 md:px-7 pt-4"><div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm"><%= alert %></div></div><% end %>
         <main class="flex-1 bg-surface"><%= yield %></main>
       </div>
     </div>

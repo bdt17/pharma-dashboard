@@ -1,0 +1,134 @@
+<% content_for :title, "Team — Pharma Transport" %>
+<% content_for :crumb, "Team" %>
+<%
+  role_notes = {
+    "admin" => "Everything, including billing, alerts and the team",
+    "dispatcher" => "Create and edit shipments, record custody, issue compliance packets",
+    "driver" => "Record pickup and delivery on their assigned shipments",
+    "pharmacist" => "View shipments and custody records; gets temperature alerts"
+  }
+  role_options = User.roles.keys.map { |r| [ r.capitalize, r ] }
+%>
+
+<div class="p-7 max-w-4xl">
+  <div class="flex flex-col gap-1 mb-6">
+    <h1 class="text-[24px]">Team</h1>
+    <span class="text-[13px] text-ink-faint">Everyone who can sign in to <%= current_organization.name %></span>
+  </div>
+
+  <div class="card overflow-hidden mb-6">
+    <table class="w-full text-[13px]">
+      <thead>
+        <tr class="bg-surface text-[11px] uppercase tracking-wide text-ink-faint">
+          <th class="text-left font-medium px-4 py-2">Person</th>
+          <th class="text-left font-medium px-4 py-2">Role</th>
+          <th class="text-left font-medium px-4 py-2">Two-factor</th>
+          <th class="px-4 py-2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @members.each do |member| %>
+          <tr class="border-t border-line-soft <%= "opacity-60" if member.deactivated? %>">
+            <td class="px-4 py-2.5">
+              <div class="font-medium"><%= member.name.presence || member.email %><%= " (you)" if member == current_user %></div>
+              <% if member.name.present? %><div class="text-[12px] text-ink-faint"><%= member.email %></div><% end %>
+            </td>
+            <td class="px-4 py-2.5">
+              <% if current_user.admin? && !member.deactivated? %>
+                <%= form_with url: team_member_path(member), method: :patch, scope: :user, class: "flex items-center gap-2" do |f| %>
+                  <%= f.select :role, options_for_select(role_options, member.role), {}, class: "border border-line rounded px-2 py-1 text-[13px]", aria: { label: "Role for #{member.email}" } %>
+                  <%= f.submit "Save", class: "text-[12px] text-accent-600 hover:text-accent-700 bg-transparent" %>
+                <% end %>
+              <% else %>
+                <%= member.role.capitalize %>
+              <% end %>
+            </td>
+            <td class="px-4 py-2.5">
+              <% if member.deactivated? %>
+                <span class="badge">Deactivated</span>
+              <% elsif member.otp_enabled? %>
+                <span class="badge badge-accent">On</span>
+              <% elsif member.two_factor_required? %>
+                <span class="badge">Set up at next sign-in</span>
+              <% else %>
+                <span class="text-ink-faint">Off</span>
+              <% end %>
+            </td>
+            <td class="px-4 py-2.5 text-right">
+              <% if current_user.admin? && member != current_user %>
+                <% if member.deactivated? %>
+                  <%= button_to "Reactivate", reactivate_team_member_path(member), method: :post,
+                        class: "text-[12px] text-accent-600 hover:text-accent-700" %>
+                <% else %>
+                  <%= button_to "Deactivate", deactivate_team_member_path(member), method: :post,
+                        form: { data: { turbo_confirm: "Deactivate #{member.email}? They'll be signed out immediately. Their custody records stay." } },
+                        class: "text-[12px] text-[#b42318] hover:underline" %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <% if @invitations.any? %>
+    <h2 class="text-[17px] font-sans font-semibold mb-2">Pending invitations</h2>
+    <div class="card overflow-hidden mb-6">
+      <table class="w-full text-[13px]">
+        <tbody>
+          <% @invitations.each do |invitation| %>
+            <tr class="border-t border-line-soft first:border-t-0">
+              <td class="px-4 py-2.5"><%= invitation.email %></td>
+              <td class="px-4 py-2.5"><%= invitation.role.capitalize %></td>
+              <td class="px-4 py-2.5 text-ink-faint">Expires <%= invitation.expires_at.to_date.strftime("%b %-d") %></td>
+              <td class="px-4 py-2.5 text-right">
+                <% if current_user.admin? %>
+                  <div class="flex items-center justify-end gap-3">
+                    <%= button_to "Resend", resend_team_invitation_path(invitation), method: :post,
+                          class: "text-[12px] text-accent-600 hover:text-accent-700" %>
+                    <%= button_to "Revoke", team_invitation_path(invitation), method: :delete,
+                          form: { data: { turbo_confirm: "Revoke the invitation to #{invitation.email}?" } },
+                          class: "text-[12px] text-[#b42318] hover:underline" %>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+
+  <% if current_user.admin? %>
+    <h2 class="text-[17px] font-sans font-semibold mb-1">Invite someone</h2>
+    <p class="text-[13px] text-ink-faint mb-3">
+      They get an email with a link to set their name and password. The link works once and expires in 7 days.
+    </p>
+    <%= form_with model: @invitation, url: team_invitations_path, method: :post, class: "card p-5 flex flex-col gap-3" do |f| %>
+      <% if @invitation.errors.any? %>
+        <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
+          <%= @invitation.errors.full_messages.to_sentence %>
+        </div>
+      <% end %>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <div class="flex-1">
+          <%= f.label :email, "Email", class: "block text-[12px] text-ink-faint mb-1" %>
+          <%= f.email_field :email, required: true, autocomplete: "off", class: "w-full border border-line rounded px-3 py-1.5 text-[13px]" %>
+        </div>
+        <div>
+          <%= f.label :role, "Role", class: "block text-[12px] text-ink-faint mb-1" %>
+          <%= f.select :role, options_for_select(role_options, @invitation.role), {}, class: "border border-line rounded px-2 py-1.5 text-[13px]" %>
+        </div>
+      </div>
+      <ul class="text-[12px] text-ink-faint">
+        <% role_notes.each do |role, note| %>
+          <li><strong class="text-ink-soft"><%= role.capitalize %></strong>: <%= note %><%= " (two-factor required)" if User::TWO_FACTOR_REQUIRED_ROLES.include?(role) %></li>
+        <% end %>
+      </ul>
+      <div><%= f.submit "Send invitation", class: "btn btn-primary btn-sm" %></div>
+    <% end %>
+  <% else %>
+    <p class="text-[12px] text-ink-faint">Only an organization admin can invite people or change roles.</p>
+  <% end %>
+</div>

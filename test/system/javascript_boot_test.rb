@@ -5,6 +5,15 @@ require "application_system_test_case"
 # any browser -- while every other system test stayed green, because none of
 # them needed JavaScript.
 class JavascriptBootTest < ApplicationSystemTestCase
+  # The custody form asks for the device location on load; give the browser
+  # a fixed fix so the lookup resolves at once instead of hanging on a
+  # permission prompt headless Chrome never answers.
+  def fake_gps
+    origin = URI.join(current_url, "/").to_s.chomp("/")
+    page.driver.browser.execute_cdp("Browser.grantPermissions", origin: origin, permissions: [ "geolocation" ])
+    page.driver.browser.execute_cdp("Emulation.setGeolocationOverride", latitude: 33.448376, longitude: -112.074036, accuracy: 10)
+  end
+
   test "Turbo and Stimulus boot on a page" do
     visit root_path
 
@@ -25,8 +34,10 @@ class JavascriptBootTest < ApplicationSystemTestCase
     click_on "Sign in"
     assert_selector "h1", text: "Dashboard"
 
+    fake_gps
     visit new_batch_custody_log_path(batch)
-    select "delivered", from: "Action type"
+    assert_text "Location attached"
+    find("label", text: "Delivered").click
     fill_in "Handler name", with: "Jane Doe"
     fill_in "Location", with: "Phoenix, AZ"
     fill_in "Signer name", with: "Sam Recipient"
@@ -42,5 +53,39 @@ class JavascriptBootTest < ApplicationSystemTestCase
     assert_equal "delivered", log.action_type
     assert log.signature_data["image"].start_with?("data:image/png;base64,"), "signature image was not captured"
     assert_equal "Sam Recipient", log.signature_data["signer_name"]
+  end
+
+  test "a driver lands on their deliveries and records a pickup from a phone-sized screen" do
+    organization = Organization.create!(name: "Northwind Pharmacy")
+    password = "correct horse battery"
+    driver = User.create!(email: "driver@example.com", name: "Dana Driver", password: password, organization: organization, role: "driver")
+    vehicle = Vehicle.create!(name: "Corolla", organization: organization)
+    batch = Batch.create!(lot_number: "LOT-DRV-1", name: "Insulin glargine", vehicle: vehicle, organization: organization, driver: driver)
+
+    page.driver.browser.manage.window.resize_to(390, 844)
+    visit new_user_session_path
+    fill_in "Email", with: "driver@example.com"
+    fill_in "Password", with: password
+    click_on "Sign in"
+
+    assert_selector "h1", text: "My deliveries"
+    assert_text "Insulin glargine"
+    fake_gps
+    click_on "Record pickup"
+
+    assert_selector "h1", text: "Record a custody event"
+    assert_text "Location attached"
+    fill_in "Location", with: "Northwind Pharmacy, 12 Main St"
+    fill_in "Product temperature °C (optional)", with: "4.4"
+    click_on "Record event"
+    assert_text "Custody event recorded."
+
+    log = batch.custody_logs.last
+    assert_equal "pickup", log.action_type
+    assert_equal driver, log.recorded_by
+    assert_equal BigDecimal("4.4"), log.temperature_celsius
+    assert_equal BigDecimal("33.448376"), log.latitude
+  ensure
+    page.driver.browser.manage.window.resize_to(1400, 1400)
   end
 end

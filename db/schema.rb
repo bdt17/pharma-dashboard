@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_27_124813) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_27_183158) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -108,7 +108,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_124813) do
     t.jsonb "signature_data"
     t.datetime "timestamp"
     t.datetime "updated_at", null: false
+    t.bigint "recorded_by_id"
+    t.decimal "latitude", precision: 9, scale: 6
+    t.decimal "longitude", precision: 9, scale: 6
+    t.integer "location_accuracy_m"
+    t.decimal "temperature_celsius", precision: 4, scale: 1
     t.index ["batch_id"], name: "index_custody_logs_on_batch_id"
+    t.index ["recorded_by_id"], name: "index_custody_logs_on_recorded_by_id"
   end
 
   create_table "dscsa_assessments", force: :cascade do |t|
@@ -146,6 +152,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_124813) do
     t.index ["batch_id"], name: "index_excursion_events_on_batch_id"
     t.index ["batch_id"], name: "index_excursion_events_one_open_per_batch", unique: true, where: "(ended_at IS NULL)"
     t.index ["vehicle_id"], name: "index_excursion_events_on_vehicle_id"
+  end
+
+  create_table "invitations", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.bigint "invited_by_id", null: false
+    t.bigint "user_id"
+    t.string "email", null: false
+    t.string "role", null: false
+    t.string "token_digest", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "accepted_at"
+    t.datetime "revoked_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invited_by_id"], name: "index_invitations_on_invited_by_id"
+    t.index ["organization_id", "email"], name: "index_invitations_on_organization_id_and_email"
+    t.index ["organization_id"], name: "index_invitations_on_organization_id"
+    t.index ["token_digest"], name: "index_invitations_on_token_digest", unique: true
+    t.index ["user_id"], name: "index_invitations_on_user_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -413,6 +438,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_124813) do
     t.text "otp_backup_codes"
     t.integer "otp_consumed_timestep"
     t.integer "second_factor_failed_attempts", default: 0, null: false
+    t.datetime "deactivated_at"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
@@ -483,8 +509,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_124813) do
   add_foreign_key "compliance_reports", "organizations"
   add_foreign_key "compliance_reports", "users", column: "generated_by_id"
   add_foreign_key "custody_logs", "batches"
+  add_foreign_key "custody_logs", "users", column: "recorded_by_id"
   add_foreign_key "excursion_events", "batches"
   add_foreign_key "excursion_events", "vehicles"
+  add_foreign_key "invitations", "organizations"
+  add_foreign_key "invitations", "users"
+  add_foreign_key "invitations", "users", column: "invited_by_id"
   add_foreign_key "packet_overages", "compliance_reports"
   add_foreign_key "packet_overages", "organizations"
   add_foreign_key "referrals", "organizations", column: "referred_organization_id"

@@ -143,6 +143,18 @@ class Rack::Attack
     req.ip if req.post? && normalized_path(req).match?(%r{\A/(alerts/recipients|webhooks)/\d+/test\z})
   end
 
+  # Each team invite (and resend) sends an email to an address the admin
+  # typed -- cap it so a hijacked admin session can't spray mail.
+  throttle("team_invites/ip", limit: 20, period: 1.hour) do |req|
+    req.ip if req.post? && normalized_path(req).match?(%r{\A/team/invitations(/\d+/resend)?\z})
+  end
+
+  # Accepting an invitation sets a password; the token is unguessable, but
+  # keep the form from being hammered.
+  throttle("invitation_accept/ip", limit: 10, period: 5.minutes) do |req|
+    req.ip if req.post? && normalized_path(req).start_with?("/invitations/")
+  end
+
   # General backstop against basic flooding of any endpoint, independent of
   # the specific throttles above. Exempt: device telemetry ingest (it has
   # its own per-token and anon throttles, and a NAT'd fleet would trip a

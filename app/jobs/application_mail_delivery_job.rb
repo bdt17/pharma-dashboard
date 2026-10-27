@@ -35,6 +35,12 @@
 # specifically delivery failures (infrastructure, not code) that get
 # swallowed-but-logged here.
 class ApplicationMailDeliveryJob < ActionMailer::MailDeliveryJob
+  # Mailer arguments carry secrets -- Devise passes the raw password-reset
+  # and confirmation tokens, invitations pass theirs -- and ActiveJob logs
+  # every argument verbatim on enqueue and perform. filter_parameters
+  # doesn't apply to job arguments, so keep them out of the logs entirely.
+  self.log_arguments = false
+
   def perform(mailer, mail_method, _delivery_method, args:, kwargs: nil, params: nil)
     mailer_class = params ? mailer.constantize.with(params) : mailer.constantize
     message = kwargs ? mailer_class.public_send(mail_method, *args, **kwargs) : mailer_class.public_send(mail_method, *args)

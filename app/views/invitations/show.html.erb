@@ -1,0 +1,62 @@
+<% content_for :title, "Join #{@invitation.organization.name} — Pharma Transport" %>
+<% content_for :bare_layout, "1" %>
+
+<h1 class="text-[20px] mb-1">Join <%= @invitation.organization.name %></h1>
+<p class="text-[13px] text-ink-faint mb-6">
+  <%= @invitation.invited_by.name.presence || @invitation.invited_by.email %> invited you as a
+  <strong><%= @invitation.role %></strong>.
+</p>
+
+<% if user_signed_in? %>
+  <p class="text-[13px] text-ink-soft mb-4">
+    You're signed in as <%= current_user.email %>. Sign out first to accept this invitation for
+    <%= @invitation.email %>.
+  </p>
+  <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-secondary w-full" %>
+<% else %>
+  <%= form_with model: @user, scope: :user, url: invitation_path(token: params[:token]), method: :post, class: "flex flex-col gap-4" do |f| %>
+    <% if @user.errors.any? %>
+      <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
+        <%= @user.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div class="flex flex-col gap-1.5">
+      <span class="text-[12.5px] font-semibold text-ink-soft">Email</span>
+      <span class="text-[14px]"><%= @invitation.email %></span>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <%= f.label :name, "Your name", class: "text-[12.5px] font-semibold text-ink-soft" %>
+      <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "field-input" %>
+      <p class="text-[11px] text-ink-faint">Shown on custody records you sign.</p>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <%= f.label :password, class: "text-[12.5px] font-semibold text-ink-soft" %>
+      <p class="text-[11px] text-ink-faint">(<%= User.password_length.min %> characters minimum)</p>
+      <%= f.password_field :password, autocomplete: "new-password", class: "field-input" %>
+    </div>
+
+    <div class="flex flex-col gap-1.5">
+      <%= f.label :password_confirmation, "Confirm password", class: "text-[12.5px] font-semibold text-ink-soft" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "field-input" %>
+    </div>
+
+    <label class="inline-flex items-start gap-2 text-[13px] text-ink-soft">
+      <%= check_box_tag "user[terms_accepted]", "1", params.dig(:user, :terms_accepted) == "1", class: "mt-1" %>
+      <span>
+        I agree to the
+        <%= link_to "Terms of Service", terms_path, target: "_blank", rel: "noopener" %>
+        and
+        <%= link_to "Privacy Policy", privacy_path, target: "_blank", rel: "noopener" %>.
+      </span>
+    </label>
+
+    <% if User::TWO_FACTOR_REQUIRED_ROLES.include?(@invitation.role) %>
+      <p class="text-[12px] text-ink-faint">Your role requires two-factor authentication. You'll set it up with an authenticator app right after this.</p>
+    <% end %>
+
+    <%= f.submit "Join #{@invitation.organization.name}", class: "btn btn-primary w-full" %>
+  <% end %>
+<% end %>

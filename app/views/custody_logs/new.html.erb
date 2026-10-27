@@ -1,7 +1,12 @@
 <% content_for :title, "Record a custody event — Pharma Transport" %>
 <% content_for :crumb, "Record a custody event" %>
+<%# Always a full page load, never a Turbo swap: the browser applies this
+    page's Permissions-Policy (geolocation allowed) only when it loads the
+    document itself. Reached by a Turbo link, the previous page's
+    geolocation=() would still be in force and GPS would be blocked. %>
+<% turbo_page_requires_reload %>
 
-<div class="p-7 max-w-lg">
+<div class="p-4 md:p-7 max-w-lg">
   <div class="flex flex-col gap-1 mb-6">
     <h1 class="text-[24px]">Record a custody event</h1>
     <span class="text-[13px] text-ink-faint">
@@ -11,7 +16,7 @@
 
   <%= form_with model: @custody_log, url: batch_custody_logs_path(@batch), local: true,
         data: { controller: "signature-pad", action: "submit->signature-pad#save" },
-        class: "card p-6 flex flex-col gap-4" do |f| %>
+        class: "card p-4 md:p-6 flex flex-col gap-4" do |f| %>
     <% if @custody_log.errors.any? %>
       <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
         <ul class="list-disc pl-4">
@@ -22,19 +27,43 @@
       </div>
     <% end %>
 
-    <div>
-      <%= f.label :action_type, "Action type", class: "block text-[12px] text-ink-faint mb-1" %>
-      <%= f.select :action_type, CustodyLog::ACTION_TYPES, {}, class: "field-input" %>
-    </div>
+    <fieldset>
+      <legend class="block text-[12px] text-ink-faint mb-1">What happened</legend>
+      <div class="flex flex-wrap gap-2">
+        <% CustodyLog::ACTION_TYPES.each do |type| %>
+          <label class="cursor-pointer">
+            <%= f.radio_button :action_type, type, class: "peer sr-only" %>
+            <span class="inline-block border border-line rounded-sm px-3.5 py-2.5 text-[14px] peer-checked:bg-brand-700 peer-checked:text-white peer-checked:border-brand-700 peer-focus-visible:ring-2 peer-focus-visible:ring-accent-600">
+              <%= type.humanize %>
+            </span>
+          </label>
+        <% end %>
+      </div>
+    </fieldset>
 
     <div>
       <%= f.label :handler_name, "Handler name", class: "block text-[12px] text-ink-faint mb-1" %>
-      <%= f.text_field :handler_name, class: "field-input" %>
+      <%= f.text_field :handler_name, autocomplete: "name", class: "field-input" %>
+    </div>
+
+    <div data-controller="geolocate">
+      <%= f.label :location, "Location", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.text_field :location, placeholder: "Address, or leave blank to use GPS", autocomplete: "street-address", class: "field-input" %>
+      <%= f.hidden_field :latitude, data: { geolocate_target: "latitude" } %>
+      <%= f.hidden_field :longitude, data: { geolocate_target: "longitude" } %>
+      <%= f.hidden_field :location_accuracy_m, data: { geolocate_target: "accuracy" } %>
+      <%# Fixed two-line height: the status text changes as the GPS lookup
+          resolves, and the form below (the signature pad) must not move. %>
+      <p class="text-[12px] leading-[18px] text-ink-faint mt-1 h-[36px] overflow-hidden" aria-live="polite">
+        <span data-geolocate-target="status">GPS is attached automatically on a phone.</span>
+        <button type="button" hidden data-geolocate-target="retry" data-action="geolocate#locate" class="text-accent-600 hover:text-accent-700 ml-1">Retry</button>
+      </p>
     </div>
 
     <div>
-      <%= f.label :location, "Location", class: "block text-[12px] text-ink-faint mb-1" %>
-      <%= f.text_field :location, class: "field-input" %>
+      <%= f.label :temperature_celsius, "Product temperature °C (optional)", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.number_field :temperature_celsius, step: 0.1, min: -40, max: 60, inputmode: "decimal", placeholder: "e.g. 4.5", class: "field-input" %>
+      <p class="text-[11px] text-ink-faint mt-1">Probe or thermometer reading at this handoff. Refrigerated product should read 2–8 °C.</p>
     </div>
 
     <div>
@@ -71,7 +100,7 @@
     </fieldset>
 
     <div>
-      <%= f.submit "Record event", class: "btn btn-primary btn-sm" %>
+      <%= f.submit "Record event", class: "btn btn-primary w-full md:w-auto" %>
     </div>
   <% end %>
 </div>
