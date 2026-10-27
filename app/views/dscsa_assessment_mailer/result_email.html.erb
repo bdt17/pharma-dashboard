@@ -14,10 +14,10 @@
   <p style="font-size:14px;">
     <% if DscsaDeadline.passed? %>
       <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work now that the
-      small-dispenser exemption has ended (<strong>November 27, 2026</strong>):
+      small-dispenser exemption has ended (<strong><%= DscsaDeadline.label %></strong>):
     <% else %>
       <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work before the
-      small-dispenser exemption ends on <strong>November 27, 2026</strong>:
+      small-dispenser exemption ends on <strong><%= DscsaDeadline.label %></strong> (the FDA extended it a year; some requirements already apply):
     <% end %>
   </p>
   <ul style="font-size:14px;">

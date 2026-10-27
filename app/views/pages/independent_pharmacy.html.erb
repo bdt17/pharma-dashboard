@@ -19,15 +19,9 @@
       <p class="text-[17px] text-ink-soft">
         Mail-order can ship prescriptions cheaper than you. What it can&rsquo;t do is hand a
         refrigerated medication to a patient in person, with a signed, temperature-verified
-        record of every step. That local handoff is your edge, and
-        <% if DscsaDeadline.passed? %>
-          since the DSCSA small-dispenser exemption ended on <%= DscsaDeadline.label %>, you&rsquo;re
-          required to document it.
-        <% else %>
-          once the DSCSA small-dispenser exemption ends on <%= DscsaDeadline.label %>, you&rsquo;ll be
-          required to document it.
-        <% end %>
-        Pharma Transport does that automatically, starting at $<%= @starter_monthly %>/month.
+        record of every step. That local handoff is your edge. Pharma Transport makes it provable,
+        and keeps the custody and cold-chain records that matter more as DSCSA tightens on small
+        pharmacies, starting at $<%= @starter_monthly %>/month.
       </p>
       <div class="flex flex-wrap gap-3 pt-1">
         <%= link_to "Start free trial", new_user_registration_path, class: "btn btn-primary" %>
@@ -105,7 +99,7 @@
   <div class="grid gap-6 md:grid-cols-2 md:gap-x-10">
     <% [
       ["We&rsquo;re too small to need this.",
-       "The exemption small pharmacies have been working under was written for pharmacies your size, and #{DscsaDeadline.passed? ? "it ended on #{DscsaDeadline.label}" : "it ends on #{DscsaDeadline.label}"}. Small pharmacies are exactly who this is for."],
+       "The exemption small pharmacies have been working under was written for pharmacies your size, and #{DscsaDeadline.passed? ? "it ended on #{DscsaDeadline.label}" : "the FDA has extended it only to #{DscsaDeadline.label}, while parts of DSCSA already apply"}. Small pharmacies are exactly who this is for."],
       ["Our wholesaler already has a portal.",
        "That covers the product until it reaches you. Pharma Transport covers the last mile: custody, temperature, and a signature all the way to the patient&rsquo;s door."],
       ["What if you go out of business?",

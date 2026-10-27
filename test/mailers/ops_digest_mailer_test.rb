@@ -14,15 +14,17 @@ class OpsDigestMailerTest < ActionMailer::TestCase
         assert_match "Ana", body
         assert_match "ana@example.com", body
         assert_match "Main Street Rx", body
-        assert_match "25 days left", body
+        assert_match "59 days left", body
         assert_match "/ops", body
       end
     end
   end
 
-  test "weekly drops the deadline line after the deadline" do
-    travel_to Time.utc(2026, 12, 7, 15) do
-      assert_no_match "DSCSA deadline", OpsDigestMailer.weekly.text_part.body.to_s
+  test "weekly drops the free setup line once the offer ends" do
+    travel_to Time.utc(2027, 1, 4, 15) do
+      body = OpsDigestMailer.weekly.text_part.body.to_s
+      assert_no_match "Free setup offer", body
+      assert_match "DSCSA small-dispenser deadline: November 27, 2027", body
     end
   end
 end

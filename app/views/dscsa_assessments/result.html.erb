@@ -33,10 +33,11 @@
       <% else %>
         <% if DscsaDeadline.passed? %>
           Based on your answers, here&rsquo;s where you stand against the requirements that took
-          effect when the exemption ended on November&nbsp;27,&nbsp;2026.
+          effect when the exemption ended on <%= DscsaDeadline.label %>.
         <% else %>
-          Based on your answers, here&rsquo;s where you stand against the requirements that take
-          effect when the exemption ends on November&nbsp;27,&nbsp;2026.
+          Based on your answers, here&rsquo;s where you stand. Some of these requirements apply now;
+          the package-level ones take effect when the exemption ends on <%= DscsaDeadline.label %>
+          (extended by the FDA from November&nbsp;27,&nbsp;2026).
         <% end %>
       <% end %>
     </p>

@@ -1,6 +1,6 @@
 <% content_for :full_bleed, "1" %>
 <% content_for :title, "DSCSA readiness check — Pharma Transport" %>
-<% content_for :meta_description, "A short self-assessment of how ready your pharmacy is for DSCSA's enhanced drug distribution security requirements once the small-dispenser exemption ends on November 27, 2026." %>
+<% content_for :meta_description, "A short self-assessment of how ready your pharmacy is for DSCSA's enhanced drug distribution security requirements once the small-dispenser exemption ends on #{DscsaDeadline.label}." %>
 
 <section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
   <div class="mx-auto max-w-3xl px-6 py-[64px]">
@@ -11,10 +11,10 @@
         Eight questions, about two minutes. You&rsquo;ll get a readiness score and a plain
         <% if DscsaDeadline.passed? %>
           breakdown of the gaps that matter now that the small-dispenser exemption has ended
-          (<strong>November&nbsp;27,&nbsp;2026</strong>). No account, and nothing is shared.
+          (<strong><%= DscsaDeadline.label %></strong>). No account, and nothing is shared.
         <% else %>
-          breakdown of the gaps that matter before the small-dispenser exemption ends on
-          <strong>November&nbsp;27,&nbsp;2026</strong>. No account, and nothing is shared.
+          breakdown of what applies now and what&rsquo;s left before the small-dispenser exemption ends on
+          <strong><%= DscsaDeadline.label %></strong>. No account, and nothing is shared.
         <% end %>
       </p>
     </div>

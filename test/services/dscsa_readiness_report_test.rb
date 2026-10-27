@@ -49,19 +49,21 @@ class DscsaReadinessReportTest < ActiveSupport::TestCase
     assert_includes text, "You answered every question"
   end
 
-  test "deadline copy and the free-setup offer switch after the deadline" do
+  test "deadline copy and the free-setup offer switch on their own dates" do
     assessment = build({ "custody" => "no" })
 
     travel_to Time.utc(2026, 11, 1, 15) do
       text = text_of(assessment)
-      assert_includes text, "exemption ends on"
-      assert_includes text, "set up your account with you for free"
+      assert_includes text, "extended the DSCSA small-dispenser exemption to November 27, 2027"
+      assert_includes text, "by December 31, 2026"
     end
 
-    travel_to Time.utc(2026, 12, 1, 15) do
-      text = text_of(assessment)
-      assert_includes text, "exemption ended on"
-      assert_not_includes text, "for free"
+    travel_to Time.utc(2027, 1, 15, 15) do
+      assert_not_includes text_of(assessment), "for free"
+    end
+
+    travel_to Time.utc(2027, 12, 1, 15) do
+      assert_includes text_of(assessment), "exemption ended on November 27, 2027"
     end
   end
 

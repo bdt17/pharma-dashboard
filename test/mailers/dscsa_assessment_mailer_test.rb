@@ -69,7 +69,7 @@ class DscsaAssessmentMailerTest < ActionMailer::TestCase
 
     [ mail.html_part, mail.text_part ].each do |part|
       body = part.body.encoded
-      assert_match "November 27, 2026", body
+      assert_match "November 27, 2027", body
       assert_match "Unsubscribe", body
     end
   end
@@ -93,11 +93,10 @@ class DscsaAssessmentMailerTest < ActionMailer::TestCase
     assessment.save!
 
     travel_to Time.utc(2026, 11, 1, 15) do
-      assert_match "before Nov 27", DscsaAssessmentMailer.follow_up_day3(assessment).subject
-      assert_match "isn't a soft deadline", DscsaAssessmentMailer.follow_up_day7(assessment).text_part.body.to_s
+      assert_match "moved the small-dispenser deadline to November 27, 2027", DscsaAssessmentMailer.follow_up_day7(assessment).text_part.body.to_s
+      assert_match "extended", DscsaAssessmentMailer.result_email(assessment).text_part.body.to_s
     end
-    travel_to Time.utc(2026, 11, 29, 15) do
-      assert_no_match "before Nov 27", DscsaAssessmentMailer.follow_up_day3(assessment).subject
+    travel_to Time.utc(2027, 11, 29, 15) do
       day7 = DscsaAssessmentMailer.follow_up_day7(assessment)
       assert_match "has passed", day7.text_part.body.to_s
       assert_match "took effect when the small-dispenser exemption ended", day7.html_part.body.to_s

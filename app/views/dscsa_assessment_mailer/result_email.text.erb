@@ -9,10 +9,11 @@ Here's your DSCSA readiness score, as requested.
 <% if @assessment.gaps.any? %>
 <% if DscsaDeadline.passed? %>
 <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work now that the
-small-dispenser exemption has ended (November 27, 2026):
+small-dispenser exemption has ended (<%= DscsaDeadline.label %>):
 <% else %>
 <%= @assessment.gaps.size %> of <%= DscsaAssessment::QUESTIONS.size %> areas need work before the
-small-dispenser exemption ends on November 27, 2026:
+small-dispenser exemption ends on <%= DscsaDeadline.label %>
+(the FDA extended it a year; some requirements already apply):
 <% end %>
 <% @assessment.gaps.first(3).each do |g| %>
 - <%= g[:category] %>

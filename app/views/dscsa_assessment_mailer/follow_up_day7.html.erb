@@ -10,13 +10,14 @@
 
 <p style="font-size:14px;">
   <% if DscsaDeadline.passed? %>
-    <strong>November 27, 2026</strong> has passed -- the exemption most small pharmacies were
+    <strong><%= DscsaDeadline.label %></strong> has passed -- the exemption most small pharmacies were
     operating under no longer applies. Anything still missing is a live compliance gap now,
     not a future one.
   <% else %>
-    <strong>November 27, 2026</strong> isn't a soft deadline -- it's when the exemption most
-    small pharmacies have been operating under simply stops applying. Whatever gets built or
-    put in place needs to be live before then, not started then.
+    The FDA moved the small-dispenser deadline to <strong><%= DscsaDeadline.label %></strong>, but it didn't pause
+    DSCSA: trading only with authorized partners, handling suspect product, and six-year
+    records apply today. The extra year is time to get the rest in place calmly &mdash; not a
+    reason to wait until next fall.
   <% end %>
 </p>
 

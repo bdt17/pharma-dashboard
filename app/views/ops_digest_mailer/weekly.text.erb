@@ -1,8 +1,9 @@
 <% d = @digest -%>
 Week of <%= d.since.to_date.strftime("%b %-d") %> - <%= d.until_time.to_date.strftime("%b %-d, %Y") %>
 <% if DeadlineOffer.active? -%>
-DSCSA deadline: <%= pluralize(DscsaDeadline.days_left, "day") %> left (free setup ends with it).
+Free setup offer: <%= pluralize(DeadlineOffer.days_left, "day") %> left (ends <%= DeadlineOffer.label %>).
 <% end -%>
+DSCSA small-dispenser deadline: <%= DscsaDeadline.label %><% unless DscsaDeadline.passed? %> (<%= pluralize(DscsaDeadline.days_left, "day") %> left)<% end %>.
 
 WAITING ON YOU
 - Unhandled call requests: <%= d.unhandled_leads_count %>

@@ -2,8 +2,9 @@
 <p style="font-size:13px; color:#666;">
   Week of <%= d.since.to_date.strftime("%b %-d") %> &ndash; <%= d.until_time.to_date.strftime("%b %-d, %Y") %>
   <% if DeadlineOffer.active? %>
-    &middot; <strong>DSCSA deadline: <%= pluralize(DscsaDeadline.days_left, "day") %> left</strong> (free setup ends with it)
+    &middot; <strong>Free setup offer: <%= pluralize(DeadlineOffer.days_left, "day") %> left</strong> (ends <%= DeadlineOffer.label %>)
   <% end %>
+  &middot; DSCSA small-dispenser deadline: <%= DscsaDeadline.label %>
 </p>
 
 <h3 style="font-size:15px; margin:20px 0 6px;">Waiting on you</h3>
