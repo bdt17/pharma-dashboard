@@ -102,12 +102,55 @@ class Rack::Attack
     req.ip if %w[/request-a-call /dscsa-assessment].include?(normalized_path(req)) && req.post?
   end
 
+  # The readiness check's emails go to whatever address is typed in, so
+  # also cap per recipient -- rotating IPs can't turn it into a way to
+  # mail one victim over and over.
+  throttle("lead_forms/email", limit: 2, period: 1.day) do |req|
+    if normalized_path(req) == "/dscsa-assessment" && req.post?
+      req.params["email"].to_s.strip.downcase.presence
+    end
+  end
+
+  # Resending a confirmation email: without this, registering a victim's
+  # address once and hammering "resend" mailed them ~60 times a minute.
+  throttle("confirmations/ip", limit: 5, period: 1.hour) do |req|
+    req.ip if normalized_path(req) == "/users/confirmation" && req.post?
+  end
+
+  # Per-address caps on the two Devise mailers, so spreading requests over
+  # many IPs still can't flood one inbox.
+  throttle("account_emails/email", limit: 5, period: 1.hour) do |req|
+    if %w[/users/password /users/confirmation].include?(normalized_path(req)) && req.post?
+      req.params.dig("user", "email").to_s.strip.downcase.presence
+    end
+  end
+
+  # Account changes take the current password -- cap guesses from a
+  # hijacked session.
+  throttle("account_update/ip", limit: 10, period: 5.minutes) do |req|
+    req.ip if normalized_path(req) == "/users" && (req.patch? || req.put?)
+  end
+
+  # Public PDF generation (the readiness report) runs Prawn per request on
+  # a small worker pool.
+  throttle("public_pdf/ip", limit: 10, period: 1.minute) do |req|
+    req.ip if req.path.start_with?("/dscsa-assessment/") && req.path.end_with?(".pdf")
+  end
+
+  # "Send test" for SMS recipients and webhooks costs real money (Twilio)
+  # or hits a third party each time.
+  throttle("test_sends/ip", limit: 10, period: 1.hour) do |req|
+    req.ip if req.post? && normalized_path(req).match?(%r{\A/(alerts/recipients|webhooks)/\d+/test\z})
+  end
+
   # General backstop against basic flooding of any endpoint, independent of
-  # the specific throttles above. Device telemetry ingest is exempt -- it
-  # has its own per-token and anon throttles (see gps_ingest/*), and a
-  # NAT'd fleet's combined volume would otherwise trip this per-IP limit.
+  # the specific throttles above. Exempt: device telemetry ingest (it has
+  # its own per-token and anon throttles, and a NAT'd fleet would trip a
+  # per-IP limit) and Stripe webhooks (signature-verified; a renewal burst
+  # from one Stripe IP must not be 429'd into late retries).
   throttle("requests/ip", limit: 300, period: 5.minutes) do |req|
-    req.ip unless normalized_path(req) == "/api/v1/gps" && req.post?
+    path = normalized_path(req)
+    req.ip unless req.post? && [ "/api/v1/gps", "/stripe/webhooks" ].include?(path)
   end
 
   self.throttled_responder = lambda do |request|

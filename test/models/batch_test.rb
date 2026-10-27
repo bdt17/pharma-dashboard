@@ -81,4 +81,16 @@ class BatchTest < ActiveSupport::TestCase
 
     assert_equal [ linked ], batch.temperature_excursions.to_a
   end
+
+  test "lot numbers are unique per organization, not across all of them" do
+    Batch.create!(lot_number: "LOT-SHARED", temperature_celsius: 5, vehicle: @vehicle, organization: @organization)
+
+    other_org = Organization.create!(name: "Other Pharmacy")
+    other = Batch.new(lot_number: "LOT-SHARED", temperature_celsius: 5,
+                      vehicle: Vehicle.create!(name: "Van", organization: other_org), organization: other_org)
+    assert other.valid?, other.errors.full_messages.to_sentence
+
+    dupe = Batch.new(lot_number: "LOT-SHARED", temperature_celsius: 5, vehicle: @vehicle, organization: @organization)
+    assert_not dupe.valid?
+  end
 end

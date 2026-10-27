@@ -6,7 +6,7 @@ class DscsaAssessment < ApplicationRecord
   # The eight scored questions. `gap` is what a non-"yes" answer means, shown
   # back on the result page. Wording tracks the DSCSA enhanced drug
   # distribution security (EDDS) obligations that apply once the
-  # small-dispenser exemption ends (2026-11-27); see the DSCSA blog post.
+  # small-dispenser exemption ends (DscsaDeadline); see the DSCSA blog post.
   QUESTIONS = [
     { key: "transaction_data",
       category: "Transaction data",
@@ -65,7 +65,7 @@ class DscsaAssessment < ApplicationRecord
   CONTEXT_QUESTION = {
     key: "exemption",
     category: "Exemption status",
-    prompt: "As of November 27, 2024, did your pharmacy employ 25 or fewer full-time licensed pharmacists and pharmacy technicians across all locations?"
+    prompt: "As of #{DscsaDeadline.qualifying_label}, will your pharmacy's owner employ 25 or fewer full-time licensed pharmacists and pharmacy technicians across all locations?"
   }.freeze
 
   ALL_KEYS = (QUESTIONS.map { |q| q[:key] } + [ CONTEXT_QUESTION[:key] ]).freeze
@@ -139,7 +139,7 @@ class DscsaAssessment < ApplicationRecord
   end
 
   # False = the exemption never applied, so the full requirements are
-  # already in force (not "in force after 2026-11-27").
+  # already in force (not "in force after DscsaDeadline::DATE").
   def still_exempt?
     answers[CONTEXT_QUESTION[:key]] == "yes"
   end

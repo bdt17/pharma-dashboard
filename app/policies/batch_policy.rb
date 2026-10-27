@@ -46,10 +46,11 @@ class BatchPolicy < ApplicationPolicy
 
   private
 
-  # A driver can always see a batch assigned to them, even if for some
-  # reason it's tagged to a different organization than their own (e.g. a
-  # cross-org delivery handoff) -- the assignment itself is the grant.
+  # A driver can see a batch assigned to them -- within their own
+  # organization. Callers (CustodyLogsController, ComplianceReportsController)
+  # look batches up unscoped and rely on this policy, so the org check here
+  # is what keeps a bad driver_id from exposing another tenant's records.
   def own_delivery?
-    user.driver? && record.driver_id == user.id
+    user.driver? && record.driver_id == user.id && record.organization_id == user.organization_id
   end
 end

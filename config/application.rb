@@ -13,6 +13,11 @@ require_relative "../lib/dashboard_subdomain_redirect"
 module PharmaDashboard
   class Application < Rails::Application
     config.load_defaults 8.1
+    # Signed/encrypted messages (unsubscribe tokens, etc.) are JSON only.
+    # The 7.1-era default, :json_allow_marshal, would still deserialize a
+    # Marshal payload -- harmless while secret_key_base is secret, but
+    # there's nothing here that needs it.
+    config.active_support.message_serializer = :json
     config.api_only = false
 
     config.generators do |g|

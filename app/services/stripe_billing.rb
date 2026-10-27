@@ -14,7 +14,7 @@ class StripeBilling
   # automatically instead of needing anyone to follow up.
   TRIAL_PERIOD_DAYS = 14
 
-  # Founding-customer launch offer, tied to the same Nov 27 2026 DSCSA
+  # Founding-customer launch offer, set before the (since-extended) Nov 27 2026 DSCSA
   # deadline the outreach mailer leans on: subscribe to the monthly plan
   # before the cutoff and get 25% off for the first 6 months after the
   # trial ends. Auto-applied in start_checkout! -- no promo code to

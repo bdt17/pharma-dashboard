@@ -53,7 +53,7 @@
       <span class="font-sans text-[13px] font-semibold">Free setups owed</span>
       <%= status_badge.(@free_setups_owed.any? ? :warn : :ok) %>
       <span class="text-[12px] text-ink-faint">
-        Deadline offer <%= DeadlineOffer.active? ? "running -- #{pluralize(DscsaDeadline.days_left, 'day')} left" : "ended" %>
+        Free setup offer <%= DeadlineOffer.active? ? "running -- #{pluralize(DeadlineOffer.days_left, 'day')} left (ends #{DeadlineOffer.label})" : "ended" %>
       </span>
     </div>
     <% if @free_setups_owed.any? %>

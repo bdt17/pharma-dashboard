@@ -78,8 +78,8 @@ class DscsaReadinessReport
     else
       days = DscsaDeadline.days_left
       left = days.zero? ? "today is the last day" : "#{days} #{'day'.pluralize(days)} from today"
-      "The DSCSA small-dispenser exemption ends on #{DscsaDeadline.label} (#{left}). " \
-        "After that, the requirements below apply."
+      "The FDA extended the DSCSA small-dispenser exemption to #{DscsaDeadline.label} (#{left}). " \
+        "Some requirements below already apply; the package-level ones take effect when it ends."
     end
   end
 
@@ -148,7 +148,7 @@ class DscsaReadinessReport
              size: 10.5, leading: 2
     pdf.move_down 8
     if DeadlineOffer.active?
-      pdf.text "Start a free trial before #{DscsaDeadline.label} and we'll set up your account with you for free " \
+      pdf.text "Start a free trial by #{DeadlineOffer.label} and we'll set up your account with you for free " \
                "(#{DeadlineOffer.value_label} value).", size: 10.5, style: :bold, leading: 2
       pdf.move_down 8
     end

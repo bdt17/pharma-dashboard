@@ -107,4 +107,23 @@ class DscsaAssessmentsControllerTest < ActionDispatch::IntegrationTest
     assert_nil assessment.utm_source
     assert_nil assessment.utm_campaign
   end
+
+  test "an unsubscribed address gets no email at all, not even the first one" do
+    EmailSuppression.suppress!("gone@example.com")
+
+    assert_no_enqueued_emails do
+      post dscsa_assessment_url, params: full_answers.merge(email: "gone@example.com")
+    end
+    assert_enqueued_jobs 0, only: DscsaAssessmentFollowUpJob
+  end
+
+  test "the result email doesn't echo form text back to whatever address was typed in" do
+    post dscsa_assessment_url, params: full_answers.merge(email: "victim@example.com", pharmacy_name: "URGENT call 555-0100")
+
+    mail = DscsaAssessmentMailer.result_email(DscsaAssessment.last)
+    assert_no_match "URGENT", mail.html_part.body.to_s
+    assert_no_match "URGENT", mail.text_part.body.to_s
+    assert_equal "List-Unsubscribe=One-Click", mail["List-Unsubscribe-Post"].to_s
+    assert_match "/unsubscribe?token=", mail["List-Unsubscribe"].to_s
+  end
 end

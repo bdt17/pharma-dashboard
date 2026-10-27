@@ -47,7 +47,7 @@ class CustodyLogTest < ActiveSupport::TestCase
 
   test "a delivered event with a real signature is valid" do
     log = CustodyLog.new(batch: @batch, action_type: "delivered", handler_name: "Jane", location: "Tucson, AZ",
-                          signature_data: { "image" => "data:image/png;base64,abc", "signer_name" => "John Recipient" })
+                          signature_data: { "image" => DemoData::TINY_PNG, "signer_name" => "John Recipient" })
     assert log.valid?
     assert log.signed?
   end
@@ -56,5 +56,24 @@ class CustodyLogTest < ActiveSupport::TestCase
     log = CustodyLog.new(batch: @batch, action_type: "pickup", handler_name: "Jane", location: "Phoenix, AZ")
     assert log.valid?
     assert_not log.signed?
+  end
+
+  test "rejects a signature that isn't a real PNG, since custody logs can never be fixed later" do
+    [ "data:image/png;base64,abc", "x", "data:image/svg+xml;base64,PHN2Zz4=", "data:image/png;base64,#{Base64.strict_encode64('GIF89a' + 'x' * 20)}" ].each do |image|
+      log = @batch.custody_logs.new(action_type: "delivered", handler_name: "Jane", location: "Dock 4",
+                                    signature_data: { "image" => image, "signer_name" => "John Recipient" })
+      assert_not log.valid?, image
+      assert_includes log.errors[:signature_data], "image isn't a valid signature"
+    end
+  end
+
+  test "rejects an oversized or absurd-dimension PNG" do
+    huge = "\x89PNG\r\n\x1A\n".b + [ 13 ].pack("N") + "IHDR" + [ 50_000, 50_000 ].pack("NN") + "\x08\x06\x00\x00\x00".b
+    log = @batch.custody_logs.new(action_type: "pickup", handler_name: "Jane", location: "Dock 4",
+                                  signature_data: { "image" => "data:image/png;base64,#{Base64.strict_encode64(huge)}", "signer_name" => "J" })
+    assert_not log.valid?
+
+    log.signature_data = { "image" => "data:image/png;base64,#{'A' * 500_000}", "signer_name" => "J" }
+    assert_not log.valid?
   end
 end

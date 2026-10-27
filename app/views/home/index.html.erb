@@ -155,9 +155,9 @@
     <div class="flex flex-col gap-1.5 max-w-[62ch]">
       <span class="text-[12px] font-semibold tracking-[0.08em] uppercase text-[#b45309]">DSCSA &mdash; small dispenser exemption</span>
       <% if DscsaDeadline.passed? %>
-        <p class="text-[15px] text-[#5c4420]">The FDA&rsquo;s small-dispenser exemption from enhanced drug distribution security requirements ended on <strong>November&nbsp;27,&nbsp;2026</strong>. If your pharmacy relied on it, the requirements apply to you now.</p>
+        <p class="text-[15px] text-[#5c4420]">The FDA&rsquo;s small-dispenser exemption from enhanced drug distribution security requirements ended on <strong><%= DscsaDeadline.label %></strong>. If your pharmacy relied on it, the requirements apply to you now.</p>
       <% else %>
-        <p class="text-[15px] text-[#5c4420]">The FDA&rsquo;s small-dispenser exemption from enhanced drug distribution security requirements ends <strong>November&nbsp;27,&nbsp;2026</strong>. If your pharmacy has relied on it, preparation needs to be finished &mdash; not starting.</p>
+        <p class="text-[15px] text-[#5c4420]">The FDA extended the small-dispenser exemption from enhanced drug distribution security requirements to <strong><%= DscsaDeadline.label %></strong>. Some DSCSA requirements already apply &mdash; use the extra year to get the rest in place without a scramble.</p>
       <% end %>
     </div>
     <div class="flex flex-col sm:flex-row gap-3 shrink-0">

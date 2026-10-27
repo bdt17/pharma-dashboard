@@ -22,13 +22,12 @@ class Batch < ApplicationRecord
   # the batch (unlike compliance_reports, which are issued records).
   has_many :excursion_events, dependent: :destroy
 
-  # Global, not scoped to organization -- matches the existing DB unique
-  # index (added before multi-tenancy). Two unrelated pharmacies could in
-  # theory collide on a lot number; revisit (with a migration to a
-  # compound [organization_id, lot_number] index) if that ever actually
-  # happens. Validated here so a collision is a readable form error
+  # Unique per organization (matching the [organization_id, lot_number]
+  # index): two pharmacies can receive the same manufacturer lot, and a
+  # global check leaked other tenants' lot numbers through the error
+  # message. Validated here so a collision is a readable form error
   # instead of a raw ActiveRecord::RecordNotUnique.
-  validates :lot_number, presence: true, uniqueness: true
+  validates :lot_number, presence: true, uniqueness: { scope: :organization_id }
   # Intentionally *not* validated into the compliant range: a temperature
   # excursion is exactly the event this system exists to detect and record.
   # Rejecting the save would make it impossible to ever have a record of a

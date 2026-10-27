@@ -20,10 +20,10 @@ class DscsaAssessmentMailer < ApplicationMailer
   def follow_up_day3(assessment)
     @assessment = assessment
     @gap = priority_gap(assessment)
-    @platform_solved = PLATFORM_SOLVED_KEYS.include?(@gap[:key])
+    @platform_solved = DscsaAssessment.closed_by_platform?(@gap)
     @unsubscribe_url = unsubscribe_url_for(assessment.email)
 
-    mail(to: assessment.email, subject: "Closing the #{@gap[:category].downcase} gap#{' before Nov 27' unless DscsaDeadline.passed?}")
+    mail(to: assessment.email, subject: "Closing the #{@gap[:category].downcase} gap")
   end
 
   def follow_up_day7(assessment)
@@ -35,18 +35,22 @@ class DscsaAssessmentMailer < ApplicationMailer
 
   private
 
+  # Also sets the RFC 8058 one-click headers, so mail clients show their
+  # own "Unsubscribe" button (Gmail/Yahoo bulk-sender requirement) that
+  # POSTs straight to /unsubscribe.
   def unsubscribe_url_for(email)
-    unsubscribe_url(token: EmailUnsubscribeToken.generate(email))
+    url = unsubscribe_url(token: EmailUnsubscribeToken.generate(email))
+    headers["List-Unsubscribe"] = "<#{url}>"
+    headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
+    url
   end
 
   # The gap to lead with in the day-3 email: prefer one the platform
   # itself closes (a trial converts directly) over one that needs a
   # written process or the compliance-officer retainer. Falls back to
   # whatever gap is first if every gap is platform-solvable or none are.
-  PLATFORM_SOLVED_KEYS = %w[custody coldchain records].freeze
-
   def priority_gap(assessment)
     gaps = assessment.gaps
-    gaps.find { |g| PLATFORM_SOLVED_KEYS.include?(g[:key]) } || gaps.first
+    gaps.find { |g| DscsaAssessment.closed_by_platform?(g) } || gaps.first
   end
 end

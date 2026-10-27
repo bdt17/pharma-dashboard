@@ -1,0 +1,67 @@
+<% d = @digest %>
+<p style="font-size:13px; color:#666;">
+  Week of <%= d.since.to_date.strftime("%b %-d") %> &ndash; <%= d.until_time.to_date.strftime("%b %-d, %Y") %>
+  <% if DeadlineOffer.active? %>
+    &middot; <strong>Free setup offer: <%= pluralize(DeadlineOffer.days_left, "day") %> left</strong> (ends <%= DeadlineOffer.label %>)
+  <% end %>
+  &middot; DSCSA small-dispenser deadline: <%= DscsaDeadline.label %>
+</p>
+
+<h3 style="font-size:15px; margin:20px 0 6px;">Waiting on you</h3>
+<ul style="font-size:14px; margin-top:0;">
+  <li>Unhandled call requests: <strong><%= d.unhandled_leads_count %></strong></li>
+  <li>Free setups owed: <strong><%= d.free_setups_owed.size %></strong>
+    <% if d.free_setups_owed.any? %>
+      <ul>
+        <% d.free_setups_owed.each do |org| %>
+          <li><%= org.name %> (since <%= org.free_setup_owed_at.to_date.strftime("%b %-d") %>)</li>
+        <% end %>
+      </ul>
+    <% end %>
+  </li>
+  <% if d.payment_failing_count.positive? %>
+    <li style="color:#b42318;">Customers with a failing payment: <strong><%= d.payment_failing_count %></strong></li>
+  <% end %>
+</ul>
+
+<h3 style="font-size:15px; margin:20px 0 6px;">This week</h3>
+<ul style="font-size:14px; margin-top:0;">
+  <li>New call requests: <strong><%= d.new_leads.size %></strong>
+    <% if d.new_leads.any? %>
+      <ul>
+        <% d.new_leads.each do |lead| %>
+          <li><%= lead.pharmacy_name.presence || lead.name %> &mdash; <%= lead.topic_label %> &mdash; <%= mail_to lead.email %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </li>
+  <li>Readiness checks taken: <strong><%= d.assessments_count %></strong>
+    (<%= d.assessments_with_email_count %> left an email<% if d.average_score %>, average score <%= d.average_score %><% end %>)</li>
+  <li>New customer signups: <strong><%= d.new_organizations.size %></strong>
+    <% if d.new_organizations.any? %>
+      <ul>
+        <% d.new_organizations.each do |org| %>
+          <li><%= org.name %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </li>
+  <li>Subscriptions started: <strong><%= d.subscriptions_started.size %></strong>
+    <% if d.subscriptions_started.any? %>
+      <ul>
+        <% d.subscriptions_started.each do |sub| %>
+          <li><%= sub.organization.name %> &mdash; <%= sub.status %><% if sub.tier %> (<%= sub.tier %>)<% end %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </li>
+  <% if d.canceled_this_week.any? %>
+    <li>Canceled: <%= d.canceled_this_week.map { |s| s.organization.name }.join(", ") %></li>
+  <% end %>
+  <li>Bot submissions blocked: <%= d.bot_blocks_count %></li>
+</ul>
+
+<h3 style="font-size:15px; margin:20px 0 6px;">Totals</h3>
+<p style="font-size:14px; margin-top:0;">Paying: <strong><%= d.active_count %></strong> &nbsp; Trialing: <strong><%= d.trialing_count %></strong></p>
+
+<p style="font-size:14px;"><%= link_to "Open /ops", ops_url %></p>

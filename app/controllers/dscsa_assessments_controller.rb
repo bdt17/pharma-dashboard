@@ -55,6 +55,10 @@ class DscsaAssessmentsController < ApplicationController
   # both delayed steps here unconditionally rather than re-deriving that
   # state twice.
   def schedule_follow_up_sequence(assessment)
+    # Someone who unsubscribed gets nothing -- not even the first email --
+    # however many times their address is typed into the form.
+    return if EmailSuppression.suppressed?(assessment.email)
+
     DscsaAssessmentMailer.result_email(assessment).deliver_later
     DscsaAssessmentFollowUpJob.set(wait: 3.days).perform_later(assessment.id, "day3")
     DscsaAssessmentFollowUpJob.set(wait: 7.days).perform_later(assessment.id, "day7")

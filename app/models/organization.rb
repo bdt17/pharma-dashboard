@@ -33,9 +33,10 @@ class Organization < ApplicationRecord
   # get typed by hand -- rejecting "abc123" for not matching "ABC123"
   # exactly would just look like a bug to whoever typed it.
   def self.find_by_referral_code(code)
+    code = code.to_s.strip
     return nil if code.blank?
 
-    find_by("upper(referral_code) = ?", code.strip.upcase)
+    find_by("upper(referral_code) = ?", code.upcase)
   end
 
   # Whether this organization is currently a real, in-good-standing

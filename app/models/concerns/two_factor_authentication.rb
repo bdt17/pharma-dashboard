@@ -158,18 +158,28 @@ module TwoFactorAuthentication
   # read-then-write). A success clears the failed-attempt counter below.
   def verify_second_factor(code)
     verified = with_lock { verify_and_consume_otp!(code) || invalidate_backup_code!(code) }
-    reset_failed_attempts! if verified
+    if verified
+      reset_failed_attempts!
+      update_column(:second_factor_failed_attempts, 0) unless second_factor_failed_attempts.zero?
+    end
     verified
   end
 
-  # A wrong second-factor code counts toward the same Devise :lockable
-  # counter a wrong password does. The per-IP throttle alone let an
-  # attacker holding the password spread guesses across many IPs; this caps
-  # guesses per account no matter where they come from. Returns true once
+  # Wrong second-factor codes are counted in their own column, and lock the
+  # account (Devise :lockable) at the same threshold as passwords. Not the
+  # shared failed_attempts: Devise resets that on every successful password
+  # sign-in, so someone holding the password could sign in again and get a
+  # fresh batch of guesses forever. This counter only resets on a correct
+  # code -- or here, once a previous lockout has expired. Returns true once
   # the account is locked, so the caller can end the session.
   def record_failed_second_factor!
-    increment_failed_attempts
-    lock_access! if failed_attempts >= self.class.maximum_attempts && !access_locked?
+    limit = self.class.maximum_attempts
+    with_lock do
+      self.second_factor_failed_attempts = 0 if second_factor_failed_attempts >= limit && !access_locked?
+      self.second_factor_failed_attempts += 1
+      save!(validate: false)
+    end
+    lock_access! if second_factor_failed_attempts >= limit && !access_locked?
     access_locked?
   end
 

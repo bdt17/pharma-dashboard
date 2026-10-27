@@ -100,17 +100,19 @@ class WebhookEndpoint < ApplicationRecord
   # RFC1918 / ULA private space, link-local (incl. the 169.254.169.254
   # cloud metadata address), "this network", carrier-grade NAT, benchmark
   # and IETF-reserved space, multicast, the IPv6 unspecified address, and
-  # NAT64 (which maps straight onto IPv4, private ranges included).
+  # NAT64 / IPv4-compatible / 6to4 / site-local (which map onto, or route
+  # to, private space).
   BLOCKED_RANGES = [
     "0.0.0.0/8", "127.0.0.0/8", "169.254.0.0/16",
     "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16",
     "100.64.0.0/10", "192.0.0.0/24", "198.18.0.0/15", "240.0.0.0/4",
-    "224.0.0.0/4", "::/128", "::1/128", "fc00::/7", "fe80::/10", "ff00::/8", "64:ff9b::/96"
+    "224.0.0.0/4", "::/96", "::1/128", "fc00::/7", "fe80::/10", "fec0::/10", "ff00::/8",
+    "64:ff9b::/96", "64:ff9b:1::/48", "2002::/16"
   ].map { |cidr| IPAddr.new(cidr) }.freeze
 
   def self.blocked_ip?(address)
     ip = IPAddr.new(address.to_s)
-    ip = ip.native if ip.ipv4_mapped?
+    ip = ip.native if ip.ipv4_mapped? || ip.ipv4_compat?
     BLOCKED_RANGES.any? { |range| range.family == ip.family && range.include?(ip) }
   rescue IPAddr::Error
     true

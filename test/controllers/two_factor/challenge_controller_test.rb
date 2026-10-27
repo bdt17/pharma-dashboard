@@ -69,4 +69,25 @@ class TwoFactor::ChallengeControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to dashboard_path
     assert_equal 0, @user.reload.failed_attempts
   end
+
+  test "signing in again with the password doesn't reset the wrong-code count" do
+    # Devise resets failed_attempts on every password sign-in, so a shared
+    # counter gave an attacker holding the password unlimited guesses,
+    # 4 per login. The 2FA counter survives re-login.
+    (Devise.maximum_attempts - 1).times { post two_factor_challenge_path, params: { otp_code: "000000" } }
+    delete destroy_user_session_path
+    post user_session_path, params: { user: { email: @user.email, password: "password123!" } }
+
+    post two_factor_challenge_path, params: { otp_code: "000000" }
+
+    assert @user.reload.access_locked?
+    assert_redirected_to new_user_session_path
+  end
+
+  test "a correct code also resets the second-factor counter" do
+    2.times { post two_factor_challenge_path, params: { otp_code: "000000" } }
+    post two_factor_challenge_path, params: { otp_code: @totp.now }
+
+    assert_equal 0, @user.reload.second_factor_failed_attempts
+  end
 end

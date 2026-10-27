@@ -71,10 +71,12 @@ class BillingController < ApplicationController
 
   # Hands off to Stripe's own hosted portal for updating a payment method,
   # viewing invoices, or canceling -- see StripeBilling.billing_portal_url.
-  # Any signed-in org member can open it (not just admin): it's read-mostly
-  # (invoice history) plus self-service actions on their own org's billing,
-  # not a distinct administrative action like starting a new subscription.
+  # Admin-only like every other billing action: the portal can cancel the
+  # subscription and change the card, not just show invoices.
   def portal
+    authorize_billing_admin!
+    return if performed?
+
     unless current_organization&.stripe_customer_id.present?
       redirect_to billing_path, alert: "No billing history yet -- subscribe first."
       return

@@ -74,7 +74,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   test "the DSCSA 2026 landing page is public, renders, and points at the free check" do
     get dscsa_2026_url
     assert_response :success
-    assert_select "h1", text: /DSCSA deadline/
+    assert_select "h1", text: /one more year/
     assert_select "a[href=?]", dscsa_assessment_path, text: /readiness check/
   end
 
@@ -120,17 +120,16 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
     assert_match "$250/month", response.body
   end
 
-  test "the independent pharmacy page carries the deadline offer only before the deadline" do
+  test "the independent pharmacy page carries the free setup offer only while it runs" do
     travel_to Time.utc(2026, 11, 1, 15) do
       get independent_pharmacy_url
-      assert_match "DSCSA deadline offer", response.body
-      assert_match "exemption ends on", response.body
+      assert_match "Free setup offer", response.body
+      assert_match "extended it only to November 27, 2027", response.body
     end
 
-    travel_to Time.utc(2026, 12, 1, 15) do
+    travel_to Time.utc(2027, 1, 15, 15) do
       get independent_pharmacy_url
-      assert_no_match "DSCSA deadline offer", response.body
-      assert_match "exemption ended on", response.body
+      assert_no_match "Free setup offer", response.body
     end
   end
 

@@ -49,3 +49,4 @@ coc.pdf
 /app/assets/builds/*
 !/app/assets/builds/.keep
 /config/secret_key.txt
+db/*.sqlite3
