@@ -40,7 +40,7 @@
 
     <div>
       <%= f.label :driver_id, "Driver (optional)", class: "block text-[12px] text-ink-faint mb-1" %>
-      <%= f.select :driver_id, current_organization.users.driver.order(:email).map { |u| [ u.name.presence || u.email, u.id ] },
+      <%= f.select :driver_id, current_organization.users.active.driver.order(:email).map { |u| [ u.name.presence || u.email, u.id ] },
             { include_blank: "Unassigned" }, class: "field-input" %>
     </div>
 

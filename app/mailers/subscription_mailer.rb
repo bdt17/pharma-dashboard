@@ -36,7 +36,7 @@ class SubscriptionMailer < ApplicationMailer
   private
 
   def recipients
-    emails = @organization.users.where(role: "admin").pluck(:email)
+    emails = @organization.users.active.where(role: "admin").pluck(:email)
     emails.presence || [ self.class.default[:from] ]
   end
 end

@@ -23,6 +23,12 @@ class ExcursionMailerTest < ActionMailer::TestCase
     assert_match "/batches/#{@batch.id}/custody_logs", body
   end
 
+  test "a deactivated admin or pharmacist no longer gets alerts" do
+    @pharmacist.update!(deactivated_at: Time.current)
+    event = ExcursionEvent.create!(batch: @batch, vehicle: @vehicle, started_at: Time.current, trigger_temp: 12.4, peak_temp: 12.4)
+    assert_equal %w[admin@example.com], ExcursionMailer.alert(event).to
+  end
+
   test "resolved names the peak temperature" do
     event = ExcursionEvent.create!(
       batch: @batch, vehicle: @vehicle,

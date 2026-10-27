@@ -1,0 +1,14 @@
+<p style="font-size:14px;">
+  <%= @inviter.name.presence || @inviter.email %> invited you to join
+  <strong><%= @invitation.organization.name %></strong> on Pharma Transport as a
+  <strong><%= @invitation.role %></strong>.
+</p>
+<p style="font-size:14px;">
+  Pharma Transport records chain of custody and temperature for the shipments your team handles.
+  Set your name and password to get started:
+</p>
+<p style="font-size:14px;"><%= link_to "Accept the invitation", @url %></p>
+<p style="font-size:12px;color:#5b6b7c;">
+  This link works once and expires <%= @invitation.expires_at.to_date.strftime("%B %-d, %Y") %>.
+  If you weren't expecting it, ignore this email and nothing happens.
+</p>

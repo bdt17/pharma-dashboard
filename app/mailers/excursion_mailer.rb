@@ -26,7 +26,7 @@ class ExcursionMailer < ApplicationMailer
   private
 
   def recipients
-    emails = @batch.organization.users.where(role: %w[admin pharmacist]).pluck(:email)
+    emails = @batch.organization.users.active.where(role: %w[admin pharmacist]).pluck(:email)
     emails.presence || [ self.class.default[:from] ]
   end
 end

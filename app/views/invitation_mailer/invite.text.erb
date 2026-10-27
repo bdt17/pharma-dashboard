@@ -1,0 +1,7 @@
+<%= @inviter.name.presence || @inviter.email %> invited you to join <%= @invitation.organization.name %> on Pharma Transport as a <%= @invitation.role %>.
+
+Pharma Transport records chain of custody and temperature for the shipments your team handles. Set your name and password to get started:
+
+<%= @url %>
+
+This link works once and expires <%= @invitation.expires_at.to_date.strftime("%B %-d, %Y") %>. If you weren't expecting it, ignore this email and nothing happens.

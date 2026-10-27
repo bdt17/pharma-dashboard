@@ -84,6 +84,19 @@ Rails.application.routes.draw do
   get "/compliance", to: "compliance#index", as: :compliance
   get "/subscribe", to: redirect("/billing")
 
+  # Team members and invitations -- see TeamController. Accepting an
+  # invitation is public (the emailed token is the credential); see
+  # InvitationsController.
+  get    "/team", to: "team#index", as: :team
+  post   "/team/invitations", to: "team#invite", as: :team_invitations
+  delete "/team/invitations/:id", to: "team#revoke", as: :team_invitation
+  post   "/team/invitations/:id/resend", to: "team#resend", as: :resend_team_invitation
+  patch  "/team/members/:id", to: "team#update_member", as: :team_member
+  post   "/team/members/:id/deactivate", to: "team#deactivate", as: :deactivate_team_member
+  post   "/team/members/:id/reactivate", to: "team#reactivate", as: :reactivate_team_member
+  get    "/invitations/:token", to: "invitations#show", as: :invitation
+  post   "/invitations/:token", to: "invitations#accept"
+
   # Full audit trail + CSV export -- see AuditLogsController. Same
   # explicit-format-suffix style as /batches.pdf below, rather than
   # relying on implicit format-suffix routing.

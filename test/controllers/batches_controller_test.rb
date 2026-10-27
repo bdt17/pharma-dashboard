@@ -116,6 +116,26 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
     assert_nil Batch.last.driver
   end
 
+  test "a deactivated driver can't be newly assigned" do
+    @driver.update!(deactivated_at: Time.current)
+    sign_in @admin
+
+    post batches_url, params: { batch: { lot_number: "LOT-2026-0007", vehicle_id: @vehicle.id, driver_id: @driver.id } }
+    assert_nil Batch.last.driver
+  end
+
+  test "editing a batch keeps a driver who was deactivated after assignment" do
+    @batch.update!(driver: @driver)
+    @driver.update!(deactivated_at: Time.current)
+    sign_in @admin
+
+    get edit_batch_url(@batch)
+    assert_select "option[selected][value=?]", @driver.id.to_s, text: /deactivated/
+
+    patch batch_url(@batch), params: { batch: { name: "Renamed", vehicle_id: @vehicle.id, driver_id: @driver.id } }
+    assert_equal @driver, @batch.reload.driver
+  end
+
   test "a duplicate lot_number is rejected with a readable error" do
     sign_in @admin
 
