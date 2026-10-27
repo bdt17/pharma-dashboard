@@ -21,8 +21,14 @@ class PagesController < ApplicationController
     # hardcoded number on an ad landing page is exactly the kind of thing
     # that quietly drifts wrong after a price change and undersells (or
     # oversells) the offer the ad promised.
-    starter_price = StripeBilling.available_plans.find { |p| p[:tier] == "starter" && p[:interval] == "month" }
-    @starter_monthly = starter_price ? starter_price[:amount].to_i : SubscriptionPlan::STARTER.monthly_dollars
+    load_starter_monthly
+  end
+
+  # Landing page for independent pharmacies competing with mail-order --
+  # the one link outreach emails, calls, and association webinars share.
+  # Same Stripe-sourced Starter price as #dscsa_2026.
+  def independent_pharmacy
+    load_starter_monthly
   end
 
   def about
@@ -43,5 +49,12 @@ class PagesController < ApplicationController
   def compliance_officer
     @slots_available = RetainerCapacity.slots_available
     @retainer_full = RetainerCapacity.full?
+  end
+
+  private
+
+  def load_starter_monthly
+    starter_price = StripeBilling.available_plans.find { |p| p[:tier] == "starter" && p[:interval] == "month" }
+    @starter_monthly = starter_price ? starter_price[:amount].to_i : SubscriptionPlan::STARTER.monthly_dollars
   end
 end

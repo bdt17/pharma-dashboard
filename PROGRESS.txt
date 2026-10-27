@@ -1,9 +1,32 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-09-09 (rev 35)
+Last updated: 2026-10-25 (rev 36)
 
 ====================================================================
 STATUS
 ====================================================================
+REV 36 (2026-10-25) -- READ THIS FIRST. Everything below this
+paragraph is the rev 35 status, kept as history; two of its headline
+numbers turned out to be wrong (see "SESSION 2026-10-25" below):
+
+  - REAL BASELINE: 0 customer orgs, 0 paying. The "21 orgs / 2 paying"
+    in earlier revs was Brett's own test accounts plus 11 bot signups.
+    Both "active" subscriptions belong to Monetize Check 3 LLC, a
+    mailinator test org. Bots deleted; every remaining org is flagged
+    internal on /ops, so any customer count there from now on is real.
+  - JAVASCRIPT HAD NEVER RUN IN ANY BROWSER since #50 (2026-08-22):
+    application.js imported a nonexistent export, so Turbo and every
+    Stimulus controller died at module-link time. Consequence: the
+    signature pad never mounted, so a "delivered" custody event could
+    not be recorded from the UI at all. Fixed in #208 -- MERGE IT
+    FIRST if it is still open.
+  - Security pass done (#204, #208): two 2FA bypasses, throttle
+    evasion, checkout price-ID trust, webhook SSRF, CSV injection,
+    TLS, CSP, real client IP behind Cloudflare, bot protection (#205).
+  - Deadline phase live (#207): copy flips by itself on 2026-11-28;
+    free White-Glove Setup offer for anyone who starts before the
+    deadline, fulfilled from /ops "Free setups owed".
+  - main @ 7774f678 (+ #208 when merged). Suite 733 + 9 system tests.
+
 The entire ROADMAP.md (steps 1-7) is built, merged, and deployed.
 Seventeen follow-up PRs shipped on top. Production is live and verified.
 
@@ -268,6 +291,102 @@ Production: Render auto-deploys main on push. Latest deploy verified --
 the CI and Smoke (live public-surface) workflows both passed, and the
 new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
 pharmatransport.org, confirming the release migrations ran.
+
+====================================================================
+SESSION 2026-10-25: SECURITY PASS, REAL BASELINE, DEADLINE PHASE
+====================================================================
+Asked to "test on functions and close all security holes." Baseline
+first: 676 unit + 7 system tests green, brakeman 0, bundler-audit 1
+(crass GHSA-pq4g-8rxf-4g29), npm audit 0. A manual audit of auth,
+tenancy, billing and webhooks (brakeman can't see logic flaws) found
+tenant isolation sound everywhere, and these real holes -- all fixed:
+
+  #204  - 2FA BYPASS (HIGH): enforce_two_factor skipped any request
+          with request.format.json?, and an Accept: application/json
+          header alone makes that true on every route. A stolen
+          password could forge signed custody records, download PDFs,
+          add webhooks. Proven: the new tests fail against the old
+          gate (a vehicle got created from a password-only session).
+        - 2FA BYPASS: devise_controller? exempted /users/edit and
+          DELETE /users from the gate.
+        - Rack::Attack compared req.path exactly; /users/sign_in/,
+          //users/sign_in and /users/sign_in.json all routed but
+          skipped every throttle. Now router-normalized.
+        - No per-account limit on 2FA guesses (per-IP only): wrong
+          codes now count toward Devise lockable (5 -> locked 1h,
+          session ended). Code checks row-locked (backup-code race).
+        - Checkout trusted any posted Stripe price_id (self-serve
+          Enterprise or an untagged price); now allow-listed to what
+          /billing offers.
+        - CSV formula injection in both exports (CsvSafe).
+        - Webhook signing secrets shown to non-admins.
+        - Webhook SSRF via DNS rebinding: delivery now connects to the
+          vetted IP (Net::HTTP#ipaddr); CGNAT/NAT64/reserved ranges
+          added. (This closes the old FOLLOW-UP item.)
+        - assume_ssl + force_ssl: Secure cookies + HSTS (verified live).
+        - User#to_json no longer includes otp_secret / backup digests.
+        - crass 1.0.8; config/secret_key.txt untracked (see STILL OPEN:
+          it is still in git history -- compare with Render's
+          SECRET_KEY_BASE and rotate if it matches).
+  #205  BOT PROTECTION. A production console check found every call
+        request (8) and 11 signups were one bot: random-letter names,
+        dotted-Gmail addresses, days apart (never near a rate limit).
+        Signup, request-a-call and the DSCSA assessment now carry an
+        off-screen honeypot (filled -> fake success, nothing saved) and
+        a signed render-time token (<3s / missing / forged / >1 day ->
+        re-shown with "please submit again", never silently dropped).
+  #206  /ops LEAD INBOX: call requests with details + Mark handled
+        (no more production console), latest assessments with email,
+        an Organizations table with Mark internal (internal orgs drop
+        out of customer and subscription counts), and a 7-day
+        bot-block counter (BotBlock rows, 90-day retention).
+  CLEANUP (console, by Brett): 11 bot users + orgs, their call
+        requests and assessments, and 3 empty "Billing Check" orgs
+        deleted in one transaction; all 14 remaining orgs marked
+        internal. /ops now reads "Customer orgs / users 0 / 0 (+14
+        internal hidden)", "Subscriptions (customers) none yet (+2 on
+        internal orgs)".
+  #207  DEADLINE PHASE. DscsaDeadline (2026-11-27, judged in US
+        Eastern) drives every deadline message: /dscsa-2026, the home
+        callout, assessment intro/result, the result/day-3/day-7 emails
+        and the day-3 subject all switch tense on Nov 28 by themselves;
+        the blog post gains an "this date has passed" note. Deadline
+        offer = free White-Glove Setup ($299) for anyone who starts a
+        trial/subscription before the deadline -- chosen over "first
+        month free" (a 14-day trial already exists; a free month delays
+        first revenue past the deadline) because it costs no recurring
+        revenue and puts Brett on a call with every new trial. Banner
+        on /pricing, /billing, /dscsa-2026 and the assessment result
+        with a days-left countdown; the Stripe webhook stamps
+        free_setup_owed_at and emails Brett; /ops "Free setups owed"
+        with Mark setup done. Verified live by curl.
+  #208  INFOSEC + JAVASCRIPT. Checking live headers showed the site is
+        behind Cloudflare, so remote_ip / Rack::Attack saw Cloudflare's
+        edge IP (shared throttles; custody/audit records storing the
+        wrong IP) -- Cloudflare ranges now trusted. Added a nonce-based
+        CSP, a real Permissions-Policy header (Rails 8.1's DSL still
+        emits obsolete Feature-Policy), Devise paranoid mode, 12-char
+        password minimum, and rewrote test_infosec.rb into a real
+        12-point live check (`ruby test_infosec.rb`). Verifying the CSP
+        in a real browser (headless Chrome over DevTools -- a dump-dom
+        check was proven blind first) is what exposed the JavaScript
+        bug in the rev 36 header above. Fixed with eagerLoadControllersFrom;
+        Stripe forms opt out of Turbo (cross-origin redirect); new
+        system tests cover JS boot and signing a delivery end to end.
+        After the fix: 7 public pages, Turbo + Stimulus boot, 0 CSP
+        violations, 0 JS errors.
+
+Dependency PRs merged after reading release notes against the code
+(green CI alone says little for Stripe -- every call is stubbed):
+#195 rails 8.1.4 (bug-fix release; it also changes db/schema.rb's
+column order, committed once in #206), #198 stripe 20.0.0 (pins API
+2026-09-30.endive; its breaking changes -- payment_method_types,
+Stripe::Reversal, billing_cycle_anchor format, Stripe Tax -- touch
+nothing this app uses; webhook payloads follow the endpoint's own API
+version), #197 sentry 7.1 (#194 closed as covered), #201 pg 1.7,
+#202 twilio 7.12, #190 bootsnap, #199 brakeman 8.1, #203 selenium.
+Also merged: #188 (Ads conversion tracking), #189 (rev 35). #183
+closed as superseded.
 
 ====================================================================
 SESSION 2026-09-03: #147 PRICE RAISE ACTIVATED IN LIVE STRIPE
@@ -656,7 +775,7 @@ own actions (see STILL OPEN) or genuinely new strategic ground (see
 NEXT PHASES) -- nothing queued and unstarted.
 
 ====================================================================
-MERGED THIS SESSION (57 PRs; #188 open)
+MERGED (running log, through #208)
 ====================================================================
 
 Roadmap + core:
@@ -834,9 +953,19 @@ Rev-12 follow-up-list work (all merged):
   #185  On-demand "Check Postmark" probe on /ops -- Phase A. No migration.
   #186  Sentry Cron Monitors heartbeat job -- Phase A. No migration.
   #187  Update PROGRESS.txt to rev 34.
-  (open) #188  Google Ads conversion tracking -- green, awaiting
-        Brett's merge as of rev 35. See the 2026-09-09 (later still)
-        write-up above. No migration.
+  #188  Google Ads conversion tracking -- dormant until
+        GOOGLE_ADS_CONVERSION_ID is set. No migration.
+  #189  Update PROGRESS.txt to rev 35.
+  #204  Security hardening (2FA bypasses, throttles, checkout price
+        allow-list, webhook SSRF, CSV injection, TLS). No migration.
+  #205  Invisible bot protection on the three public forms. No migration.
+  #206  /ops lead inbox, internal-org flag, bot-block counts.
+        Migrations: organizations.internal, bot_blocks.
+  #207  DSCSA deadline auto-switch + free-setup deadline offer.
+        Migration: organizations.free_setup_owed_at / _completed_at.
+  #208  Infosec (Cloudflare client IP, CSP, Permissions-Policy, Devise)
+        + fix JavaScript never booting. No migration.
+  (See "SESSION 2026-10-25" above for all of these.)
 
   Also merged, not written up individually (routine, zero app-code
   changes): #166 Bump actions/checkout from 5 to 7; #167 Bump stripe
@@ -927,9 +1056,13 @@ FOLLOW-UP WORK (product)
 - Self-serve Enterprise -- contact-sales for now; see #138 note above.
 - Webhook delivery log (#136) shows the newest 100 only -- add pagination
   + a status/event filter if a real integration customer needs history.
-- Webhook delivery has a small DNS-rebinding window (validated at save,
-  re-checked at send, not pinned to the resolved IP). Fiddly, low
-  likelihood, deferred.
+- Webhook DNS-rebinding window -- DONE, pinned to the vetted IP (#204).
+- Three Stimulus controllers are unused dead code (batch_live_table,
+  fda_audit_trail, gps_map) -- they poll HTML endpoints and were never
+  wired to a view. Delete or finish them; they now actually load (#208).
+- Billing portal is open to every member, admin or not, and allows
+  cancelling -- documented as intentional (a test asserts it). Revisit
+  once orgs have non-admin members (team invites).
 - Split the Solid Queue worker into its own Render service if job volume
   grows (drop the puma plugin line, run bin/jobs).
 - SELF-SERVE BATCH CREATION -- DONE, see #172 above.
@@ -1028,3 +1161,14 @@ PRE-EXISTING ISSUES FOUND & FIXED THIS SESSION
   9. Nothing anywhere ever advanced a batch's status to "delivered",
      so Vehicle#current_batch was silently wrong for any real
      customer's completed deliveries                           -> #172
+ 10. 2FA bypassable with an Accept: application/json header, and
+     account settings reachable before the second factor        -> #204
+ 11. Every Rack::Attack throttle skippable with a trailing slash or
+     format extension                                           -> #204
+ 12. All "leads" and 11 of 25 users were a spam bot; /ops counts
+     were test accounts + bots (0 real customers)               -> #205, #206
+ 13. Rate limits and custody/audit IPs saw Cloudflare's edge, not
+     the visitor                                                -> #208
+ 14. JavaScript never executed in any browser since #50: Turbo and
+     all Stimulus controllers dead, so "delivered" custody events
+     were impossible to record from the UI                     -> #208

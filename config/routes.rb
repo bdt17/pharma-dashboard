@@ -32,6 +32,8 @@ Rails.application.routes.draw do
   # separate page from the general marketing pricing page rather than
   # sending that traffic to /pricing directly. See PagesController#dscsa_2026.
   get "/dscsa-2026", to: "pages#dscsa_2026", as: :dscsa_2026
+  # Outreach landing page for independents competing with mail-order.
+  get "/independent-pharmacy", to: "pages#independent_pharmacy", as: :independent_pharmacy
   get "/verify/:token", to: "verifications#show", as: :verification
   # Embeddable SVG version of the badge -- a pharmacy drops this on its own
   # site (see the snippet on the Billing page), and every embed links back

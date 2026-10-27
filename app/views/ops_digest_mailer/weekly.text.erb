@@ -1,0 +1,39 @@
+<% d = @digest -%>
+Week of <%= d.since.to_date.strftime("%b %-d") %> - <%= d.until_time.to_date.strftime("%b %-d, %Y") %>
+<% if DeadlineOffer.active? -%>
+DSCSA deadline: <%= pluralize(DscsaDeadline.days_left, "day") %> left (free setup ends with it).
+<% end -%>
+
+WAITING ON YOU
+- Unhandled call requests: <%= d.unhandled_leads_count %>
+- Free setups owed: <%= d.free_setups_owed.size %>
+<% d.free_setups_owed.each do |org| -%>
+    <%= org.name %> (since <%= org.free_setup_owed_at.to_date.strftime("%b %-d") %>)
+<% end -%>
+<% if d.payment_failing_count.positive? -%>
+- Customers with a failing payment: <%= d.payment_failing_count %>
+<% end -%>
+
+THIS WEEK
+- New call requests: <%= d.new_leads.size %>
+<% d.new_leads.each do |lead| -%>
+    <%= lead.pharmacy_name.presence || lead.name %> - <%= lead.topic_label %> - <%= lead.email %>
+<% end -%>
+- Readiness checks taken: <%= d.assessments_count %> (<%= d.assessments_with_email_count %> left an email<% if d.average_score %>, average score <%= d.average_score %><% end %>)
+- New customer signups: <%= d.new_organizations.size %>
+<% d.new_organizations.each do |org| -%>
+    <%= org.name %>
+<% end -%>
+- Subscriptions started: <%= d.subscriptions_started.size %>
+<% d.subscriptions_started.each do |sub| -%>
+    <%= sub.organization.name %> - <%= sub.status %><% if sub.tier %> (<%= sub.tier %>)<% end %>
+<% end -%>
+<% if d.canceled_this_week.any? -%>
+- Canceled: <%= d.canceled_this_week.map { |s| s.organization.name }.join(", ") %>
+<% end -%>
+- Bot submissions blocked: <%= d.bot_blocks_count %>
+
+TOTALS
+- Paying: <%= d.active_count %>   Trialing: <%= d.trialing_count %>
+
+Details: <%= ops_url %>

@@ -9,6 +9,7 @@
             "compliance_officer_waitlist" => "Compliance officer waitlist",
             "dscsa_assessment" => "DSCSA readiness",
             "enterprise" => "Enterprise plan",
+            "independent_pharmacy" => "For independent pharmacies",
             "general" => "Talk to us" }.fetch(@call_request.topic, "Talk to us") %>
     </span>
     <h1 class="text-[28px] sm:text-[32px]">
@@ -26,6 +27,9 @@
       <% elsif @call_request.topic == "enterprise" %>
         Tell us about your locations and volume &mdash; we&rsquo;ll scope an Enterprise plan,
         walk through SSO and onboarding, and put pricing in writing.
+      <% elsif @call_request.topic == "independent_pharmacy" %>
+        Fifteen minutes with the founder on what DSCSA means for a pharmacy your size and how
+        your deliveries would be recorded &mdash; whether or not you sign up.
       <% else %>
         Tell us a little about your pharmacy and we&rsquo;ll get back to you.
       <% end %>
