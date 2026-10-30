@@ -154,13 +154,40 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", new_vehicle_path, text: "Add a vehicle →"
   end
 
-  test "the packet step links to the most recent batch's custody history once a batch exists" do
+  test "the packet step links to recording an event on the most recent batch once a batch exists" do
     batch = Batch.create!(lot_number: "LOT-1", vehicle: @vehicle, organization: @organization)
 
     sign_in @user
     get dashboard_url
 
-    assert_select "a[href=?]", batch_custody_logs_path(batch), text: "Record a delivery →"
+    assert_select "a[href=?]", new_batch_custody_log_path(batch), text: "Record a delivery →"
+  end
+
+  test "the invite step links admins to the Team page and is done once anyone is invited" do
+    org = Organization.create!(name: "Solo Pharmacy")
+    admin = User.create!(email: "admin@example.com", password: "password123!", organization: org, role: "admin")
+
+    sign_in admin
+    get dashboard_url
+    assert_select "a[href=?]", team_path, text: "Invite →"
+    assert_match "0 of 4 done", response.body
+
+    org.invitations.create!(email: "driver@example.com", role: "driver", invited_by: admin)
+    get dashboard_url
+    assert_select "main a[href=?]", team_path, count: 0
+    assert_match "1 of 4 done", response.body
+  end
+
+  test "non-admins are told to ask their admin instead of getting links they can't use" do
+    driver = User.create!(email: "driver@example.com", password: "password123!", organization: @organization, role: "driver")
+
+    sign_in driver
+    get dashboard_url
+
+    assert_response :success
+    assert_select "main a[href=?]", team_path, count: 0
+    assert_select "main a[href=?]", new_batch_path, count: 0
+    assert_match "Ask your admin", response.body
   end
 
   test "the packet step has no link when there's no batch yet to record a delivery on" do
@@ -170,7 +197,7 @@ class DashboardControllerTest < ActionDispatch::IntegrationTest
     assert_match "Log a batch first", response.body
   end
 
-  test "hides the getting-started checklist once the organization is fully activated" do
+  test "hides the getting-started checklist once the required steps are done, even with nobody invited" do
     batch = Batch.create!(lot_number: "LOT-1", vehicle: @vehicle, organization: @organization)
     ComplianceReport.create_next_version!(batch: batch, generated_by: @user, content_hash: SecureRandom.hex(32), pdf_data: "%PDF-x")
 

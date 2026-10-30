@@ -1,9 +1,7 @@
-<p style="font-size:14px;">
-  <%# No form text (like the pharmacy name) is echoed here: the address
-    is whatever was typed into a public form, so echoing input would let
-    anyone send their own words to anyone from our domain. %>
+<%# No form text (like the pharmacy name) is echoed here: the address
+  is whatever was typed into a public form, so echoing input would let
+  anyone send their own words to anyone from our domain. %>
 <p style="font-size:14px;">Here's your DSCSA readiness score, as requested.</p>
-</p>
 
 <p style="font-size:32px; margin: 20px 0 4px;">
   <strong><%= @assessment.score %></strong><span style="font-size:16px; color:#666;"> / 100 &mdash; <%= @assessment.band_label %></span>

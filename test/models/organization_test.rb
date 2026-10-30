@@ -200,6 +200,20 @@ class OrganizationTest < ActiveSupport::TestCase
     assert org.fully_activated?
   end
 
+  test "invited_a_teammate? counts a second member or any invitation, and isn't required for activation" do
+    org = Organization.create!(name: "Acme Pharma")
+    admin = User.create!(email: "admin@example.com", password: "password123!", organization: org, role: "admin")
+    assert_not org.invited_a_teammate?
+
+    org.invitations.create!(email: "driver@example.com", role: "driver", invited_by: admin)
+    assert org.invited_a_teammate?
+
+    other = Organization.create!(name: "Two Person Pharmacy")
+    User.create!(email: "a@example.com", password: "password123!", organization: other, role: "admin")
+    User.create!(email: "b@example.com", password: "password123!", organization: other, role: "driver")
+    assert other.invited_a_teammate?
+  end
+
   test "find_by_referral_code tolerates a non-string param instead of raising" do
     assert_nil Organization.find_by_referral_code([ "x" ])
     assert_nil Organization.find_by_referral_code({ "a" => "b" })
