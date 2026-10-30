@@ -1,8 +1,8 @@
 <% content_for :title, "Dashboard — Pharma Transport" %>
 <% content_for :crumb, "Dashboard" %>
 
-<div class="p-7 max-w-6xl">
-  <div class="flex items-end justify-between mb-6">
+<div class="p-4 md:p-7 max-w-6xl">
+  <div class="flex flex-wrap items-end justify-between gap-3 mb-6">
     <div class="flex flex-col gap-1">
       <h1 class="text-[24px]">Dashboard</h1>
       <span class="text-[13px] text-ink-faint"><%= current_organization&.name %></span>
@@ -19,39 +19,53 @@
   </div>
 
   <% if @show_activation_checklist %>
+    <%
+      org = current_organization
+      steps = [
+        { title: "Add a vehicle", hint: "The van or car the medication rides in.", done: org.added_a_vehicle?,
+          cta: (link_to("Add a vehicle →", new_vehicle_path, class: "font-medium text-accent-600 hover:text-accent-700") if policy(Vehicle.new).create?) },
+        { title: "Invite your driver", hint: "They get an email link and record pickups from their phone. Skip this if you drive yourself.",
+          optional: true, done: org.invited_a_teammate?,
+          cta: (link_to("Invite →", team_path, class: "font-medium text-accent-600 hover:text-accent-700") if current_user.admin?) },
+        { title: "Log a batch", hint: "The lot you're shipping. Assign it to whoever is driving.", done: org.logged_a_batch?,
+          cta: (link_to("Add a batch →", new_batch_path, class: "font-medium text-accent-600 hover:text-accent-700") if policy(Batch.new).create?) },
+        { title: "Record the pickup and delivery", hint: "Recording Delivered generates the Compliance Packet. On a phone, use Deliveries.",
+          done: org.generated_a_packet?,
+          cta: (@most_recent_batch ? link_to("Record a delivery →", new_batch_custody_log_path(@most_recent_batch), class: "font-medium text-accent-600 hover:text-accent-700")
+                                   : tag.span("Log a batch first", class: "text-ink-faint")) }
+      ]
+    %>
     <div class="card p-5 mb-8 flex flex-col gap-3">
-      <div class="flex flex-col gap-1">
-        <span class="font-semibold text-[14px]">Getting started</span>
-        <p class="text-[13px] text-ink-soft">Three steps to your first real Compliance Packet.</p>
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex flex-col gap-1">
+          <span class="font-semibold text-[14px]">Getting started</span>
+          <p class="text-[13px] text-ink-soft">From an empty account to your first Compliance Packet.</p>
+        </div>
+        <span class="text-[12px] text-ink-faint whitespace-nowrap"><%= steps.count { |step| step[:done] } %> of <%= steps.size %> done</span>
       </div>
-      <ul class="flex flex-col">
-        <li class="flex items-center justify-between gap-3 py-2.5 border-t border-line-soft first:border-t-0 text-[13px]">
-          <span>Add a vehicle</span>
-          <% if current_organization.added_a_vehicle? %>
-            <span class="badge badge-accent">Done</span>
-          <% else %>
-            <%= link_to "Add a vehicle →", new_vehicle_path, class: "font-medium text-accent-600 hover:text-accent-700" %>
-          <% end %>
-        </li>
-        <li class="flex items-center justify-between gap-3 py-2.5 border-t border-line-soft first:border-t-0 text-[13px]">
-          <span>Log a batch</span>
-          <% if current_organization.logged_a_batch? %>
-            <span class="badge badge-accent">Done</span>
-          <% else %>
-            <%= link_to "Add a batch →", new_batch_path, class: "font-medium text-accent-600 hover:text-accent-700" %>
-          <% end %>
-        </li>
-        <li class="flex items-center justify-between gap-3 py-2.5 border-t border-line-soft first:border-t-0 text-[13px]">
-          <span>Generate a Compliance Packet</span>
-          <% if current_organization.generated_a_packet? %>
-            <span class="badge badge-accent">Done</span>
-          <% elsif @most_recent_batch %>
-            <%= link_to "Record a delivery →", batch_custody_logs_path(@most_recent_batch), class: "font-medium text-accent-600 hover:text-accent-700" %>
-          <% else %>
-            <span class="text-ink-faint">Log a batch first</span>
-          <% end %>
-        </li>
-      </ul>
+      <ol class="flex flex-col">
+        <% steps.each_with_index do |step, i| %>
+          <li class="flex items-center justify-between gap-3 py-2.5 border-t border-line-soft first:border-t-0 text-[13px]">
+            <div class="flex items-start gap-3 min-w-0">
+              <span class="shrink-0 w-5 h-5 rounded-full border border-line text-[11px] flex items-center justify-center text-ink-faint"><%= i + 1 %></span>
+              <div class="flex flex-col gap-0.5 min-w-0">
+                <span class="<%= "text-ink-faint line-through" if step[:done] %>">
+                  <%= step[:title] %>
+                  <% if step[:optional] %><span class="badge ml-1">Optional</span><% end %>
+                </span>
+                <% unless step[:done] %><span class="text-[12px] text-ink-faint"><%= step[:hint] %></span><% end %>
+              </div>
+            </div>
+            <div class="shrink-0">
+              <% if step[:done] %>
+                <span class="badge badge-accent">Done</span>
+              <% else %>
+                <%= step[:cta] || tag.span("Ask your admin", class: "text-ink-faint") %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ol>
     </div>
   <% end %>
 

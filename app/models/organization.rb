@@ -113,6 +113,14 @@ class Organization < ApplicationRecord
     compliance_reports.exists?
   end
 
+  # Optional, so not part of fully_activated?: a one-person pharmacy that
+  # drives its own deliveries never needs a second account. An invite
+  # counts as soon as it's sent -- whether it's been accepted yet is the
+  # Team page's business, not the checklist's.
+  def invited_a_teammate?
+    users.count > 1 || invitations.exists?
+  end
+
   def fully_activated?
     added_a_vehicle? && logged_a_batch? && generated_a_packet?
   end
