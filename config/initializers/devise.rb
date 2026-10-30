@@ -218,11 +218,11 @@ Devise.setup do |config|
   # :time  = Re-enables login after a certain amount of time (see :unlock_in below)
   # :both  = Enables both strategies
   # :none  = No unlock strategy. You should handle unlocking by yourself.
-  # Using :time rather than :email/:both: production SMTP delivery isn't
-  # configured/verified yet (see the app-wide mailer gap noted in the Phase 1
-  # audit), and locking someone out with no way back in except an email that
-  # may never arrive is worse than just waiting out the lock.
-  config.unlock_strategy = :time
+  # :both -- a lock also emails the owner an unlock link (which doubles as
+  # "someone is guessing your password"), and the 1-hour timer still lifts
+  # it if that email never arrives. Was :time only while mail delivery was
+  # unverified; Postmark now carries invites and password resets.
+  config.unlock_strategy = :both
 
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.

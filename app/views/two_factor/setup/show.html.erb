@@ -74,3 +74,16 @@
     <%= submit_tag "Verify and continue", class: "btn btn-primary w-full" %>
   <% end %>
 <% end %>
+
+<%# Not shown mid-enrollment: a required-2FA user can't use the rest of the
+  app (this included) until they finish setting it up. %>
+<% if current_user.otp_enabled? || !current_user.two_factor_required? %>
+  <h2 class="text-[15px] font-sans font-semibold mt-10 mb-1">Sign out other devices</h2>
+  <p class="text-[14px] text-ink-soft">
+    Lost a phone, or still signed in on a shared computer? This signs out
+    every other browser and device. You stay signed in here.
+  </p>
+  <%= button_to "Sign out other devices", other_sessions_path, method: :delete,
+        class: "btn btn-secondary w-full mt-3",
+        form: { data: { turbo_confirm: "Sign out every other device and browser?" } } %>
+<% end %>

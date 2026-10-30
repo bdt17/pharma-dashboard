@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_27_183158) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_30_181147) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -392,6 +392,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_183158) do
     t.string "tier"
     t.datetime "last_dunning_email_at"
     t.integer "dunning_email_count", default: 0, null: false
+    t.datetime "stripe_event_at"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
   end
 
@@ -439,6 +440,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_183158) do
     t.integer "otp_consumed_timestep"
     t.integer "second_factor_failed_attempts", default: 0, null: false
     t.datetime "deactivated_at"
+    t.string "session_token"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
@@ -457,10 +459,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_27_183158) do
     t.string "status"
     t.datetime "updated_at", null: false
     t.string "imei"
-    t.string "api_token"
     t.float "speed"
     t.integer "heading"
     t.datetime "last_ping_at"
+    t.string "api_token_digest"
     t.index ["imei"], name: "index_vehicles_on_imei", unique: true
   end
 

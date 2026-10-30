@@ -14,9 +14,9 @@ class StripeWebhooksController < ApplicationController
 
     case event.type
     when "customer.subscription.created", "customer.subscription.updated"
-      sync_subscription(event.data.object)
+      sync_subscription(event.data.object, event_at(event))
     when "customer.subscription.deleted"
-      cancel_subscription(event.data.object)
+      cancel_subscription(event.data.object, event_at(event))
     when "checkout.session.completed"
       grant_report_credit(event.data.object)
     end
@@ -38,7 +38,14 @@ class StripeWebhooksController < ApplicationController
     nil
   end
 
-  def sync_subscription(stripe_subscription)
+  # Stripe doesn't guarantee delivery order, and retries a failed delivery
+  # for days -- so each subscription event carries its own `created` time
+  # and Subscription ignores one older than what it already applied.
+  def event_at(event)
+    event.created ? Time.at(event.created) : Time.current
+  end
+
+  def sync_subscription(stripe_subscription, event_at)
     organization = Organization.find_by(stripe_customer_id: stripe_subscription.customer)
     unless organization
       Rails.logger.warn("StripeWebhooksController: no organization for customer #{stripe_subscription.customer}")
@@ -55,14 +62,16 @@ class StripeWebhooksController < ApplicationController
     # and the period end.
     item = stripe_subscription.items.data.first
 
-    Subscription.sync_from_stripe!(
+    subscription = Subscription.sync_from_stripe!(
       organization: organization,
       stripe_subscription_id: stripe_subscription.id,
       status: stripe_subscription.status,
       plan_amount: item&.price ? item.price.unit_amount / 100.0 : nil,
       current_period_end: item&.current_period_end ? Time.at(item.current_period_end) : nil,
-      tier: item&.price ? (item.price[:metadata] || {})["tier"] : nil
+      tier: item&.price ? (item.price[:metadata] || {})["tier"] : nil,
+      event_at: event_at
     )
+    return unless subscription
 
     # "active" specifically, not "trialing" -- a referral reward only pays
     # out once this organization has actually converted to a real paying
@@ -77,8 +86,9 @@ class StripeWebhooksController < ApplicationController
     DeadlineOffer.claim!(organization) if %w[active trialing].include?(stripe_subscription.status)
   end
 
-  def cancel_subscription(stripe_subscription)
-    Subscription.find_by(stripe_subscription_id: stripe_subscription.id)&.update!(status: "canceled")
+  def cancel_subscription(stripe_subscription, event_at)
+    organization = Organization.find_by(stripe_customer_id: stripe_subscription.customer)
+    Subscription.cancel_from_stripe!(organization: organization, stripe_subscription_id: stripe_subscription.id, event_at: event_at)
   end
 
   # Only a Compliance-Packet-credit add-on (single or bulk) completes

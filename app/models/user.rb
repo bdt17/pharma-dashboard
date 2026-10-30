@@ -72,6 +72,18 @@ class User < ApplicationRecord
     deactivated? ? :deactivated : super
   end
 
+  # Devise stores this in the session and in the remember-me cookie, and
+  # rejects either once it no longer matches -- that's why a password
+  # change signs out every device. Mixing session_token in lets
+  # #sign_out_everywhere! do the same without a password change.
+  def authenticatable_salt
+    "#{super}#{session_token}"
+  end
+
+  def sign_out_everywhere!
+    update!(session_token: SecureRandom.hex(16))
+  end
+
   private
 
   def auto_confirm_unless_self_service_signup

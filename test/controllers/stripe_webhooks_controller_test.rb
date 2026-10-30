@@ -25,11 +25,12 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
   # current_period_end lives on the subscription item, not the subscription
   # itself.
   def subscription_event_payload(status: "active", tier: nil, type: "customer.subscription.updated",
-                                 id: "sub_123", amount: 9900)
+                                 id: "sub_123", amount: 9900, created: nil)
     price = { unit_amount: amount }
     price[:metadata] = { tier: tier } if tier
     {
       type: type,
+      created: created&.to_i,
       data: {
         object: {
           id: id,
@@ -130,6 +131,27 @@ class StripeWebhooksControllerTest < ActionDispatch::IntegrationTest
   test "replaying the same subscription event is idempotent" do
     2.times { post_event subscription_event_payload(status: "active", tier: "pro") }
     assert_equal 1, Subscription.where(stripe_subscription_id: "sub_123").count
+  end
+
+  test "an older event delivered late doesn't overwrite newer state" do
+    post_event subscription_event_payload(status: "past_due", created: 1.minute.ago)
+    post_event subscription_event_payload(status: "active", created: 10.minutes.ago)
+
+    assert_response :success
+    assert_equal "past_due", Subscription.find_by(stripe_subscription_id: "sub_123").status
+  end
+
+  test "no event revives a canceled subscription, and an early deletion isn't undone by a late creation" do
+    deleted = { type: "customer.subscription.deleted", created: 1.minute.ago.to_i,
+                data: { object: { id: "sub_123", customer: "cus_123" } } }.to_json
+    post_event deleted
+    assert_equal "canceled", Subscription.find_by(stripe_subscription_id: "sub_123").status
+
+    post_event subscription_event_payload(type: "customer.subscription.created", status: "trialing", created: 5.minutes.ago)
+    post_event subscription_event_payload(status: "active", created: Time.current)
+
+    assert_equal "canceled", Subscription.find_by(stripe_subscription_id: "sub_123").status
+    assert_not @organization.reload.verified?
   end
 
   test "accepts a correctly signed subscription.deleted event and cancels the subscription" do

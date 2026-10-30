@@ -18,7 +18,7 @@ module TwoFactor
 
       sign_out(:user)
       redirect_to new_user_session_path,
-        alert: "Too many incorrect codes. Your account is locked for #{Devise.unlock_in.inspect}."
+        alert: "Too many incorrect codes. Your account is locked for #{Devise.unlock_in.inspect}, or until you use the unlock link we've emailed you."
       true
     end
 

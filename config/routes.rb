@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resource :two_factor_setup, only: %i[show create destroy], controller: "two_factor/setup"
   resource :two_factor_challenge, only: %i[new create], controller: "two_factor/challenge"
   resource :two_factor_backup_codes, only: %i[show create], controller: "two_factor/backup_codes"
+  delete "/sessions/others", to: "other_sessions#destroy", as: :other_sessions
 
   # Public pages
   root "home#index"

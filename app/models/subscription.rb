@@ -41,8 +41,14 @@ class Subscription < ApplicationRecord
   # copy of subscription state -- see StripeWebhooksController. Idempotent:
   # replaying the same event (Stripe's own delivery guarantee is
   # at-least-once) just re-applies the same attributes.
-  def self.sync_from_stripe!(organization:, stripe_subscription_id:, status:, plan_amount: nil, current_period_end: nil, tier: nil)
+  # Returns nil, changing nothing, for a stale event: one created before
+  # the last event applied to this subscription, or any event after it was
+  # canceled (Stripe never reactivates a canceled subscription).
+  def self.sync_from_stripe!(organization:, stripe_subscription_id:, status:, plan_amount: nil, current_period_end: nil, tier: nil, event_at: Time.current)
     subscription = find_or_initialize_by(stripe_subscription_id: stripe_subscription_id)
+    return nil if subscription.stale_event?(event_at)
+
+    subscription.stripe_event_at = event_at
     subscription.organization = organization
     subscription.status = status
     subscription.plan_amount = plan_amount if plan_amount
@@ -51,6 +57,25 @@ class Subscription < ApplicationRecord
     subscription.save!
     subscription.handle_dunning_after_sync!
     subscription
+  end
+
+  # Always applies, whatever order it arrives in: cancellation is final.
+  # Creates the row if "deleted" overtook "created", so the late "created"
+  # finds it canceled and can't resurrect it.
+  def self.cancel_from_stripe!(organization:, stripe_subscription_id:, event_at: Time.current)
+    subscription = find_by(stripe_subscription_id: stripe_subscription_id)
+    subscription ||= new(stripe_subscription_id: stripe_subscription_id, organization: organization) if organization
+    return nil unless subscription
+
+    subscription.update!(status: "canceled", stripe_event_at: [ subscription.stripe_event_at, event_at ].compact.max)
+    subscription
+  end
+
+  def stale_event?(event_at)
+    return false if new_record?
+    return true if status == "canceled"
+
+    stripe_event_at.present? && event_at < stripe_event_at
   end
 
   # Run after every webhook sync. Kicks off the payment-recovery email the

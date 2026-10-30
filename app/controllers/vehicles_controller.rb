@@ -18,8 +18,8 @@ class VehiclesController < ApplicationController
     authorize @vehicle
 
     if @vehicle.save
-      # Shown exactly once, the same way 2FA backup codes are -- api_token
-      # is encrypted at rest and never displayed again after this redirect.
+      # Shown exactly once, the same way 2FA backup codes are -- only its
+      # digest is stored, so it can't be displayed again after this redirect.
       flash[:api_token] = @vehicle.api_token
       redirect_to edit_vehicle_path(@vehicle), notice: "Added #{@vehicle.name}. Copy its device token below before you leave this page."
     else
