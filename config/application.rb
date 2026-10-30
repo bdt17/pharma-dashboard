@@ -40,7 +40,7 @@ module PharmaDashboard
     # with no exception, no failed job, and no log line.
     config.action_mailer.delivery_job = "ApplicationMailDeliveryJob"
 
-    # ActiveRecord Encryption for User#otp_secret, Vehicle#api_token, and
+    # ActiveRecord Encryption for User#otp_secret and
     # anything else marked `encrypts` later. This app keeps no Rails
     # credentials file, so the keys come from env vars in real environments
     # and from fixed, non-secret values in development/test -- nothing
@@ -49,10 +49,9 @@ module PharmaDashboard
     # before app initializers run.
     #
     # `support_unencrypted_data` is off: every encrypted column
-    # (User#otp_secret, Vehicle#api_token) has been confirmed to hold no
-    # legacy plaintext rows in production -- the backfill tasks
-    # (`two_factor:encrypt_secrets`, `vehicles:encrypt_api_tokens`) have run
-    # and were verified. A plaintext value in one of these columns now raises
+    # (User#otp_secret) has been confirmed to hold no legacy plaintext rows
+    # in production -- the backfill task (`two_factor:encrypt_secrets`) has run
+    # and was verified. A plaintext value in one of these columns now raises
     # a decryption error instead of being read silently. Anything marked
     # `encrypts` from here on is encrypted-only by construction; run its
     # backfill (if the column already had data) with this briefly flipped

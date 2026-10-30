@@ -59,6 +59,17 @@ class VehicleTest < ActiveSupport::TestCase
     assert_not_equal delivered, vehicle.current_batch
   end
 
+  test "stores only a digest of the token; a reloaded vehicle still authenticates it" do
+    vehicle = Vehicle.create!(name: "Truck 1", organization: @organization)
+    token = vehicle.api_token
+
+    reloaded = Vehicle.find(vehicle.id)
+    assert_nil reloaded.api_token
+    assert_not_equal token, reloaded.api_token_digest
+    assert reloaded.api_token_matches?(token)
+    assert_not reloaded.api_token_matches?(reloaded.api_token_digest)
+  end
+
   test "api_token_matches? uses a constant-time comparison and rejects blanks" do
     vehicle = Vehicle.create!(name: "Truck 1", organization: @organization)
 

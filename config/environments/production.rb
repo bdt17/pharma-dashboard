@@ -45,6 +45,21 @@ Rails.application.configure do
   # APP_HOST to the real production domain in the deploy environment.
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "example.com"), protocol: "https" }
 
+  # Answer only to our own hostnames (DNS rebinding, Host-header games):
+  # APP_HOST and its subdomains (www, dashboard -- see
+  # DashboardSubdomainRedirect), plus Render's own onrender.com name, which
+  # Render sets in RENDER_EXTERNAL_HOSTNAME. Anything else gets a 403.
+  # Health checks are exempt because the platform probes the instance
+  # directly, not through a public hostname; they render nothing that
+  # depends on the host. Skipped if APP_HOST isn't set, like the rest of
+  # this file's "safe until configured" settings.
+  if ENV["APP_HOST"].present?
+    config.hosts = [ ".#{ENV["APP_HOST"]}", ENV["RENDER_EXTERNAL_HOSTNAME"].presence ].compact
+    config.host_authorization = {
+      exclude: ->(request) { %w[/up /health].include?(request.path) || (request.head? && request.path == "/") }
+    }
+  end
+
   # Mail delivery, in preference order, each activating only when its own
   # env vars are set -- the "safe until configured" pattern used across
   # this app. No delivery method was ever configured here originally, and
