@@ -33,6 +33,9 @@ class DscsaAssessmentsController < ApplicationController
   def report
     assessment = DscsaAssessment.find_by!(token: params[:token])
     report = DscsaReadinessReport.new(assessment, result_url: dscsa_assessment_result_url(assessment))
+    # First download only -- the /ops/outreach funnel counts who took the
+    # action plan, not how many times it was opened.
+    assessment.update_column(:report_downloaded_at, Time.current) if assessment.report_downloaded_at.nil?
 
     send_data report.generate, filename: report.filename, type: "application/pdf", disposition: "attachment"
   end

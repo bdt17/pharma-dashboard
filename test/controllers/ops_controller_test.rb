@@ -210,4 +210,39 @@ class OpsControllerTest < ActionDispatch::IntegrationTest
     end
     assert owed.reload.free_setup_completed_at
   end
+
+  test "outreach kit 404s for anyone not on the allowlist" do
+    with_operator_emails("ops@example.com") do
+      sign_in @other_admin
+      get ops_outreach_url
+      assert_response :not_found
+    end
+  end
+
+  test "outreach kit shows the funnel, templates, and a link from /ops" do
+    DscsaAssessment.build_from({}.with_indifferent_access).tap { |a| a.utm_source = "linkedin"; a.utm_campaign = "first-message" }.save!
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+      get ops_url
+      assert_select "a[href=?]", ops_outreach_path, text: "Outreach kit"
+
+      get ops_outreach_url
+      assert_response :success
+      assert_select "h1", "Outreach kit"
+      assert_select "#funnel td", text: "linkedin / first-message"
+      assert_select "#template-association textarea", text: /utm_source=association/
+      assert_select "#template-cold_email input[value=?]", "[Pharmacy] and the DSCSA extension"
+      assert_select "#builder textarea", count: 0
+    end
+  end
+
+  test "outreach link builder returns a tagged link" do
+    with_operator_emails("ops@example.com") do
+      sign_in @operator
+      get ops_outreach_url(page: "signup", source: "association", campaign: "AZ assoc Dec")
+      assert_response :success
+      assert_select "#builder textarea", text: %r{/users/sign_up\?utm_campaign=az-assoc-dec&utm_source=association}
+      assert_select "input[name=campaign][value=?]", "az-assoc-dec"
+    end
+  end
 end
