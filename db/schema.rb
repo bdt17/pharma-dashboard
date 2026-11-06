@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_06_203227) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_06_205549) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -196,6 +196,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_203227) do
     t.datetime "free_setup_owed_at"
     t.datetime "free_setup_completed_at"
     t.integer "onboarding_emails_sent", default: 0, null: false
+    t.string "delivery_gps_precision", default: "approximate", null: false
     t.index ["referral_code"], name: "index_organizations_on_referral_code", unique: true
     t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true
     t.index ["verification_token"], name: "index_organizations_on_verification_token", unique: true

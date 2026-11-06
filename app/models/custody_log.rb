@@ -33,6 +33,9 @@ class CustodyLog < ApplicationRecord
   validate :signature_image_is_a_sane_png, on: :create
 
   before_validation :set_timestamp, on: :create
+  # Before default_location_to_gps, so a trimmed fix is what fills a blank
+  # location too.
+  before_validation :apply_delivery_gps_precision, on: :create
   # A driver at a doorstep may not know the street address -- the GPS fix
   # is a better location record than nothing.
   before_validation :default_location_to_gps, on: :create
@@ -73,6 +76,23 @@ class CustodyLog < ApplicationRecord
 
   def set_timestamp
     self.timestamp ||= Time.current
+  end
+
+  # See Organization::DELIVERY_GPS_PRECISIONS. Two decimal places is
+  # roughly 1.1 km, so the accuracy is widened to match.
+  APPROXIMATE_ACCURACY_M = 1_100
+
+  def apply_delivery_gps_precision
+    return unless action_type == "delivered" && gps?
+
+    case batch&.organization&.delivery_gps_precision
+    when "off"
+      self.latitude = self.longitude = self.location_accuracy_m = nil
+    when "approximate"
+      self.latitude = latitude.to_d.round(2)
+      self.longitude = longitude.to_d.round(2)
+      self.location_accuracy_m = [ location_accuracy_m.to_i, APPROXIMATE_ACCURACY_M ].max
+    end
   end
 
   def default_location_to_gps
