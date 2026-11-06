@@ -1,10 +1,27 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-11-06 (rev 39)
+Last updated: 2026-11-06 (rev 40)
 
 ====================================================================
 STATUS
 ====================================================================
-REV 39 (2026-11-06, end of day) -- READ THIS FIRST. Since rev 38:
+REV 40 (2026-11-06) -- READ THIS FIRST. Full infosec test run (#235):
+  - The GitHub repo is PUBLIC. Old secret_key_base values are in its
+    history -> rotate SECRET_KEY_BASE on Render (NEXT_STEPS A5). No other
+    credential patterns (Stripe, Twilio, AWS, GitHub, Postmark, Sentry,
+    private keys) found anywhere in history.
+  - Production test users on mailinator.com / yourdomain.com /
+    example.com / mail-tester.com could have been taken over by password
+    reset once mail delivers (public inboxes / a stranger's domain).
+    Production now refuses sign-in for those domains
+    (User::TEST_EMAIL_DOMAINS, config.x.block_test_email_sign_in).
+  - test_infosec.rb: 12 -> ~96 live, read-only checks (TLS, exposure,
+    auth gates, API/webhooks, CSRF, tokens, errors, injection, CORS, DNS).
+    Live: all pass, 3 warnings (DMARC missing x2 -> NEXT_STEPS A5b; HSTS
+    includeSubDomains left off on purpose).
+  - New RouteAuthSweepTest: every GET route is public-by-list or gated.
+  - security.txt published. Suite 900 runs, 0 failures. main @ edc45639.
+
+REV 39 (2026-11-06, end of day) -- Since rev 38:
   - #232 DATE AUDIT: /security still said the exemption "ends on
     November 27, 2026" (fixed); the readiness question said "will" about
     a date that passes Nov 27 (now switches to "did"); meta descriptions
