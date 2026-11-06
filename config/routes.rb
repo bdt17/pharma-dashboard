@@ -76,6 +76,7 @@ Rails.application.routes.draw do
   get "/gps", to: "home#gps"
   # Driver mode home: shipments still out, one tap to record pickup/delivery.
   get "/deliveries", to: "deliveries#index", as: :deliveries
+  patch "/deliveries/privacy", to: "deliveries#update_privacy", as: :deliveries_privacy
   # Self-serve vehicle registration -- see VehiclesController. index/show
   # deliberately excluded: /gps already lists the fleet, and the JSON
   # index/show live under api/v1 below.

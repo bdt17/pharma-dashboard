@@ -48,7 +48,8 @@
 
     <div data-controller="geolocate">
       <%= f.label :location, "Location", class: "block text-[12px] text-ink-faint mb-1" %>
-      <%= f.text_field :location, placeholder: "Address, or leave blank to use GPS", autocomplete: "street-address", class: "field-input" %>
+      <%= f.text_field :location, placeholder: "Facility name, or Patient residence. Blank uses GPS.", autocomplete: "off", class: "field-input" %>
+      <p class="text-[12px] text-ink-faint mt-1">For a patient&rsquo;s home, write <span class="mono">Patient residence</span>, not their name or street address.<% if @batch.organization.delivery_gps_precision != "exact" && @custody_log.action_type == "delivered" %> Deliveries keep <%= @batch.organization.delivery_gps_precision == "off" ? "no GPS" : "an approximate location (about 1 km)" %>.<% end %></p>
       <%= f.hidden_field :latitude, data: { geolocate_target: "latitude" } %>
       <%= f.hidden_field :longitude, data: { geolocate_target: "longitude" } %>
       <%= f.hidden_field :location_accuracy_m, data: { geolocate_target: "accuracy" } %>

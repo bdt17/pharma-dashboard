@@ -5,6 +5,18 @@ class Organization < ApplicationRecord
   # `internal` marks the operator's own test/demo orgs (toggled from /ops)
   # so the customer counts there aren't inflated by them.
   scope :customers, -> { where(internal: false) }
+
+  # What a "delivered" custody event keeps of the phone's GPS fix. A
+  # delivery to a patient's home turns an exact fix into a home address,
+  # so "approximate" (about 1 km) is the default; "off" keeps none, and
+  # "exact" suits pharmacies that only deliver to facilities. Pickups and
+  # handoffs always keep the exact fix. Enforced in CustodyLog, not the form.
+  DELIVERY_GPS_PRECISIONS = {
+    "approximate" => "Approximate (about 1 km)",
+    "off" => "Off: no GPS on deliveries",
+    "exact" => "Exact"
+  }.freeze
+  validates :delivery_gps_precision, inclusion: { in: DELIVERY_GPS_PRECISIONS.keys }
   has_many :vehicles, dependent: :restrict_with_error
   has_many :batches, dependent: :restrict_with_error
   has_many :subscriptions, dependent: :destroy

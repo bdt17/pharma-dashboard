@@ -47,4 +47,25 @@
       <% end %>
     </ul>
   <% end %>
+
+  <% if current_user.admin? %>
+    <div id="privacy" class="card p-5 mt-8 flex flex-col gap-3">
+      <div class="flex flex-col gap-1">
+        <span class="font-semibold text-[14px]">Delivery location precision</span>
+        <p class="text-[13px] text-ink-soft">
+          How much of the phone&rsquo;s GPS a delivery keeps. For a delivery to a patient&rsquo;s home, an exact
+          location is the patient&rsquo;s address, which is health information. Pickups always keep the exact location.
+        </p>
+      </div>
+      <%= form_with url: deliveries_privacy_path, method: :patch, class: "flex flex-wrap items-center gap-3" do %>
+        <% Organization::DELIVERY_GPS_PRECISIONS.each do |value, label| %>
+          <label class="inline-flex items-center gap-2 text-[13px]">
+            <%= radio_button_tag :delivery_gps_precision, value, current_organization.delivery_gps_precision == value %>
+            <%= label %>
+          </label>
+        <% end %>
+        <%= submit_tag "Save", class: "btn btn-secondary btn-sm" %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
