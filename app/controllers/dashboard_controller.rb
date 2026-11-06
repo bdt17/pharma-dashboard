@@ -31,6 +31,7 @@ class DashboardController < ApplicationController
     # link to (recording a delivery is what generates a packet) once a
     # batch actually exists.
     @show_activation_checklist = current_organization.present? && !current_organization.fully_activated?
-    @most_recent_batch = current_organization&.batches&.order(created_at: :desc)&.first if @show_activation_checklist
+    @most_recent_batch = current_organization&.batches&.real&.order(created_at: :desc)&.first if @show_activation_checklist
+    @offer_sample_data = @show_activation_checklist && SampleData.available?(current_organization)
   end
 end

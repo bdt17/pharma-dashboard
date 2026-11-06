@@ -26,7 +26,7 @@
 
     <div>
       <%= f.label :vehicle_id, "Vehicle", class: "block text-[12px] text-ink-faint mb-1" %>
-      <%= f.select :vehicle_id, current_organization.vehicles.order(:name).map { |v| [ v.name.presence || v.identifier, v.id ] },
+      <%= f.select :vehicle_id, current_organization.vehicles.real.order(:name).map { |v| [ v.name.presence || v.identifier, v.id ] },
             {}, class: "field-input" %>
     </div>
 

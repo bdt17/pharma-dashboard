@@ -70,6 +70,8 @@ Rails.application.routes.draw do
 
   # Authenticated application pages
   get "/dashboard", to: "dashboard#index", as: :dashboard
+  post   "/sample-data", to: "sample_data#create", as: :sample_data
+  delete "/sample-data", to: "sample_data#destroy"
   get "/enterprise/dashboard", to: "dashboard#index"
   get "/gps", to: "home#gps"
   # Driver mode home: shipments still out, one tap to record pickup/delivery.

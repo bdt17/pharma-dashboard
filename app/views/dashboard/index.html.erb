@@ -66,6 +66,12 @@
           </li>
         <% end %>
       </ol>
+      <% if @offer_sample_data && policy(Batch.new(organization: current_organization)).create? %>
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-line-soft text-[13px]">
+          <span class="text-ink-soft">Want to look around first? Load a few sample shipments: a delivery with a signature, one with a temperature excursion, and one in transit. You can clear them with one click.</span>
+          <%= button_to "Load sample data", sample_data_path, method: :post, class: "btn btn-secondary btn-sm shrink-0" %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 

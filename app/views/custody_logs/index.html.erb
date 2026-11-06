@@ -7,9 +7,12 @@
       <h1 class="text-[24px]">Custody history</h1>
       <span class="text-[13px] text-ink-faint">
         Lot <span class="mono"><%= @batch.lot_number %></span>
+        <% if @batch.sample? %><span class="badge badge-amber ml-1">Sample</span><% end %>
       </span>
     </div>
-    <%= link_to "Record a custody event", new_batch_custody_log_path(@batch), class: "btn btn-primary btn-sm shrink-0" %>
+    <% if policy(@batch).record_custody? %>
+      <%= link_to "Record a custody event", new_batch_custody_log_path(@batch), class: "btn btn-primary btn-sm shrink-0" %>
+    <% end %>
   </div>
 
   <p class="text-[13px] mb-6">
