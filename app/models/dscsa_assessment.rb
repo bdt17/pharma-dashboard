@@ -61,12 +61,19 @@ class DscsaAssessment < ApplicationRecord
   PLATFORM_KEYS = %w[custody coldchain records].freeze
 
   # Asked for context, not scored: a "no" here means the exemption never
-  # applied and the full requirements are already in force.
+  # applied and the full requirements are already in force. The prompt is
+  # built per request (context_prompt), not here, so it switches from
+  # "will" to "did" the day after the headcount date.
   CONTEXT_QUESTION = {
     key: "exemption",
-    category: "Exemption status",
-    prompt: "As of #{DscsaDeadline.qualifying_label}, will your pharmacy's owner employ 25 or fewer full-time licensed pharmacists and pharmacy technicians across all locations?"
+    category: "Exemption status"
   }.freeze
+
+  def self.context_prompt
+    verb = DscsaDeadline.qualifying_passed? ? "did" : "will"
+    "As of #{DscsaDeadline.qualifying_label}, #{verb} your pharmacy's owner employ 25 or fewer full-time " \
+      "licensed pharmacists and pharmacy technicians across all locations?"
+  end
 
   ALL_KEYS = (QUESTIONS.map { |q| q[:key] } + [ CONTEXT_QUESTION[:key] ]).freeze
   ANSWERS  = %w[yes unsure no].freeze

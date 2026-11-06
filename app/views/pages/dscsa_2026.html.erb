@@ -1,6 +1,6 @@
 <% content_for :full_bleed, "1" %>
-<% content_for :title, "Small Pharmacy DSCSA Exemption Extended to 2027 — Pharma Transport" %>
-<% content_for :meta_description, "The FDA extended the DSCSA small-dispenser exemption to #{DscsaDeadline.label}. Some requirements apply now. Free 2-minute readiness check, plus the platform and retainer that close the gaps." %>
+<% content_for :title, DscsaDeadline.passed? ? "Small Pharmacy DSCSA Exemption Has Ended — Pharma Transport" : "Small Pharmacy DSCSA Exemption Extended to #{DscsaDeadline::DATE.year} — Pharma Transport" %>
+<% content_for :meta_description, DscsaDeadline.passed? ? "The DSCSA small-dispenser exemption ended #{DscsaDeadline.label}. Free 2-minute readiness check, plus the platform and retainer that close the gaps." : "The FDA extended the DSCSA small-dispenser exemption to #{DscsaDeadline.label}. Some requirements apply now. Free 2-minute readiness check, plus the platform and retainer that close the gaps." %>
 
 <%
   assessment_link = dscsa_assessment_path

@@ -25,6 +25,12 @@ module DscsaDeadline
     on > DATE
   end
 
+  # The headcount snapshot date has passed: copy asking about it says
+  # "did", not "will".
+  def self.qualifying_passed?(on: today)
+    on > QUALIFYING_DATE
+  end
+
   def self.days_left(on: today)
     [ (DATE - on).to_i, 0 ].max
   end

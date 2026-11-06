@@ -1,6 +1,6 @@
 <% content_for :full_bleed, "1" %>
 <% content_for :title, "DSCSA readiness check — Pharma Transport" %>
-<% content_for :meta_description, "A short self-assessment of how ready your pharmacy is for DSCSA's enhanced drug distribution security requirements once the small-dispenser exemption ends on #{DscsaDeadline.label}." %>
+<% content_for :meta_description, "A short self-assessment of how ready your pharmacy is for DSCSA's enhanced drug distribution security requirements #{DscsaDeadline.passed? ? "now that the small-dispenser exemption has ended" : "once the small-dispenser exemption ends on #{DscsaDeadline.label}"}." %>
 
 <section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
   <div class="mx-auto max-w-3xl px-6 py-[64px]">
@@ -28,7 +28,7 @@
       First, for context &mdash; this one isn&rsquo;t scored:
     </div>
     <fieldset class="flex flex-col gap-3">
-      <legend class="text-[15px] font-sans font-semibold mb-1"><%= DscsaAssessment::CONTEXT_QUESTION[:prompt] %></legend>
+      <legend class="text-[15px] font-sans font-semibold mb-1"><%= DscsaAssessment.context_prompt %></legend>
       <div class="flex flex-wrap gap-2">
         <% DscsaAssessment::ANSWERS.each do |value| %>
           <label class="inline-flex items-center gap-2 border border-line rounded-sm px-3 py-2 text-[13.5px] cursor-pointer hover:bg-surface has-[:checked]:border-accent-600 has-[:checked]:bg-accent-50">
