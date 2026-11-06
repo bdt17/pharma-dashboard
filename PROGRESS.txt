@@ -1,10 +1,38 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-10-25 (rev 36)
+Last updated: 2026-11-06 (rev 37)
 
 ====================================================================
 STATUS
 ====================================================================
-REV 36 (2026-10-25) -- READ THIS FIRST. Everything below this
+REV 37 (2026-11-06) -- READ THIS FIRST. Rev 36 status follows as history.
+
+  - DEADLINE MOVED: on 2026-08-06 the FDA extended the small-dispenser
+    exemption a year, to 2027-11-27; qualifying headcount is measured
+    as of 2026-11-27 (#214, shipped inside #215). Every "Nov 27, 2026"
+    in rev 36 below is now the QUALIFYING date, not the deadline. The
+    free White-Glove Setup offer has its own end date: 2026-12-31
+    (DeadlineOffer::ENDS). That is the near-term outreach hook.
+  - /ops on production 2026-11-06: 0 customer orgs / 0 users (+14
+    internal), 0 call requests, 0 readiness checks in 7 days (only ever
+    Brett's two tests), 6 bot submissions blocked in 7 days. Zero
+    inbound traffic -- outreach is the whole job.
+  - Shipped since rev 36: /independent-pharmacy page, readiness PDF
+    action plan, Monday ops digest, day-3 email upgrade, DSCSA copy
+    corrected for the extension, security passes 3 and 4, team
+    invites, driver mode (phone pickup/delivery with GPS + probe temp),
+    checklist driver-invite step. See "SESSION 2026-11-06" below.
+  - Still open for Brett (from /ops): SENTRY_DSN unset; Monetize Check
+    3 (internal test org) still shows an active subscription -- check
+    Stripe live mode; Postmark approval/DKIM status not visible on /ops
+    (click "Check Postmark", then test a gmail signup); old
+    SECRET_KEY_BASE comparison; LEADS_EMAIL optional.
+  - HIPAA: a delivery GPS fix plus signer name can identify a patient's
+    home. A BAA stance (and Render/Postmark coverage) is required BEFORE
+    the first customer logs patient-home deliveries in driver mode.
+  - main @ 2b258b65 (#227) once deployed; /ops showed 33ba40ea before.
+    Suite 850 runs, 0 failures, + system tests in CI (after #226/#227).
+
+REV 36 (2026-10-25). Everything below this
 paragraph is the rev 35 status, kept as history; two of its headline
 numbers turned out to be wrong (see "SESSION 2026-10-25" below):
 
@@ -291,6 +319,84 @@ Production: Render auto-deploys main on push. Latest deploy verified --
 the CI and Smoke (live public-surface) workflows both passed, and the
 new routes (/webhooks, /verify/:token/badge.svg) respond correctly on
 pharmatransport.org, confirming the release migrations ran.
+
+====================================================================
+SESSION 2026-11-06: CATCH-UP LOG FOR #210-#220 (rev 37)
+====================================================================
+These merged after rev 36 without a PROGRESS bump. Several were built as
+stacks; the squash commits on main carry more than their titles say.
+
+  #210  /independent-pharmacy: "compete with mail-order: prove the care
+        they can't." Six product-backed reasons, courier section,
+        objections, trial + readiness-check CTAs, deadline offer. Says
+        "mail-order", never "Amazon" (a test enforces it). New
+        independent_pharmacy call-request topic. Linked from the home
+        hero, /dscsa-2026 and the footer.
+  #211  Readiness-check PDF action plan (DscsaReadinessReport, Prawn):
+        score, deadline status, each gap with a concrete first step,
+        who closes it, and a Done/Owner/Target-date line. GET
+        /dscsa-assessment/:token/report.pdf; linked from the result page
+        and result email.
+  #215  Squash of the stack #212 + #213 + #214 + #215:
+        - #212 Monday ops digest email (WeeklyOpsDigestJob, 8am
+          Phoenix) to LEADS_EMAIL: waiting-on-you, the week, totals.
+        - #213 Day-3 follow-up gives the gap's first step + PDF link.
+        - #214 DSCSA COPY CORRECTED FOR THE FDA EXTENSION (see STATUS).
+          Removed two overclaims that DSCSA covers delivery to the
+          patient (it covers trading-partner transfers, not dispensing).
+        - #215 Security pass 3: parameter log filtering restored (it had
+          been deleted -- passwords/tokens/OTPs were in Render logs);
+          2FA lockout bypass (own failed-attempt counter); billing
+          portal admin-only; malformed signatures can no longer break a
+          batch's PDFs; readiness-check email abuse limits; new
+          throttles; Devise mail via deliver_later; Puma 3 threads;
+          scanner-safe unsubscribe + RFC 8058; lot numbers unique per
+          org.
+  #218  Squash of #216 + #217 + #218:
+        - #216 Mail job arguments no longer logged (reset/confirmation
+          tokens had been in logs briefly after #215).
+        - #217 TEAM INVITES: /team, invite by email with role, resend,
+          revoke, change roles, deactivate (never delete). Token stored
+          as SHA-256 digest, single-use, 7-day expiry.
+        - #218 DRIVER MODE: /deliveries landing for drivers, phone-first
+          custody form, browser GPS at handoff (geolocation allowed by
+          Permissions-Policy on that form only), optional probe temp
+          (2-8 C flagged), recorded_by on every custody event; shown on
+          the event page, history, chain-of-custody PDF and webhook
+          payload. Responsive app shell.
+  #219  Getting-started checklist: optional "Invite your driver" step,
+        last step opens the record-event form, "N of 4 done", phone
+        layout fix.
+  #220  Security pass 4: config.hosts allowlist (APP_HOST + subdomains
+        + RENDER_EXTERNAL_HOSTNAME; health checks exempt); unlock by
+        email; "Sign out other devices" (users.session_token);
+        vehicles.api_token -> api_token_digest (irreversible migration,
+        trackers keep working); Stripe subscription events applied in
+        order, canceled never revived.
+
+Closed without merging (contents shipped in the squashes above):
+#212 #213 #214 #216 #217. Open: dependabot #221-#224 only.
+
+Also this session (2026-11-06):
+  #226  SECURITY GEM UPDATES. bundler-audit began failing every PR on
+        new advisories: Rails 8.1.4 -> 8.1.4.1 (actionpack RemoteIp IP
+        spoofing + strong-params bypass, activestorage file read/write,
+        actionview XSS helpers, activesupport), nokogiri 1.19.7, rack
+        3.2.8, loofah 2.25.3, addressable 2.9.2, rails-html-sanitizer
+        1.7.2. Patch-level only; 832 runs green.
+  #227  OUTREACH KIT at /ops/outreach (operator-only, linked from
+        /ops): funnel by first-touch source/campaign (checks -> email
+        -> PDF -> calls -> customer signups -> trial/paid; 30/90/all),
+        new dscsa_assessments.report_downloaded_at (first download),
+        a GET link builder, and five send-ready messages (association
+        webinar, LinkedIn note + first message, cold email, follow-up),
+        each with its own tagged link. Dates from DscsaDeadline /
+        DeadlineOffer: offer lines vanish after 2026-12-31, copy flips
+        tense after 2027-11-27. 850 runs green.
+
+Next (agent): onboarding emails
++ optional sample data, a date audit pinned to 2026-11-28 and
+2027-01-01, SEO pages, dead Stimulus controllers, backup-restore drill.
 
 ====================================================================
 SESSION 2026-10-25: SECURITY PASS, REAL BASELINE, DEADLINE PHASE
@@ -1060,9 +1166,8 @@ FOLLOW-UP WORK (product)
 - Three Stimulus controllers are unused dead code (batch_live_table,
   fda_audit_trail, gps_map) -- they poll HTML endpoints and were never
   wired to a view. Delete or finish them; they now actually load (#208).
-- Billing portal is open to every member, admin or not, and allows
-  cancelling -- documented as intentional (a test asserts it). Revisit
-  once orgs have non-admin members (team invites).
+- Billing portal -- DONE, admin-only since #215 (team invites #217
+  made non-admin members real).
 - Split the Solid Queue worker into its own Render service if job volume
   grows (drop the puma plugin line, run bin/jobs).
 - SELF-SERVE BATCH CREATION -- DONE, see #172 above.
