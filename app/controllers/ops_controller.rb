@@ -18,6 +18,20 @@ class OpsController < ApplicationController
                                     .where(free_setup_completed_at: nil).order(:free_setup_owed_at)
   end
 
+  # Outreach kit: campaign-tagged links, the per-campaign funnel they
+  # feed, and ready-to-send messages. GET-only; the link builder is a GET
+  # form so a built link is also a bookmarkable URL.
+  def outreach
+    @kit = Ops::OutreachKit.new
+    @funnel = Ops::CampaignFunnel.new(window: params[:window])
+    @builder = {
+      page: Ops::OutreachKit::LANDING_PAGES.key?(params[:page]) ? params[:page] : "assessment",
+      source: Ops::OutreachKit::SOURCES.include?(params[:source]) ? params[:source] : "linkedin",
+      campaign: Ops::OutreachKit.campaign_slug(params[:campaign])
+    }
+    @built_link = @kit.link(**@builder) if params[:campaign].present?
+  end
+
   # Closes out a free White-Glove Setup owed under DeadlineOffer.
   def complete_free_setup
     organization = Organization.find(params[:id])

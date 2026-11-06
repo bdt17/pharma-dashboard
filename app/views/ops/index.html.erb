@@ -22,6 +22,7 @@
       <% if ENV["POSTMARK_API_TOKEN"].present? %>
         <%= button_to "Check Postmark", ops_check_postmark_path, method: :post, class: "btn btn-secondary btn-sm" %>
       <% end %>
+      <%= link_to "Outreach kit", ops_outreach_path, class: "btn btn-primary btn-sm" %>
       <%= button_to "Send myself a test email", ops_test_email_path, method: :post, class: "btn btn-secondary btn-sm" %>
     </div>
   </div>

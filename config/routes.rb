@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   # Operator diagnostics -- integration health at a glance. Gated to an
   # OPERATOR_EMAILS allowlist (see OpsController).
   get  "/ops", to: "ops#index", as: :ops
+  get  "/ops/outreach", to: "ops#outreach", as: :ops_outreach
   post "/ops/test-email", to: "ops#test_email", as: :ops_test_email
   post "/ops/check-postmark", to: "ops#check_postmark", as: :ops_check_postmark
   post "/ops/call-requests/:id/handle", to: "ops#handle_call_request", as: :ops_handle_call_request

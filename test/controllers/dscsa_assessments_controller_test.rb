@@ -52,6 +52,21 @@ class DscsaAssessmentsControllerTest < ActionDispatch::IntegrationTest
     assert response.body.start_with?("%PDF")
   end
 
+  test "the first PDF download is stamped for the outreach funnel" do
+    post dscsa_assessment_url, params: full_answers(default: "yes")
+    assessment = DscsaAssessment.last
+    assert_nil assessment.report_downloaded_at
+
+    get dscsa_assessment_report_url(assessment.token)
+    first = assessment.reload.report_downloaded_at
+    assert first
+
+    travel 1.hour do
+      get dscsa_assessment_report_url(assessment.token)
+    end
+    assert_equal first, assessment.reload.report_downloaded_at
+  end
+
   test "the PDF report 404s on an unknown token" do
     get dscsa_assessment_report_url("does-not-exist")
     assert_response :not_found
