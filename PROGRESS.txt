@@ -29,8 +29,8 @@ REV 37 (2026-11-06) -- READ THIS FIRST. Rev 36 status follows as history.
   - HIPAA: a delivery GPS fix plus signer name can identify a patient's
     home. A BAA stance (and Render/Postmark coverage) is required BEFORE
     the first customer logs patient-home deliveries in driver mode.
-  - main @ 33ba40ea, deployed and matching /ops "Deployed revision".
-    Suite 832 runs, 0 failures, + system tests in CI.
+  - main @ 2b258b65 (#227) once deployed; /ops showed 33ba40ea before.
+    Suite 850 runs, 0 failures, + system tests in CI (after #226/#227).
 
 REV 36 (2026-10-25). Everything below this
 paragraph is the rev 35 status, kept as history; two of its headline
@@ -377,8 +377,24 @@ stacks; the squash commits on main carry more than their titles say.
 Closed without merging (contents shipped in the squashes above):
 #212 #213 #214 #216 #217. Open: dependabot #221-#224 only.
 
-Next (agent): outreach kit -- /ops campaign link builder, per-campaign
-funnel, ready-to-send email templates (next PR). Then onboarding emails
+Also this session (2026-11-06):
+  #226  SECURITY GEM UPDATES. bundler-audit began failing every PR on
+        new advisories: Rails 8.1.4 -> 8.1.4.1 (actionpack RemoteIp IP
+        spoofing + strong-params bypass, activestorage file read/write,
+        actionview XSS helpers, activesupport), nokogiri 1.19.7, rack
+        3.2.8, loofah 2.25.3, addressable 2.9.2, rails-html-sanitizer
+        1.7.2. Patch-level only; 832 runs green.
+  #227  OUTREACH KIT at /ops/outreach (operator-only, linked from
+        /ops): funnel by first-touch source/campaign (checks -> email
+        -> PDF -> calls -> customer signups -> trial/paid; 30/90/all),
+        new dscsa_assessments.report_downloaded_at (first download),
+        a GET link builder, and five send-ready messages (association
+        webinar, LinkedIn note + first message, cold email, follow-up),
+        each with its own tagged link. Dates from DscsaDeadline /
+        DeadlineOffer: offer lines vanish after 2026-12-31, copy flips
+        tense after 2027-11-27. 850 runs green.
+
+Next (agent): onboarding emails
 + optional sample data, a date audit pinned to 2026-11-28 and
 2027-01-01, SEO pages, dead Stimulus controllers, backup-restore drill.
 
