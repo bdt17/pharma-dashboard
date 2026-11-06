@@ -1,10 +1,34 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-11-06 (rev 37)
+Last updated: 2026-11-06 (rev 38)
 
 ====================================================================
 STATUS
 ====================================================================
-REV 37 (2026-11-06) -- READ THIS FIRST. Rev 36 status follows as history.
+REV 38 (2026-11-06, later) -- READ THIS FIRST. Since rev 37:
+  - #228 gem bumps (stripe 20.1.0 -- same endive API family, changelog
+    read; bootsnap, csv, tailwindcss-rails); dependabot #221-#224 closed.
+  - #229 SAMPLE DATA: an empty account (admin/dispatcher) can load 4
+    flagged sample lots (SAMPLE-0001..0004) and clear them in one click.
+    Read-only via BatchPolicy, no alerts/webhooks/packets/quota, never
+    count toward activation, banner on every app page, SAMPLE watermark
+    on their PDFs. vehicles.sample / batches.sample.
+  - #230 ONBOARDING EMAILS: OnboardingEmailJob daily 9am Phoenix -- day
+    1/3/7 nudges keyed to the next unfinished checklist step (stop at
+    fully_activated?; unsubscribe honoured; internal and >10-day-old
+    orgs skipped) + one trial-ending notice 3 days out.
+  - Sales material refreshed (Artifacts): the Case, the Using guide and
+    the Ad Copy now reflect the 2027 extension, driver mode and current
+    prices. Old ad copy claimed "no card required" -- FALSE (card is
+    taken up front, charged at trial end); removed.
+  - Webinar kit: deck https://claude.ai/artifact/BYrQwaWh81nrCtRKYJQoFS
+    (11 slides + notes, [VERIFY] notes to resolve before presenting) and
+    a one-page handout PDF (dscsa-extension-checklist.pdf, repo root,
+    untracked). Prospect research: arizona-pharmacy-prospects.csv (90
+    rows) and pharmacy-associations.csv (23 orgs), repo root, untracked
+    and in .git/info/exclude.
+  - Suite 877 runs, 0 failures. main @ f4f8092e.
+
+REV 37 (2026-11-06) -- Rev 36 status follows as history.
 
   - DEADLINE MOVED: on 2026-08-06 the FDA extended the small-dispenser
     exemption a year, to 2027-11-27; qualifying headcount is measured
