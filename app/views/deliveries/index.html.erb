@@ -23,7 +23,7 @@
             <div class="min-w-0">
               <div class="font-semibold text-[15px] truncate"><%= batch.name.presence || "Lot #{batch.lot_number}" %></div>
               <div class="text-[12.5px] text-ink-faint">
-                Lot <span class="mono"><%= batch.lot_number %></span> · <%= batch.vehicle.name %>
+                Lot <span class="mono"><%= batch.lot_number %></span> · <%= batch.vehicle.name %><% if batch.sample? %> <span class="badge badge-amber">Sample</span><% end %>
                 <% unless current_user.driver? %>· <%= batch.driver ? (batch.driver.name.presence || batch.driver.email) : "unassigned" %><% end %>
               </div>
             </div>

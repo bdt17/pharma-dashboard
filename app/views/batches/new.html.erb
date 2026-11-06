@@ -28,8 +28,8 @@
 
     <div>
       <%= f.label :vehicle_id, "Vehicle", class: "block text-[12px] text-ink-faint mb-1" %>
-      <% if current_organization.vehicles.any? %>
-        <%= f.select :vehicle_id, current_organization.vehicles.order(:name).map { |v| [ v.name.presence || v.identifier, v.id ] },
+      <% if current_organization.vehicles.real.any? %>
+        <%= f.select :vehicle_id, current_organization.vehicles.real.order(:name).map { |v| [ v.name.presence || v.identifier, v.id ] },
               { include_blank: "Select a vehicle" }, class: "field-input" %>
       <% else %>
         <p class="text-[13px] text-ink-soft">

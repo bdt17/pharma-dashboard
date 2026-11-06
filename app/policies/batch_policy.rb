@@ -13,8 +13,10 @@ class BatchPolicy < ApplicationPolicy
     user.admin? || user.dispatcher?
   end
 
+  # Sample shipments (SampleData) are read-only: nothing real may be
+  # recorded on or issued from them.
   def update?
-    (user.admin? || user.dispatcher?) && same_organization?
+    (user.admin? || user.dispatcher?) && same_organization? && !record.sample?
   end
 
   def destroy?
@@ -25,7 +27,7 @@ class BatchPolicy < ApplicationPolicy
   # batch's own attributes (update?) -- whoever is physically handling the
   # batch should be able to log a handoff, including the assigned driver.
   def record_custody?
-    (user.admin? || user.dispatcher? || user.driver?) && (same_organization? || own_delivery?)
+    (user.admin? || user.dispatcher? || user.driver?) && (same_organization? || own_delivery?) && !record.sample?
   end
 
   # A formal Compliance Packet is a billable, customer-facing artifact
@@ -35,7 +37,7 @@ class BatchPolicy < ApplicationPolicy
   # issuing the official versioned report is an organizational/billing
   # action, not a field one. No own_delivery? carve-out here on purpose.
   def generate_compliance_report?
-    (user.admin? || user.dispatcher?) && same_organization?
+    (user.admin? || user.dispatcher?) && same_organization? && !record.sample?
   end
 
   class Scope < Scope

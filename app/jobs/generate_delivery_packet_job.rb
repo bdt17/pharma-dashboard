@@ -20,6 +20,7 @@ class GenerateDeliveryPacketJob < ApplicationJob
     batch = custody_log.batch
     recorded_by = User.find_by(id: recorded_by_id)
     return unless batch && recorded_by
+    return if batch.sample? # SampleData: never issue a real packet or use quota
 
     # Idempotency: a retry of this job, or someone generating a packet by
     # hand between the delivery and this job running, both mean there's

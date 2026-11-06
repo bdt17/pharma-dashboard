@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_06_195129) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_06_202613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -53,6 +53,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_195129) do
     t.datetime "updated_at", null: false
     t.bigint "vehicle_id", null: false
     t.bigint "driver_id"
+    t.boolean "sample", default: false, null: false
     t.index ["driver_id"], name: "index_batches_on_driver_id"
     t.index ["lot"], name: "index_batches_on_lot", unique: true
     t.index ["organization_id", "lot_number"], name: "index_batches_on_organization_id_and_lot_number", unique: true
@@ -464,6 +465,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_195129) do
     t.integer "heading"
     t.datetime "last_ping_at"
     t.string "api_token_digest"
+    t.boolean "sample", default: false, null: false
     t.index ["imei"], name: "index_vehicles_on_imei", unique: true
   end
 

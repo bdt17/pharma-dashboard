@@ -102,11 +102,11 @@ class Organization < ApplicationRecord
   # auto-generates one). Org-wide, not scoped to whichever user happens
   # to be looking -- activation is a property of the organization.
   def added_a_vehicle?
-    vehicles.exists?
+    vehicles.real.exists?
   end
 
   def logged_a_batch?
-    batches.exists?
+    batches.real.exists?
   end
 
   def generated_a_packet?
@@ -119,6 +119,10 @@ class Organization < ApplicationRecord
   # Team page's business, not the checklist's.
   def invited_a_teammate?
     users.count > 1 || invitations.exists?
+  end
+
+  def sample_data?
+    batches.samples.exists? || vehicles.samples.exists?
   end
 
   def fully_activated?

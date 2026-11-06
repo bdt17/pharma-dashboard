@@ -15,6 +15,7 @@ class PdfChainOfCustodyGenerator
   def generate
     pdf = Prawn::Document.new(page_size: "LETTER", margin: 50)
 
+    sample_watermark(pdf) if batch.sample?
     header(pdf)
     batch_details(pdf)
     temperature_monitoring(pdf)
@@ -36,7 +37,23 @@ class PdfChainOfCustodyGenerator
     pdf.fill_color "000000"
     pdf.move_down 4
     pdf.text "Generated #{Time.current.strftime('%Y-%m-%d %H:%M %Z')}", size: 9, color: "666666"
+    if batch.sample?
+      pdf.move_down 4
+      pdf.text "SAMPLE DATA - not a real shipment or record", size: 11, style: :bold, color: "B45309"
+    end
     pdf.move_down 16
+  end
+
+  # SampleData batches can be previewed as a PDF so a new account sees the
+  # format, but every page says it isn't a real record.
+  def sample_watermark(pdf)
+    pdf.repeat(:all) do
+      pdf.transparent(0.12) do
+        pdf.rotate(35, origin: [ pdf.bounds.width / 2, pdf.bounds.height / 2 ]) do
+          pdf.draw_text "SAMPLE", size: 140, style: :bold, at: [ pdf.bounds.width / 2 - 260, pdf.bounds.height / 2 - 40 ]
+        end
+      end
+    end
   end
 
   def batch_details(pdf)

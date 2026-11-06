@@ -19,6 +19,11 @@ class Vehicle < ApplicationRecord
 
   before_create :generate_api_token
 
+  # See Batch.real / SampleData. A sample vehicle is never offered for a
+  # real batch, so clearing sample data never strands a real one.
+  scope :real, -> { where(sample: false) }
+  scope :samples, -> { where(sample: true) }
+
   # The delivery this vehicle is currently carrying: the most recent batch
   # that hasn't been marked delivered. Incoming GPS/sensor pings are
   # attributed to it (see Api::V1::GpsController#create) so a shipment's

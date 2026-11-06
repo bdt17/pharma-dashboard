@@ -94,7 +94,7 @@ class BatchesController < ApplicationController
     vehicle_id = params.dig(:batch, :vehicle_id).presence
     driver_id = params.dig(:batch, :driver_id).presence
 
-    @batch.vehicle = vehicle_id && current_organization.vehicles.find_by(id: vehicle_id)
+    @batch.vehicle = vehicle_id && current_organization.vehicles.real.find_by(id: vehicle_id)
     # Re-submitting the current driver keeps them even if deactivated since;
     # only active drivers can be newly assigned.
     return if driver_id && driver_id.to_i == @batch.driver_id

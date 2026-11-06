@@ -1,0 +1,9 @@
+<%# Shown on every app page while SampleData records exist, so nothing sample can be mistaken for a real record. %>
+<div class="px-4 md:px-7 pt-4">
+  <div class="rounded border border-[#ecd3ac] bg-[#fbf1e4] text-[#7a3e06] px-4 py-3 text-sm flex flex-wrap items-center justify-between gap-3">
+    <span><b>You&rsquo;re looking at sample data.</b> Lots starting <span class="mono">SAMPLE-</span> are examples: they can&rsquo;t be edited, recorded on or turned into Compliance Packets.</span>
+    <% if policy(Batch.new(organization: current_organization)).create? %>
+      <%= button_to "Clear sample data", sample_data_path, method: :delete, class: "btn btn-secondary btn-sm shrink-0" %>
+    <% end %>
+  </div>
+</div>

@@ -36,6 +36,11 @@ class Batch < ApplicationRecord
 
   before_validation :default_status, on: :create
 
+  # Sample shipments from SampleData, loaded so a new account has something
+  # to look at. Never real records: custody, packets and edits are refused
+  # on them (BatchPolicy), and they don't count toward activation.
+  scope :real, -> { where(sample: false) }
+  scope :samples, -> { where(sample: true) }
   scope :compliant, -> { where(temperature_celsius: COMPLIANT_RANGE) }
   scope :non_compliant, -> { where.not(temperature_celsius: nil).where.not(temperature_celsius: COMPLIANT_RANGE) }
   scope :active, -> { where(status: "active") }

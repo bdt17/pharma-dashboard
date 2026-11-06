@@ -100,6 +100,7 @@
         <%= render "layouts/card_expiry_banner" %>
         <% if notice %><div class="px-4 md:px-7 pt-4"><div class="rounded border border-accent-100 bg-accent-50 text-accent-700 px-4 py-3 text-sm"><%= notice %></div></div><% end %>
         <% if alert %><div class="px-4 md:px-7 pt-4"><div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-4 py-3 text-sm"><%= alert %></div></div><% end %>
+        <%= render "layouts/sample_data_banner" if current_organization&.sample_data? %>
         <main class="flex-1 bg-surface"><%= yield %></main>
       </div>
     </div>
