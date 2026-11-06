@@ -35,16 +35,6 @@ class DscsaAssessmentMailer < ApplicationMailer
 
   private
 
-  # Also sets the RFC 8058 one-click headers, so mail clients show their
-  # own "Unsubscribe" button (Gmail/Yahoo bulk-sender requirement) that
-  # POSTs straight to /unsubscribe.
-  def unsubscribe_url_for(email)
-    url = unsubscribe_url(token: EmailUnsubscribeToken.generate(email))
-    headers["List-Unsubscribe"] = "<#{url}>"
-    headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click"
-    url
-  end
-
   # The gap to lead with in the day-3 email: prefer one the platform
   # itself closes (a trial converts directly) over one that needs a
   # written process or the compliance-officer retainer. Falls back to

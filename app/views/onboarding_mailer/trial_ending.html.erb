@@ -1,0 +1,24 @@
+<p style="font-size:14px;">Hi<%= " #{@user.name.split.first}" if @user.name.present? %>,</p>
+
+<p style="font-size:14px;">
+  <strong><%= @organization.name %></strong>&rsquo;s free trial ends on <strong><%= @ends_on.strftime("%B %-d, %Y") %></strong>.
+  After that, your <%= @plan_name ? "#{@plan_name} plan" : "plan" %> starts billing to the card on file.
+</p>
+
+<p style="font-size:14px;">
+  So far: <%= pluralize(@vehicles, "vehicle") %>, <%= pluralize(@batches, "batch") %> and
+  <%= pluralize(@packets, "Compliance Packet") %>.
+  <% if @packets.zero? %>
+    You haven&rsquo;t recorded a delivery yet. There&rsquo;s still time to try it:
+    <%= link_to "record a pickup and delivery", deliveries_url %>.
+  <% end %>
+</p>
+
+<p style="font-size:14px;">
+  Want to change plans, or not continue? You can do either from <%= link_to "Billing", billing_url %> before
+  <%= @ends_on.strftime("%B %-d") %>, and you won&rsquo;t be charged. Questions? Just reply.
+</p>
+
+<p style="font-size:14px;">Brett Thomas<br>Pharma Transport</p>
+
+<p style="font-size:12px; color:#666;">You&rsquo;re getting this because you&rsquo;re an admin on <%= @organization.name %>.</p>

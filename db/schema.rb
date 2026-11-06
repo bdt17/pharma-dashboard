@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_06_202613) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_06_203227) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -195,6 +195,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_202613) do
     t.boolean "internal", default: false, null: false
     t.datetime "free_setup_owed_at"
     t.datetime "free_setup_completed_at"
+    t.integer "onboarding_emails_sent", default: 0, null: false
     t.index ["referral_code"], name: "index_organizations_on_referral_code", unique: true
     t.index ["subdomain"], name: "index_organizations_on_subdomain", unique: true
     t.index ["verification_token"], name: "index_organizations_on_verification_token", unique: true
@@ -395,6 +396,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_202613) do
     t.datetime "last_dunning_email_at"
     t.integer "dunning_email_count", default: 0, null: false
     t.datetime "stripe_event_at"
+    t.datetime "trial_ending_notified_at"
     t.index ["organization_id"], name: "index_subscriptions_on_organization_id"
   end
 

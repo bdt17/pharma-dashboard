@@ -1,0 +1,55 @@
+<p style="font-size:14px;">Hi<%= " #{@user.name.split.first}" if @user.name.present? %>,</p>
+
+<p style="font-size:14px;">
+  <% case @stage %>
+  <% when 1 %>
+    Thanks for setting up <strong><%= @organization.name %></strong> on Pharma Transport. The quickest way
+    to see what it does is to record one real delivery, start to finish. It takes about ten minutes.
+  <% when 2 %>
+    <%= @organization.name %> is <%= @done_count %> of <%= OnboardingMailer::STEPS.size %> steps into getting set up.
+    Here&rsquo;s the next one.
+  <% else %>
+    It&rsquo;s been a week, and <%= @organization.name %> hasn&rsquo;t recorded a delivery yet. If something&rsquo;s
+    in the way, reply to this email and tell me what it is, or book a 20-minute call and we&rsquo;ll set it up together.
+  <% end %>
+</p>
+
+<p style="font-size:14px; background:#f4f7f8; border:1px solid #e0e6ea; padding:12px 14px; border-radius:4px;">
+  <strong>Next step: <%= @step[:title] %></strong><br>
+  <%= @step[:hint] %><br>
+  <%= link_to "#{@step[:title]} →", @step_url %>
+</p>
+
+<% if @invite %>
+  <p style="font-size:14px;">
+    Someone else drives? <%= link_to "Invite your driver", team_url %>. They get an email link and record
+    pickups and deliveries from their phone.
+  </p>
+<% end %>
+
+<% if @sample_data %>
+  <p style="font-size:14px;">
+    Want to look around first? Load a few sample shipments from your <%= link_to "Dashboard", dashboard_url %>,
+    then clear them with one click.
+  </p>
+<% end %>
+
+<% if @free_setup == :owed %>
+  <p style="font-size:14px;">Your free setup call is included. Reply with a couple of times that work and we&rsquo;ll do it together.</p>
+<% elsif @free_setup == :offer %>
+  <p style="font-size:14px;">
+    Start your trial before <%= DeadlineOffer.label %> and we&rsquo;ll set everything up with you on a call, free
+    (normally <%= DeadlineOffer.value_label %>). <%= link_to "Start your trial", billing_url %>.
+  </p>
+<% end %>
+
+<% if @stage == 3 %>
+  <p style="font-size:14px;"><%= link_to "Book a 20-minute call", request_a_call_url(topic: "general") %></p>
+<% end %>
+
+<p style="font-size:14px;">Brett Thomas<br>Pharma Transport</p>
+
+<p style="font-size:12px; color:#666;">
+  You&rsquo;re getting this because you&rsquo;re an admin on <%= @organization.name %>. These getting-started emails
+  stop once your first delivery is recorded. <%= link_to "Unsubscribe", @unsubscribe_url %>.
+</p>

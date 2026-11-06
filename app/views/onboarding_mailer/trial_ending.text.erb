@@ -1,0 +1,17 @@
+Hi<%= " #{@user.name.split.first}" if @user.name.present? %>,
+
+<%= @organization.name %>'s free trial ends on <%= @ends_on.strftime("%B %-d, %Y") %>. After that, your <%= @plan_name ? "#{@plan_name} plan" : "plan" %> starts billing to the card on file.
+
+So far: <%= pluralize(@vehicles, "vehicle") %>, <%= pluralize(@batches, "batch") %> and <%= pluralize(@packets, "Compliance Packet") %>.
+<% if @packets.zero? -%>
+You haven't recorded a delivery yet. There's still time to try it: <%= deliveries_url %>
+<% end -%>
+
+Want to change plans, or not continue? You can do either from Billing before <%= @ends_on.strftime("%B %-d") %>, and you won't be charged: <%= billing_url %>
+Questions? Just reply.
+
+Brett Thomas
+Pharma Transport
+
+--
+You're getting this because you're an admin on <%= @organization.name %>.
