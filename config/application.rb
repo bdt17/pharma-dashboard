@@ -66,5 +66,8 @@ module PharmaDashboard
       config.active_record.encryption.deterministic_key = ENV.fetch("AR_ENCRYPTION_DETERMINISTIC_KEY")
       config.active_record.encryption.key_derivation_salt = ENV.fetch("AR_ENCRYPTION_KEY_DERIVATION_SALT")
     end
+
+    # See User::TEST_EMAIL_DOMAINS. On in production only.
+    config.x.block_test_email_sign_in = false
   end
 end

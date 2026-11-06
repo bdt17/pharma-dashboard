@@ -10,6 +10,7 @@ en:
       already_authenticated: "You are already signed in."
       inactive: "Your account is not activated yet."
       deactivated: "Your account has been deactivated. Ask your organization's admin if you need access again."
+      test_address: "This address can't be used to sign in. Contact brett@pharmatransport.org."
       invalid: "Invalid %{authentication_keys} or password."
       locked: "Your account is locked."
       last_attempt: "You have one more attempt before your account is locked."
