@@ -64,12 +64,29 @@ class User < ApplicationRecord
     deactivated_at.present?
   end
 
+  # Domains no real person signs in from: reserved for documentation
+  # (RFC 2606), public-inbox throwaways, and placeholders someone else
+  # owns. Early test accounts on production used them, and the repo is
+  # public -- a public inbox (mailinator) or a stranger's domain
+  # (yourdomain.com) could receive a password reset and take the account
+  # over. Production refuses sign-in for them; dev and test, which seed
+  # @example.com users, don't.
+  TEST_EMAIL_DOMAINS = %w[example.com example.org example.net mailinator.com yourdomain.com mail-tester.com].freeze
+
+  def test_email_address?
+    domain = email.to_s.downcase.split("@").last.to_s
+    TEST_EMAIL_DOMAINS.any? { |d| domain == d || domain.end_with?(".#{d}") }
+  end
+
   def active_for_authentication?
-    super && !deactivated?
+    super && !deactivated? && !(Rails.configuration.x.block_test_email_sign_in && test_email_address?)
   end
 
   def inactive_message
-    deactivated? ? :deactivated : super
+    return :deactivated if deactivated?
+    return :test_address if Rails.configuration.x.block_test_email_sign_in && test_email_address?
+
+    super
   end
 
   # Devise stores this in the session and in the remember-me cookie, and

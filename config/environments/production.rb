@@ -3,6 +3,9 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # See User::TEST_EMAIL_DOMAINS.
+  config.x.block_test_email_sign_in = true
+
   # Settings here override config/application.rb.
 
   # Production code is loaded once at boot and not reloaded per request.
