@@ -30,6 +30,12 @@ production:
     class: CardExpiryCheckJob
     schedule: every day at 8am
 
+  # Day 1/3/7 getting-started nudges and the 3-days-left trial notice.
+  # See OnboardingEmailJob. Phoenix time -- no DST.
+  onboarding_emails:
+    class: OnboardingEmailJob
+    schedule: every day at 9am America/Phoenix
+
   # Monday operator email: the week's leads, checks, signups, trials, and
   # anything waiting (see Ops::WeeklyDigest). Phoenix time -- no DST.
   weekly_ops_digest:

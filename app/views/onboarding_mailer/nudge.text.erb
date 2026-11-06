@@ -1,0 +1,40 @@
+Hi<%= " #{@user.name.split.first}" if @user.name.present? %>,
+
+<% case @stage -%>
+<% when 1 -%>
+Thanks for setting up <%= @organization.name %> on Pharma Transport. The quickest way to see what it does is to record one real delivery, start to finish. It takes about ten minutes.
+<% when 2 -%>
+<%= @organization.name %> is <%= @done_count %> of <%= OnboardingMailer::STEPS.size %> steps into getting set up. Here's the next one.
+<% else -%>
+It's been a week, and <%= @organization.name %> hasn't recorded a delivery yet. If something's in the way, reply to this email and tell me what it is, or book a 20-minute call and we'll set it up together.
+<% end -%>
+
+NEXT STEP: <%= @step[:title] %>
+<%= @step[:hint] %>
+<%= @step_url %>
+<% if @invite %>
+
+Someone else drives? Invite your driver: <%= team_url %>
+They get an email link and record pickups and deliveries from their phone.
+<% end -%>
+<% if @sample_data %>
+
+Want to look around first? Load a few sample shipments from your Dashboard, then clear them with one click: <%= dashboard_url %>
+<% end -%>
+<% if @free_setup == :owed %>
+
+Your free setup call is included. Reply with a couple of times that work and we'll do it together.
+<% elsif @free_setup == :offer %>
+
+Start your trial before <%= DeadlineOffer.label %> and we'll set everything up with you on a call, free (normally <%= DeadlineOffer.value_label %>): <%= billing_url %>
+<% end -%>
+<% if @stage == 3 %>
+
+Book a 20-minute call: <%= request_a_call_url(topic: "general") %>
+<% end -%>
+
+Brett Thomas
+Pharma Transport
+
+--
+You're getting this because you're an admin on <%= @organization.name %>. These getting-started emails stop once your first delivery is recorded. Unsubscribe: <%= @unsubscribe_url %>
