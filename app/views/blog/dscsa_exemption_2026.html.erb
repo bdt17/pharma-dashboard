@@ -1,5 +1,5 @@
 <% content_for :title, "Small Pharmacy DSCSA Exemption Extended to #{DscsaDeadline.label} — What Still Applies Now" %>
-<% content_for :meta_description, "The FDA extended the DSCSA small dispenser exemption to #{DscsaDeadline.label}. Who qualifies, what's still required today, and how to use the extra year." %>
+<% content_for :meta_description, DscsaDeadline.passed? ? "The DSCSA small dispenser exemption ended #{DscsaDeadline.label}. Who it covered, and what small pharmacies are required to do now." : "The FDA extended the DSCSA small dispenser exemption to #{DscsaDeadline.label}. Who qualifies, what's still required today, and how to use the extra year." %>
 
 <% content_for :full_bleed, "1" %>
 <div class="doc-prose mx-auto max-w-3xl px-6 py-14">
@@ -84,7 +84,7 @@
         and store it</li>
       <li>Write down your suspect-product process now &mdash; it&rsquo;s required today, not next year</li>
       <li>Get custody and cold-chain records into a system you could hand an inspector, so the
-        November 2027 work is an upgrade rather than a rebuild</li>
+        <%= DscsaDeadline::DATE.strftime("%B %Y") %> work is an upgrade rather than a rebuild</li>
     </ul>
   </section>
 

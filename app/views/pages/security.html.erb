@@ -101,7 +101,7 @@
     </div>
     <div class="flex flex-col gap-3">
       <h3 class="text-[20px]">DSCSA</h3>
-      <p class="text-[14px] text-ink-soft">Custody-event logging and per-shipment compliance packets give dispensers an audit-ready record of what happened in transit &mdash; the documentation that matters once the small-dispenser exemption ends on November&nbsp;27,&nbsp;2026. It does not replace a wholesaler&rsquo;s serialization system.</p>
+      <p class="text-[14px] text-ink-soft">Custody-event logging and per-shipment compliance packets give dispensers an audit-ready record of what happened in transit &mdash; the documentation that matters <% if DscsaDeadline.passed? %>now that the small-dispenser exemption has ended<% else %>today, and more so when the small-dispenser exemption ends on <%= DscsaDeadline.label %><% end %>. It does not replace a wholesaler&rsquo;s serialization system.</p>
     </div>
   </div>
 </section>
