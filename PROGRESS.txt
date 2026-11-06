@@ -1,10 +1,27 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-11-06 (rev 38)
+Last updated: 2026-11-06 (rev 39)
 
 ====================================================================
 STATUS
 ====================================================================
-REV 38 (2026-11-06, later) -- READ THIS FIRST. Since rev 37:
+REV 39 (2026-11-06, end of day) -- READ THIS FIRST. Since rev 38:
+  - #232 DATE AUDIT: /security still said the exemption "ends on
+    November 27, 2026" (fixed); the readiness question said "will" about
+    a date that passes Nov 27 (now switches to "did"); meta descriptions
+    and the /dscsa-2026 title would have kept saying the exemption is
+    ahead after 2027-11-27 (fixed). DateSweepTest renders 9 pages, 5
+    emails and the PDF at 2026-11-28, 2027-01-01 and 2027-11-28.
+  - #233 DELIVERY PRIVACY: delivered custody events keep approximate GPS
+    (~1 km) by default; admin setting on /deliveries (approximate / off /
+    exact), enforced in CustodyLog. "Patient residence" guidance and
+    no-patient-name hint on the product field.
+  - HIPAA vendor research and the open decision (facility-first vs
+    HIPAA-ready) are in NEXT_STEPS.txt M6. Key facts: Postmark signs no
+    BAA (email must stay PHI-free); Cloudflare BAA is Enterprise-only and
+    the site is proxied; Render BAA needs a HIPAA workspace (+20%).
+  - Suite 893 runs, 0 failures. main @ 618771b8.
+
+REV 38 (2026-11-06, later) -- Since rev 37:
   - #228 gem bumps (stripe 20.1.0 -- same endive API family, changelog
     read; bootsnap, csv, tailwindcss-rails); dependabot #221-#224 closed.
   - #229 SAMPLE DATA: an empty account (admin/dispatcher) can load 4
