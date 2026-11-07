@@ -45,7 +45,7 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 # it into a dedicated worker process later if that changes.
 # config/queue.yml and config/recurring.yml were already in the repo,
 # waiting for this.
-gem "solid_queue", "~> 1.4"
+gem "solid_queue", "~> 1.7"
 
 # PostgreSQL adapter — used in every environment (development, test, production).
 gem "pg", "~> 1.7"
