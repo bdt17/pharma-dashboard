@@ -75,7 +75,7 @@ gem "stripe", "~> 20.0"
 # ActiveRecord encryption, which this app has no credentials/master.key for --
 # so the TOTP layer here is built directly on rotp instead. See
 # app/models/concerns/two_factor_authenticatable.rb.
-gem "rotp", "~> 6.3"
+gem "rotp", "~> 6.4"
 gem "rqrcode", "~> 3.2"
 
 # SMS temperature-excursion alerts (Pro/Compliance tiers). Twilio's REST
