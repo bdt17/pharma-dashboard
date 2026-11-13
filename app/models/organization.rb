@@ -133,6 +133,16 @@ class Organization < ApplicationRecord
     users.count > 1 || invitations.exists?
   end
 
+  # A brand-new account with nothing real in it yet: no real vehicles or
+  # batches, nobody else in it or invited, no subscription. While this
+  # holds, its admin may explore before enrolling in two-factor (see
+  # User#two_factor_grace?); the moment any of it changes, the normal rule
+  # applies on every page.
+  def exploring?
+    !vehicles.real.exists? && !batches.real.exists? && users.count == 1 &&
+      !invitations.exists? && !subscriptions.exists?
+  end
+
   def sample_data?
     batches.samples.exists? || vehicles.samples.exists?
   end

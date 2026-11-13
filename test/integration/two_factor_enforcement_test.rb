@@ -24,10 +24,52 @@ class TwoFactorEnforcementTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "an un-enrolled admin is forced into two-factor setup" do
-    log_in create_user(role: "admin")
+  test "an un-enrolled admin of an account with real data is forced into two-factor setup" do
+    admin = create_user(role: "admin")
+    vehicle = Vehicle.create!(name: "Van", organization: @organization)
+    Batch.create!(lot_number: "LOT-1", vehicle: vehicle, organization: @organization)
+    log_in admin
     get dashboard_path
     assert_redirected_to two_factor_setup_path
+  end
+
+  test "an un-enrolled admin of an empty account may explore and try sample data" do
+    log_in create_user(role: "admin")
+    get dashboard_path
+    assert_response :success
+    assert_match "You&rsquo;re exploring.", response.body
+
+    post sample_data_path
+    assert_redirected_to dashboard_path
+    assert @organization.reload.sample_data?
+
+    get compliance_path
+    assert_response :success
+  end
+
+  test "exploring stops at the first real write, account change, or invite" do
+    log_in create_user(role: "admin")
+
+    assert_no_difference -> { Vehicle.count } do
+      post vehicles_path, params: { vehicle: { name: "Our van" } }
+    end
+    assert_redirected_to two_factor_setup_path
+    assert_match "before adding your own data", flash[:alert]
+
+    post team_invitations_path, params: { invitation: { email: "d@example.com", role: "driver" } }
+    assert_redirected_to two_factor_setup_path
+
+    get edit_user_registration_path
+    assert_redirected_to two_factor_setup_path
+  end
+
+  test "sample data alone doesn't end exploring, but a teammate does" do
+    admin = create_user(role: "admin")
+    SampleData.load!(@organization, user: admin)
+    assert admin.reload.two_factor_grace?
+
+    create_user(role: "driver")
+    assert_not admin.reload.two_factor_grace?
   end
 
   test "an un-enrolled pharmacist is forced into two-factor setup" do

@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
     return if devise_controller? && !is_a?(Devise::RegistrationsController)
     return if two_factor_satisfied?
     return unless current_user.otp_enabled? || current_user.two_factor_required?
+    return if exploring_before_two_factor?
 
     # Never skip the gate by request format: Accept: application/json alone
     # makes request.format.json? true on any route, and most actions do the
@@ -49,10 +50,23 @@ class ApplicationController < ActionController::Base
 
     if current_user.otp_enabled?
       redirect_to new_two_factor_challenge_path
+    elsif current_user.two_factor_grace?
+      redirect_to two_factor_setup_path,
+        alert: "Set up two-factor authentication before adding your own data. It takes about a minute."
     else
       redirect_to two_factor_setup_path,
         alert: "Two-factor authentication is required for your role. Set it up to continue."
     end
+  end
+
+  # The grace in User#two_factor_grace?: reading pages, and loading or
+  # clearing sample data, while the account is still empty. Never account
+  # settings (RegistrationsController), and never any other write.
+  def exploring_before_two_factor?
+    return false unless current_user.two_factor_grace?
+    return false if is_a?(Devise::RegistrationsController)
+
+    request.get? || request.head? || is_a?(SampleDataController)
   end
 
   # True once the user has passed the second factor in this login session.

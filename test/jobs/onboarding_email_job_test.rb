@@ -78,4 +78,9 @@ class OnboardingEmailJobTest < ActiveJob::TestCase
     assert_equal "OnboardingEmailJob", task["class"]
     assert_equal "0 9 * * * America/Phoenix", Fugit.parse(task["schedule"]).to_cron_s
   end
+
+  test "unconfirmed admins get no onboarding email" do
+    @admin.update_columns(confirmed_at: nil)
+    assert_no_enqueued_emails { run_job }
+  end
 end

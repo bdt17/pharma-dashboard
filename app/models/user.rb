@@ -60,6 +60,14 @@ class User < ApplicationRecord
   # (not only at sign-in), so deactivating ends existing sessions too.
   scope :active, -> { where(deactivated_at: nil) }
 
+  # An un-enrolled admin of a still-empty account (Organization#exploring?)
+  # may browse and try sample data before setting up two-factor. Anything
+  # that adds real data, people, billing or account changes still requires
+  # it -- see ApplicationController#enforce_two_factor.
+  def two_factor_grace?
+    admin? && !otp_enabled? && organization&.exploring? || false
+  end
+
   def deactivated?
     deactivated_at.present?
   end
