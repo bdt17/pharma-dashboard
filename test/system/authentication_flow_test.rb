@@ -1,11 +1,11 @@
 require "application_system_test_case"
 
-# The signup -> confirm -> sign in -> mandatory 2FA enrolment -> dashboard
+# The signup -> dashboard (explore, unconfirmed) -> two-factor enrolment
 # path. This is exactly the flow that broke repeatedly (full_bleed layout,
 # QR rendering, half-enrolled 2FA, bcrypt) with every individual piece
 # green in the controller/model suites.
 class AuthenticationFlowTest < ApplicationSystemTestCase
-  test "a new admin signs up, confirms, enrols two-factor, and reaches the dashboard" do
+  test "a new admin signs up, explores, enrols two-factor, and reaches the dashboard" do
     email = "founder-#{SecureRandom.hex(4)}@example.com"
 
     visit new_user_registration_path
@@ -16,25 +16,17 @@ class AuthenticationFlowTest < ApplicationSystemTestCase
     check "user_terms_accepted"
     click_on "Create organization"
 
-    # click_on returns as soon as the click is dispatched -- the signup
-    # POST may not have hit the database yet. Wait on the post-signup flash
-    # (a Capybara matcher, which retries) before querying for the user
-    # directly with User.find_by!, which does not. This race is what made
-    # the test flake in CI.
-    assert_text "confirmation link has been sent"
-
-    # Confirmable is on for the signup path; a real inbox isn't available in
-    # a system test, so confirm directly -- the point here is the 2FA gate.
+    # Signup lands straight in the dashboard, unconfirmed and exploring
+    # (24-hour email grace; two-factor before real data). Waiting on this
+    # Capybara matcher (which retries) also covers the race where the signup
+    # POST hasn't hit the database before User.find_by! runs.
+    assert_selector "h1", text: "Dashboard"
+    assert_text "Confirm your email."
+    assert_text "You’re exploring."
     user = User.find_by!(email: email)
     assert_not user.confirmed?
-    user.confirm
 
-    visit new_user_session_path
-    fill_in "Email", with: email
-    fill_in "Password", with: "correct horse battery"
-    click_on "Sign in"
-
-    # Admins are forced into enrolment before any authenticated page.
+    click_on "Set it up now"
     assert_selector "h1", text: "Set up two-factor authentication"
     # visible: :all skips Capybara's per-candidate displayed? RPC, which
     # intermittently threw "Node with given id does not belong to the
@@ -55,6 +47,7 @@ class AuthenticationFlowTest < ApplicationSystemTestCase
 
     assert_selector "h1", text: "Dashboard"
     assert_text "Northwind Pharmacy"
+    assert_no_text "You’re exploring."
     assert user.reload.otp_enabled?
     assert_equal 10, user.backup_codes_remaining
   end
