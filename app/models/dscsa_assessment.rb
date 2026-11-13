@@ -27,7 +27,7 @@ class DscsaAssessment < ApplicationRecord
     { key: "records",
       category: "Recordkeeping",
       prompt: "Are your transaction and custody records stored so you could produce any shipment’s full history quickly, and kept for at least six years?",
-      gap: "DSCSA records must be retained about six years and be retrievable on request." },
+      gap: "DSCSA transaction information and statements must be kept at least six years, and produced within two business days if an official asks during a recall or investigation." },
     { key: "sops",
       category: "Written procedures",
       prompt: "Do you have current written SOPs for receiving, quarantine, recalls, and temperature excursions that your staff actually follow?",
