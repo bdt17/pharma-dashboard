@@ -12,7 +12,7 @@ class DateSweepTest < ActionDispatch::IntegrationTest
   AFTER_EXEMPTION = Time.utc(2027, 11, 28, 15)
 
   PAGES = %i[root_path dscsa_2026_path independent_pharmacy_path pricing_path security_path
-             blog_dscsa_exemption_2026_path dscsa_assessment_path compliance_officer_path about_path].freeze
+             blog_dscsa_exemption_2026_path dscsa_assessment_path compliance_officer_path about_path guides_path].freeze
 
   # Wording that names the old 2026 deadline as if it were still ahead.
   # ("was due to end on November 27, 2026" is history, and fine.)
@@ -20,10 +20,11 @@ class DateSweepTest < ActionDispatch::IntegrationTest
 
   def render_all(time)
     travel_to(time) do
-      PAGES.map do |page|
-        get public_send(page)
-        assert_response :success, "#{page} at #{time}"
-        [ page, response.body ]
+      paths = PAGES.map { |page| public_send(page) } + Guide::SLUGS.map { |slug| guide_path(slug) }
+      paths.map do |path|
+        get path
+        assert_response :success, "#{path} at #{time}"
+        [ path, response.body ]
       end.to_h
     end
   end

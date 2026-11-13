@@ -1,0 +1,42 @@
+<%= render layout: "guides/frame", locals: { guide: @guide } do %>
+  <p>
+    Specialty pharmacies handle high-value, often refrigerated product, and that changes where DSCSA risk sits.
+    The obligations are the same as any dispenser&rsquo;s; the stakes of getting them wrong are higher.
+  </p>
+
+  <section>
+    <h2>Check the headcount first</h2>
+    <%= render "guides/qualify" %>
+    <p>
+      Specialty pharmacies owned by larger companies are often over 25. If yours is, the enhanced, electronic,
+      package-level requirements already apply; the <%= DscsaDeadline.label %> date is not yours.
+    </p>
+  </section>
+
+  <section>
+    <h2>Where specialty pharmacies get caught</h2>
+    <ul>
+      <li><strong>Suspect product.</strong> High-value product is where diversion and counterfeiting show up.
+        Quarantine anything suspect and investigate it with your trading partners promptly. See
+        <%= link_to "handling suspect and illegitimate product", guide_path("dscsa-suspect-illegitimate-product") %>.</li>
+      <li><strong>Shortage buying.</strong> A new source during a shortage must still be an authorized trading
+        partner. Check the license before you buy, and keep a dated record of the check.</li>
+      <li><strong>Records you can produce.</strong> In a recall or investigation you have two business days to
+        produce the records you received for a specific product.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What applies today</h2>
+    <%= render "guides/applies_today" %>
+  </section>
+
+  <section>
+    <h2>Cold chain and delivery records</h2>
+    <p>
+      DSCSA doesn&rsquo;t regulate temperature or delivery to the patient, but your manufacturer and
+      limited-distribution agreements, payers and state board may. Keeping a temperature and custody record for
+      each delivery is how you answer them. See <%= link_to "DSCSA and pharmacy delivery", guide_path("dscsa-pharmacy-delivery") %>.
+    </p>
+  </section>
+<% end %>

@@ -1,0 +1,52 @@
+<%= render layout: "guides/frame", locals: { guide: @guide } do %>
+  <p>
+    Every dispenser needs a written procedure for suspect and illegitimate product. It applies today, whether or
+    not you qualify for the small-dispenser exemption.
+  </p>
+
+  <section>
+    <h2>Suspect or illegitimate?</h2>
+    <p>
+      <strong>Suspect product</strong> is product you have reason to believe is potentially counterfeit, diverted
+      or stolen; potentially intentionally adulterated, or otherwise unfit for distribution, such that it would
+      result in serious adverse health consequences or death; or potentially the subject of a fraudulent
+      transaction. <strong>Illegitimate product</strong> is product where credible evidence shows it is one of
+      those things.
+    </p>
+  </section>
+
+  <section>
+    <h2>When product is suspect</h2>
+    <ul>
+      <li>Quarantine it, physically separate from saleable stock.</li>
+      <li>Promptly investigate with your trading partners to determine whether it&rsquo;s illegitimate.</li>
+      <li>Keep a record of the investigation for at least six years after it concludes.</li>
+    </ul>
+    <p>
+      The enhanced requirements add package-level verification of the product identifier during an investigation.
+      FDA has deferred that step for qualifying small dispensers until <%= DscsaDeadline.label %>; the rest of the
+      suspect-product duties still apply.
+    </p>
+  </section>
+
+  <section>
+    <h2>When product is illegitimate</h2>
+    <ul>
+      <li>Quarantine it and work with the manufacturer to take steps so it doesn&rsquo;t reach patients.</li>
+      <li><strong>Within 24 hours</strong> of determining it&rsquo;s illegitimate, notify FDA and the immediate
+        trading partners you believe may have received it. FDA&rsquo;s preferred route is the Form FDA 3911 platform
+        in CDER NextGen; emailing Form FDA 3911 is still accepted.</li>
+      <li>Keep records of the disposition for at least six years after it concludes.</li>
+      <li>Respond to FDA or state requests for records within two business days.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Make it a one-page procedure</h2>
+    <p>
+      Name who decides a product is suspect, where quarantined stock goes, who contacts trading partners, and who
+      files with FDA. Keep a blank log next to it. An inspector looks for a process you follow the same way every
+      time.
+    </p>
+  </section>
+<% end %>

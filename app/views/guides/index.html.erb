@@ -1,0 +1,19 @@
+<% content_for :title, "DSCSA guides for independent pharmacies — Pharma Transport" %>
+<% content_for :meta_description, "Plain-language DSCSA guides for compounding, long-term care, specialty and delivering pharmacies: what applies today and what changes on #{DscsaDeadline.label}." %>
+<% content_for :full_bleed, "1" %>
+<div class="doc-prose mx-auto max-w-3xl px-6 py-14">
+  <h1>DSCSA guides for independent pharmacies</h1>
+  <p>
+    Short, plain-language guides to the Drug Supply Chain Security Act for small pharmacies, each checked against
+    the statute and FDA&rsquo;s exemption notice. <% if DscsaDeadline.passed? %>The small-dispenser exemption ended
+    on <%= DscsaDeadline.label %>.<% else %>The small-dispenser exemption now runs to <%= DscsaDeadline.label %>,
+    but much of DSCSA applies today.<% end %> For the background, start with
+    <%= link_to "the small-pharmacy exemption explained", blog_dscsa_exemption_2026_path %>.
+  </p>
+  <ul>
+    <% @guides.each do |guide| %>
+      <li><%= link_to guide.title, guide_path(guide.slug) %>. <%= guide.summary %></li>
+    <% end %>
+  </ul>
+  <p class="text-[13px] text-ink-faint">Last reviewed <%= Guide::REVIEWED_ON.strftime("%B %-d, %Y") %>. General information, not legal advice.</p>
+</div>
