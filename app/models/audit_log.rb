@@ -4,6 +4,26 @@ class AuditLog < ApplicationRecord
 
   validates :event, presence: true
 
+  # Plain words for the event codes, shown to customers. Anything not
+  # listed falls back to the humanized code ("team_member_invited" ->
+  # "Team member invited"), so a new event never shows up blank.
+  EVENT_LABELS = {
+    "custody_log_created" => "Custody event recorded",
+    "compliance_report_generated" => "Compliance Packet generated",
+    "compliance_packet_autogen_skipped" => "Compliance Packet skipped (monthly limit reached)",
+    "chain_of_custody_pdf_generated" => "Chain-of-custody PDF downloaded",
+    "sample_data_loaded" => "Sample data loaded",
+    "sample_data_cleared" => "Sample data cleared",
+    "team_invitation_accepted" => "Invitation accepted",
+    "signed_out_other_sessions" => "Signed out other devices",
+    "two_factor_reset" => "Two-factor reset",
+    "delivery_gps_precision_changed" => "Delivery location precision changed"
+  }.freeze
+
+  def event_label
+    EVENT_LABELS.fetch(event) { event.to_s.humanize }
+  end
+
   # The one write path for audit entries, so every caller records the same
   # shape consistently instead of hand-building AuditLog.create! calls with
   # slightly different fields each time.

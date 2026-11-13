@@ -21,7 +21,7 @@ class VehiclesController < ApplicationController
       # Shown exactly once, the same way 2FA backup codes are -- only its
       # digest is stored, so it can't be displayed again after this redirect.
       flash[:api_token] = @vehicle.api_token
-      redirect_to edit_vehicle_path(@vehicle), notice: "Added #{@vehicle.name}. Copy its device token below before you leave this page."
+      redirect_to edit_vehicle_path(@vehicle), notice: "Added #{@vehicle.name}. Drivers' phones will record location. If you ever fit a GPS tracker, it needs the device token below, shown only now."
     else
       render :new, status: :unprocessable_content
     end

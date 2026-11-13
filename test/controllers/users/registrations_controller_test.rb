@@ -23,7 +23,7 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_response :unprocessable_content
-    assert_match "Organization name", response.body
+    assert_match "Pharmacy name", response.body
   end
 
   test "signup without accepting the terms is rejected" do

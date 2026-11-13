@@ -5,7 +5,7 @@
   <div class="flex flex-col gap-1 mb-6">
     <h1 class="text-[24px]">Add a vehicle</h1>
     <span class="text-[13px] text-ink-faint">
-      Register a truck or van so its GPS/temperature tracker can start reporting.
+      The car or van your driver uses. No tracker needed: drivers&rsquo; phones record location at each pickup and delivery.
     </span>
   </div>
 
@@ -18,15 +18,14 @@
 
     <div>
       <%= f.label :name, class: "block text-[12px] text-ink-faint mb-1" %>
-      <%= f.text_field :name, placeholder: "Truck 4", class: "field-input" %>
+      <%= f.text_field :name, placeholder: "Delivery van", class: "field-input" %>
     </div>
 
     <div>
-      <%= f.label :imei, "Tracker IMEI (optional)", class: "block text-[12px] text-ink-faint mb-1" %>
+      <%= f.label :imei, "GPS tracker IMEI (only if you have a tracker)", class: "block text-[12px] text-ink-faint mb-1" %>
       <%= f.text_field :imei, placeholder: "860000000000004", class: "field-input mono" %>
       <p class="text-[12px] text-ink-faint mt-1">
-        15 digits, printed on the tracker device. Don't have it in hand yet? Leave this
-        blank and add it later — you'll get a device token either way.
+        15 digits, printed on the tracker. Most pharmacies leave this blank.
       </p>
     </div>
 

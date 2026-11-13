@@ -10,7 +10,12 @@
   <% if current_user.two_factor_grace? %>
     <div class="rounded border border-line bg-surface text-ink-soft px-4 py-3 text-sm flex flex-wrap items-center justify-between gap-3">
       <span><b class="text-ink">You&rsquo;re exploring.</b> Look around and try sample data. Before you add your own vehicles, shipments or team, you&rsquo;ll set up two-factor authentication.</span>
-      <%= link_to "Set it up now", two_factor_setup_path, class: "btn btn-secondary btn-sm shrink-0" %>
+      <div class="flex flex-wrap gap-2 shrink-0">
+        <% if SampleData.available?(current_organization) %>
+          <%= button_to "Load sample data", sample_data_path, method: :post, class: "btn btn-primary btn-sm" %>
+        <% end %>
+        <%= link_to "Set up two-factor", two_factor_setup_path, class: "btn btn-secondary btn-sm" %>
+      </div>
     </div>
   <% end %>
 </div>

@@ -21,6 +21,10 @@ class BatchesController < ApplicationController
   # is the closest thing to a batch detail page this app has.
   def new
     @batch = Batch.new
+    # A one-driver pharmacy shouldn't have to pick: an unassigned shipment
+    # never shows on the driver's Deliveries page.
+    drivers = current_organization.users.active.driver
+    @batch.driver = drivers.first if drivers.one?
     authorize @batch
   end
 

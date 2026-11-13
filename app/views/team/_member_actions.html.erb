@@ -1,0 +1,11 @@
+<%# Deactivate / Reactivate. Rendered in its own column on wide screens and under the role on phones. %>
+<% if current_user.admin? && member != current_user %>
+  <% if member.deactivated? %>
+    <%= button_to "Reactivate", reactivate_team_member_path(member), method: :post,
+          class: "text-[12px] text-accent-600 hover:text-accent-700" %>
+  <% else %>
+    <%= button_to "Deactivate", deactivate_team_member_path(member), method: :post,
+          form: { data: { turbo_confirm: "Deactivate #{member.email}? They'll be signed out immediately. Their custody records stay." } },
+          class: "text-[12px] text-[#b42318] hover:underline" %>
+  <% end %>
+<% end %>
