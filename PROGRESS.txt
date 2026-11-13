@@ -1,10 +1,27 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-11-13 (rev 41)
+Last updated: 2026-11-13 (rev 42)
 
 ====================================================================
 STATUS
 ====================================================================
-REV 41 (2026-11-13) -- READ THIS FIRST.
+REV 42 (2026-11-13, end of day) -- READ THIS FIRST.
+  - PROJECT REVIEW: the product is ahead of demand (0 customers, nobody
+    has completed signup on production). Plan in NEXT_STEPS.txt: no new
+    features; goal = 3 pharmacies record a real delivery by 2026-12-31.
+  - #247 repo cleanup: 45 unreferenced root scripts/PDFs/drafts untracked
+    (public repo); 3 never-wired Stimulus controllers deleted.
+  - #248 backup drill tooling: bin/rails ops:row_counts (Ops::RowCounts)
+    + RUNBOOK.md procedure; not yet run (Brett, Render dashboard).
+  - #249 first-session grace (Brett's decisions): signup -> dashboard;
+    24h unconfirmed access then blocked (Devise allow_unconfirmed_access_
+    for); onboarding mail skips unconfirmed; un-enrolled admin of an empty
+    account (Organization#exploring?) may browse + use sample data, any
+    real write/invite/billing/account change requires 2FA first
+    (ApplicationController#exploring_before_two_factor?). New
+    FirstCustomerJourneyTest covers signup -> Compliance Packet.
+  - Suite 913 runs, 0 failures. main @ 7cc27f14. Live checks pass.
+
+REV 41 (2026-11-13) --
   - CI BROKE: GitHub's ubuntu-latest moved to 26.04 (no Ruby 3.3.5 for
     setup-ruby), so every job failed at "Set up Ruby". #242 (rotp 6.4.0,
     solid_queue 1.7.2, sentry 7.2.0, selenium 4.52.0; supersedes #237-#241)
