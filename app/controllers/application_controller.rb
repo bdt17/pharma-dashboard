@@ -48,6 +48,7 @@ class ApplicationController < ActionController::Base
       return
     end
 
+    remember_two_factor_return_to
     if current_user.otp_enabled?
       redirect_to new_two_factor_challenge_path
     elsif current_user.two_factor_grace?
@@ -67,6 +68,26 @@ class ApplicationController < ActionController::Base
     return false if is_a?(Devise::RegistrationsController)
 
     request.get? || request.head? || is_a?(SampleDataController)
+  end
+
+  # Where to send someone once they've set up or passed two-factor: the
+  # page they were opening, or -- for a blocked form submission -- the page
+  # the form was on. Same-site paths only (never "//host"), so it can't be
+  # used as an open redirect.
+  def remember_two_factor_return_to
+    path = request.get? || request.head? ? request.fullpath : URI(request.referer.to_s).then { |u| u.host == request.host ? u.request_uri : nil }
+    session[:two_factor_return_to] = path if safe_return_path?(path)
+  rescue URI::InvalidURIError
+    nil
+  end
+
+  def take_two_factor_return_to
+    path = session.delete(:two_factor_return_to)
+    safe_return_path?(path) ? path : nil
+  end
+
+  def safe_return_path?(path)
+    path.is_a?(String) && path.start_with?("/") && !path.start_with?("//") && !path.start_with?("/two_factor")
   end
 
   # True once the user has passed the second factor in this login session.
