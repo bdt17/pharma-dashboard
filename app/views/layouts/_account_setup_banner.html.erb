@@ -1,0 +1,16 @@
+<%# First-session reminders: confirm the email (24-hour grace, devise.rb) and
+    set up two-factor before adding real data (User#two_factor_grace?). %>
+<div class="px-4 md:px-7 pt-4 flex flex-col gap-2">
+  <% unless current_user.confirmed? %>
+    <div class="rounded border border-[#ecd3ac] bg-[#fbf1e4] text-[#7a3e06] px-4 py-3 text-sm flex flex-wrap items-center justify-between gap-3">
+      <span><b>Confirm your email.</b> We sent a link to <span class="mono"><%= current_user.email %></span>. Until you click it, this account stays open for 24 hours from signup.</span>
+      <%= button_to "Resend the link", user_confirmation_path, params: { user: { email: current_user.email } }, method: :post, class: "btn btn-secondary btn-sm shrink-0" %>
+    </div>
+  <% end %>
+  <% if current_user.two_factor_grace? %>
+    <div class="rounded border border-line bg-surface text-ink-soft px-4 py-3 text-sm flex flex-wrap items-center justify-between gap-3">
+      <span><b class="text-ink">You&rsquo;re exploring.</b> Look around and try sample data. Before you add your own vehicles, shipments or team, you&rsquo;ll set up two-factor authentication.</span>
+      <%= link_to "Set it up now", two_factor_setup_path, class: "btn btn-secondary btn-sm shrink-0" %>
+    </div>
+  <% end %>
+</div>

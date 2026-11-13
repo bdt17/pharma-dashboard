@@ -59,6 +59,12 @@ module Users
       redirect_to after_inactive_sign_up_path_for(build_resource(sign_up_params))
     end
 
+    # Straight into the product (with the confirm-your-email banner), not
+    # back to the marketing home page.
+    def after_sign_up_path_for(_resource)
+      dashboard_path
+    end
+
     def ask_to_resubmit_form
       build_resource(sign_up_params)
       clean_up_passwords resource

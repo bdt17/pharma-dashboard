@@ -152,7 +152,11 @@ Devise.setup do |config|
   # without confirming their account.
   # Default is 0.days, meaning the user cannot access the website without
   # confirming their account.
-  # config.allow_unconfirmed_access_for = 2.days
+  # A new signup can sign in and look around for 24 hours before confirming,
+  # so a slow or junk-foldered confirmation email isn't a dead end. A banner
+  # asks them to confirm; after 24 hours unconfirmed, sign-in stops.
+  # Onboarding emails skip unconfirmed addresses (OnboardingEmailJob).
+  config.allow_unconfirmed_access_for = 24.hours
 
   # A period that the user is allowed to confirm their account before their
   # token becomes invalid. For example, if set to 3.days, the user can confirm

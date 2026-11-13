@@ -38,21 +38,45 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_match "must be accepted", response.body
   end
 
-  test "a self-service signup is not confirmed and cannot sign in until they click the emailed link" do
+  test "a self-service signup lands in the dashboard unconfirmed, with a banner to confirm" do
     post user_registration_path, params: {
       user: { organization_name: "Acme Pharma", email: "founder@example.com",
               password: "password123!", password_confirmation: "password123!", terms_accepted: "1" }
     }
+    assert_redirected_to dashboard_path
 
     user = User.find_by(email: "founder@example.com")
     assert_not user.confirmed?
+    follow_redirect!
+    assert_response :success
+    assert_match "Confirm your email.", response.body
+    assert_select "form[action=?]", user_confirmation_path
+  end
 
-    post user_session_path, params: { user: { email: user.email, password: "password123!" } }
-    assert_redirected_to new_user_session_path
+  test "unconfirmed signups can sign in for 24 hours, then not until they confirm" do
+    post user_registration_path, params: {
+      user: { organization_name: "Acme Pharma", email: "founder@example.com",
+              password: "password123!", password_confirmation: "password123!", terms_accepted: "1" }
+    }
+    user = User.find_by(email: "founder@example.com")
+    delete destroy_user_session_path
 
-    user.confirm
-    post user_session_path, params: { user: { email: user.email, password: "password123!" } }
-    assert_redirected_to root_path
+    travel 23.hours do
+      post user_session_path, params: { user: { email: user.email, password: "password123!" } }
+      assert_response :redirect
+      assert_not_equal new_user_session_url, response.location
+      delete destroy_user_session_path
+    end
+
+    travel 25.hours do
+      post user_session_path, params: { user: { email: user.email, password: "password123!" } }
+      assert_redirected_to new_user_session_path
+
+      user.confirm
+      post user_session_path, params: { user: { email: user.email, password: "password123!" } }
+      assert_response :redirect
+      assert_not_equal new_user_session_url, response.location
+    end
   end
 
   test "signing up with a valid referral code records a referral" do

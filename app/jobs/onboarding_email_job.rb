@@ -49,7 +49,9 @@ class OnboardingEmailJob < ApplicationJob
     end
   end
 
+  # Confirmed addresses only: never mail an address nobody has verified
+  # (signups get 24 hours of unconfirmed access -- see devise.rb).
   def admins(organization)
-    organization.users.active.where(role: "admin").to_a
+    organization.users.active.where(role: "admin").where.not(confirmed_at: nil).to_a
   end
 end
