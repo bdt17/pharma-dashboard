@@ -31,6 +31,14 @@ export default class extends Controller {
     this.pad?.clear()
   }
 
+  // The signature block is hidden until "Delivered" is picked, so a canvas
+  // sized while hidden is 0x0. Re-fit it when the action type changes and
+  // the block has a real size; ignore every other change in the form.
+  refit(event) {
+    if (event.target.name !== "custody_log[action_type]") return
+    if (this.canvasTarget.offsetWidth > 0) this.resizeCanvas()
+  }
+
   clear() {
     this.pad.clear()
     this.inputTarget.value = ""

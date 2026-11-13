@@ -168,3 +168,9 @@
   .doc-prose section { margin-bottom: 0.5rem; }
   .doc-prose strong { color: var(--color-ink); }
 }
+
+/* Custody form: the signature block only applies to a delivery. Browsers
+   without :has() keep it visible, which is harmless. */
+.custody-form:not(:has(input[name="custody_log[action_type]"][value="delivered"]:checked)) .signature-block {
+  display: none;
+}

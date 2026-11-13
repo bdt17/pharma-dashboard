@@ -15,8 +15,8 @@
   </div>
 
   <%= form_with model: @custody_log, url: batch_custody_logs_path(@batch), local: true,
-        data: { controller: "signature-pad", action: "submit->signature-pad#save" },
-        class: "card p-4 md:p-6 flex flex-col gap-4" do |f| %>
+        data: { controller: "signature-pad", action: "submit->signature-pad#save change->signature-pad#refit" },
+        class: "custody-form card p-4 md:p-6 flex flex-col gap-4" do |f| %>
     <% if @custody_log.errors.any? %>
       <div class="rounded border border-[#f0c8c2] bg-[#fdeceb] text-[#b42318] px-3 py-2 text-[13px]">
         <ul class="list-disc pl-4">
@@ -72,7 +72,8 @@
       <%= f.text_area :condition_notes, rows: 3, class: "field-input" %>
     </div>
 
-    <fieldset class="border border-line rounded-sm p-4 flex flex-col gap-3">
+    <%# Shown only while "Delivered" is selected (CSS :has, application.css). %>
+    <fieldset class="signature-block border border-line rounded-sm p-4 flex flex-col gap-3">
       <legend class="text-[12px] font-semibold text-ink-soft px-1">Signature — required to confirm delivery</legend>
 
       <div>

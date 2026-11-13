@@ -36,10 +36,14 @@
   <h1 class="text-[20px] mb-2">Set up two-factor authentication</h1>
 
   <% if current_user.two_factor_required? %>
-    <p class="text-[14px] text-[#b42318] font-semibold">
-      Two-factor authentication is required for <%= current_user.role %>
-      accounts. Finish setup to continue.
-    </p>
+    <%# The redirect that brought them here usually explains why in its own
+        alert; only say it here when nothing else on the page does. %>
+    <% unless alert.present? %>
+      <p class="text-[14px] text-ink font-semibold">
+        Two-factor authentication is required for <%= current_user.role %>
+        accounts. It takes about a minute.
+      </p>
+    <% end %>
   <% else %>
     <p class="text-[14px] text-ink-soft">
       Two-factor authentication adds a one-time code from your phone when you

@@ -10,7 +10,7 @@ module TwoFactor
 
     def create
       if current_user.verify_second_factor(params[:otp_code])
-        mark_passed_and_redirect(dashboard_path)
+        mark_passed_and_redirect(take_two_factor_return_to || dashboard_path)
       elsif !locked_out_after_failed_code?
         flash.now[:alert] = "That code didn't match. Enter the current code from your authenticator app, or one of your backup codes."
         render :new, status: :unprocessable_content
