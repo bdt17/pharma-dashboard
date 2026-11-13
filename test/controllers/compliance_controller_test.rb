@@ -34,6 +34,6 @@ class ComplianceControllerTest < ActionDispatch::IntegrationTest
     get compliance_url
 
     assert_response :success
-    assert_select "td", text: "batch_created"
+    assert_select "td", text: "Batch created"
   end
 end

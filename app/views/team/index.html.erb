@@ -17,64 +17,70 @@
   </div>
 
   <div class="card overflow-hidden mb-6">
+    <div class="overflow-x-auto">
     <table class="w-full text-[13px]">
       <thead>
         <tr class="bg-surface text-[11px] uppercase tracking-wide text-ink-faint">
           <th class="text-left font-medium px-4 py-2">Person</th>
           <th class="text-left font-medium px-4 py-2">Role</th>
-          <th class="text-left font-medium px-4 py-2">Two-factor</th>
-          <th class="px-4 py-2"></th>
+          <th class="text-left font-medium px-4 py-2 hidden sm:table-cell">Two-factor</th>
+          <th class="px-4 py-2 hidden sm:table-cell"></th>
         </tr>
       </thead>
       <tbody>
         <% @members.each do |member| %>
           <tr class="border-t border-line-soft <%= "opacity-60" if member.deactivated? %>">
             <td class="px-4 py-2.5">
-              <div class="font-medium"><%= member.name.presence || member.email %><%= " (you)" if member == current_user %></div>
-              <% if member.name.present? %><div class="text-[12px] text-ink-faint"><%= member.email %></div><% end %>
+              <div class="font-medium [overflow-wrap:anywhere]"><%= member.name.presence || member.email %></div><% if member == current_user %><div class="text-[12px] text-ink-faint">(you)</div><% end %>
+              <% if member.name.present? %><div class="text-[12px] text-ink-faint [overflow-wrap:anywhere]"><%= member.email %></div><% end %>
+              <div class="sm:hidden mt-1 text-[12px]">
+              <% if member.deactivated? %>
+                <span class="badge whitespace-nowrap">Deactivated</span>
+              <% elsif member.otp_enabled? %>
+                <span class="badge badge-accent whitespace-nowrap">2FA on</span>
+              <% elsif member.two_factor_required? %>
+                <span class="badge whitespace-nowrap">2FA at next sign-in</span>
+              <% else %>
+                <span class="text-ink-faint">2FA off</span>
+              <% end %>
+              </div>
             </td>
             <td class="px-4 py-2.5">
               <% if current_user.admin? && !member.deactivated? %>
-                <%= form_with url: team_member_path(member), method: :patch, scope: :user, class: "flex items-center gap-2" do |f| %>
+                <%= form_with url: team_member_path(member), method: :patch, scope: :user, class: "flex flex-wrap items-center gap-2" do |f| %>
                   <%= f.select :role, options_for_select(role_options, member.role), {}, class: "border border-line rounded px-2 py-1 text-[13px]", aria: { label: "Role for #{member.email}" } %>
                   <%= f.submit "Save", class: "text-[12px] text-accent-600 hover:text-accent-700 bg-transparent" %>
                 <% end %>
               <% else %>
                 <%= member.role.capitalize %>
               <% end %>
+              <div class="sm:hidden mt-1"><%= render "team/member_actions", member: member %></div>
             </td>
-            <td class="px-4 py-2.5">
+            <td class="px-4 py-2.5 hidden sm:table-cell">
               <% if member.deactivated? %>
-                <span class="badge">Deactivated</span>
+                <span class="badge whitespace-nowrap">Deactivated</span>
               <% elsif member.otp_enabled? %>
-                <span class="badge badge-accent">On</span>
+                <span class="badge badge-accent whitespace-nowrap">2FA on</span>
               <% elsif member.two_factor_required? %>
-                <span class="badge">Set up at next sign-in</span>
+                <span class="badge whitespace-nowrap">2FA at next sign-in</span>
               <% else %>
-                <span class="text-ink-faint">Off</span>
+                <span class="text-ink-faint">2FA off</span>
               <% end %>
             </td>
-            <td class="px-4 py-2.5 text-right">
-              <% if current_user.admin? && member != current_user %>
-                <% if member.deactivated? %>
-                  <%= button_to "Reactivate", reactivate_team_member_path(member), method: :post,
-                        class: "text-[12px] text-accent-600 hover:text-accent-700" %>
-                <% else %>
-                  <%= button_to "Deactivate", deactivate_team_member_path(member), method: :post,
-                        form: { data: { turbo_confirm: "Deactivate #{member.email}? They'll be signed out immediately. Their custody records stay." } },
-                        class: "text-[12px] text-[#b42318] hover:underline" %>
-                <% end %>
-              <% end %>
+            <td class="px-4 py-2.5 text-right hidden sm:table-cell">
+              <%= render "team/member_actions", member: member %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    </div>
   </div>
 
   <% if @invitations.any? %>
     <h2 class="text-[17px] font-sans font-semibold mb-2">Pending invitations</h2>
     <div class="card overflow-hidden mb-6">
+      <div class="overflow-x-auto">
       <table class="w-full text-[13px]">
         <tbody>
           <% @invitations.each do |invitation| %>
@@ -97,6 +103,7 @@
           <% end %>
         </tbody>
       </table>
+      </div>
     </div>
   <% end %>
 

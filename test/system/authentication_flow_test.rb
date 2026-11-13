@@ -9,12 +9,12 @@ class AuthenticationFlowTest < ApplicationSystemTestCase
     email = "founder-#{SecureRandom.hex(4)}@example.com"
 
     visit new_user_registration_path
-    fill_in "Organization name", with: "Northwind Pharmacy"
+    fill_in "Pharmacy name", with: "Northwind Pharmacy"
     fill_in "Email", with: email
     fill_in "Password", with: "correct horse battery"
     fill_in "Confirm password", with: "correct horse battery"
     check "user_terms_accepted"
-    click_on "Create organization"
+    click_on "Create account"
 
     # Signup lands straight in the dashboard, unconfirmed and exploring
     # (24-hour email grace; two-factor before real data). Waiting on this
@@ -26,7 +26,7 @@ class AuthenticationFlowTest < ApplicationSystemTestCase
     user = User.find_by!(email: email)
     assert_not user.confirmed?
 
-    click_on "Set it up now"
+    click_on "Set up two-factor"
     assert_selector "h1", text: "Set up two-factor authentication"
     # visible: :all skips Capybara's per-candidate displayed? RPC, which
     # intermittently threw "Node with given id does not belong to the
