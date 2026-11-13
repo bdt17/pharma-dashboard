@@ -38,10 +38,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&display=swap">
 
-  <%# Never wired up before -- config/importmap.rb didn't even exist, so no
-      Stimulus controller in this app (gps_map_controller.js etc.) has ever
-      actually loaded in a browser. Needed now for real: signature capture
-      below depends on JS actually running. %>
+  <%# Turbo + Stimulus via importmap. Signature capture, GPS at handoff and
+      select-on-click all depend on JS actually running (see #208). %>
   <%= javascript_importmap_tags %>
   <%# tailwindcss-rails compiles app/assets/tailwind/application.css to
       app/assets/builds/tailwind.css automatically as part of
