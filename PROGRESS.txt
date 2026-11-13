@@ -1,10 +1,22 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-11-13 (rev 42)
+Last updated: 2026-11-13 (rev 43)
 
 ====================================================================
 STATUS
 ====================================================================
-REV 42 (2026-11-13, end of day) -- READ THIS FIRST.
+REV 43 (2026-11-13) -- READ THIS FIRST.
+  - Full test run: 919 unit/integration (0 failures), CI green incl.
+    system tests, rubocop/brakeman/bundler-audit/npm audit clean, live
+    smoke 12/12, live test_infosec all pass (3 warnings: DMARC x2, HSTS).
+  - Phone-width (390px) walk-through of all 15 first-customer screens
+    found 7 issues the tests missed; #251 fixed them (clipped backup-codes
+    button, Team table overflow, raw audit event codes -> AuditLog#
+    event_label, tracker-first vehicle copy, one-driver preselect on new
+    batch, sample-data button in the exploring banner, "pharmacy" wording
+    on signup). 3 small ones remain -- see NEXT_STEPS.txt.
+  - main @ b77fd994.
+
+REV 42 (2026-11-13, end of day) --
   - PROJECT REVIEW: the product is ahead of demand (0 customers, nobody
     has completed signup on production). Plan in NEXT_STEPS.txt: no new
     features; goal = 3 pharmacies record a real delivery by 2026-12-31.
