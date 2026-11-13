@@ -1,0 +1,50 @@
+<%= render layout: "guides/frame", locals: { guide: @guide } do %>
+  <p>
+    Compounding pharmacies often assume DSCSA is about someone else&rsquo;s supply chain. Part of that is right,
+    and part of it isn&rsquo;t. Here&rsquo;s where the line falls for a 503A pharmacy.
+  </p>
+
+  <section>
+    <h2>Compounded preparations aren&rsquo;t DSCSA &ldquo;product&rdquo;</h2>
+    <p>
+      DSCSA&rsquo;s tracing rules apply to &ldquo;product&rdquo;: a prescription drug in a finished dosage form.
+      The statute&rsquo;s definition expressly excludes a drug compounded in compliance with section 503A or
+      503B. So the preparations you compound and dispense don&rsquo;t carry DSCSA transaction information,
+      and you don&rsquo;t trace them under DSCSA.
+    </p>
+  </section>
+
+  <section>
+    <h2>The manufactured drugs you buy still are</h2>
+    <p>
+      Most compounding pharmacies also buy and dispense commercially manufactured prescription drugs, and some
+      use them as ingredients. When you take ownership of those, you&rsquo;re a dispenser receiving product, and
+      the usual dispenser obligations apply, exemption or not:
+    </p>
+    <%= render "guides/applies_today" %>
+  </section>
+
+  <section>
+    <h2>Are you a small dispenser?</h2>
+    <%= render "guides/qualify" %>
+    <p>
+      If you qualify, FDA has deferred the enhanced, electronic, package-level requirements until
+      <%= DscsaDeadline.label %>. If you don&rsquo;t, they already apply to the manufactured products you handle.
+    </p>
+  </section>
+
+  <section>
+    <h2>Practical steps</h2>
+    <ul>
+      <li>Separate the two flows on paper: what you compound, and what you buy finished. Only the second needs
+        DSCSA transaction records.</li>
+      <li>Check that every supplier of finished product is an authorized trading partner, including the one you
+        found during a shortage.</li>
+      <li>Write a one-page suspect-product procedure; it applies to finished product you receive.</li>
+    </ul>
+    <p>
+      This guide is about 503A pharmacies. 503B outsourcing facilities have their own federal obligations;
+      check FDA&rsquo;s outsourcing-facility guidance.
+    </p>
+  </section>
+<% end %>

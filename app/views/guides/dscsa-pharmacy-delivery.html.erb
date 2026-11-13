@@ -1,0 +1,44 @@
+<%= render layout: "guides/frame", locals: { guide: @guide } do %>
+  <p>
+    Pharmacies that deliver often ask whether DSCSA requires records of the delivery itself. It doesn&rsquo;t,
+    and it&rsquo;s worth knowing why, because delivery records still matter for other reasons.
+  </p>
+
+  <section>
+    <h2>What DSCSA covers</h2>
+    <p>
+      DSCSA traces product as it changes ownership between trading partners: manufacturers, repackagers,
+      wholesale distributors and dispensers. Its definition of a transaction excludes dispensing a product
+      pursuant to a prescription, and the dispenser rules for passing on transaction records exclude dispensing to
+      a patient. So the trip from your pharmacy to a patient&rsquo;s home or a care facility is not a DSCSA
+      transaction.
+    </p>
+  </section>
+
+  <section>
+    <h2>What DSCSA does require of you</h2>
+    <%= render "guides/applies_today" %>
+  </section>
+
+  <section>
+    <h2>Why delivery records still matter</h2>
+    <ul>
+      <li><strong>Disputes.</strong> &ldquo;It never arrived&rdquo; is answered by a signature, a time and a
+        place, recorded at the door.</li>
+      <li><strong>Cold chain.</strong> For refrigerated product, a temperature at pickup and at delivery shows the
+        product stayed in range.</li>
+      <li><strong>Your state board, payers and contracts.</strong> Delivery rules and documentation terms vary by
+        state and agreement; check yours.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Keep patient information to a minimum</h2>
+    <p>
+      A delivery record can include a patient&rsquo;s name and home location, which is health information. Record
+      what you need to prove the delivery and no more: &ldquo;Patient residence&rdquo; rather than a street
+      address in free-text fields, and an approximate location rather than an exact one where that&rsquo;s enough.
+      Make sure any vendor that stores those records will sign a business associate agreement if HIPAA applies to you.
+    </p>
+  </section>
+<% end %>

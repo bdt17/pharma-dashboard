@@ -1,0 +1,42 @@
+<%= render layout: "guides/frame", locals: { guide: @guide } do %>
+  <p>
+    A long-term care pharmacy serving nursing homes, assisted living and group homes is a dispenser under
+    DSCSA. Three questions come up more than any others.
+  </p>
+
+  <section>
+    <h2>Is delivering to a facility a DSCSA transaction?</h2>
+    <p>
+      DSCSA&rsquo;s definition of a transaction excludes dispensing a product pursuant to a prescription, and the
+      dispenser rules for passing on transaction records say &ldquo;not including dispensing to a patient.&rdquo;
+      Filling residents&rsquo; prescriptions and delivering them isn&rsquo;t a trading-partner transfer, so it
+      doesn&rsquo;t carry DSCSA transaction information. Your delivery records still matter for state rules,
+      facility contracts and cold chain; see <%= link_to "DSCSA and pharmacy delivery", guide_path("dscsa-pharmacy-delivery") %>.
+    </p>
+  </section>
+
+  <section>
+    <h2>Selling to another pharmacy</h2>
+    <p>
+      When one pharmacy sells a product to another to fill a prescription for an identified patient, the selling
+      pharmacy isn&rsquo;t required to provide transaction information or a transaction statement. Transfers to
+      replenish the other pharmacy&rsquo;s stock don&rsquo;t qualify. That&rsquo;s the &ldquo;specific patient
+      need&rdquo; provision; if you do this often, document the patient need each time.
+    </p>
+  </section>
+
+  <section>
+    <h2>The headcount question for multi-site groups</h2>
+    <%= render "guides/qualify" %>
+    <p>
+      LTC pharmacy groups often run several sites. The count covers the whole owning company, not one location,
+      so a group can be over 25 even when each site is small. If you&rsquo;re over, the enhanced requirements
+      already apply.
+    </p>
+  </section>
+
+  <section>
+    <h2>What applies today either way</h2>
+    <%= render "guides/applies_today" %>
+  </section>
+<% end %>

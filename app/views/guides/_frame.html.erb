@@ -1,0 +1,42 @@
+<%# Shared head, disclaimer and next steps for every guide. Usage:
+    render layout: "guides/frame", locals: { guide: @guide } do ... end %>
+<% content_for :title, "#{guide.title} — Pharma Transport" %>
+<% content_for :meta_description, guide.summary %>
+<% content_for :full_bleed, "1" %>
+<div class="doc-prose mx-auto max-w-3xl px-6 py-14">
+  <p class="text-[13px]"><%= link_to "DSCSA guides", guides_path %></p>
+  <h1><%= guide.title %></h1>
+  <p class="text-[13px] text-ink-faint">Last reviewed <%= Guide::REVIEWED_ON.strftime("%B %-d, %Y") %> against FD&amp;C Act sections 581&ndash;582 and FDA&rsquo;s small-dispenser exemption notice.</p>
+
+  <% if DscsaDeadline.passed? %>
+    <p class="rounded border p-3 text-[14px]" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
+      The small-dispenser exemption ended on <strong><%= DscsaDeadline.label %></strong>. Where this guide
+      describes the exemption, the enhanced requirements now apply.
+    </p>
+  <% end %>
+
+  <%= yield %>
+
+  <section>
+    <h2>Check where you stand</h2>
+    <p>
+      The free <%= link_to "DSCSA readiness check", dscsa_assessment_path %> takes about two minutes, needs no
+      account, and gives you a printable action plan for your pharmacist-in-charge.
+    </p>
+  </section>
+
+  <section>
+    <h2>Other guides</h2>
+    <ul>
+      <% (Guide::ALL - [ guide ]).each do |other| %>
+        <li><%= link_to other.title, guide_path(other.slug) %></li>
+      <% end %>
+    </ul>
+  </section>
+
+  <p class="text-sm text-gray-500 border-t pt-4">
+    General information, not legal advice. DSCSA dates and FDA policy have changed before and may again.
+    Confirm current requirements on FDA&rsquo;s DSCSA pages or with counsel before relying on this for
+    compliance decisions.
+  </p>
+</div>

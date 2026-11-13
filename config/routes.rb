@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   get "/terms", to: "legal#terms", as: :terms
   get "/privacy", to: "legal#privacy", as: :privacy
   get "/blog/small-pharmacy-dscsa-exemption-2026", to: "blog#dscsa_exemption_2026", as: :blog_dscsa_exemption_2026
+  # Plain-language DSCSA guides (see Guide) and the sitemap that lists them.
+  get "/guides", to: "guides#index", as: :guides
+  get "/guides/:slug", to: "guides#show", as: :guide, constraints: { slug: Regexp.union(Guide::SLUGS) }
+  get "/sitemap.xml", to: "sitemaps#show", as: :sitemap, defaults: { format: :xml }
   get "/pricing", to: "pages#pricing", as: :pricing
   get "/about", to: "pages#about", as: :about
   get "/security", to: "pages#security", as: :security

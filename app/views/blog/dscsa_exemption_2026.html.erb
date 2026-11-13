@@ -4,7 +4,8 @@
 <% content_for :full_bleed, "1" %>
 <div class="doc-prose mx-auto max-w-3xl px-6 py-14">
   <h1>Small Pharmacy DSCSA Exemption Extended to <%= DscsaDeadline.label %> — What Still Applies Now</h1>
-  <p class="text-[13px] text-ink-faint">Last updated: <%= Date.current.strftime("%B %-d, %Y") %></p>
+  <%# A real review date, not Date.current: the page used to claim it was updated on every visit. %>
+  <p class="text-[13px] text-ink-faint">Last reviewed <%= Guide::REVIEWED_ON.strftime("%B %-d, %Y") %> against FD&amp;C Act sections 581&ndash;582 and FDA&rsquo;s exemption notice.</p>
 
   <% if DscsaDeadline.passed? %>
     <p class="rounded border p-3 text-[14px]" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">
@@ -97,6 +98,15 @@
       <%= link_to "you can sign up and try it", new_user_registration_path %>, or
       <%= link_to "take the free readiness check", dscsa_assessment_path %> first.
     </p>
+  </section>
+
+  <section>
+    <h2 class="text-lg font-semibold mb-2">Guides for your kind of pharmacy</h2>
+    <ul class="list-disc pl-6 space-y-1">
+      <% Guide::ALL.each do |guide| %>
+        <li><%= link_to guide.title, guide_path(guide.slug) %></li>
+      <% end %>
+    </ul>
   </section>
 
   <p class="text-sm text-gray-500 border-t pt-4">

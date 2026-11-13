@@ -11,7 +11,7 @@ class RouteAuthSweepTest < ActionDispatch::IntegrationTest
     /invitations/:token /verify/:token /verify/:token/badge.svg /health /up /login /signup /landing
     /subscribe /batches.pdf /users/sign_in /users/sign_up /users/password/new /users/password/edit
     /users/confirmation /users/confirmation/new /users/unlock /users/unlock/new /users/cancel
-    /two_factor_challenge/new
+    /two_factor_challenge/new /guides /guides/:slug /sitemap.xml
   ].freeze
 
   def get_routes

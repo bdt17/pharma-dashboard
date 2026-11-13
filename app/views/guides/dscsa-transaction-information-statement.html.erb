@@ -1,0 +1,59 @@
+<%= render layout: "guides/frame", locals: { guide: @guide } do %>
+  <p>
+    &ldquo;T3&rdquo; meant three documents that travelled with every change of ownership: transaction
+    information, transaction history and the transaction statement. One of those is gone.
+  </p>
+
+  <section>
+    <h2>Transaction history ended in 2023</h2>
+    <p>
+      The statute ended the provision and receipt of transaction history on November 27, 2023, when the enhanced
+      requirements took effect for most of the supply chain. Since then, the records that change hands are
+      transaction information and the transaction statement.
+    </p>
+  </section>
+
+  <section>
+    <h2>Transaction information (TI)</h2>
+    <p>
+      TI describes what was transferred and between whom: the product&rsquo;s name, strength and dosage form,
+      NDC, container size and number of containers, lot number, the transaction date (and the shipment date, if more
+      than 24 hours later), and
+      the business names and addresses of the seller and buyer. Under the enhanced requirements it also carries
+      each package&rsquo;s product identifier, electronically.
+    </p>
+  </section>
+
+  <section>
+    <h2>Transaction statement (TS)</h2>
+    <p>
+      The TS is the seller&rsquo;s attestation that, among other things, it is authorized, received the product
+      from an authorized trading partner, received the required records, and did not knowingly ship suspect or
+      illegitimate product.
+    </p>
+  </section>
+
+  <section>
+    <h2>What a pharmacy must do with them</h2>
+    <ul>
+      <li>Accept ownership of product only when you receive its TI and TS.</li>
+      <li>Keep them for at least six years after the transaction.</li>
+      <li>In a recall or an investigation of suspect or illegitimate product, produce the records you received
+        within two business days of a request from FDA or another appropriate federal or state official.</li>
+    </ul>
+    <p>
+      Most pharmacies receive these through their wholesaler&rsquo;s portal. The useful test is how quickly you can
+      pull them for one specific lot.
+    </p>
+  </section>
+
+  <section>
+    <h2>Small dispensers and electronic, package-level data</h2>
+    <%= render "guides/qualify" %>
+    <p>
+      For qualifying small dispensers, FDA has deferred the enhanced requirements, including receiving and keeping
+      package-level data electronically, until <%= DscsaDeadline.label %>. Ask each wholesaler now how they will
+      send it, and whether your systems can receive and store it.
+    </p>
+  </section>
+<% end %>
