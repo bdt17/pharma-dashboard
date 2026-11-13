@@ -1,10 +1,36 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-11-06 (rev 40)
+Last updated: 2026-11-13 (rev 41)
 
 ====================================================================
 STATUS
 ====================================================================
-REV 40 (2026-11-06) -- READ THIS FIRST. Full infosec test run (#235):
+REV 41 (2026-11-13) -- READ THIS FIRST.
+  - CI BROKE: GitHub's ubuntu-latest moved to 26.04 (no Ruby 3.3.5 for
+    setup-ruby), so every job failed at "Set up Ruby". #242 (rotp 6.4.0,
+    solid_queue 1.7.2, sentry 7.2.0, selenium 4.52.0; supersedes #237-#241)
+    was merged on that red CI by mistake -- it had passed 900 tests +
+    bundler-audit locally. #243 pins ci.yml/smoke.yml to ubuntu-24.04;
+    its green CI was the first real CI run on #242. Lesson: never chain a
+    merge after `gh pr checks --watch` without testing the result.
+    (Pushing workflow files needs the gh token's `workflow` scope; added.)
+  - FACT-CHECK of 11 DSCSA claims against FD&C Act 581-582 and FDA's
+    2026-08-06 exemption notice: 6 true, 5 partly. Corrections:
+    2-business-day records duty only in a recall or suspect/illegitimate
+    investigation; transaction history ended 2023-11-27 (TI + TS, keep
+    >= 6 years); small dispenser = owning company's total full-time (IRS
+    30 h/week) licensed pharmacists + qualified techs <= 25 as of
+    2026-11-27; 24-hour illegitimate notice to FDA (3911 platform in CDER
+    NextGen preferred, email accepted) and partners who may have received
+    it. Applied to: #244 (/dscsa-2026 card + readiness-check gap), the
+    webinar deck (all [VERIFY] notes resolved), the handout PDF.
+  - #245 SEO: /guides + six fact-checked guides (compounding, LTC,
+    specialty, delivery, TI/TS, suspect/illegitimate), Guide registry with
+    REVIEWED_ON, generated /sitemap.xml (16 URLs; old public/sitemaps.xml
+    was empty), robots.txt Sitemap line, blog shows a real review date.
+  - Prospect list (untracked) now 95 rows after a second research pass.
+  - Suite 905 runs, 0 failures. main @ 8e6a6af7, CI green, live checks pass.
+
+REV 40 (2026-11-06) -- Full infosec test run (#235):
   - The GitHub repo is PUBLIC. Old secret_key_base values are in its
     history -> rotate SECRET_KEY_BASE on Render (NEXT_STEPS A5). No other
     credential patterns (Stripe, Twilio, AWS, GitHub, Postmark, Sentry,
