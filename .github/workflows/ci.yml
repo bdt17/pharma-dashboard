@@ -7,7 +7,7 @@ on:
 
 jobs:
   scan_ruby:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
@@ -25,7 +25,7 @@ jobs:
         run: bundle exec bundler-audit check --update
       
   lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       RUBOCOP_CACHE_ROOT: tmp/rubocop
     steps:
@@ -51,7 +51,7 @@ jobs:
         run: bundle exec rubocop -f github
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     services:
       postgres:
@@ -95,7 +95,7 @@ jobs:
         run: bin/rails db:test:prepare test
 
   system:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     services:
       postgres:
