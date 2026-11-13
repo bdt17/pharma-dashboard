@@ -50,7 +50,7 @@
     <% [
       ["Required now: authorized partners", "Buy from and sell to licensed, authorized trading partners only, and accept product only with its identifier."],
       ["Required now: suspect product", "A documented process to quarantine and investigate suspect product, with FDA and trading-partner notification."],
-      ["Required now: six-year records", "Transaction history retrievable on request, not reconstructed after the fact."],
+      ["Required now: six-year records", "Transaction information and statements kept at least six years, and produced within two business days if FDA or a state official asks during a recall or investigation."],
       ["#{DscsaDeadline.passed? ? "Now" : DscsaDeadline::DATE.year}: package-level tracing", "Electronic, package-level transaction data from every wholesaler, and verification of individual packages."],
     ].each do |title, body| %>
       <div class="card p-6 flex flex-col gap-2">
