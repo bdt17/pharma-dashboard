@@ -1,0 +1,53 @@
+<%= render layout: "guides/frame", locals: { guide: @guide } do %>
+  <p>
+    Since 2015, a pharmacy&rsquo;s trading partners may only be <strong>authorized trading partners</strong>.
+    The rule is simple to state and easy to let slide, especially when a shortage pushes you to a supplier
+    you haven&rsquo;t used before. It applies then too.
+  </p>
+
+  <section>
+    <h2>What &ldquo;authorized&rdquo; means</h2>
+    <p>DSCSA (FD&amp;C Act section 581) defines it for each kind of trading partner:</p>
+    <ul>
+      <li><strong>Manufacturers and repackagers:</strong> a valid FDA registration.</li>
+      <li><strong>Wholesale distributors:</strong> a valid license under state law (or from FDA), and
+        reporting that licensure to FDA each year.</li>
+      <li><strong>Third-party logistics providers:</strong> the same: a valid license and annual reporting to FDA.</li>
+      <li><strong>Other dispensers</strong>, such as a pharmacy you buy from or sell to: a valid state license.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Where to check</h2>
+    <ul>
+      <li><strong>Wholesalers and 3PLs:</strong> FDA publishes the licenses they report in a searchable
+        <a href="https://www.accessdata.fda.gov/scripts/cder/wdd3plreporting" rel="noopener">annual reporting
+        database</a>, updated every business day. Each line is a license for one facility, so look for the
+        facility that actually ships to you.</li>
+      <li><strong>State licenses:</strong> the issuing state&rsquo;s online license lookup, usually on the board
+        of pharmacy&rsquo;s website.</li>
+      <li><strong>Manufacturers and repackagers:</strong> ask for their FDA registration, or check it in FDA&rsquo;s
+        drug establishment listings.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>A routine that holds up</h2>
+    <ol>
+      <li>List every supplier you bought from in the last 12 months, including one-off purchases during
+        shortages.</li>
+      <li>For each, check the license or registration and save a screenshot or PDF with the date you checked.</li>
+      <li>Do the same before the first order from any new supplier.</li>
+      <li>Re-check your regular suppliers once a year, and note expiry dates where the lookup shows them.</li>
+    </ol>
+    <p>
+      If a supplier can&rsquo;t show it is authorized, don&rsquo;t buy from it. If you already have product from
+      a supplier you now doubt, treat the product as possibly suspect: quarantine it and investigate.
+    </p>
+  </section>
+
+  <section>
+    <h2>The rest of what applies today</h2>
+    <%= render "guides/applies_today" %>
+  </section>
+<% end %>

@@ -1,0 +1,64 @@
+<%= render layout: "guides/frame", locals: { guide: @guide } do %>
+  <p>
+    Whether the small-dispenser exemption covers your pharmacy comes down to one number on one date. It takes
+    ten minutes to work out and write down, and it is the first thing to settle before deciding anything else
+    about DSCSA.
+  </p>
+
+  <section>
+    <h2>The test</h2>
+    <%= render "guides/qualify" %>
+  </section>
+
+  <section>
+    <h2>Who counts</h2>
+    <ul>
+      <li><strong>Licensed pharmacists and qualified pharmacy technicians</strong> who are full-time employees.
+        Clerks, drivers and other staff are not part of the count.</li>
+      <li><strong>Full-time means the IRS test:</strong> 30 or more hours a week, or 130 a month. The test counts
+        full-time employees, so staff who work fewer hours are not counted.</li>
+      <li><strong>One date:</strong> the count is taken as of <%= DscsaDeadline.qualifying_label %>, not averaged
+        over the year.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>If you own more than one store</h2>
+    <p>
+      The count is for the <strong>company that owns the pharmacy</strong>, not each store on its own. An owner
+      with three stores of eight full-time pharmacists and technicians each has 24, and qualifies; add a fourth
+      store and the company is over 25, so none of the stores qualify. If your stores are owned through more than
+      one company, or you have joined a larger group, check which company owns each pharmacy before you count.
+    </p>
+  </section>
+
+  <section>
+    <h2>Write it down</h2>
+    <p>
+      FDA doesn&rsquo;t ask you to file anything, which is exactly why it&rsquo;s worth a record. A one-page
+      worksheet kept with your DSCSA file is enough:
+    </p>
+    <ul>
+      <li>The owning company&rsquo;s legal name and each pharmacy it owns.</li>
+      <li>For each licensed pharmacist and qualified technician: name, role, and usual weekly hours as of
+        <%= DscsaDeadline.qualifying_label %>.</li>
+      <li>The full-time total, the date you counted, and who counted.</li>
+      <li>A note of which trading partners you told that you rely on the exemption, and when.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>If you&rsquo;re over 25</h2>
+    <p>
+      The exemption doesn&rsquo;t apply, and the enhanced, package-level requirements already apply to your
+      pharmacy. Talk to your wholesalers and your pharmacy-system vendor now about how they exchange and verify
+      that data.
+    </p>
+  </section>
+
+  <section>
+    <h2>Either way</h2>
+    <p>These obligations apply whether or not you qualify:</p>
+    <%= render "guides/applies_today" %>
+  </section>
+<% end %>

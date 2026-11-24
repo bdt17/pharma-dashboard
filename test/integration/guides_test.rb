@@ -14,7 +14,7 @@ class GuidesTest < ActionDispatch::IntegrationTest
       assert_select "title", /#{Regexp.escape(guide.title)}/
       assert_select "meta[name=description][content=?]", guide.description
       assert_select "h1", guide.title
-      assert_match "Last reviewed #{Guide::REVIEWED_ON.strftime('%B %-d, %Y')}", response.body
+      assert_match "Last reviewed #{guide.reviewed_on.strftime('%B %-d, %Y')}", response.body
       assert_match "not legal advice", response.body
       assert_select "a[href=?]", dscsa_assessment_path
     end
