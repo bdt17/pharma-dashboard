@@ -1,0 +1,5 @@
+<% url = unlock_url(@resource, unlock_token: @token) %>
+<p style="margin:0 0 14px;">Your Pharma Transport account (<%= @resource.email %>) was locked after <%= Devise.maximum_attempts %> unsuccessful sign-in attempts.</p>
+<p style="margin:0 0 20px;"><%= link_to "Unlock my account", url, style: "display:inline-block;background:#1f3a53;color:#ffffff;text-decoration:none;font-weight:600;padding:11px 20px;border-radius:8px;" %></p>
+<p style="font-size:12px;color:#5b6b7c;">It also unlocks on its own after <%= Devise.unlock_in.inspect %>. If the button doesn't work, copy this link into your browser:<br><%= link_to url, url, style: "color:#1f3a53;word-break:break-all;" %></p>
+<p style="font-size:12px;color:#5b6b7c;">If those attempts weren't you, reset your password after unlocking, and reply to this email so we can take a look.</p>
