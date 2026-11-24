@@ -83,8 +83,13 @@ class OpsController < ApplicationController
 
   private
 
+  # The allowlisted email alone isn't enough: the address must be
+  # confirmed (so nobody can claim an operator address by signing up with
+  # it during the 24h unconfirmed grace) and the second factor passed (so
+  # the explore-before-two-factor grace never reaches cross-tenant data).
   def require_operator
-    return if operator_emails.include?(current_user.email.to_s.strip.downcase)
+    return if operator_emails.include?(current_user.email.to_s.strip.downcase) &&
+      current_user.confirmed? && two_factor_satisfied?
 
     head :not_found
   end

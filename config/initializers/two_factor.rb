@@ -18,9 +18,10 @@
 # an enrolled user signing in again always re-triggers the challenge even in a
 # browser that still has the cookie -- password alone is never enough.
 #
-# Not covered here: the JSON API (namespace :api). Those endpoints are
-# browser-session authenticated today and the gate only runs for HTML
-# requests; token auth with its own second-factor story is a separate change.
+# The session-authenticated JSON API (namespace :api) goes through the same
+# gate: a non-HTML request that hasn't passed the second factor gets a 401
+# rather than a redirect. Device-token endpoints (GPS ingest) don't use the
+# user session and skip it.
 #
 # users.otp_secret is encrypted at rest (`encrypts :otp_secret` in the
 # concern).
