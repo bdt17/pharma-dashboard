@@ -1,7 +1,7 @@
 <%# Shared head, disclaimer and next steps for every guide. Usage:
     render layout: "guides/frame", locals: { guide: @guide } do ... end %>
 <% content_for :title, "#{guide.title} — Pharma Transport" %>
-<% content_for :meta_description, guide.summary %>
+<% content_for :meta_description, guide.description %>
 <% content_for :full_bleed, "1" %>
 <div class="doc-prose mx-auto max-w-3xl px-6 py-14">
   <p class="text-[13px]"><%= link_to "DSCSA guides", guides_path %></p>

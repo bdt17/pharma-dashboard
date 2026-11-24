@@ -12,7 +12,7 @@ class GuidesTest < ActionDispatch::IntegrationTest
       get guide_path(guide.slug)
       assert_response :success, guide.slug
       assert_select "title", /#{Regexp.escape(guide.title)}/
-      assert_select "meta[name=description][content=?]", guide.summary
+      assert_select "meta[name=description][content=?]", guide.description
       assert_select "h1", guide.title
       assert_match "Last reviewed #{Guide::REVIEWED_ON.strftime('%B %-d, %Y')}", response.body
       assert_match "not legal advice", response.body
