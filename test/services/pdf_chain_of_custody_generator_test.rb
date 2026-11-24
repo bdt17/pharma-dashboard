@@ -23,15 +23,22 @@ class PdfChainOfCustodyGeneratorTest < ActiveSupport::TestCase
     refute_includes text, "LOT-PHARMA-20260207", "should not contain the old hardcoded placeholder batch id"
   end
 
-  test "shows COMPLIANT for a batch within the 2-8°C range" do
+  test "states the temperature range, not a compliance verdict, for a batch within 2-8°C" do
     text = extracted_text(@batch)
-    assert_includes text, "COMPLIANT"
+    assert_includes text, "Within 2-8°C"
+    refute_match(/compliant/i, text)
   end
 
-  test "shows NON-COMPLIANT for a batch outside the 2-8°C range" do
+  test "flags a batch outside the 2-8°C range" do
     @batch.update!(temperature_celsius: 15)
     text = extracted_text(@batch)
-    assert_includes text, "NON-COMPLIANT"
+    assert_includes text, "OUTSIDE 2-8°C"
+    refute_match(/compliant/i, text)
+  end
+
+  test "says not recorded when the batch has no temperature" do
+    @batch.update!(temperature_celsius: nil)
+    assert_includes extracted_text(@batch), "Not recorded"
   end
 
   test "includes real custody log entries, not the hardcoded 'Position updated' placeholder" do
