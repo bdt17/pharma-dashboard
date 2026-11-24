@@ -23,6 +23,6 @@
   <g transform="translate(80,516)" fill="#b9c6d2" font-size="18">
     <g><rect width="196" height="40" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.15"/><text x="24" y="26">Chain of custody</text></g>
     <g transform="translate(212,0)"><rect width="252" height="40" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.15"/><text x="24" y="26">Temperature monitoring</text></g>
-    <g transform="translate(480,0)"><rect width="136" height="40" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.15"/><text x="24" y="26">DSCSA-ready</text></g>
+    <g transform="translate(480,0)"><rect width="152" height="40" rx="20" fill="none" stroke="#ffffff" stroke-opacity="0.15"/><text x="24" y="26">DSCSA-ready</text></g>
   </g>
 </svg>
