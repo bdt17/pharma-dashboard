@@ -8,7 +8,7 @@ module Ops
   # Tagged links feed UtmTracking's first-touch cookie, which stamps the
   # readiness check, call request or new org -- see Ops::CampaignFunnel.
   class OutreachKit
-    SOURCES = %w[linkedin email association partner referral].freeze
+    SOURCES = %w[linkedin email association partner referral mail].freeze
 
     # key => [label, route helper]
     LANDING_PAGES = {

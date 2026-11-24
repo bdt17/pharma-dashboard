@@ -6,7 +6,7 @@
 <div class="doc-prose mx-auto max-w-3xl px-6 py-14">
   <p class="text-[13px]"><%= link_to "DSCSA guides", guides_path %></p>
   <h1><%= guide.title %></h1>
-  <p class="text-[13px] text-ink-faint">Last reviewed <%= Guide::REVIEWED_ON.strftime("%B %-d, %Y") %> against FD&amp;C Act sections 581&ndash;582 and FDA&rsquo;s small-dispenser exemption notice.</p>
+  <p class="text-[13px] text-ink-faint">Last reviewed <%= guide.reviewed_on.strftime("%B %-d, %Y") %> against FD&amp;C Act sections 581&ndash;582 and FDA&rsquo;s small-dispenser exemption notice.</p>
 
   <% if DscsaDeadline.passed? %>
     <p class="rounded border p-3 text-[14px]" style="background-color:#fbf1e4;border-color:#ecd3ac;color:#5c4420;">

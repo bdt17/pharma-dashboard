@@ -8,7 +8,7 @@ class SitemapsController < ApplicationController
 
   def show
     @urls = PAGES.map { |page| public_send(page) } + Guide::ALL.map { |guide| guide_url(guide.slug) }
-    @guides_lastmod = Guide::REVIEWED_ON
+    @guides_lastmod = Guide::ALL.map(&:reviewed_on).max
     expires_in 1.hour, public: true
   end
 end

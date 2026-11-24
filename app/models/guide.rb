@@ -12,7 +12,13 @@ class Guide
 
   # summary is the one-line teaser on the index; description is the
   # longer search-result / link-preview text (aim for 120-160 chars).
-  Entry = Data.define(:slug, :title, :summary, :description)
+  # reviewed_on is when that guide's claims were last checked against the
+  # statute (defaults to REVIEWED_ON, when the first six were checked).
+  Entry = Data.define(:slug, :title, :summary, :description, :reviewed_on) do
+    def initialize(slug:, title:, summary:, description:, reviewed_on: REVIEWED_ON)
+      super
+    end
+  end
 
   ALL = [
     Entry.new(slug: "dscsa-compounding-pharmacies", title: "DSCSA for compounding pharmacies",
@@ -32,7 +38,19 @@ class Guide
               description: "Transaction history ended in 2023. What pharmacies must still receive and keep: transaction information and statements, held at least six years."),
     Entry.new(slug: "dscsa-suspect-illegitimate-product", title: "Handling suspect and illegitimate product",
               summary: "Quarantine, investigation, and the 24-hour notice, step by step.",
-              description: "How a pharmacy handles suspect and illegitimate drug product under DSCSA: quarantine, investigation, and the 24-hour notice to FDA (Form 3911) and partners.")
+              description: "How a pharmacy handles suspect and illegitimate drug product under DSCSA: quarantine, investigation, and the 24-hour notice to FDA (Form 3911) and partners."),
+    Entry.new(slug: "dscsa-small-dispenser-staff-count", title: "Counting staff for the small-dispenser exemption",
+              summary: "Who counts, who doesn't, and how to write the number down -- including for multi-store owners.",
+              description: "How to count full-time pharmacists and technicians for FDA's small-dispenser exemption, why multi-store owners count every store, and how to document it.",
+              reviewed_on: Date.new(2026, 11, 24)),
+    Entry.new(slug: "dscsa-authorized-trading-partners", title: "Checking that your suppliers are authorized",
+              summary: "What \"authorized\" means for each kind of supplier, and where to check it.",
+              description: "DSCSA lets pharmacies buy only from authorized trading partners. What that means for manufacturers, wholesalers and 3PLs, and how to check and file it.",
+              reviewed_on: Date.new(2026, 11, 24)),
+    Entry.new(slug: "dscsa-records-request-two-business-days", title: "Answering a records request in two business days",
+              summary: "When an official can ask, what you must produce, and a drill to prove you can.",
+              description: "In a recall or suspect-product investigation, a pharmacy has two business days to produce its DSCSA records. What triggers it, what to send, how to practice.",
+              reviewed_on: Date.new(2026, 11, 24))
   ].freeze
 
   SLUGS = ALL.map(&:slug).freeze
