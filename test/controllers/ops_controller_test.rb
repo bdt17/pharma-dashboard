@@ -5,7 +5,8 @@ class OpsControllerTest < ActionDispatch::IntegrationTest
 
   setup do
     @org = Organization.create!(name: "Acme Pharma")
-    @operator = User.create!(email: "ops@example.com", password: "password123!", organization: @org, role: "admin")
+    @operator = User.create!(email: "ops@example.com", password: "password123!", organization: @org, role: "admin",
+      confirmed_at: Time.current)
     @other_admin = User.create!(email: "someone@example.com", password: "password123!", organization: @org, role: "admin")
   end
 
@@ -34,6 +35,39 @@ class OpsControllerTest < ActionDispatch::IntegrationTest
     with_operator_emails("ops@example.com") do
       sign_in @other_admin
       get ops_url
+      assert_response :not_found
+    end
+  end
+
+  # A real password login (no test-helper shortcut), so the second factor
+  # is not marked passed. The org is empty, so the explore-before-2FA grace
+  # lets GETs through enforce_two_factor -- /ops must still refuse.
+  def password_login(user)
+    post user_session_path, params: { user: { email: user.email, password: "password123!" } }
+  end
+
+  test "404s for an unconfirmed account that signed up with an operator address" do
+    squatter_org = Organization.create!(name: "Squatter")
+    squatter = User.create!(email: "ops2@example.com", password: "password123!", organization: squatter_org, role: "admin")
+    squatter.update_columns(confirmed_at: nil, confirmation_sent_at: Time.current) # a fresh self-service signup, inside the 24h grace
+    assert_not squatter.confirmed?
+    with_operator_emails("ops@example.com, ops2@example.com") do
+      password_login(squatter)
+      get ops_url, headers: { "Accept" => "text/html" }
+      assert_response :not_found
+      get ops_outreach_url, headers: { "Accept" => "text/html" }
+      assert_response :not_found
+    end
+  end
+
+  test "404s for a confirmed operator who hasn't passed two-factor" do
+    solo_org = Organization.create!(name: "Solo")
+    solo = User.create!(email: "solo@example.com", password: "password123!", organization: solo_org, role: "admin",
+      confirmed_at: Time.current)
+    assert solo.two_factor_grace?
+    with_operator_emails("solo@example.com") do
+      password_login(solo)
+      get ops_url, headers: { "Accept" => "text/html" }
       assert_response :not_found
     end
   end
