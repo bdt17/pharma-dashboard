@@ -38,6 +38,62 @@ class InvitationTest < ActiveSupport::TestCase
     assert_match "already has a Pharma Transport account", invitation.errors.full_messages.to_sentence
   end
 
+  def abandoned_signup(email: "squatted@example.com", age: 25.hours)
+    other = Organization.create!(name: "Squatter Rx")
+    user = User.create!(email: email, password: "password123!", organization: other, role: "admin",
+                        requires_email_confirmation: true, terms_accepted: "1")
+    user.update_column(:confirmation_sent_at, age.ago)
+    user
+  end
+
+  test "an unconfirmed signup still inside its 24 hours keeps the address" do
+    abandoned_signup(age: 23.hours)
+    invitation = @organization.invitations.build(email: "squatted@example.com", role: "driver", invited_by: @admin)
+    assert_not invitation.valid?
+    assert_match "already has a Pharma Transport account", invitation.errors.full_messages.to_sentence
+  end
+
+  test "an unconfirmed signup past its 24 hours doesn't block an invitation" do
+    squatter = abandoned_signup
+    invitation = invite(email: "Squatted@example.com")
+    member = accept(invitation)
+
+    assert_predicate member, :persisted?
+    assert_equal @organization, member.organization
+    assert_equal "squatted@example.com", member.email
+    assert_predicate member, :confirmed?
+
+    squatter.reload
+    assert_equal "released-#{squatter.id}@released.invalid", squatter.email
+    assert_predicate squatter, :deactivated?
+    assert_nil squatter.confirmation_token
+    assert_equal "Squatter Rx", squatter.organization.name, "nothing is deleted"
+    log = AuditLog.find_by!(event: "abandoned_signup_released", user: squatter)
+    assert_equal "squatted@example.com", log.data["email"]
+  end
+
+  test "a signup confirmed after the invitation was sent is a real account again" do
+    squatter = abandoned_signup
+    invitation = invite(email: "squatted@example.com")
+    squatter.confirm
+
+    member = accept(invitation)
+    assert_not member.persisted?
+    assert_equal "squatted@example.com", squatter.reload.email
+    assert_predicate invitation.reload, :pending?
+  end
+
+  test "a failed accept leaves the abandoned signup untouched" do
+    squatter = abandoned_signup
+    invitation = invite(email: "squatted@example.com")
+
+    member = accept(invitation, password_confirmation: "does-not-match")
+    assert_not member.persisted?
+    assert_equal "squatted@example.com", squatter.reload.email
+    assert_not squatter.deactivated?
+    assert_not AuditLog.exists?(event: "abandoned_signup_released")
+  end
+
   test "rejects a duplicate pending invite but allows one after revoking" do
     first = invite
     assert_not @organization.invitations.build(email: first.email, role: "driver", invited_by: @admin).valid?
