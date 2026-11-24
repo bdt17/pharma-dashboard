@@ -1,14 +1,14 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-11-24 (rev 44)
+Last updated: 2026-11-24 (rev 45)
 
 ====================================================================
 STATUS
 ====================================================================
-REV 44 (2026-11-24) -- READ THIS FIRST.
-  - main @ 87fb712c (#264), deployed, CI + Smoke green, live
-    test_infosec passes (2 intentional warnings: DMARC p=none until
-    ~Dec 4-11, HSTS includeSubDomains off). 937 tests, 0 failures
-    (one unidentified flaky failure seen once in 4 local runs).
+REV 45 (2026-11-24) -- READ THIS FIRST.
+  - main @ 00b27103 (#266), deployed, live test_infosec passes (2
+    intentional warnings: DMARC p=none until ~Dec 4-11, HSTS
+    includeSubDomains off). 942 tests, 0 failures. Brakeman 0,
+    bundler-audit clean, rubocop clean, npm audit 0.
   - MERGED 2026-11-24 (all on green CI, verified live):
     #254  twilio-ruby update.
     #255  selenium-webdriver update.
@@ -38,6 +38,21 @@ REV 44 (2026-11-24) -- READ THIS FIRST.
           ruby:3.3.14-slim to match .ruby-version (Render builds
           natively, so the Dockerfile is unused; aligned so it isn't
           misleading).
+    #266  Invitations reclaim an address held by an abandoned signup
+          (unconfirmed and past the 24h unconfirmed-access window).
+          Accepting moves the old user aside -- placeholder address
+          released-<id>@released.invalid, deactivated, confirmation
+          token cleared -- and audits it (abandoned_signup_released).
+          Nothing is deleted. Re-checked inside the accept lock, so a
+          signup confirmed in the meantime is a real account again.
+  - POWER LOSS (2026-11-24 afternoon): 4 git objects in the local
+    clone were left empty (incl. the rev 44 commit). Fixed by moving
+    the empty files aside and re-fetching from origin; fsck clean. If
+    it happens again: back up .git, `find .git/objects -type f -empty`
+    -> move them out, delete any zeroed refs, `git fetch origin`,
+    `git fsck --full`. Also removed 83 stray packages from local
+    node_modules that npm audit flagged (not project deps; nothing
+    tracked changed).
   - SECURITY AUDIT (same day): tenant isolation reviewed -- no IDOR, no
     in-org privilege escalation; tokens and webhooks solid. Brakeman 0,
     bundler-audit clean.
@@ -54,9 +69,7 @@ REV 44 (2026-11-24) -- READ THIS FIRST.
     build a page after 2 sales. Outreach drafts, 16 Tier A emails, an
     AZ postcard and 8 LinkedIn posts are local untracked files (repo is
     public).
-  - CODE FOLLOW-UP (low risk): email squatting -- an unconfirmed signup
-    blocks invitations to that address until it expires; fix so an
-    invitation replaces/ignores an unconfirmed user older than 24h.
+  - CODE FOLLOW-UP: none open. Email squatting fixed in #266.
 
 REV 43 (2026-11-13) --
   - Full test run: 919 unit/integration (0 failures), CI green incl.
