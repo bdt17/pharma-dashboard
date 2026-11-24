@@ -1,10 +1,64 @@
 PHARMA DASHBOARD — SESSION PROGRESS & HANDOFF
-Last updated: 2026-11-13 (rev 43)
+Last updated: 2026-11-24 (rev 44)
 
 ====================================================================
 STATUS
 ====================================================================
-REV 43 (2026-11-13) -- READ THIS FIRST.
+REV 44 (2026-11-24) -- READ THIS FIRST.
+  - main @ 87fb712c (#264), deployed, CI + Smoke green, live
+    test_infosec passes (2 intentional warnings: DMARC p=none until
+    ~Dec 4-11, HSTS includeSubDomains off). 937 tests, 0 failures
+    (one unidentified flaky failure seen once in 4 local runs).
+  - MERGED 2026-11-24 (all on green CI, verified live):
+    #254  twilio-ruby update.
+    #255  selenium-webdriver update.
+    #257  stripe 20 -> 21.1.0 (major). v21 removed StripeObject
+          caching; we don't rely on it, so no code change.
+    #258  puma 8.0.2 -> 8.1.2 + msgpack 1.8.7; cleared 10
+          bundler-audit advisories that had turned scan_ruby red.
+    #259  /ops + /ops/outreach require a confirmed email AND passed
+          2FA. Audit finding: an unconfirmed signup using an operator
+          address, or an un-enrolled operator in an empty org, could
+          read /ops. Operators must enroll 2FA to see /ops.
+    #260  Ruby 3.3.5 -> 3.3.14 (zlib overflow, getaddrinfo UAF, ERB,
+          resolv/REXML/cgi DoS, Oct 2026 regexp fixes).
+    #261  Branded 400/404/422/500 pages (were blank), raster og.png
+          share image, apple-touch-icon, canonical URLs, per-guide
+          search descriptions.
+    #262  Branded email frame; account emails (confirm, reset,
+          invite, unlock, etc.) rewritten in plain language.
+    #263  Accurate claims: badge now says "custody records active"
+          plus a not-a-certification line; removed Part 11,
+          "immutable" and "FDA-ready" claims the product can't back.
+    #264  Three new /guides (staff count for the small-dispenser
+          exemption, authorized trading partners, 2-business-day
+          records requests); per-guide review dates; 'mail' as an
+          outreach UTM source (for the AZ postcard QR code).
+    #265  This rev + Dockerfile base image ruby:3.4-slim ->
+          ruby:3.3.14-slim to match .ruby-version (Render builds
+          natively, so the Dockerfile is unused; aligned so it isn't
+          misleading).
+  - SECURITY AUDIT (same day): tenant isolation reviewed -- no IDOR, no
+    in-org privilege escalation; tokens and webhooks solid. Brakeman 0,
+    bundler-audit clean.
+  - BRETT'S ACCOUNT ITEMS DONE TODAY: A1 Postmark approved (reset email
+    reached an outside Gmail; server "My First Server"); A4
+    SECRET_KEY_BASE rotated; A6 SENTRY_DSN set (US region); A6b Search
+    Console Domain property + sitemap submitted.
+  - STILL OPEN (Brett): confirm /ops "Error tracking OK" + Sentry Crons
+    heartbeat; A5 cancel the "Monetize Check 3" Stripe live sub; check
+    DKIM/SPF/DMARC via Gmail "Show original"; DMARC -> p=quarantine
+    Dec 4-11; check Search Console Performance ~Dec 1.
+  - SALES DECISIONS: "DSCSA Today" package -- $500 for the first five,
+    then $750; sell on calls first via a Stripe Payment Link (live),
+    build a page after 2 sales. Outreach drafts, 16 Tier A emails, an
+    AZ postcard and 8 LinkedIn posts are local untracked files (repo is
+    public).
+  - CODE FOLLOW-UP (low risk): email squatting -- an unconfirmed signup
+    blocks invitations to that address until it expires; fix so an
+    invitation replaces/ignores an unconfirmed user older than 24h.
+
+REV 43 (2026-11-13) --
   - Full test run: 919 unit/integration (0 failures), CI green incl.
     system tests, rubocop/brakeman/bundler-audit/npm audit clean, live
     smoke 12/12, live test_infosec all pass (3 warnings: DMARC x2, HSTS).
