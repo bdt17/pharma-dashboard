@@ -57,7 +57,7 @@ class PdfChainOfCustodyGenerator
   end
 
   def batch_details(pdf)
-    compliant = batch.compliance_status == "compliant"
+    range_color = { "compliant" => "1a7f37", "non-compliant" => "b91c1c" }.fetch(batch.compliance_status, "57606a")
 
     pdf.text "Lot #{batch.lot_number}", size: 16, style: :bold
     pdf.move_down 6
@@ -68,13 +68,16 @@ class PdfChainOfCustodyGenerator
         [ "Vehicle", batch.vehicle&.name || batch.vehicle&.identifier || "unassigned" ],
         [ "Driver", batch.driver&.email || "unassigned" ],
         [ "Temperature", batch.temperature_celsius ? "#{batch.temperature_celsius}°C" : "not recorded" ],
-        [ "Compliance", compliant ? "COMPLIANT (2-8°C)" : batch.compliance_status.upcase ],
+        # States the measurement, not a regulatory verdict: a temperature in
+        # range doesn't make a shipment "compliant" with anything, and the
+        # packet is evidence people hand to auditors (see CLIENT_CONTACT_SOP).
+        [ "Temperature range", temperature_range_label ],
         [ "Expiry", batch.expiry&.to_s || "not set" ]
       ],
       cell_style: { size: 10, padding: 6 },
       column_widths: [ 130, 360 ]
     ) do
-      row(5).text_color = compliant ? "1a7f37" : "b91c1c"
+      row(5).text_color = range_color
       row(5).font_style = :bold
     end
     pdf.move_down 20
@@ -276,5 +279,13 @@ class PdfChainOfCustodyGenerator
     pdf.text "This document is a computer-generated record of the data held for batch ##{batch.id} " \
               "at the time of generation. It is not, on its own, a certification of regulatory compliance.",
               size: 8, color: "666666"
+  end
+
+  def temperature_range_label
+    case batch.compliance_status
+    when "compliant" then "Within 2-8°C"
+    when "non-compliant" then "OUTSIDE 2-8°C"
+    else "Not recorded"
+    end
   end
 end
