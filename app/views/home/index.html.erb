@@ -1,6 +1,6 @@
 <% content_for :full_bleed, "1" %>
 <% content_for :title, "Pharma Transport — chain-of-custody for pharmaceutical transport" %>
-<% content_for :meta_description, "Fleet GPS tracking, immutable hash-chained chain-of-custody logging, and FDA-ready compliance PDFs for pharmaceutical transport." %>
+<% content_for :meta_description, "Fleet GPS tracking, tamper-evident chain-of-custody logging, and inspection-ready compliance PDFs for pharmaceutical transport." %>
 
 <%# Hero %>
 <section class="border-b border-line bg-gradient-to-b from-[#fbfcfd] to-[#f3f6f8]">
@@ -11,7 +11,7 @@
         The shipment record you can produce on demand&nbsp;&mdash; not reconstruct from memory.
       </h1>
       <p class="text-[18px] text-ink-soft max-w-[38ch]">
-        Track your fleet, log every custody handoff as it happens, and generate FDA-ready
+        Track your fleet, log every custody handoff as it happens, and generate inspection-ready
         compliance documentation automatically. When a regulator, a client, or an auditor
         asks what happened to a batch, the answer is already written down.
       </p>
@@ -20,9 +20,9 @@
         <%= link_to "See pricing", pricing_path, class: "btn btn-secondary" %>
       </div>
       <div class="flex flex-wrap items-center gap-x-7 gap-y-2 pt-3 text-[13px] text-ink-faint">
-        <span>Built for 21 CFR Part 11</span>
+        <span>Tamper-evident custody records</span>
         <span class="w-1 h-1 rounded-full bg-line"></span>
-        <span>DSCSA-aligned custody records</span>
+        <span>Signed proof of every handoff</span>
         <span class="w-1 h-1 rounded-full bg-line"></span>
         <span>Live in production</span>
       </div>
@@ -103,11 +103,11 @@
       ["Live fleet GPS tracking",
        "Real-time vehicle positions, scoped to your organization. Every driver ping is a timestamped data point, not a dot on a demo map.",
        '<path d="M12 21s-6.5-5.6-6.5-10A6.5 6.5 0 0 1 18.5 11c0 4.4-6.5 10-6.5 10Z"/><circle cx="12" cy="11" r="2.3"/>'],
-      ["Immutable custody log",
+      ["Tamper-evident custody log",
        "Every handoff — pickup, transfer, delivery — is written as a hash-chained record. A later edit breaks the chain, so tampering is detectable rather than silent.",
        '<path d="M9 15l6-6"/><path d="M11 7l1-1a4 4 0 0 1 5.7 5.7l-1 1"/><path d="M13 17l-1 1A4 4 0 0 1 6.3 12.3l1-1"/>'],
-      ["FDA-ready Compliance Packets",
-       "One PDF per batch covering chain-of-custody and temperature monitoring, generated from the underlying data — built for 21 CFR Part 11 documentation needs.",
+      ["Inspection-ready Compliance Packets",
+       "One PDF per batch covering chain-of-custody and temperature monitoring, generated from the underlying data, ready to hand to an inspector or auditor.",
        '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9.5 14.5l1.8 1.8 3.2-3.6"/>'],
       ["Proof-of-delivery signatures",
        "Captured at the point of delivery and attached directly to the custody record it belongs to — not a separate photo in someone’s phone.",

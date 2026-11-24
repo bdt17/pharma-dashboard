@@ -28,7 +28,7 @@ module SubscriptionPlan
     tagline: "The full record for a pharmacy moving product occasionally.",
     features: [
       "Live GPS fleet tracking",
-      "Immutable hash-chained chain-of-custody log",
+      "Tamper-evident, hash-chained chain-of-custody log",
       "Proof-of-delivery signature capture",
       "Audit trail and compliance dashboard",
       "15 Compliance Packets per month",
