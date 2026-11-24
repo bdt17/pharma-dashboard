@@ -68,6 +68,39 @@ class User < ApplicationRecord
     admin? && !otp_enabled? && organization&.exploring? || false
   end
 
+  # A self-service signup that never confirmed its email and whose
+  # unconfirmed-access window (config.allow_unconfirmed_access_for, 24h)
+  # has run out: nobody can sign in to it. Such a record must not keep
+  # holding the address -- otherwise anyone could block a real person from
+  # ever being invited by signing up with their email first. See
+  # Invitation#release_abandoned_signup!.
+  def abandoned_signup?
+    return false if confirmed?
+
+    window = self.class.allow_unconfirmed_access_for
+    return false if window.nil?
+
+    confirmation_sent_at.nil? || confirmation_sent_at < window.ago
+  end
+
+  # Frees this abandoned signup's email address for someone else, without
+  # deleting anything: the user (and its organization, custody records and
+  # audit trail) stays, deactivated, under a placeholder address. The old
+  # confirmation link stops working. Returns the address that was released.
+  # update_columns, not update!: with reconfirmable on, Devise would park
+  # the new value in unconfirmed_email and mail it instead of changing it.
+  def release_email_address!
+    released = email
+    update_columns(
+      email: "released-#{id}@released.invalid",
+      unconfirmed_email: nil,
+      confirmation_token: nil,
+      deactivated_at: deactivated_at || Time.current,
+      updated_at: Time.current
+    )
+    released
+  end
+
   def deactivated?
     deactivated_at.present?
   end

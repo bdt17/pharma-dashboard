@@ -70,6 +70,19 @@ class InvitationsControllerTest < ActionDispatch::IntegrationTest
     assert member.two_factor_required?
   end
 
+  test "an abandoned unconfirmed signup can't keep the invitee out" do
+    squatter = User.create!(email: "squatted@example.com", password: "password123!", role: "admin",
+                            organization: Organization.create!(name: "Squatter Rx"),
+                            requires_email_confirmation: true, terms_accepted: "1")
+    squatter.update_column(:confirmation_sent_at, 2.days.ago)
+    invitation = @organization.invitations.create!(email: "squatted@example.com", role: "driver", invited_by: @admin)
+
+    post invitation_url(token: invitation.token), params: accept_params
+    assert_redirected_to root_path
+    assert_equal @organization, User.find_by!(email: "squatted@example.com").organization
+    assert_predicate squatter.reload, :deactivated?
+  end
+
   test "a signed-in user is asked to sign out instead of accepting" do
     sign_in @admin
     get invitation_url(token: @token)

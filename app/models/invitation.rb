@@ -76,6 +76,7 @@ class Invitation < ApplicationRecord
         member.errors.add(:base, "This invitation is no longer valid")
         raise ActiveRecord::Rollback
       end
+      release_abandoned_signup!
       raise ActiveRecord::Rollback unless member.save
 
       update!(accepted_at: Time.current, user: member)
@@ -96,11 +97,30 @@ class Invitation < ApplicationRecord
     self.expires_at = EXPIRES_IN.from_now
   end
 
+  # Opening the link proves the invitee controls the address. If an
+  # unconfirmed signup that ran out of time is sitting on it (see
+  # User#abandoned_signup?), move it aside so the member can be created.
+  # Checked here, inside the lock, as well as when inviting: the signup may
+  # have been confirmed in between, and then it is a real account and the
+  # usual "already has an account" error applies. Rolled back with the
+  # rest if the member can't be saved.
+  def release_abandoned_signup!
+    abandoned = User.find_by(email: email)
+    return unless abandoned&.abandoned_signup?
+
+    released = abandoned.release_email_address!
+    AuditLog.record!(event: "abandoned_signup_released", user: abandoned,
+                     data: { email: released, invitation_id: id, organization_id: organization_id })
+  end
+
   # One account belongs to exactly one organization, so an address that
   # already signed up anywhere can't be moved over by invite. Only an
   # organization admin ever sees this message.
   def email_not_already_a_user
-    return unless email.present? && User.exists?(email: email)
+    return unless email.present?
+
+    existing = User.find_by(email: email)
+    return if existing.nil? || existing.abandoned_signup?
 
     errors.add(:email, "already has a Pharma Transport account. Each account belongs to one organization, so invite a different address")
   end
