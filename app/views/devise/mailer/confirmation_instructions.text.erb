@@ -1,0 +1,10 @@
+<% url = confirmation_url(@resource, confirmation_token: @token) %>
+<% if @resource.try(:unconfirmed_email?) -%>
+Please confirm <%= @resource.unconfirmed_email %> as the new email address for your Pharma Transport account:
+<% else -%>
+Welcome to Pharma Transport. Please confirm your email address so we can reach you about your account and your compliance records:
+<% end -%>
+
+<%= url %>
+
+If you didn't create an account, you can ignore this email.

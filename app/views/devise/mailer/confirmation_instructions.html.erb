@@ -1,0 +1,9 @@
+<% url = confirmation_url(@resource, confirmation_token: @token) %>
+<% if @resource.try(:unconfirmed_email?) %>
+  <p style="margin:0 0 14px;">Please confirm <strong><%= @resource.unconfirmed_email %></strong> as the new email address for your Pharma Transport account.</p>
+<% else %>
+  <p style="margin:0 0 14px;">Welcome to Pharma Transport. Please confirm your email address so we can reach you about your account and your compliance records.</p>
+<% end %>
+<p style="margin:0 0 20px;"><%= link_to "Confirm my email", url, style: "display:inline-block;background:#1f3a53;color:#ffffff;text-decoration:none;font-weight:600;padding:11px 20px;border-radius:8px;" %></p>
+<p style="font-size:12px;color:#5b6b7c;">If the button doesn't work, copy this link into your browser:<br><%= link_to url, url, style: "color:#1f3a53;word-break:break-all;" %></p>
+<p style="font-size:12px;color:#5b6b7c;">If you didn't create an account, you can ignore this email.</p>

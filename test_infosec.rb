@@ -169,7 +169,8 @@ warn_check.("DMARC record", !dmarc.nil?, dmarc.to_s[0, 80])
 warn_check.("DMARC policy enforces", dmarc.to_s.match?(/p=(quarantine|reject)/), dmarc.to_s[/p=\w+/].to_s)
 cname = dns.getresources("pm-bounces.#{host}", Resolv::DNS::Resource::IN::CNAME).first
 warn_check.("Postmark Return-Path CNAME", !cname.nil?, cname&.name.to_s)
-if (selector = ENV["DKIM_SELECTOR"])
+# Postmark's DKIM selector for pharmatransport.org (public, it's in DNS).
+if (selector = ENV.fetch("DKIM_SELECTOR", "20260909222958pm"))
   key = txt.("#{selector}._domainkey.#{host}").find { |t| t.include?("p=") }
   warn_check.("DKIM #{selector}", !key.nil?, key.to_s[0, 40])
 else
