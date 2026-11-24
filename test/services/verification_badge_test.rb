@@ -12,7 +12,7 @@ class VerificationBadgeTest < ActiveSupport::TestCase
 
     assert svg.start_with?("<svg")
     assert svg.strip.end_with?("</svg>")
-    assert_includes svg, "DSCSA verified"
+    assert_includes svg, "custody records active"
     assert_includes svg, VerificationBadge::VERIFIED_BG
     assert_includes svg, 'xmlns="http://www.w3.org/2000/svg"'
   end
@@ -20,13 +20,13 @@ class VerificationBadgeTest < ActiveSupport::TestCase
   test "shows the not-verified label and grey fill without an active subscription" do
     svg = VerificationBadge.new(@organization).svg
 
-    assert_includes svg, "not verified"
+    assert_includes svg, "not active"
     assert_includes svg, VerificationBadge::UNVERIFIED_BG
-    assert_not_includes svg, "DSCSA verified"
+    assert_not_includes svg, "custody records active"
   end
 
   test "trialing counts as verified" do
     Subscription.create!(organization: @organization, status: "trialing", stripe_subscription_id: "sub_1")
-    assert_includes VerificationBadge.new(@organization).svg, "DSCSA verified"
+    assert_includes VerificationBadge.new(@organization).svg, "custody records active"
   end
 end

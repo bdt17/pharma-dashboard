@@ -8,7 +8,7 @@ class VerificationsControllerTest < ActionDispatch::IntegrationTest
     get verification_url(org.verification_token)
 
     assert_response :success
-    assert_match "DSCSA Compliance Verified", response.body
+    assert_match "Custody records active", response.body
     assert_match "Acme Pharma", response.body
   end
 
@@ -18,7 +18,7 @@ class VerificationsControllerTest < ActionDispatch::IntegrationTest
     get verification_url(org.verification_token)
 
     assert_response :success
-    assert_match "Not currently verified", response.body
+    assert_match "Not currently active", response.body
   end
 
   test "does not require authentication" do
@@ -44,7 +44,7 @@ class VerificationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_equal "image/svg+xml", response.media_type
     assert_match "<svg", response.body
-    assert_match "DSCSA verified", response.body
+    assert_match "custody records active", response.body
     assert_match(/max-age=3600/, response.headers["Cache-Control"])
   end
 
@@ -54,7 +54,7 @@ class VerificationsControllerTest < ActionDispatch::IntegrationTest
     get verification_badge_url(org.verification_token)
 
     assert_response :success
-    assert_match "not verified", response.body
+    assert_match "not active", response.body
   end
 
   test "the badge is 404 for an unknown token, not a 500" do

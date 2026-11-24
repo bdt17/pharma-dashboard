@@ -182,18 +182,18 @@
 
     <div>
       <div class="text-[13px] text-ink-faint mb-1">
-        Your DSCSA verification badge —
+        Your chain-of-custody records badge —
         <% if current_organization.verified? %>
           shareable on your own site or with an auditor
         <% else %>
-          currently shows "not verified" since there's no active subscription; it'll update automatically once you subscribe
+          currently shows "not active" since there's no active subscription; it'll update automatically once you subscribe
         <% end %>
       </div>
       <code class="bg-paper border border-line rounded px-3 py-1.5 inline-block mono text-[13px] break-all"><%= verification_url(current_organization.verification_token) %></code>
 
-      <% badge_snippet = %(<a href="#{verification_url(current_organization.verification_token)}"><img src="#{verification_badge_url(current_organization.verification_token)}" alt="DSCSA compliance verified via Pharma Transport" height="20"></a>) %>
+      <% badge_snippet = %(<a href="#{verification_url(current_organization.verification_token)}"><img src="#{verification_badge_url(current_organization.verification_token)}" alt="Chain-of-custody records kept with Pharma Transport" height="20"></a>) %>
       <div class="mt-3 flex items-center gap-3">
-        <img src="<%= verification_badge_path(current_organization.verification_token) %>" alt="DSCSA compliance verified via Pharma Transport" height="20">
+        <img src="<%= verification_badge_path(current_organization.verification_token) %>" alt="Chain-of-custody records kept with Pharma Transport" height="20">
         <span class="text-[13px] text-ink-faint">— embed it on your site:</span>
       </div>
       <textarea readonly rows="2" class="mt-1 w-full bg-paper border border-line rounded px-3 py-1.5 mono text-[12px] break-all" data-controller="select-on-click" data-action="click->select-on-click#select"><%= badge_snippet %></textarea>

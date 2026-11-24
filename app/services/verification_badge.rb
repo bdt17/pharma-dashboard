@@ -19,7 +19,7 @@ class VerificationBadge
   end
 
   def svg
-    value = @verified ? "DSCSA verified" : "not verified"
+    value = @verified ? "custody records active" : "not active"
     label_w = segment_width(LABEL_TEXT)
     value_w = segment_width(value)
     total_w = label_w + value_w
